@@ -1,0 +1,162 @@
+import json, sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+team_tournaments = [
+    {
+        "id": "team_champ_6",
+        "title": "VI Командный Чемпионат по Goal 3",
+        "season_year": "2023 (Лето — Осень)",
+        "game": "Goal 3 (NES, хак T354)",
+        "format": "2x2 Командный (Высшая и Средняя лиги)",
+        "organizer": "Memori",
+        "prize_pool": "3600 руб.",
+        "champion": "RVD & PacnyTHuK (Высшая) / leon-udomlya & RASH (Средняя)",
+        "runner_up": "Alpharushin & BZK (Высшая) / Kamaz & Jamlight (Средняя)",
+        "bronze": "ectopower & Davitel (Высшая) / Aeris & Yuliy Cezar (Средняя)",
+        "description": "Шестой официальный командный чемпионат сообщества. 16+ команд, 2 дивизиона с полноценным групповым этапом и стадией плей-офф. Драматичнейший финал Высшей лиги завершился со счётом 7:6 в пользу RVD & PacnyTHuK против дуэта Alpharushin & BZK. В матче за бронзу экс-чемпионы ectopower & Davitel одолели пару Romix & Jgunishka со счётом 7:5.",
+        "divisions": {
+            "Высшая лига": [
+                {"team": "RVD & PacnyTHuK (Мафута лох)", "rank": "1 (Плей-офф)", "result": "🥇 ЧЕМПИОНЫ (Финал 7:6)"},
+                {"team": "Alpharushin & BZK (Кайлыч, Аязыч)", "rank": "2 (Плей-офф)", "result": "🥈 2 МЕСТО (Финалисты)"},
+                {"team": "ectopower & Davitel (Голубое тестирование)", "rank": "3 (Плей-офф)", "result": "🥉 3 МЕСТО (Матч за бронзу 7:5)"},
+                {"team": "Romix & Jgunishka (Пухляш бобчег)", "rank": "4 (Плей-офф)", "result": "4 место (Полуфинал)"},
+                {"team": "Kunio & Memori (Десять лет золота нет)", "rank": "Группа", "result": "Участник группового этапа"},
+                {"team": "Ric25 & Dune", "rank": "Группа", "result": "Участник группового этапа"},
+                {"team": "Bubnov & lenin1st (Ланцет)", "rank": "Группа", "result": "Участник группового этапа"}
+            ],
+            "Средняя лига": [
+                {"team": "leon-udomlya & RASH (Жабий ХАОС)", "rank": "1 (Плей-офф)", "result": "🥇 ЧЕМПИОНЫ Средней лиги"},
+                {"team": "Kamaz & Jamlight", "rank": "2 (Плей-офф)", "result": "🥈 2 МЕСТО (Финалисты)"},
+                {"team": "Aeris & Yuliy Cezar (Бухинаторы)", "rank": "3 (Плей-офф)", "result": "🥉 3 МЕСТО (Матч за бронзу 7:5)"},
+                {"team": "Кубик & Snipe (Золотые пятки)", "rank": "4 (Плей-офф)", "result": "4 место (Полуфинал)"},
+                {"team": "Dynamik & Таёда (Пивной ОЙ!)", "rank": "Группа", "result": "Участник группового этапа"},
+                {"team": "Роджер & Ryumaru (Футбольная бомба)", "rank": "Группа", "result": "Участник группового этапа"}
+            ]
+        },
+        "playoff_matches": [
+            {"league": "Высшая лига", "stage": "1/2 финала", "t1": "RVD & PacnyTHuK", "t2": "ectopower & Davitel", "score": "6:2"},
+            {"league": "Высшая лига", "stage": "1/2 финала", "t1": "Alpharushin & BZK", "t2": "Romix & Jgunishka", "score": "6:2"},
+            {"league": "Высшая лига", "stage": "Матч за 3-е место", "t1": "ectopower & Davitel", "t2": "Romix & Jgunishka", "score": "7:5"},
+            {"league": "Высшая лига", "stage": "ФИНАЛ", "t1": "RVD & PacnyTHuK", "t2": "Alpharushin & BZK", "score": "7:6"},
+            {"league": "Средняя лига", "stage": "1/2 финала", "t1": "leon-udomlya & RASH", "t2": "Кубик & Snipe", "score": "6:3"},
+            {"league": "Средняя лига", "stage": "1/2 финала", "t1": "Kamaz & Jamlight", "t2": "Aeris & Yuliy Cezar", "score": "Победа Kamaz/Jamlight"},
+            {"league": "Средняя лига", "stage": "Матч за 3-е место", "t1": "Aeris & Yuliy Cezar", "t2": "Кубик & Snipe", "score": "7:5"},
+            {"league": "Средняя лига", "stage": "ФИНАЛ", "t1": "leon-udomlya & RASH", "t2": "Kamaz & Jamlight", "score": "Победа leon-udomlya/RASH"}
+        ],
+        "key_players": ["ectopower", "Davitel", "Alpharushin", "BZK", "Romix", "Jgunishka", "Kunio", "Memori", "Ric25", "Dune", "leonudomlya", "RASH", "Jamlight", "Aeris", "Juliy_Cezar", "Kubik", "Taeda", "Веселый Роджер"]
+    },
+    {
+        "id": "team_champ_5",
+        "title": "V Командный Чемпионат по Goal 3",
+        "season_year": "2017 (Осень)",
+        "game": "Goal 3 (NES)",
+        "format": "2x2 Командный (Двухкруговой чемпионат: Высшая и Дворовая лиги)",
+        "organizer": "mafuta & BZK",
+        "champion": "Transistor & PacnyTHuK (Высшая) / BOP95 & ROOS (Дворовая)",
+        "runner_up": "mafuta & izzzotope (Высшая) / Focus & Romix (Дворовая)",
+        "bronze": "ectopower & Davitel (Высшая) / Palka Palych & Ric25 (Дворовая)",
+        "description": "Пятый юбилейный командный турнир сообщества. Грандиозный двухкруговой марафон (78 матчей на команду в Высшей лиге). Триумфальное чемпионство пары Transistor & PacnyTHuK, набравших рекордные 181 очко (54 победы). В Дворовой лиге золото завоевали BOP95 & ROOS.",
+        "divisions": {
+            "Высшая лига": [
+                {"rank": 1, "team": "Transistor & PacnyTHuK", "battles": 13, "games": 78, "w": 54, "wp": 7, "lp": 5, "l": 12, "pts": 181},
+                {"rank": 2, "team": "mafuta & izzzotope (Salamander men)", "battles": 13, "games": 78, "w": 49, "wp": 7, "lp": 8, "l": 14, "pts": 169},
+                {"rank": 3, "team": "BZK & Alpharushin (Татарский Универ)", "battles": 13, "games": 78, "w": 41, "wp": 5, "lp": 5, "l": 27, "pts": 138},
+                {"rank": 4, "team": "ectopower & Davitel (Лохматый сейф)", "battles": 11, "games": 66, "w": 40, "wp": 5, "lp": 2, "l": 19, "pts": 132},
+                {"rank": 5, "team": "Kunio & Memori (Красный Рулон)", "battles": 12, "games": 72, "w": 25, "wp": 7, "lp": 3, "l": 37, "pts": 92},
+                {"rank": 6, "team": "esteban & tymoschuk (Барабанщик 44)", "battles": 11, "games": 66, "w": 15, "wp": 4, "lp": 4, "l": 43, "pts": 57},
+                {"rank": 7, "team": "FC Pushistik & CentZloy (Wihar)", "battles": 12, "games": 72, "w": 12, "wp": 1, "lp": 5, "l": 54, "pts": 43},
+                {"rank": 8, "team": "Буц & Dopi", "battles": 7, "games": 42, "w": 4, "wp": 0, "lp": 4, "l": 34, "pts": 16}
+            ],
+            "Дворовая лига": [
+                {"rank": 1, "team": "Focus & Romix", "battles": 9, "games": 54, "w": 33, "wp": 4, "lp": 2, "l": 15, "pts": 109},
+                {"rank": 2, "team": "Flash & Wenderfit", "battles": 8, "games": 48, "w": 26, "wp": 2, "lp": 2, "l": 18, "pts": 84},
+                {"rank": 3, "team": "BOP95 & ROOS", "battles": 7, "games": 42, "w": 21, "wp": 1, "lp": 5, "l": 15, "pts": 70},
+                {"rank": 4, "team": "Palka Palych & Ric25", "battles": 8, "games": 48, "w": 15, "wp": 5, "lp": 6, "l": 22, "pts": 61},
+                {"rank": 5, "team": "Rustin Cohle & Kubik", "battles": 6, "games": 36, "w": 15, "wp": 2, "lp": 4, "l": 15, "pts": 53},
+                {"rank": 6, "team": "TEXAS & starspro", "battles": 4, "games": 24, "w": 11, "wp": 1, "lp": 0, "l": 12, "pts": 35},
+                {"rank": 7, "team": "Aeris & Jamlight", "battles": 5, "games": 30, "w": 7, "wp": 5, "lp": 3, "l": 15, "pts": 34},
+                {"rank": 8, "team": "yoxter & Кирпич57", "battles": 5, "games": 30, "w": 6, "wp": 2, "lp": 0, "l": 22, "pts": 22}
+            ]
+        },
+        "key_players": ["Transistor", "PacnyTHuK", "mafuta", "izzzotope", "BZK", "Alpharushin", "ectopower", "Davitel", "Kunio", "Memori", "Tymoschuk", "FC Pushistik", "Centurion", "Буц", "Dopi", "Romix", "Flash", "Wenderfit", "BOP95", "Ric25", "Kubik", "Aeris", "Jamlight", "Кирпич57"]
+    },
+    {
+        "id": "team_champ_4",
+        "title": "IV Командный Чемпионат по Goal 3",
+        "season_year": "2016 (Лето — Осень)",
+        "game": "Goal 3 (NES)",
+        "format": "2x2 Командный (Рекордные 20 команд в двух лигах + плей-офф)",
+        "organizer": "mafuta & BZK",
+        "champion": "ectopower & Davitel (Высшая) / Буц & Kipriot (Дворовая)",
+        "runner_up": "PacnyTHuK & Jgunishka (Высшая) / tubustd & Kotix (Дворовая)",
+        "bronze": "Kunio & Memori (Высшая) / izzzotope & Wenderfit (Дворовая)",
+        "description": "Крупнейший командный чемпионат в истории сообщества: 20 команд (40 игроков) на старте турнира. В Высшей лиге команда ectopower & Davitel (Мохнатый сейф) продемонстрировала эталонную командную игру, одолев в гранд-финале дуэт PacnyTHuK & Jgunishka. Бронзу взяли Kunio & Memori, переигравшие Scorpions (Huba & mafuta). В Дворовой лиге победу праздновали ФК «Качки» (Буц & Kipriot).",
+        "divisions": {
+            "Высшая лига": [
+                {"rank": 1, "team": "Kunio & Memori", "games": 8, "w": 7, "l": 1, "diff": "+21", "pts": 7},
+                {"rank": 2, "team": "PacnyTHuK & Jgunishka", "games": 8, "w": 6, "l": 2, "diff": "+20", "pts": 6},
+                {"rank": 3, "team": "ectopower & Davitel (Мохнатый сейф)", "games": 8, "w": 6, "l": 2, "diff": "+12", "pts": 6},
+                {"rank": 4, "team": "Huba_Buba_5 & mafuta (Scorpions)", "games": 8, "w": 6, "l": 2, "diff": "+20", "pts": 6},
+                {"rank": 5, "team": "Transistor & Tymoschuk (Электровихрь)", "games": 8, "w": 4, "l": 4, "diff": "+4", "pts": 4},
+                {"rank": 6, "team": "Dopi & esteban (Ахуитцотли)", "games": 8, "w": 4, "l": 4, "diff": "-1", "pts": 4},
+                {"rank": 7, "team": "Ric25 & RVD (ЗУБАСТИКИ)", "games": 8, "w": 2, "l": 6, "diff": "-18", "pts": 2},
+                {"rank": 8, "team": "Armfly & Alpharushin (Alphacrops)", "games": 8, "w": 1, "l": 7, "diff": "-27", "pts": 1},
+                {"rank": 9, "team": "Rock & edexy (Technos Brothers)", "games": 8, "w": 0, "l": 8, "diff": "-31", "pts": -1}
+            ],
+            "Дворовая лига": [
+                {"rank": 1, "team": "Буц & Kipriot (ФК Качки)", "games": 8, "w": 7, "l": 1, "diff": "+18", "pts": 7},
+                {"rank": 2, "team": "tubustd & Kotix (КОТОБУС)", "games": 8, "w": 6, "l": 2, "diff": "+14", "pts": 6},
+                {"rank": 3, "team": "izzzotope & Wenderfit (Южный Дистрикт)", "games": 8, "w": 5, "l": 3, "diff": "+8", "pts": 5},
+                {"rank": 4, "team": "TEXAS & starspro", "games": 8, "w": 4, "l": 4, "diff": "+2", "pts": 4},
+                {"rank": 5, "team": "BZK & Dune (Огурцы)", "games": 8, "w": 4, "l": 4, "diff": "0", "pts": 4},
+                {"rank": 6, "team": "wanchous & Kirpich", "games": 8, "w": 3, "l": 5, "diff": "-5", "pts": 3},
+                {"rank": 7, "team": "Kubik & E_not (Северное сияние)", "games": 8, "w": 3, "l": 5, "diff": "-6", "pts": 3},
+                {"rank": 8, "team": "Aeris & AJ_Maker", "games": 8, "w": 0, "l": 8, "diff": "-31", "pts": 0}
+            ]
+        },
+        "playoff_matches": [
+            {"league": "Высшая лига", "stage": "1/2 финала", "t1": "Kunio & Memori", "t2": "ectopower & Davitel", "score": "Победа ectopower/Davitel"},
+            {"league": "Высшая лига", "stage": "1/2 финала", "t1": "PacnyTHuK & Jgunishka", "t2": "Huba & mafuta", "score": "Победа PacnyTHuK/Jgunishka"},
+            {"league": "Высшая лига", "stage": "Матч за 3-е место", "t1": "Kunio & Memori", "t2": "Huba & mafuta", "score": "Победа Kunio/Memori"},
+            {"league": "Высшая лига", "stage": "ФИНАЛ", "t1": "ectopower & Davitel", "t2": "PacnyTHuK & Jgunishka", "score": "Победа ectopower & Davitel (🥇)"},
+            {"league": "Дворовая лига", "stage": "1/2 финала", "t1": "Буц & Kipriot", "t2": "TEXAS & starspro", "score": "6:5"},
+            {"league": "Дворовая лига", "stage": "1/2 финала", "t1": "tubustd & Kotix", "t2": "izzzotope & Wenderfit", "score": "Победа tubustd/Kotix"},
+            {"league": "Дворовая лига", "stage": "Матч за 3-е место", "t1": "izzzotope & Wenderfit", "t2": "TEXAS & starspro", "score": "Победа izzzotope/Wenderfit"},
+            {"league": "Дворовая лига", "stage": "ФИНАЛ", "t1": "Буц & Kipriot", "t2": "tubustd & Kotix", "score": "Победа Буц & Kipriot (🥇)"}
+        ],
+        "key_players": ["ectopower", "Davitel", "PacnyTHuK", "Jgunishka", "Kunio", "Memori", "mafuta", "Transistor", "Tymoschuk", "Dopi", "Ric25", "RVD", "Alpharushin", "Rock", "edexy", "Буц", "Kipriot", "tubustd", "Wenderfit", "BZK", "Dune", "Kubik", "E_not", "Aeris"]
+    },
+    {
+        "id": "team_champ_3",
+        "title": "III Командный Чемпионат (Летний 2015)",
+        "season_year": "2015 (Июль — Сентябрь)",
+        "game": "Goal 3 (NES)",
+        "format": "2x2 Командный (10 команд, первый призовой фонд)",
+        "organizer": "RVD, mafuta, Kotix",
+        "prize_pool": "1130 руб.",
+        "champion": "ectopower & Davitel",
+        "runner_up": "Kunio & Memori",
+        "bronze": "Huba_Buba_5 & mafuta",
+        "description": "Первый турнир сообщества с официальным призовым фондом от игроков. Ровно 2 месяца бескомпромиссных противостояний 10 команд. ectopower & Davitel впервые завоевали командную корону сообщества, обыграв в финале дуэт Kunio & Memori. Двукратные чемпионы Huba & mafuta заняли 3-е место.",
+        "key_players": ["ectopower", "Davitel", "Kunio", "Memori", "mafuta", "RVD", "PacnyTHuK", "Alpharushin", "LiptOn", "Centurion", "edexy", "Jgunishka"]
+    },
+    {
+        "id": "team_champ_1_2",
+        "title": "I и II Командные Чемпионаты (Эпоха зарождения 2х2)",
+        "season_year": "2012 — 2013",
+        "game": "Goal 3 (NES)",
+        "format": "2x2 Командный",
+        "organizer": "Пионеры сообщества NST",
+        "champion": "Huba_Buba_5 & mafuta (Двукратные чемпионы)",
+        "runner_up": "Kunio & напарник / Ветераны лиги",
+        "bronze": "Ветераны 2х2",
+        "description": "Исторические первые командные первенства, с которых началась культура соревнований 2 на 2 в русскоязычном комьюнити. Пара Huba_Buba_5 & mafuta установила исторический рекорд, выиграв два дебютных командных кубка подряд.",
+        "key_players": ["mafuta", "Kunio"]
+    }
+]
+
+with open("team_tournaments_data.json", "w", encoding="utf-8") as f:
+    json.dump(team_tournaments, f, ensure_ascii=False, indent=2)
+
+print(f"team_tournaments_data.json successfully generated with {len(team_tournaments)} team championships!")

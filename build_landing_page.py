@@ -1,0 +1,589 @@
+import os
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+html_content = """<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEKKETSU ALMANAC • Киберспортивный Альманах Сообщества NST (2015–2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="audio-player.css">
+  <style>
+    :root {
+      --nes-bg: #091728;
+      --nes-bg-dark: #050d18;
+      --nes-card-bg: #0d1e32;
+      --nes-panel-border: 1px solid #234568;
+      --nes-gold: #ffcb05;
+      --nes-cyan: #38bdf8;
+      --nes-green: #22c55e;
+      --nes-red: #f43f5e;
+      --nes-purple: #c084fc;
+      --font-title: 'Russo One', sans-serif;
+      --font-body: 'Rubik', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      text-shadow: none !important;
+    }
+
+    html, body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body {
+      background-color: var(--nes-bg);
+      color: #f8fafc;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.45;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
+        linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-bottom: 70px;
+    }
+
+    /* Header */
+    header {
+      background: #06111e;
+      border-bottom: 2px solid #1e3a58;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      flex-shrink: 0;
+    }
+    .header-inner {
+      max-width: 1820px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-badge {
+      background: var(--nes-gold);
+      color: #000000;
+      font-family: var(--font-title);
+      font-size: 17px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 900;
+    }
+    .logo-text h1 {
+      font-family: var(--font-title);
+      font-size: 17px;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    .logo-text p {
+      font-size: 11px;
+      color: var(--nes-gold);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .nav-btn-link:hover {
+      background: rgba(255, 203, 5, 0.15);
+      border-color: var(--nes-gold);
+      color: var(--nes-gold);
+    }
+    .nav-btn-link.primary {
+      background: #2787f5;
+      border-color: #2787f5;
+      color: #ffffff;
+    }
+    .nav-btn-link.primary:hover {
+      background: #1971d2;
+    }
+
+    /* Main Container (100% viewport fit) */
+    .viewport-container {
+      max-width: 1720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 18px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    /* Hero Bar */
+    .hero-strip {
+      background: #0d1e32;
+      border: 1px solid #1a334e;
+      border-radius: 8px;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+    .hero-info h2 {
+      font-family: var(--font-title);
+      font-size: 20px;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-info p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .hero-metrics {
+      display: flex;
+      gap: 12px;
+    }
+    .metric-pill {
+      background: #081729;
+      border: 1px solid #1e3a58;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .metric-pill strong {
+      font-family: var(--font-mono);
+      color: var(--nes-gold);
+      font-size: 14px;
+    }
+
+    /* Top Row: 2 Active Flagship Cards */
+    .active-disciplines-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .flagship-card {
+      background: #0d1e32;
+      border: 2px solid #1e3a58;
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .flagship-card:hover {
+      border-color: var(--nes-gold);
+      transform: translateY(-2px);
+    }
+    .flagship-card.soccer-theme {
+      border-top: 4px solid var(--nes-green);
+    }
+    .flagship-card.quotes-theme {
+      border-top: 4px solid var(--nes-gold);
+    }
+
+    .flagship-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .flagship-badge {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge-live-green {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid var(--nes-green);
+      color: var(--nes-green);
+    }
+    .badge-live-gold {
+      background: rgba(255, 203, 5, 0.15);
+      border: 1px solid var(--nes-gold);
+      color: var(--nes-gold);
+    }
+
+    .flagship-jap {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--nes-cyan);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .flagship-title {
+      font-family: var(--font-title);
+      font-size: 22px;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .flagship-desc {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .flagship-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #081729;
+      border: 1px solid #142a42;
+      border-radius: 6px;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .flagship-pills span strong {
+      color: #fff;
+    }
+
+    .flagship-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .flagship-btn.green {
+      background: var(--nes-green);
+      color: #000;
+    }
+    .flagship-btn.green:hover {
+      background: #16a34a;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+    }
+    .flagship-btn.gold {
+      background: var(--nes-gold);
+      color: #000;
+    }
+    .flagship-btn.gold:hover {
+      background: #f59e0b;
+      color: #000;
+      box-shadow: 0 0 15px rgba(255, 203, 5, 0.4);
+    }
+
+    /* Bottom Row: 4 Upcoming Disciplines (Compact & Neat) */
+    .upcoming-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .upcoming-card {
+      background: #0c1e32;
+      border: 1px dashed #234568;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0.75;
+      transition: opacity 0.15s ease;
+    }
+    .upcoming-card:hover {
+      opacity: 0.95;
+      border-color: #3b82f6;
+    }
+    .up-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .up-title {
+      font-family: var(--font-title);
+      font-size: 14px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .up-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      background: #081729;
+      border: 1px solid #1a334e;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .up-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.4;
+      margin: 4px 0 8px 0;
+    }
+    .up-status {
+      font-size: 11px;
+      color: #64748b;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: #050d18;
+      border-top: 1px solid #1a334e;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748b;
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+    footer a {
+      color: var(--nes-gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body data-discipline="hub">
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo-block">
+        <div class="logo-badge">ALMANAC</div>
+        <div class="logo-text">
+          <h1>NEKKETSU SPORTS TOURNAMENTS</h1>
+          <p>Официальный Киберспортивный Альманах (2015–2026)</p>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="soccer.html" class="nav-btn-link">⚽ Чемпионат Goal 3</a>
+        <a href="quotes.html" class="nav-btn-link">💬 Золотой Цитатник</a>
+        <a href="https://vk.ru/nekketsu" target="_blank" rel="noopener" class="nav-btn-link primary">VK Сообщество ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Viewport Container (Fits exactly on Full HD screen without scrolling) -->
+  <main class="viewport-container">
+
+    <!-- Hero Strip -->
+    <div class="hero-strip">
+      <div class="hero-info">
+        <h2>熱血 • ЕДИНАЯ ЭНЦИКЛОПЕДИЯ ВСЕХ ДИСЦИПЛИН И ТУРНИРОВ NEKKETSU</h2>
+        <p>11 лет соревновательной истории сообщества NST: протоколы, сетки чемпионатов, видеоархив и золотой фольклор</p>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-pill">
+          <span>Матчей:</span>
+          <strong>2 562+</strong>
+        </div>
+        <div class="metric-pill">
+          <span>Сезонов NSL:</span>
+          <strong>9</strong>
+        </div>
+        <div class="metric-pill">
+          <span>Игроков:</span>
+          <strong>102</strong>
+        </div>
+        <div class="metric-pill">
+          <span>Цитат:</span>
+          <strong>407</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Flagship Disciplines (Soccer & Quotes) -->
+    <div class="active-disciplines-row">
+
+      <!-- Soccer Card -->
+      <div class="flagship-card soccer-theme">
+        <div>
+          <div class="flagship-top">
+            <span class="flagship-badge badge-live-green">● ПОЛНЫЙ АРХИВ (АКТИВНО)</span>
+            <span style="font-size: 26px;">⚽</span>
+          </div>
+          <div class="flagship-jap">Kunio-kun no Nekketsu Soccer League (Goal 3 / 熱血サッカー)</div>
+          <h3 class="flagship-title">Nekketsu Soccer League</h3>
+          <p class="flagship-desc">
+            Главная соревновательная дисциплина сообщества. Все 9 номерных чемпионатов (Высшая, Средняя и Дворовая лиги), парные командные турниры 2х2, молодежные кубки, калькулятор очных встреч H2H, личные дела 102 игроков и встроенный кинозал с повторами матчей.
+          </p>
+        </div>
+        <div>
+          <div class="flagship-pills">
+            <span>🏆 <strong>9</strong> сезонов</span>
+            <span>🎮 <strong>2 562</strong> матча</span>
+            <span>⚽ <strong>15 531</strong> гол</span>
+            <span>👤 <strong>102</strong> игрока</span>
+            <span>🎬 <strong>786</strong> видео</span>
+          </div>
+          <a href="soccer.html" class="flagship-btn green">
+            Войти в зал славы футбола ➔
+          </a>
+        </div>
+      </div>
+
+      <!-- Quotes Card -->
+      <div class="flagship-card quotes-theme">
+        <div>
+          <div class="flagship-top">
+            <span class="flagship-badge badge-live-gold">● ЦИТАТНИК (АКТИВНО)</span>
+            <span style="font-size: 26px;">💬</span>
+          </div>
+          <div class="flagship-jap">NST Community Folklore & Legendary Quotes</div>
+          <h3 class="flagship-title">Золотой Цитатник NST</h3>
+          <p class="flagship-desc">
+            Культурное наследие и живой фольклор сообщества. 407 крылатых высказываний, эпичных споров, локальных мемов и исторических перлов игроков с 2015 года. Мгновенный поиск по цитатам, быстрые фильтры по авторам и генератор случайных фраз.
+          </p>
+        </div>
+        <div>
+          <div class="flagship-pills">
+            <span>📜 <strong>407</strong> цитат</span>
+            <span>👥 <strong>40+</strong> авторов</span>
+            <span>🔍 Умный поиск</span>
+            <span>🎲 Рандомайзер</span>
+            <span>📋 Копирование</span>
+          </div>
+          <a href="quotes.html" class="flagship-btn gold">
+            Открыть цитатник комьюнити ➔
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Row: 4 Upcoming Disciplines -->
+    <div class="upcoming-row">
+
+      <div class="upcoming-card">
+        <div class="up-top">
+          <span class="up-title">🏒 Хоккей (Ike Ike!)</span>
+          <span class="up-badge">СКОРО</span>
+        </div>
+        <p class="up-desc">Ледовые баталии школы Неккетсу. Скоростные суперброски и силовые приёмы на коньках.</p>
+        <span class="up-status">⏳ Оцифровка архивов</span>
+      </div>
+
+      <div class="upcoming-card">
+        <div class="up-top">
+          <span class="up-title">🏀 Баскетбол 2x2</span>
+          <span class="up-badge">СКОРО</span>
+        </div>
+        <p class="up-desc">Уличный стрит-баскетбол Dunk Heroes. Трёхуровневые щиты и броски в падении.</p>
+        <span class="up-status">⏳ Сбор протоколов</span>
+      </div>
+
+      <div class="upcoming-card">
+        <div class="up-top">
+          <span class="up-title">🥊 Бои 2x2 (Kakutou)</span>
+          <span class="up-badge">СКОРО</span>
+        </div>
+        <p class="up-desc">Командный файтинг на опасных аренах с шипами, наэлектризованными канатами и льдом.</p>
+        <span class="up-status">⏳ Сбор сеток</span>
+      </div>
+
+      <div class="upcoming-card">
+        <div class="up-top">
+          <span class="up-title">🏅 Олимпиада</span>
+          <span class="up-badge">СКОРО</span>
+        </div>
+        <p class="up-desc">Городской кросс по крышам, заплывы с препятствиями и королевская битва на ринге.</p>
+        <span class="up-status">⏳ Подготовка раздела</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>Официальный альманах киберспортивного сообщества <strong>NEKKETSU SPORTS TOURNAMENTS</strong> &bull; 2015–2026</div>
+    <div>
+      <a href="soccer.html">Футбольная лига (Goal 3)</a> &bull; 
+      <a href="quotes.html">Золотой цитатник</a> &bull; 
+      <a href="https://vk.ru/nekketsu" target="_blank" rel="noopener">VK Группа</a>
+    </div>
+  </footer>
+
+  <!-- Persistent Audio Deck & PJAX Router -->
+  <script src="audio/playlist-manifest.js"></script>
+<script src="audio-player.js"></script>
+</body>
+</html>
+"""
+
+out_path = os.path.abspath("index.html")
+with open(out_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"Non-scrolling pixel-perfect landing page generated: {out_path} ({len(html_content)/1024:.1f} KB)")

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Золотой Цитатник Сообщества NEKKETSU (407 цитат) • Альманах</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="audio-player.css">
+  <style>
+    :root {
+      --nes-bg: #091728;
+      --nes-bg-dark: #050d18;
+      --nes-card-bg: #0d1e32;
+      --nes-panel-border: 1px solid #234568;
+      --nes-gold: #ffcb05;
+      --nes-cyan: #38bdf8;
+      --nes-green: #22c55e;
+      --nes-red: #f43f5e;
+      --nes-purple: #c084fc;
+      --font-title: 'Russo One', sans-serif;
+      --font-body: 'Rubik', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      text-shadow: none !important;
+    }
+
+    /* Custom Slim Clean Scrollbars */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #050d18; }
+    ::-webkit-scrollbar-thumb {
+      background: #234568;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+
+    body {
+      background-color: var(--nes-bg);
+      color: #f8fafc;
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.55;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
+        linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    header {
+      background: #06111e;
+      border-bottom: 2px solid #1e3a58;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .header-inner {
+      max-width: 1820px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-badge {
+      background: var(--nes-gold);
+      color: #000000;
+      font-family: var(--font-title);
+      font-size: 18px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 900;
+    }
+    .logo-text h1 {
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    .logo-text p {
+      font-size: 11px;
+      color: var(--nes-gold);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .nav-link-btn:hover {
+      background: rgba(255, 203, 5, 0.15);
+      border-color: var(--nes-gold);
+      color: var(--nes-gold);
+    }
+    .nav-link-btn.primary {
+      background: #2787f5;
+      border-color: #2787f5;
+      color: #ffffff;
+    }
+    .nav-link-btn.primary:hover {
+      background: #1971d2;
+    }
+    .nav-link-btn.gold {
+      background: rgba(255, 203, 5, 0.15);
+      border-color: var(--nes-gold);
+      color: var(--nes-gold);
+    }
+
+    .container {
+      max-width: 1820px;
+      margin: 0 auto;
+      padding: 24px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Random Quote Hero Card */
+    .random-hero {
+      background: #0d1e32;
+      border: 2px solid var(--nes-gold);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .random-hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .random-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--nes-gold);
+      color: #000;
+      font-family: var(--font-title);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .random-quote-text {
+      font-size: 16px;
+      font-style: italic;
+      color: #ffffff;
+      line-height: 1.6;
+      background: #081729;
+      border-left: 5px solid var(--nes-gold);
+      padding: 14px 20px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      white-space: pre-line;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .random-quote-author {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      background: #0c1e32;
+      border: 1px solid #1a334e;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      background: #06111d;
+      border: 1px solid #234568;
+      border-radius: 4px;
+      padding: 8px 14px;
+      flex: 1;
+      min-width: 260px;
+      gap: 8px;
+    }
+    .search-input-box input {
+      background: none;
+      border: none;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      width: 100%;
+      outline: none;
+    }
+    .search-input-box input::placeholder {
+      color: #64748b;
+    }
+
+    .author-select {
+      background: #06111d;
+      border: 1px solid #234568;
+      border-radius: 4px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 8px 12px;
+      outline: none;
+      cursor: pointer;
+      min-width: 200px;
+    }
+
+    .authors-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .author-chip {
+      background: #0c1e32;
+      border: 1px solid #1e3a58;
+      color: #cbd5e1;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .author-chip:hover, .author-chip.active {
+      background: var(--nes-gold);
+      border-color: var(--nes-gold);
+      color: #000;
+      font-weight: 700;
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 14px;
+    }
+    .quote-card {
+      background: #0d1e32;
+      border: 1px solid #1a334e;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .quote-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--nes-cyan);
+    }
+    .quote-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .quote-card-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: #081729;
+    }
+    .author-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .quote-id-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--nes-gold);
+      background: #081729;
+      border: 1px solid #1e3a58;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .quote-bubble {
+      font-size: 13.5px;
+      color: #f1f5f9;
+      line-height: 1.5;
+      background: #081729;
+      border-left: 3px solid var(--nes-gold);
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      white-space: pre-line;
+      flex: 1;
+    }
+    .quote-card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #142a42;
+      padding-top: 8px;
+      margin-top: 4px;
+    }
+    .copy-btn {
+      background: none;
+      border: 1px solid #234568;
+      color: #94a3b8;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border-color: #fff;
+    }
+
+    footer {
+      background: #050d18;
+      border-top: 1px solid #1a334e;
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body data-discipline="quotes">
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo-block">
+        <div class="logo-badge">NST</div>
+        <div class="logo-text">
+          <h1>ЗОЛОТОЙ ЦИТАТНИК NEKKETSU</h1>
+          <p>Архив легендарных перлов комьюнити • 407 цитат (2015–2026)</p>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="index.html" class="nav-link-btn gold">🏛️ В Главный Альманах</a>
+        <a href="soccer.html" class="nav-link-btn">⚽ Чемпионат Goal 3</a>
+        <a href="https://vk.ru/nekketsu" target="_blank" class="nav-link-btn primary">VK Сообщество ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="random-hero">
+      <div class="random-hero-top">
+        <div class="random-badge">🎲 СЛУЧАЙНЫЙ ПЕРЛ КОМЬЮНИТИ</div>
+        <button class="nav-link-btn gold" onclick="rollRandomQuote()">⚡ Крутить следующую</button>
+      </div>
+      <div class="random-quote-text" id="randomQuoteText">Загрузка цитаты...</div>
+      <div class="random-quote-author">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img id="randomQuoteAvatar" src="" class="author-avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=nst'">
+          <div>
+            <div id="randomQuoteAuthor" style="font-weight: 700; color: #fff; font-size: 15px;"></div>
+            <div id="randomQuoteId" style="font-size: 11px; color: var(--nes-gold); font-family: var(--font-mono);"></div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyRandomQuote(this)">📋 Скопировать цитату</button>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-input-box">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Поиск по тексту цитаты или автору..." oninput="handleSearch()">
+      </div>
+      <select id="authorSelect" class="author-select" onchange="handleAuthorChange()">
+        <option value="">Все авторы (407 цитат)</option>
+      </select>
+    </div>
+
+    <div class="authors-chips" id="authorChips"></div>
+
+    <div style="font-size: 13px; color: #94a3b8; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+      <span>Показано цитат: <strong id="quoteCounter" style="color: var(--nes-gold);">407</strong></span>
+      <span style="font-size: 11px; color: #64748b;">Официальный архив форумов и бесед NST</span>
+    </div>
+
+    <div class="quotes-grid" id="quotesGrid"></div>
+
+  </main>
+
+  <footer>
+    <div>Альманах киберспортивного сообщества <strong>NEKKETSU SPORTS TOURNAMENTS</strong> &bull; 2015–2026</div>
+    <div style="margin-top: 6px;">
+      <a href="index.html" style="color: var(--nes-gold); text-decoration: none;">На главную</a> &bull; 
+      <a href="soccer.html" style="color: var(--nes-cyan); text-decoration: none;">Футбольная лига</a> &bull; 
+      <a href="https://vk.ru/nekketsu" target="_blank" style="color: #60a5fa; text-decoration: none;">VK Группа</a>
+    </div>
+  </footer>
+
+  <script>
+    const QUOTES = [{"id": 1, "text": "Лишь один дедушка Ленин хороший был вождь, а все другие остальные — такое дерьмо. А все другие — враги и такие мудаки. Над задротским неккетсу из сладкого хлеба дождь шел, я проебал 3 минибатла и понял, что все идет по плану", "author": "ectoPower"}, {"id": 2, "text": "Нам нужно больше организаторов про запас, чтобы когда у одного крыша съезжает, второй заменял", "author": "RVD"}, {"id": 3, "text": "Я много раз заявлял, что мне насрать, кто из вас чемпион или бог хардтранса. При причинах всех забаним", "author": "RVD"}, {"id": 4, "text": "Есть два эмуля, на одном лаги точеные, на другом задержки дроченые. За какой сам сядешь, за какой Хубу посадишь?", "author": "Memori"}, {"id": 5, "text": "600 человек в группе — кто-нибудь да транс!", "author": "ectoPower"}, {"id": 6, "text": "О, боже, оно не лагает! Как в это можно играть?", "author": "Rock"}, {"id": 7, "text": "Зачем кричать друг на друга, мы ведь все друзья?", "author": "Alpharushin"}, {"id": 8, "text": "Я мог бы стать крутым, но не захотел", "author": "CentZloy"}, {"id": 9, "text": "А в чем сложность ночью сыграть? Занятой пиздец, да? А может, тебе техническое поражение записать и всё? Чтобы ты шевелиться начал!", "author": "Focus"}, {"id": 10, "text": "Как много вокруг ебанутых людей стало! Ужос просто!", "author": "Alpharushin"}, {"id": 11, "text": "Я уже трахался с Мадонной на стриме, убивал Путина на стриме. Решил поматериться с неизвестным хуем из Рязани. Может, задонатят?", "author": "Esteban"}, {"id": 12, "text": "Да цитаты говно, для даунов!", "author": "ectoPower"}, {"id": 13, "text": "Сегодня ты ник поменял, завтра пол, а послезавтра страну, иди нахер, проститутка!", "author": "Kinbeas"}, {"id": 14, "text": "Мафута говорит, что призы это путь к развитию. Я считаю, что Мафута это путь в никуда", "author": "RVD"}, {"id": 15, "text": "Печень очищает организм от алкоголя за сутки, поэтому приходится пить каждый день: D", "author": "CentZloy"}, {"id": 16, "text": "Я знаю что про меня напишут: Цент алкаш, пьёт водку 8 дней в неделю", "author": "CentZloy"}, {"id": 17, "text": "О, время дали, заебись! Я так не успевал, что даже забыл про время", "author": "esteban"}, {"id": 18, "text": "Болею за Палыча, потому что над ним можно издеваться", "author": "RVD"}, {"id": 19, "text": "Кайлыч, на самом деле, нормальный пацан, только с запудренными мозгами", "author": "Palka Palych"}, {"id": 20, "text": "В нст идет очень серьезная промывка мозгов по поводу большинства других групп, особенно качественных и успешных, у которых идеология несколько отличается от НСТшной", "author": "Palka Palych"}, {"id": 21, "text": "самоуверенные яйца только в смятку бывают помни Рома", "author": "REAL STEEL"}, {"id": 22, "text": "Заплатить за рекламу пиксель Девилсу → закрыть группу → гениально", "author": "Alpharushin"}, {"id": 23, "text": "Кто хорошо играет в акме\nИ забивает по системе\nПокроется блять нахуй акне\nИ баб ебать будет за деньги", "author": "Islambad Prince"}, {"id": 24, "text": "За деньги баб ебать согласен!\nСимуля где-то прокричал\nИ думал, сколько брать за это?\nНу, безнадежный оптимист", "author": "Simulacrum"}, {"id": 25, "text": "На вас обижусь, где, бля, кубки?\nСквозь сон в бреду мычал игрок,\nКак будто выиграл он в майнкрафте,\nНе человек, а цифрозмей", "author": "Simulacrum"}, {"id": 26, "text": "В Удомле бегал одинокий\nЗабытый всеми самурай\nВоспоминанья терзали душу\nКогда слышал слово Сосать", "author": "Simulacrum"}, {"id": 27, "text": "У тебя каждый день то фига то бенфига то милан то дима билан", "author": "Memori"}, {"id": 28, "text": "Да ну на хрен! Какого хрена эта брусника меня так оттолкнула?!", "author": "Clark Kent"}, {"id": 29, "text": "Ну наличие жены и ребенка не всегда подтверждает гетеросексуальную ориентацию", "author": "PyramidHead"}, {"id": 30, "text": "Выбирай, Мемори. Полижешь попочку Палычу — ливнет Ромарио. Полижешь попочку Ромарио — ливнет Палыч. Никому не полижешь попочку — Палыч все равно ливнет, но хоть язык будет не в говне", "author": "Memori"}, {"id": 31, "text": "Я пиздабол во благо. Я выебал её в жопу во благо! У нее был рейтинг нуль! А так никто не пострадал", "author": "RVD"}, {"id": 32, "text": "Слава мне не нужна. У меня и без нее личка в ВК часто разрывается. Скоро буду как Кинаман!", "author": "Palka Palych"}, {"id": 33, "text": "Наша великая тираническая группа устроит вам всем ретроцид", "author": "RVD"}, {"id": 34, "text": "Брать надо ответственных и часто играющих игроков, и необязательно чтоб прям знатоки игры были", "author": "Esteban"}, {"id": 35, "text": "Проститутка это баба, которая каждый день трахается с 10 бабами", "author": "Romario"}, {"id": 36, "text": "Я-то этого пидараса не оскорбляю!", "author": "Дядюшка АУ"}, {"id": 37, "text": "Да, я гомофоб. И я этим горжусь", "author": "Palka Palych"}, {"id": 38, "text": "Мафута пытается удержать неудержимое. Магниты с одинаковыми знаками", "author": "Romario"}, {"id": 39, "text": "Полный оргкомитет скрипучих ретроградных хуев", "author": "Memori"}, {"id": 40, "text": "Цент танцует минимал, Мафута долбится в анал", "author": "CentZloy"}, {"id": 41, "text": "Наверное вам из гаража лучше видно, би я или не би", "author": "Palka Palych"}, {"id": 42, "text": "По традиции кто ромарио забанил тот и главный", "author": "BZK"}, {"id": 43, "text": "Преклони голову, встав на колено, электронный ты долбоящер", "author": "Pyramidhead"}, {"id": 44, "text": "Ты прост трясущийся смуглый парнишка из мусульманской резервации", "author": "Lenin1st"}, {"id": 45, "text": "Рот себе завуалируй и иди отсюда!", "author": "RVD"}, {"id": 46, "text": "Ты просто можешь не осознавать, пидорас ты или нет, пока не попробуешь", "author": "Aeris"}, {"id": 47, "text": "Был профессором, стал хуеплетом. Был хуеплетом, стал ебаным охуевшим царем", "author": "Palka Palych"}, {"id": 48, "text": "10 синдромов Давителя из 10!", "author": "ectoPower"}, {"id": 49, "text": "Сегодня ты на коне, завтра на бутылочке", "author": "Palka Palych"}, {"id": 50, "text": "мафут, ты бы на странице, где бабло собираешь, убрал бы слово «ретрогеи»", "author": "Memori"}, {"id": 51, "text": "Ну что Браток? Когда собираемся обсудить? Ты палыч мемори липа. Не нужен чат клопов на клаве давить, пришли собрались обсудили!", "author": "Alpharushin"}, {"id": 52, "text": "То ж НСТ, тут без гомосятины никак", "author": "Dune"}, {"id": 53, "text": "я тебе серьёзно говорю что в моей тусовке я не на первых ролях, я обычный мидл. Но что я могу поделать если я умнее таких недалёких как ты, вафлюта и прочие эктососы", "author": "Romario"}, {"id": 54, "text": "Нахуй Ике. Акме круче. Жизнь лучше вашего гадюшника", "author": "Romario"}, {"id": 55, "text": "Я неконфликтный пацан, миролюбивый — могу даже Эстебану руку пожать. Если он извинится", "author": "Alpharushin"}, {"id": 56, "text": "А ты вспомни, RVD, может ты обидел кого-нибудь?", "author": "Kirpich57"}, {"id": 57, "text": "Великое почетное звание педика на нст надо заслужить!", "author": "Kirpich57"}, {"id": 58, "text": "Русский хентай с деревянными тентаклями", "author": "Enot"}, {"id": 59, "text": "Я человек крайне не принципиальный и считаю, что принципы, доводящие до абсурда это хуже всего. Поэтому я могу сходить купить в магазине страпон и на него сесть, например", "author": "Alpharushin"}, {"id": 60, "text": "Ты сел себе на страпон и радуешься, а к тебе подкатывают 10 бритых нео-гей-нацист-скрепочников и разъебывают бошку, ибо у них принято на бутылках сидеть, а ты больной, ты на страпоне", "author": "Islambad Prince"}, {"id": 61, "text": "Красить волосы — нормально. Я вот в лысый цвет голову хочу покрасить", "author": "RVD"}, {"id": 62, "text": "Ромарио — это облачко из Марио. Ничо особенного, но иногда бесит", "author": "Palka Palych"}, {"id": 63, "text": "Ты ёбаный охуевший царь, поэтому и доебался до тебя. Еще вопросы?", "author": "Kinbeas"}, {"id": 64, "text": "Гейская музыка под японский хардтранс", "author": "Alpharushin"}, {"id": 65, "text": "За такое нужно медаль давать. Каменную, кило под 40, на шею. И в Днепре утопить", "author": "Memori"}, {"id": 66, "text": "Ромарио пишет /ping, а у него руки сами печатают /putin", "author": "Memori"}, {"id": 67, "text": "Хочу пойти написать на листочке Жыве Беларусь нарисовать хуй и бросить в корзину", "author": "Romario про выборы"}, {"id": 68, "text": "Хули вам не нравится тут? Деньги готовь, елупень пидорская!", "author": "Дядюшка АУ (после спора с Ромарио на 4 бакса, что сборная РФ не выйдет из группы на ЧМ 2018)"}, {"id": 69, "text": "Нахуй вам второй Азатрон?", "author": "Azatron"}, {"id": 70, "text": "Требую хак по Бугермэну. Турнир по правилам: кто больше пернет за 1й уровень", "author": "Palka Palych"}, {"id": 71, "text": "И ещё мафута следи за Щлюзом, а то пьяная свинья захходит и постит всякую хуйню на стене группы", "author": "CentZloy"}, {"id": 72, "text": "Как ты заебал, предатель ёбаний. Сдам тебя в ретродиспансер, заебал", "author": "RVD"}, {"id": 73, "text": "Успешность для пидоров, а я просто классный", "author": "mafuta"}, {"id": 74, "text": "Есть люди своей стаи, за них и умереть готов (без прекрас)", "author": "Romario"}, {"id": 75, "text": "В стародревние времена была своя Нобелевская премия — костер. Если тебя сожгли, значит, ты слишком мозговит", "author": "Palka Palych"}, {"id": 76, "text": "Не путай слова «жопа» и «анус». Хотя может ты и прав. Но я все же, в отличие от тебя, не привык на обосранную задницу надевать трусы", "author": "Palka Palych"}, {"id": 77, "text": "Надо расширять аудиторию. Ради этого я баню участников", "author": "RVD"}, {"id": 78, "text": "Лысым зимой холодно, снег на голову падает и ты это чувствуешь", "author": "BZK"}, {"id": 79, "text": "Рус, ты снова пьяный или опять?", "author": "CentZloy"}, {"id": 80, "text": "Мой мозг работает быстрее твоего в разы, поэтому ты меня не понимаешь", "author": "Romario"}, {"id": 81, "text": "СУКИ ПИДАРЫ ШОБ У ВАС НЕ СТОЯЛО МЕСЯЦ", "author": "Palka Palych"}, {"id": 82, "text": "Смотрите сегодня вечером на канале РК НСТ: Аяз Валиуллин в фильме «Комп за 80: в каком ухе жужжит?", "author": "Palka Palych"}, {"id": 83, "text": "Юбилейный ром по гол 3 будет называться «Тысяча и одна ночь с Мафутой и Липецком", "author": "IMPACT"}, {"id": 84, "text": "Я не понимаю, зачем дышу, когда играю в это дерьмо с пингами", "author": "Изивин"}, {"id": 85, "text": "Лысый коронный, ром Текмо похоронный", "author": "Islambad Prince"}, {"id": 86, "text": "У вас что ни срач, то новый Технос", "author": "Partsigah"}, {"id": 87, "text": "Я как-нибудь покажусь на стриме полуголый, чтобы разбить миф о моей полноте)", "author": "CentZloy"}, {"id": 88, "text": "Я бы в Удаве поплавал", "author": "RVD"}, {"id": 89, "text": "Ебался в очко наш сегодня Руслан.\nРугается, братко, наверно, устал.\nОчко заболело, но не беда,\nЛевомиколь поможет всегда", "author": "mafuta & ectoPower"}, {"id": 90, "text": "К палычу любой может, а ты попробуй к вору поехать", "author": "Azatron"}, {"id": 91, "text": "Заебала то заебала, но я тож хочу чтоб мои цитаты блестели в гаджете", "author": "Azatron"}, {"id": 92, "text": "Я бы поставил лайк, но я не удафчег", "author": "Azatron"}, {"id": 93, "text": "Я и есть замечательное оружие деструкции. Модель 3 с конца. Выше меня только психо и стасыч", "author": "RVD"}, {"id": 94, "text": "Попрошу Хорика отфотошопить где я тебя ебу в жопу? Хочешь? Аккуратно с пруфами", "author": "RVD"}, {"id": 95, "text": "Пиздёжь! Я в три раза сильней и в два раза качественнее, а он отбил лбом нахуй!", "author": "ВОР95"}, {"id": 96, "text": "Щас на Украине был гей-парад, прикиньте, пацаны. Конченые, сука, хохлов всех истребить нахуй", "author": "Стасыч"}, {"id": 97, "text": "Все по-русски. Свиньи все, кроме палыча. Хорошо, что вас на олимпиаде забанили", "author": "Romario"}, {"id": 98, "text": "Липецк слишком обидчивый. Ему скажешь «козел», он обидится", "author": "RVD"}, {"id": 99, "text": "Сука, уже который раз засрали мне личку с просьюой посмотреть что-то с этой группы. Я посмотрел, что это за хрень? Бешеные крики, будто вас в ванну с тезиковой кислотой кидают. Совсем поехали", "author": "Стёпа"}, {"id": 100, "text": "На морском песочке я Мафуту встретил,\nВместе с Изотопом они играли в денди,\nТа-та-да-дам, та-та-да-дам, в розовых чулочках,\nТа-та-да-дам, та-та-да-дам, талия в корсете", "author": "Kunio"}, {"id": 101, "text": "Я — адекватный человек", "author": "Alpharushin"}, {"id": 102, "text": "Смотря на игру Цента, ощущение, что у него пинг по жизни", "author": "Islambad Prince"}, {"id": 103, "text": "Не ну к тому что я говорю брбл просто так уже привыкли даже на работе", "author": "Simulacrum"}, {"id": 104, "text": "Все сегодня я пил в последний раз больше не буду, бросать надо", "author": "ectoPower"}, {"id": 105, "text": "Во время декабрьского полуфинала в баскете против акме-милана психанул так, что хотелось убить жену и кота", "author": "Palka Palych"}, {"id": 106, "text": "Я, блядь, уважаю людей, с которыми живу, а вы пидоры, блядь", "author": "esteban"}, {"id": 107, "text": "Давай мне модерку Кайлыч назад. Мастер раны у меня. И комп за 70к. Понял?", "author": "Alpharushin"}, {"id": 108, "text": "Поверь я и так занят пиздец как всем подряд. НСТ на пятом месте, а с таким отношением как у тебя. Грузчик ты ебучий, вообще желания нет. Распадется комьюнити ваше рано или поздно", "author": "psycho"}, {"id": 109, "text": "Чувак получил пизды в личку. Хуй из интернета написал хую из интернета, что ты гандон нехорошо себя повел. НИХУЯ СОБИ НАКАЗАЛ", "author": "RVD"}, {"id": 110, "text": "Не зли его. Да кто ты такой? Лох с деревни, лох по жизни, с таким поведением уже и лох в сообществе", "author": "Romario"}, {"id": 111, "text": "Даю 100% гарантию, что турнир с таким форматом не проведет ни одной игры. 4 человек собрать в одно и то же время — не реально", "author": "Tarantull, 2011 г"}, {"id": 112, "text": "Надо, чтобы люди чётко знали, что в такое-то время вечером в будние дни проходят чемпионаты Технос. И тогда будет какая-то дисциплина. А если размусоливать и они 10 дней будут договариваться о встрече, то из этого ничего и не выйдет как раз", "author": "Kinbeas, 2011 г"}, {"id": 113, "text": "Чем тебя в армии кормили, ностальгией?", "author": "Стёпа"}, {"id": 114, "text": "И что? Между вами все время срач. Каждый друг друга в пизду по 156 раз бывает за день посылает. Что мне теперь, смонтировать 2 куклы (Андре и Ромарио) и втыкать в них иглы?", "author": "Palka Palych"}, {"id": 115, "text": "Эх, хоронили ПФ, порвали два Удава!", "author": "Memori"}, {"id": 116, "text": "Я когда играл в Wolfenstein, у меня сердце кровью обливалось", "author": "Kotix"}, {"id": 117, "text": "Браток, давай, дудочку купил, теперь хардтранс играй!", "author": "Alpharushin"}, {"id": 118, "text": "Стихоплеты-хуеплеты не играют нихуя,\nСтихоплеты-хуеплеты не админят нихуя,\nСтихоплеты-хуеплеты только день да ото дня\nВсе турниры и площадки посливают нахуй бля", "author": "Islambad Prince"}, {"id": 119, "text": "А ну-ка регайся на акме,\nМаксиму говорил кацап,\nМаксим кивал и улыбался\nИ думал, как ты заебал", "author": "mafuta"}, {"id": 120, "text": "Когда ворвался я на митинг,\nАязыча там увидал.\nГастрит, кричал он, убивает\nИ Путин тоже заебал", "author": "ectoPower"}, {"id": 121, "text": "Аязыч плакал и смеялся\nИ умолял его простить.\nЧтоб на турнир он записался,\nПришлось Навального убить", "author": "Memori"}, {"id": 122, "text": "Я помню чудное мгновенье,\nПередо мной явилась ты…\nПосле второй бутылки водки\nЦент говорил картинке с Клэр", "author": "Memori"}, {"id": 123, "text": "Ходил к Навальному на митинг\nТатарский русофоб Аяз,\nПоднял плакат «Мафута пидор»,\nМенты скрутили в тот же час", "author": "Memori"}, {"id": 124, "text": "Я забиваю по системе\nПусть и забился мой толчок,\nГовна в квартире по колено,\nЗато я в Акме чемпион", "author": "Islambad Prince"}, {"id": 125, "text": "ectoPower, с Днем Рождения, мразь!", "author": "mafuta"}, {"id": 126, "text": "Дорогие мои селюки,\nКак же мне тяжело на работе.\nДорогие мои селюки,\nЛучше б с вами валялся в блевоте", "author": "Davitel"}, {"id": 127, "text": "Выйди из беседы, раз не нравится.» «Это моя беседа. Сам выходи.", "author": "RVD и Udav213"}, {"id": 128, "text": "Люблю поехавших, сам такой", "author": "Romario"}, {"id": 129, "text": "Бадыч рассказывает Ромарио о вчерашней вечеринке: «Ты знаешь, было так здорово! Все перепились, передрались, перееблись!» Ромарио с завистью спрашивает: «А кто там был-то?» «Я и Рокки", "author": "Дядюшка АУ"}, {"id": 130, "text": "А я бы наоборот Андре админку дал. Он молодец, с пидорами воюет", "author": "ectoPower"}, {"id": 131, "text": "На стене Ромхака сраться нельзя. Это храм", "author": "Romario"}, {"id": 132, "text": "Два дня не был вк, а из новостей только: что Палыч в командировке, Бадыч — пидр, а Рокки дал бы ему", "author": "Blade"}, {"id": 133, "text": "В пидре года за меня даже бабы голосуют? Предложил бы им приехать в Минск отсосать", "author": "Romario"}, {"id": 134, "text": "Вот если б я был организатором, у меня было бы все просто, кто-нибудь обыграл бы меня, я б забанил", "author": "Rock"}, {"id": 135, "text": "Ну мемори мы знаем, это почти кинаман, только не калека", "author": "Lenin1st"}, {"id": 136, "text": "РВД, а я очень просто скажу. Проект некоммерческий, денег не приносит, поэтому как рано или поздно ты выдохнешься, неизвестно, но это произойдет", "author": "Аким"}, {"id": 137, "text": "Существует легенда о наследнике трона страны Хакии, который в будущем должен свергнуть тиранию генерала Липецка и неразумного короля Мафуту, находящегося под влиянием генерала. Наследника нужно оберегать и обучать. Столь непростую задачу на себя возложил Мэрелин Ромариано, один из магов гильдии ледяного ике", "author": "Romario"}, {"id": 138, "text": "Все пидры, кроме меня — это позиция Мансона. Моя позиция — все пидры, включая меня", "author": "RVD"}, {"id": 139, "text": "Если бы был Бог — мы бы играли без лагов", "author": "Kotix"}, {"id": 140, "text": "Я хотел предложить тебе вместе в Крым слетать, я со своей девушкой, ты со своей сестрой, ну или можешь взять колесо от формулы-1, ну или куда ты там дрочишь, в бублики? А нахуй гадать", "author": "esteban"}, {"id": 141, "text": "Кунио вон тоже в банке делает вид, что работает. А потом приходит в РК и поёт, да еще и бабу не щупал. Чем не гей", "author": "RVD"}, {"id": 142, "text": "На диком пляже средь бакланов\nС баклахи пиво пил Андрей\nНа солнце щурясь как ариец\nЧертил там хуем слово хуй", "author": "mafuta"}, {"id": 143, "text": "На всех углах горланит Вова\n«Сегодня будет блиц-турнир!»\nНо все молчат и лишь Давитель\nВ ответ напишет «пососешь?", "author": "Memori"}, {"id": 144, "text": "Биен шаверму съел с утра\nСосиску в тесте, огурец\nПрисел уж было покурить\nВесь день так сидя и курил", "author": "mafuta"}, {"id": 145, "text": "Москаль Андрюша любит писю\nСосать желательно в ночи,\nКак повезло, что есть ариец\nКоторый в рот ему дает", "author": "ectoPower"}, {"id": 146, "text": "Москаль старательно пытался\nАрийца чувства вновь задеть,\nНо и ариец не сдавался\nХуём проткнул его ротец", "author": "ectoPower"}, {"id": 147, "text": "Когда хохлы копали море\nБиен проебывался мразь\nПришлось на Балтику к арийцам\nС бутылкой в анусе идти", "author": "mafuta"}, {"id": 148, "text": "Много спорта любит Дима\nФутбик баскет и хоккей\nХуесосание спортивное\nЛюбит наш москаль Андрей", "author": "ectoPower"}, {"id": 149, "text": "Когда хохлы копали море\nБиен там был как фараон\nА главный раб сосатель хуев\nТам был конечно же москаль", "author": "ectoPower"}, {"id": 150, "text": "Сосать - нехитрое занятье\nРязанцу заявил Биен\nА ну-ка приспусти штанишки\nЯ покажу ом-ом-ом-ом", "author": "mafuta"}, {"id": 151, "text": "Гиляка — ветка, то ль ракета\nМоскаль все свою думу вел\nИ не заметил как ариец\nЕму насрал прям на ковер", "author": "ectoPower"}, {"id": 152, "text": "Биен бухает в понедельник\nВо вторник среду и четверг\nА с пятницы по воскресенье\nПиздит что он сверхчеловек", "author": "mafuta"}, {"id": 153, "text": "Сверхлюди пьют когда им взбрендит\nМоскаль же думает иначе\nКупив бутылку водки в среду\nСадится на нее и скачет", "author": "ectoPower"}, {"id": 154, "text": "Матрос Биенко! в сон Андрея\nВорвался голос старшины\nЯ! Что, опять дрочил? Так точно!\nТо светлой юности пора.", "author": "mafuta"}, {"id": 155, "text": "Задумчиво водил Давитель\nБиенке хуем по губам\nА если б ты родился тёлкой\nТак и не встретились б с тобой", "author": "mafuta"}, {"id": 156, "text": "Кацап и фейковый хохол\nВдвоем лежат в сарае,\nНо истинный хохол пришел,\nВсех в ротик начал жарить", "author": "Kunio"}, {"id": 157, "text": "Максим в перчатках и с пинцетом\nПо маленькой нужде ходил\nБудь ласка, дякую на мове\nОн говорил, а щас пиздец", "author": "mafuta"}, {"id": 158, "text": "Мафута ездил вокруг света\nДавитель нежно говорил:\nМафут, ну чеи? Бывал в музее?\nИи бля, Ии Ии Ии Ии Ии бля", "author": "Kunio"}, {"id": 159, "text": "Сидит сашок и горько плачет\nНе выиграть конкурс красоты\nЕму с вертухи уебали\nВ его красивое лицо", "author": "Memori"}, {"id": 160, "text": "Мафута евнух и по жизни\nПривык очко он подставлять\nНо к сожалению давитель\nПривык очко только лизать", "author": "ectoPower"}, {"id": 161, "text": "ЗАТКНИСЬ\nЗАТКНИСЬ\nЗАТКНИСЬ\nЗАТКНИСЬ", "author": "RVD"}, {"id": 162, "text": "Субботний стрим и на гудгейме\nХyйни не пишут парни в чат \nА на твиче же пидорасы\nСо всей планеты собрались)", "author": "mafuta"}, {"id": 163, "text": "Мафута, дай стране мазута", "author": "TubusTD"}, {"id": 164, "text": "ИИИИИИИИИИ. ААААААААААА. Ромхак плохо влияет. Дух Аязыча вселяется", "author": "RVD"}, {"id": 165, "text": "Писал про Текмо Исламбадыч\nПро то, что Кайлыч пидорас\nНо акмесосы распизделись\nВновь про системные голы", "author": "mafuta"}, {"id": 166, "text": "Да и то что ром убог это натяжка. Ну нет там коротких пасов. Кай же обосновал что их длина была такая же как у обычных", "author": "mafuta"}, {"id": 167, "text": "Не спамьте, че вы мне пишете слова", "author": "Изивин"}, {"id": 168, "text": "Я, конечно, понимаю, что орги — долбоебы и им хоть в глаза нассы, но ты пидер еще ответишь", "author": "Rustin Cohle"}, {"id": 169, "text": "Ладно, время все на свои места расставит, а ты как был трусливым ссыклом, так и остался. И я тебе на встречу больше никогда не пойду, мразь ебаная", "author": "Rustin Cohle"}, {"id": 170, "text": "В беседе люди — не всегда люди", "author": "Palka Palych"}, {"id": 171, "text": "Кунио зашкварился, Арийская земля зашкварилась, Распутник Тимощук как шакалы, Липецк Великий стример Всея Руси теперь как Эстебан на Гараже, все превратились в ёбаных мразей", "author": "mafuta"}, {"id": 172, "text": "у ромарио политика головного мозга, абсолютно не возможно его хуйню читать, одним словом — поехваший. ему наверное блять вообще про что угодно спросишь, ну там про мороженное, он скажет — «дада я люблю вишневое, а вот у вас В РОССИИ ПУТИН МРАЗЬ И ВСЯ ВЛАСТЬ ВАМ ГАВНО СУЮТ В РОТ В МЕСТО МОРОЖЕННОГО А ВЫТЕРПИТЕ, ПОТОМУ ЧТО РАШКА ГАВНО", "author": "ectoPower"}, {"id": 173, "text": "Лысый, верни турбо!", "author": "RVD"}, {"id": 174, "text": "Если тебя ебут в жопу, значит, ты европеец", "author": "mafuta"}, {"id": 175, "text": "Кривую ВВП России\nПо памяти чертил Роман\nНо врач не удивился в дурке\nИ не похлопал по плечу", "author": "mafuta"}, {"id": 176, "text": "Роман кастрюлю надевает\nИ пробегает холодок\nСвежо еще воспоминанье\nПро борщ холодный на спине", "author": "mafuta"}, {"id": 177, "text": "Дебил смеялся над Романом\nЕго фашистом называл\nНо Любашенко не повелся\nВедь он-то знал что он еврей", "author": "mafuta"}, {"id": 178, "text": "Бывает РВД психует\nИ что ж, парнишке двадцать лет\nКогда-то Фрейд «идите нахуй»\nКоллегам тоже всем сказал", "author": "mafuta"}, {"id": 179, "text": "Аким, когда приводил Ромарио, сказал «он еврей тот еще». Я тогда не понимал его", "author": "Lipetsk"}, {"id": 180, "text": "На смех веселый я взбираюсь\nХрущевки лестница крута\nЗвоню, Максим дверь открывает\nПривет, Бандера, заходи", "author": "mafuta"}, {"id": 181, "text": "Мафута срался с розмарином\nЛетели колкие стихи\nРебята сделали мне утро\nПора хаккетсу воскрешать", "author": "Memori"}, {"id": 182, "text": "В предчувствии конца паРаши\nРоман прожил последний час\nПотом весь день неделю месяц\nИ всю оставшуюся жизнь", "author": "mafuta"}, {"id": 183, "text": "Доказать мы ничего не сможем, но забанить без причины сможем. Отмазка всегда работает: это же РВД, РВД пидр", "author": "RVD"}, {"id": 184, "text": "Опять весна и все в округе\nКричат Роману чтоб съебал\nРоман ответил ну и ладно\nНо мразь остался где и был", "author": "mafuta"}, {"id": 185, "text": "Сидит мафута у параши\nСмотря программы день и ночь\nВон там фашисты тут чуваши\nТак сразу нахуй не поймешь", "author": "Romario"}, {"id": 186, "text": "Идут на митинг любашенки\nХотят историю вершить\nКазалось бы, но в мыслях каждый\nМечтает про пятьсот рублей", "author": "mafuta"}, {"id": 187, "text": "Роман отчаянно пытался\nУравновесить рифмой стих\nНо так как слыл он пидорасом\nПрокукарекал и притих", "author": "mafuta"}, {"id": 188, "text": "Роман решает на майдане\nЗа тунеядцев жизнь отдать\nНо был застрелен катапультой\nПарнишкой с шарфиком Милан", "author": "mafuta"}, {"id": 189, "text": "Назвав Романа пидорасом,\nЕму наскучил как поэт,\nОн опустился на колени,\nА я сказал, о нет, о нет", "author": "mafuta"}, {"id": 190, "text": "Построить бы царь-бутылку и посадить бы Мафуту на неё за такие идеи", "author": "Memori"}, {"id": 191, "text": "Жопа зачесалась. Выебали, а оказалось что на сперму аллергия", "author": "Romario"}, {"id": 192, "text": "Они тупые как два мешка ведра", "author": "Alpharushin"}, {"id": 193, "text": "Вот мне дали по ебалу на тренировке, я теперь приду и скажу что мне дали по ебалу и теперь я буду некрасивый и из-за этого буду плакать", "author": "Alpharushin"}, {"id": 194, "text": "РВД, ты думать не умеешь. Тебе голову оторвать и сказать, а почему ты умер?", "author": "Alpharushin"}, {"id": 195, "text": "Интересно, а если тебе щас сломать, допустим, ногу, или битой по голове, ты не будешь орать, потому что ты воспитанный?", "author": "RVD"}, {"id": 196, "text": "Аязыч, честно, вот все против тебя уже, потому что ты ДАУН!", "author": "RVD"}, {"id": 197, "text": "Так я спросил у Аязыча, почему татары не играют в футбол, он говорит, потому что Россия захватила их", "author": "ectoPower"}, {"id": 198, "text": "Что-то плохое сказал, констатировал факт? Ты враг, блядь, России!", "author": "Alpharushin"}, {"id": 199, "text": "Санта фе уникальный персонаж, его в музее можно показывать, я просто хуею от его любви к путину", "author": "Левальский"}, {"id": 200, "text": "Паша будь взрослее внатуре, когда с нами общался, другой был, а как связался с малолетками, так изменился", "author": "Joe Duffy"}, {"id": 201, "text": "Я вчера уебал трех татар, одного звали Аяз, другого Алмаз, а третьего — Топаз, блядь", "author": "ectoPower"}, {"id": 202, "text": "Одному кепку на залупу узлом, другому джойстики в анус толстой жопы", "author": "Стёпа"}, {"id": 203, "text": "Я думал, тут нормальные люди сидят, говорят про говно там, про сперму, а тут про меднафен говорят", "author": "Davitel"}, {"id": 204, "text": "Ёбаный БЗК,\nЁбаный БЗК,\nТребует он себе новый меднафен,\nСнялся с турнира я!", "author": "Davitel"}, {"id": 205, "text": "Суть проблемы в том что вы все поехавшие включая меня", "author": "IMPACT"}, {"id": 206, "text": "Сыграли вон сейчас с Мал да Удал, сначала он у меня очко вырвал, потом я у него вырвал", "author": "BOP95"}, {"id": 207, "text": "Мотивация, борьба и качество!", "author": "Alpharushin"}, {"id": 208, "text": "Ребят, вы понимаете вот? Что вы тут срётесь, а от этого мафута с кайлычем только сильней становятся", "author": "Memori"}, {"id": 209, "text": "А ФАРМАЗОНЮ", "author": "Roos"}, {"id": 210, "text": "Я хочу играть в игры от Техноса, а не от Кайлыча", "author": "Romario"}, {"id": 211, "text": "Вы уникальны, но вы в дерьме и самое печальное, что этого вы не видите", "author": "Clark Kent"}, {"id": 212, "text": "Честно признаюсь я бы вдул Валере", "author": "Memori"}, {"id": 213, "text": "Почка не девственность, их две, а она одна", "author": "Udav213"}, {"id": 214, "text": "Палыч не гей. (ред.)", "author": "Анна Черышева"}, {"id": 215, "text": "На твоей жопе только в бильярд играть", "author": "Стёпа"}, {"id": 216, "text": "Коронавиирус! Коронавиирус!\nНам пизда мы все умрём!\nКоронавиирус! Коронавиирус!\nДруг друга с голоду сожрём!", "author": "ectoPower"}, {"id": 217, "text": "В смысле я лох, блять, я джентльмен!", "author": "Davitel"}, {"id": 218, "text": "А помните как 1 апреля Мафута разбанил Ромарио и попросил забыть все обиды и начать всё с нуля? И то, что сейчас Ромарио повторяет ту же ситуацию с Аутлоу — всем кроме Палыча похуй. Вы реально ебанулись? Человеку Мафута дал индульгенцию и опять вляпались в говно с этим Ромарио. Вы чё реально ебанутые? Дегенерат ебучий", "author": "RVD"}, {"id": 219, "text": "Общество разбитых сердец, ёбана. Один разведенный, другой бездетный, третий поехавший", "author": "Memori"}, {"id": 220, "text": "У кого чего болит, у того нашли covid", "author": "Davitel"}, {"id": 221, "text": "Тебе, может, блядь, в бан прописать?", "author": "REAL STEEL"}, {"id": 222, "text": "Это все равно что играть в шахматы с Аязычем, он просто насрет на доску и убежит", "author": "Rock"}, {"id": 223, "text": "Две кнопки вверх, две кнопки вниз, прыжок с локтя, удар в карниз", "author": "ectoPower"}, {"id": 224, "text": "Это жизнь на краю ножа, на зажиме турбокнопки", "author": "Lenin1st"}, {"id": 225, "text": "Узилог завяжется. Узилог развяжется. Ну, а дима-натурал это то что кажется", "author": "Стёпа"}, {"id": 226, "text": "я чувствую себя круче. прям щаз, лёжа на диване. мне 37", "author": "mafuta"}, {"id": 227, "text": "я думаю на нст детей нет. если ты пришел на нст, то все, детство кончилось, забудь о нем", "author": "Kubik"}, {"id": 228, "text": "За Спартак и за двор — в жопу даю в упор!", "author": "Anubis"}, {"id": 229, "text": "Претендентов на чемпионство трое. А пиздоболов дохуя", "author": "Romario"}, {"id": 230, "text": "Говорят, не повезет, если мафута в команду попадет", "author": "Rock"}, {"id": 231, "text": "Дава-а-ай, жопу, блядь, в кулак и вперед", "author": "mafuta"}, {"id": 232, "text": "Мопед сломался. Толерантность в баке закончилась, нужно идти с канистрой на заправку — доливать", "author": "RVD"}, {"id": 233, "text": "Кларк — наш лидер. Очень многое делает для РЛЕ. Кс стримит, тебя (RVD) вернуть пытается, нахуй всех посылает)", "author": "Palka Palych"}, {"id": 234, "text": "Одна капля никотина убивает лошадь, а семь строчек кода убивают дух хоккея", "author": "Memori"}, {"id": 235, "text": "Trap это когда турнир на 1-е апреля на НСТ организуешь, а потом в нём играть приходится", "author": "RVD"}, {"id": 236, "text": "что можно быдлу, того нельзя эрудиту", "author": "Anubis"}, {"id": 237, "text": "Ике настолько тупая игра что в нее играет ромарио", "author": "Metallist Balalaykin"}, {"id": 238, "text": "Да я чел мирный по сути", "author": "Romario"}, {"id": 239, "text": "хотел забанить Ромарио в итоге забанил сам себя)", "author": "Cent про RVD"}, {"id": 240, "text": "Kinbeas, можешь забанить этого инвалида? Как болячка всё чешется и чешется", "author": "Esteban"}, {"id": 241, "text": "чтоб вывозить как Леха нужно стараться вообще не стараться", "author": "Anubis"}, {"id": 242, "text": "я че бля Стил, чтоб кучу турниров вывозить", "author": "Sokol"}, {"id": 243, "text": "Да Ромарио пора давно отпиздить, блядь, Кайлыч пусть едет его и пиздит", "author": "ectoPower"}, {"id": 244, "text": "Мне не надо ничего, мне нужен лишь норм пас,\nТочно знаю, тот, кто щелкает, тот пидорас,\nЯ не то, чтоб не прошел, не то, чтоб проиграл,\nПросто я от щелкунов и от тех сраных выкатов устал", "author": "Davitel"}, {"id": 245, "text": "вы знаете, что я с Палкой Палычем подружился на нервной почве?", "author": "Василий Желамбеков"}, {"id": 246, "text": "Надо же уже свой ум иметь, хотя бы относительно самостоятельный, чтобы всем этим заниматься. Но вы сука нихуя не взрослые, блять! Вы мальчики с большими хуями! Как вы блять работаете, как?", "author": "mafuta"}, {"id": 247, "text": "я палец в жопе поверну… и снова 3-е сентября", "author": "mafuta"}, {"id": 248, "text": "я вообще считаю что кто не прошёл баттл тодс на денди тот конченый нубосос", "author": "Jamlight"}, {"id": 249, "text": "один пёс другой психоз)", "author": "Dune про вора и рвд"}, {"id": 250, "text": "Иван был музыкант от Бога,\nАккордом бил сердца людей,\nА люди били ему морду\nИ объясняли что Цой жив 💪🏻", "author": "mafuta"}, {"id": 251, "text": "Сергей! Кричали мне пришельцы\nМы на качелях! Выходи!\nНо я не вёлся на попытки\nОтвлечь меня от рен тв", "author": "mafuta"}, {"id": 252, "text": "Иван Касея перекинул,\nПодпрыгнул, зарядил пилу,\nНо из окошка вдруг донёсся\nИз Восьмикласницы мотив", "author": "mafuta"}, {"id": 253, "text": "Сергей мечтал прививку сделать\nДрузьям, начальнику, жене,\nВсем близким людям, на кого он\nРастратил свой иммунитет", "author": "mafuta"}, {"id": 254, "text": "Сергей с умом и скурпулёзно\nВакцину тёще выбирал,\nНо к сожалению в побочных\nЭффектах был только понос", "author": "mafuta"}, {"id": 255, "text": "Сергей смеётся с тех кто в маске\nИ угарает с тех кто без,\nТаких смешных мясных уродов\nВо всей галактике нема", "author": "mafuta"}, {"id": 256, "text": "Врачи с вакцинами сужали\nВокруг Серёги хоровод,\nВдруг на летающей тарелке!\n(…а хуй вам, а не хэппи энд)", "author": "mafuta"}, {"id": 257, "text": "Решил в Германию податься\nХохол с фамилией Француз.\nНачало право интригует,\nУвы, пока на этом всё 😃", "author": "mafuta"}, {"id": 258, "text": "Витёк детали для комбайна\nВсю ночь хуярил до зари,\nПотом весь день ебашил в сегу\nИ так до пенсии, прикинь", "author": "mafuta"}, {"id": 259, "text": "Роман политику затронул,\nНо извинился в тот же час,\nЧтобы опять ее затронуть\nЧерез четырнадцать секунд", "author": "mafuta"}, {"id": 260, "text": "Раньше РВД выходил из ВК, а теперь ВК вышел из РВД", "author": "Memori"}, {"id": 261, "text": "Тебе то за что 70% накатили? Они там совсем ебанулись? Даже на Технос-Баттлс такого не было", "author": "Kinbeas"}, {"id": 262, "text": "У Рил Стила так много мозгов, что он просто не успевает подумать", "author": "RVD"}, {"id": 263, "text": "Вы, браток, правы!", "author": "Dune"}, {"id": 264, "text": "совесть на нст - как бюджет в стране", "author": "Kubik"}, {"id": 265, "text": "Украину стоило захватить только затем, чтобы зарофлить Бадыча", "author": "mafuta"}, {"id": 266, "text": "на Россию не получается выёбываться у Американасосий и других маленьких сосий!", "author": "Alpharushin"}, {"id": 267, "text": "Как называется боязнь Шлюза? Русофобия!", "author": "Palka Palych"}, {"id": 268, "text": "В день всех влюбленных будем ебало католикам бить!!!", "author": "Esteban"}, {"id": 269, "text": "Скоро инвалидность станет иконой ретрогейминга", "author": "Dynamik"}, {"id": 270, "text": "давай пообщаемся как мужик с мужиком, или ты жирная свинья?", "author": "Romario"}, {"id": 271, "text": "с тобой пообщаться интеллектуально всегда хорошо, ты довольно таки образованный человек. Хоть и мразь", "author": "Romario"}, {"id": 272, "text": "не нужно держаться за долбоёбов инвалидов. Нужно держаться за качественный контент", "author": "Romario"}, {"id": 273, "text": "ваша цель - это засирать ютуб. И ни чего более.", "author": "Romario"}, {"id": 274, "text": "сотни видосов, у людей, которые увидят игру своего детства, вызовут отвращение, при види стримов РЛЕ", "author": "Romario"}, {"id": 275, "text": "у меня есть конкретный антогонист. Антогониста зовут Павел Миронов, потому что на этого ебоната я потратил 2 года своей жизни. Прочие ебанаты меня не интересуют", "author": "Romario"}, {"id": 276, "text": "Вы либо админку снимите, либо трусы наденьте", "author": "daz"}, {"id": 277, "text": "Я долго думал о никнейме,\nОткуда даз и почему,\nА он наверно ретрогеймер\nИ сега Даз вот нинтендонт", "author": "Taeda"}, {"id": 278, "text": "\"Привет, мафут!\" по коридору\nНавстречу дружною гурьбой\nНеслись шизы, роняя тапки,\nЗавидев издали врача", "author": "mafuta"}, {"id": 279, "text": "Прошла молва на некуретсу,\nВесь день гудит честной народ,\nС утра толпятся ретрогеи\nНа сиськи Даза поглядеть", "author": "mafuta"}, {"id": 280, "text": "Пока вы хвалите инвалидов и баните из-за них нормальных людей, они будут думать что делают все правильно и не будут меняться", "author": "Rock"}, {"id": 281, "text": "Увещевания о толерантности кста можно назвать ту книгу, что Мемори пишет история нст", "author": "RVD"}, {"id": 282, "text": "У меня такое ощущение, что меня сюда пригласили реально для промывки мозгов) но нет - я уже слишком старый, нечего промывать)", "author": "Palka Palych"}, {"id": 283, "text": "себя не причисчляю к ретрогеям", "author": "Jamlight"}, {"id": 284, "text": "чё завыёбывался? дуй в баню дибил", "author": "Jamlight"}, {"id": 285, "text": "А вообще, столько пидорасов в одном месте - у нас это противозаконно", "author": "Kinbeas"}, {"id": 286, "text": "Вот она цитата", "author": "Esteban"}, {"id": 287, "text": "не нужно больше брать тех кто снимается", "author": "Дядюшка АУ"}, {"id": 288, "text": "Дружба с роком это постоянное ощущение, что проебываешь время", "author": "DoubleyouW"}, {"id": 289, "text": "Что, в своем глазу коляску не видим?", "author": "RVD"}, {"id": 290, "text": "Мне слишком похуй, чтобы спорить", "author": "Memori"}, {"id": 291, "text": "Ретрогеев много, а я один!", "author": "Alpharushin"}, {"id": 292, "text": "я не фашист, я татарин", "author": "Alpharushin"}, {"id": 293, "text": "Ромарио пропал и Палыч решил себе придумать новых Ромарио. Сразу нескольких штук. Всегда должен быть человек, которому ты можешь себя противопоставить.", "author": "RVD"}, {"id": 294, "text": "ты хули тролишь? ром говно снимаюсь с турнира", "author": "Jamlight"}, {"id": 295, "text": "А у нас есть в группе чмаз, а у вас?", "author": "Davitel"}, {"id": 296, "text": "Разнообразие НСТ и вся эта движуха относительно старой текмо группы меня очень привлекает. И комиксы с вырезанными бошками.", "author": "BZK"}, {"id": 297, "text": "я затрахался ебать газон, если честно", "author": "Palka Palych"}, {"id": 298, "text": "да какой план и стратегия в этой игре? От рандома и от удачи зависит. Вот в коламнсе 3 вот это я понимаю стратегия и план. Там это есть", "author": "Дядюшка АУ"}, {"id": 299, "text": "Будешь гнать на меня, на мою семью, на акме братков, я утоплю тебя в фонтане кефира прямиком из своих яиц. И мне будет абсолютно насрать на твой четырехлетний опыт онанизма в ретро-турнирах.", "author": "Palka Palych"}, {"id": 300, "text": "Пожилые жижи нынче не в почете", "author": "Dune"}, {"id": 301, "text": "Раньше дилеры были хорошие", "author": "Alpharushin"}, {"id": 302, "text": "Сделаем традицию, на пасху не христосаться, а хуесоситься", "author": "Simulacrum"}, {"id": 303, "text": "Чо такое сделать турнир? Написать 5 минут регламент и дать всем пизды.", "author": "RVD"}, {"id": 304, "text": "Ты не настолько крут как всякие рокзвезды, которые женятся, чтобы скрыть свою голубизну. Ты тупо боевой пидорас", "author": "RVD"}, {"id": 305, "text": "Я тогда был на что-то зол, только я не помню, на что. То ли что ты ромхакер, то ли что я не ромхакер…", "author": "RVD"}, {"id": 306, "text": "Если Мафута - Аид, то Ленинист - Цербер", "author": "Anubis"}, {"id": 307, "text": "Скажи мне, кто твой друг, и я скажу, какая у тебя группа инвалидности", "author": "daz"}, {"id": 308, "text": "Ну я бы умер от кринжа, или от инфаркта жопы, например", "author": "Anubis"}, {"id": 309, "text": "чтобы быть великим оргом на НСТ - надо уметь управлять случайностями", "author": "Anubis"}, {"id": 310, "text": "Кто-то коллекционирует крышечки, кто-то кринж, кто-то картриджи, а рил стил - поражения", "author": "Дядюшка АУ"}, {"id": 311, "text": "Мафута, ты когда друзей под лавкой находишь, не зови их сюда", "author": "Johnny Bravo"}, {"id": 312, "text": "Так с мафутой, что дружить, что сраться, ничего не меняется, он аморфен", "author": "Islambad Prince"}, {"id": 313, "text": "Даже в чемпионате Гваделупы забивают из под кольца", "author": "Davitel"}, {"id": 314, "text": "Нстшное ципсо работает на ура", "author": "Palka Palych"}, {"id": 315, "text": "А жареных бровей не хочешь?", "author": "Memori"}, {"id": 316, "text": "Это не поздравления, это 48 минут траура", "author": "daz"}, {"id": 317, "text": "Я понял. Во всём аська виновата. В аське была такая хуйня удалиться из чужого списка контактов. Я многому научился у аськи", "author": "RVD"}, {"id": 318, "text": "Практика бьет теорию. Всегда.", "author": "Memori"}, {"id": 319, "text": "Ты не в реальности живешь, а в какой-то татарской плоскости", "author": "ectoPower"}, {"id": 320, "text": "По логике даза мы все умственно отсталые даже я капец бред", "author": "Роджер"}, {"id": 321, "text": "Пиздеть вы все горазды, а съебать хватило смелости только у меня", "author": "RVD"}, {"id": 322, "text": "Какая админка, какой ресурс? Кого предать, куда переметнуться?", "author": "CentZloy"}, {"id": 323, "text": "Что у нст на хуе, то у рле на языке,или как то так немпомню дословно поговорку,если что извиняйте", "author": "Star"}, {"id": 324, "text": "Мне не жалко очка. Туда уже поезда из фактории свободно проезжают.", "author": "mafuta"}, {"id": 325, "text": "Колесников детский психолог, мне страшно с ним связываться, вдруг он расскажет почему я ретрогей", "author": "mafuta"}, {"id": 326, "text": "Строчки вяжутся в стишок,\nЛавка греет тушу.\nДети какают в горшок,\nА Мафута - в душу", "author": "Sokol"}, {"id": 327, "text": "Кому инпут лаг, а кому мать родная", "author": "Memori"}, {"id": 328, "text": "Жизн как хуй", "author": "ROOS"}, {"id": 329, "text": "ааааа блядь вот чо за обострение то, у пидоров месяц пидоров", "author": "daz"}, {"id": 330, "text": "Вывод - у ебанутого банкира ебанутый пак", "author": "Rock"}, {"id": 331, "text": "Завалите ебальники, я Аязыча не слышу", "author": "daz"}, {"id": 332, "text": "У Мафуты ебало стало уже, значит, солитер поужинал", "author": "daz"}, {"id": 333, "text": "Он каждого второго игрока обосрал с ног до ниточки", "author": "Palka Palych"}, {"id": 334, "text": "там, где я сижу, мы уже шесть лет пинаем мертвых ослов, и, поверьте мне, порой они от этого воскресают", "author": "Memori"}, {"id": 335, "text": "Счастье - это не иметь дел с этой группой", "author": "Kubik"}, {"id": 336, "text": "Мафута сверхчеловек. Он в своём познании настолько преисполнился, что лежит сутками под лавкой и ничего не делает. Он прошёл жизнь на харде", "author": "Davitel"}, {"id": 337, "text": "Слово \"ретро\" - бесит", "author": "Катарина Одуванчик"}, {"id": 338, "text": "Да хули ромхак разъебывать? С такой скоростью развития он сам себя поглотит", "author": "RVD"}, {"id": 339, "text": "Поцаны я ща хуй в инете нашел. Искал кто нибудь?", "author": "RVD"}, {"id": 340, "text": "Стоять. Иди в хоккей играй нахуй бля. То есть пожалуйста", "author": "RVD"}, {"id": 341, "text": "Последний раз говорю. Читать форум - это библия и коран!", "author": "Tarantull, 2009 г"}, {"id": 342, "text": "Меня обнимают два мужчины и одна женщина, а кто обнимает тебя", "author": "daz"}, {"id": 343, "text": "Да, всё-таки самые главные лаги происходят в умах игроков", "author": "mafuta"}, {"id": 344, "text": "мне главное чтобы димка мог кикать чмаза", "author": "Kotix"}, {"id": 345, "text": "Женщины, вы как пиво - всегда хочется вторую бутылку", "author": "Дядюшка АУ"}, {"id": 346, "text": "Чужая моча - потемки", "author": "mafuta"}, {"id": 347, "text": "Ты и твой друг можете идти в другую комнату себе анусы верстать", "author": "Стёпа"}, {"id": 348, "text": "Лавка всегда падает мафутой вниз", "author": "Memori"}, {"id": 349, "text": "Легки на подъём? Легки на проституцию!", "author": "Kinbeas"}, {"id": 350, "text": "а котиксу хоть в какой-то степени не все равно, но у дурака банхаммер, сука, на эндорфиновой кнопке", "author": "Memori"}, {"id": 351, "text": "Я уже не тубус нахуй, я цилиндр блядь", "author": "TubusTD"}, {"id": 352, "text": "В велогонке \"Тур де Франс\"\nНаш участвовал Аяз,\nВместо финиша поехал\nС Эстебаном стримить, мразз", "author": "Memori"}, {"id": 353, "text": "И развивая тему татарского велоспорта, мне всегда казалось, что Аязыч это ящер подвида велоцираптатар, но в последнее время он все больше игуаногондон", "author": "Memori"}, {"id": 354, "text": "Сейчас бы вырезать Мичуринск из Земли и захуярить куда-нибудь в Африку", "author": "daz"}, {"id": 355, "text": "У Ау коллекционные крышечки как колечки из соника посыпались уже когда он вылетел с полуфинала после игры со мной", "author": "Jamlight"}, {"id": 356, "text": "Ну так извини меня. А как ты хотел. Сидеть монотонно разговаривать о том какой анубис забил вантаймер в 12-м сезоне, 8-м туре, 2 периода, на 3-й минуте в ворота рагнара. Как бы извини меня. Я горжусь тем что я пидорас. Я ПИДОРАС. ОЛЕ-ОЛЕ-ОЛЕ", "author": "RVD"}, {"id": 357, "text": "Даз был нормальным ребенком, пока не родился", "author": "RVD"}, {"id": 358, "text": "Ретрогеи не моются, жопа должна быть грязная", "author": "ectoPower"}, {"id": 359, "text": "Ты же профессор физики, какой суффикс из двадцати пяти?", "author": "Kunio"}, {"id": 360, "text": "Все будут смеяться над Аязычем, а долбоебы будут в почете", "author": "Alpharushin"}, {"id": 361, "text": "Даз удалил турнир и страницу вконтакте. 3 буквы в нике другие, а смысл не поменялся", "author": "RVD"}, {"id": 362, "text": "игроки предполагают, а орги - располагают", "author": "Anubis"}, {"id": 363, "text": "Без цитат мы всего лишь безликое скопище ретрогномов, заблудившихся в ретрогейском лесу", "author": "mafuta"}, {"id": 364, "text": "вы все ребят лучшие и даз не пизди тут но ты тоже красава", "author": "Hanter"}, {"id": 365, "text": "Я сам себя выгуливаю", "author": "BOP95"}, {"id": 366, "text": "Регламенты простыми должны быть, а не 7 по 2, причем еще 4 на 4 делить, и со своей четверкой ты потом играешь 2 раза и еще с кем то один раз. Мафуте в кабинет петухотерапевта срочно", "author": "RVD"}, {"id": 367, "text": "Ваще вся эта тема гараж - это угнетение для меня. Я вижу как люди, которые сюда приходят, видят, какой я долбоеб-алкаш, и они развиваются, блядь", "author": "Esteban"}, {"id": 368, "text": "Место женщины в группе NST занято мной. Лёх, пора становится мужчиной, я не потерплю конкуренции", "author": "RVD"}, {"id": 369, "text": "Помнят с горечью древляне, Хоть прошло не мало лет,\nО романтике Костяне, Чей лежит на дне (турнирной таблицы) скелет.\nЖаль, никто ему не верил, Но захватывало дух -\nПятитаймеры хуярил, Не помыв он даже рук", "author": "Star"}, {"id": 370, "text": "а ромарио нельзя вернуть?", "author": "Дядюшка АУ"}, {"id": 371, "text": "Кунио, ну ты и хуй", "author": "wolfworld"}, {"id": 372, "text": "В британии был агент 007, а у нас будет агент 107", "author": "Memori"}, {"id": 373, "text": "Я не я и жопа не моя", "author": "Palka Palych"}, {"id": 374, "text": "Банан элементарно берётся, дебил ебучий!", "author": "RVD"}, {"id": 375, "text": "В руки бери!...Да это пиздец какой-то нахуй, я сейчас брошу смотреть, вы заебали, сука!!!", "author": "Transistor"}, {"id": 376, "text": "Ебать! Там на 2 кнопки прыжок) 10 минут тыкал пока не сообразил)", "author": "Palka Palych"}, {"id": 377, "text": "кто реппер? я думал все кто в некетцу ставит на аву левые картинки слушают рок и смотрят аниме", "author": "Metallist Balalaykin"}, {"id": 378, "text": "Ты тормоз, а может даже даун. Но для баранов повторяю…", "author": "Kinbeas"}, {"id": 379, "text": "Фармазон, только свистни он появится, Фармазон! Леха от винта!", "author": "Davitel"}, {"id": 380, "text": "Ты вообще когда-нибудь молчишь? Разговор уже закончен, а ты все пиздишь-пиздишь-пиздишь. Закрой рот.", "author": "RVD"}, {"id": 381, "text": "Зимня, зимня! Вишняя зииимняаа!", "author": "ROOS"}, {"id": 382, "text": "У тебя на лбу написано, \"забаньте умоляю\"", "author": "psycho"}, {"id": 383, "text": "Вообще, на самом деле, если правильно все организовать, то 2 крупных группы по ретро-играм - это очень здорово на самом деле. Если ни они, ни мы не будем пидрами, то можем по 40 челов собирать на турниры влегкую.", "author": "Palka Palych, 2019 г."}, {"id": 384, "text": "Если игрок не двигает сетку тогда сетка двигает игрока", "author": "Jamlight"}, {"id": 385, "text": "В свиное ухо залетело, из московского вылетело", "author": "daz"}, {"id": 386, "text": "Играю в Акме месяцами,\nВ Удомле не был я ни разу,\nДиагонали бью зайцами,\nЗовите меня пидарасом", "author": "Islambad Prince"}, {"id": 387, "text": "Кто забивает угловыми\nИ читерит Монтаной, гад,\nПуская идет и возглавляет\nБольшой огромный гей-парад", "author": "Simulacrum"}, {"id": 388, "text": "Играйте в Акме месяцами,\nКачайте скилл вы свой в футбол,\nА я мгновенными пальцами\nВсех уничтожу в баскетбол", "author": "Palka Palych"}, {"id": 389, "text": "Он был крутым на Пиксель Файтерс,\nНо отказался пососать.\nТеперь в майнкрафте строит слово\nНаипейздатейший Удав", "author": "Simulacrum"}, {"id": 390, "text": "Запишись на баскетбол,\nТам крутится много очков\nИ анальное кольцо\nВсегда открыто для хуйцов", "author": "Islambad Prince"}, {"id": 391, "text": "Залез однажды Брбл в память\nИ разхерачил абы как.\nТеперь на поле вместо зайцев\nБегут Онопко и Семак!", "author": "Palka Palych"}, {"id": 392, "text": "Попсу вдруг начал слушать рокер!\nИз крана вдруг течет моча!\nЗа всю игру на поле в Акме\nНи разу Блейд не всек с плеча!", "author": "Palka Palych"}, {"id": 393, "text": "Весь день ты чистил унитаз,\nТрудился ты как только мог!\nВдруг выдался свободный час,\nНо добрый кот насрал в лоток…", "author": "Palka Palych"}, {"id": 394, "text": "Каждый день к восьми утра Брблу на работу.\nТам он просыпается, и долой зевоту!\nОн включает комп, ведь есть у него задача:\nЗа рабочий день успеть Акме заромхачить!", "author": "Palka Palych"}, {"id": 395, "text": "импакт заходит с фланга, удар, гоооол! смерть путину! ура!", "author": "Memori"}, {"id": 396, "text": "-я тебе рубль дал? -дал! -за приднестровским кефиром послал? -ты кто по жизни?", "author": "Стёпа"}, {"id": 397, "text": "кто рано встает, тому ромхак подает", "author": "TubusTD"}, {"id": 398, "text": "пошли туда, пошли сюда, пошли в кино, пошли в бассейн, пошли в баню, пошли на горки, пошли нахуй!", "author": "Memori"}, {"id": 399, "text": "этот ответ твой с матом - считай некорректность организационного характера с применением нецензурной лексики в процессе уточнения времени командной встречи", "author": "Jamlight"}, {"id": 400, "text": "Ромарио пизданул, окей, но хуйло тоже же нужно наказывать а не канделябры башкиру петь", "author": "Romario"}, {"id": 401, "text": "В ретроаду только и ретроразговоров, что о ретрофашизме и ретроинвалидности.", "author": "Rock"}, {"id": 402, "text": "Даже Джексон рассказывал как он участвовал в турнире по чип и дейлу, в первые же минуты его петухом назвали", "author": "CentZloy"}, {"id": 403, "text": "А я хочу напомнить, что Лёха у нас ещё и боксёр же. Но полагаю, если он приедет бить мне ебало, он будет стоять в метре от меня и хуярить голосовухи.", "author": "RVD"}, {"id": 404, "text": "В этом весь движ НХЛ94, сами пошутили, сами посмеялись)", "author": "Dynamik"}, {"id": 405, "text": "только цент знает меня изнутри", "author": "Kotix"}, {"id": 406, "text": "Я палка индивидуалтный двигатель революции (ПИДР)", "author": "Palka Palych"}, {"id": 407, "text": "играем в каждом туре разными,то есть одинаковыми командами", "author": "Joe Duffy"}];
+    const AVATARS = {"aeris": {"vk_id": 689482217, "vk_name": "Artem Artemyev", "avatar_url": "https://sun4-20.userapi.com/s/v1/ig2/2XwMUi6EbjqlGZNBFEMWh-iWH05ID-JA8F7xKWdsrCwjScqvqN-iHWcbw29W5wIQAnKuIhpFvHFAd_WLn3Ts8RnO.jpg?quality=95&crop=104,209,640,640&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640&ava=1&cs=200x200", "domain": "aeros9080"}, "ectopower": {"vk_id": 22217971, "vk_name": "Bien ^^", "avatar_url": "https://sun4-15.userapi.com/s/v1/ig2/JhhQMLx-nIp7DmFP-Q8yDOX0RnVoxHjdddVGa7_Pugz9y_WUQk72JtK9z1KeSOLw8ytxTmbG9Us1q9fQp8YIh0KT.jpg?quality=96&crop=4,0,465,465&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&cs=200x200", "domain": "naprimer_zdravo"}, "kunio": {"vk_id": 94258064, "vk_name": "Maxim Nadolinny", "avatar_url": "https://sun4-8.userapi.com/s/v1/ig2/5CZ5iLs7f83vpxboQO191BxVNNwxD8BCuqufgfRPD4ijUsoRaDWT4rVEps1TH6klNSf0L35WaLs4mVFzdXO3mRIn.jpg?quality=95&crop=160,8,362,362&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&cs=200x200", "domain": "ma_xing"}, "pacnythuk": {"vk_id": 112974978, "vk_name": "Valentin Ilichev", "avatar_url": "https://sun9-49.userapi.com/s/v1/ig2/ojijsr_oCps1B6eXvbznqPD0lCqeJJNf3gNicrHMcP5RSLauUtYBfOUm17sJMxbj8mG7KZHVq9GVpsblzynSivz3.jpg?quality=96&crop=45,289,598,598&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540&ava=1&cs=200x200", "domain": "pacnythuk55"}, "romix": {"vk_id": 40491805, "vk_name": "Romix Redin", "avatar_url": "https://sun4-21.userapi.com/s/v1/ig2/KuQ930aUJrOKpauJjDEc0-2sRaPjJo1N63e1SlBroyjECBF2532P4n3aNjYqpjlDLLbfopewzACXptEDqLc65zd8.jpg?quality=96&crop=201,202,1127,1127&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080&ava=1&cs=200x200", "domain": "id40491805"}, "ric25": {"vk_id": 333783566, "vk_name": "Ric Farnsword", "avatar_url": "https://sun9-47.userapi.com/s/v1/ig1/fPU_F5VxRK4hOwK5bqRmB_BnqcGrI3J-7m0pPZo6cAHD_j8NKO71i8ap7JBZcVPoiTba6Wyu.jpg?quality=96&crop=392,93,399,399&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&cs=200x200", "domain": "ric25"}, "memori": {"vk_id": 286855730, "vk_name": "Memori New", "avatar_url": "https://sun9-82.userapi.com/s/v1/ig1/g1YrbEPmWWHX8Qe-e_RdwSgMMvJgZdAUN1a-omzKON2vsJj7M38vpPgq-uDigdVhd5fRtTB6.jpg?quality=96&crop=0,0,2160,2160&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440&ava=1&cs=200x200", "domain": "brbl_kun"}, "leonudomlya": {"vk_id": 143684, "vk_name": "Roman Kuznetsov", "avatar_url": "https://sun4-21.userapi.com/s/v1/ig1/K8lopv8VQK7HctnYc2QehI5pB5ipPspLLvtuf_kf2qd8jKeoYt8RwtKZJlG6rXte8lHLYH6L.jpg?quality=96&crop=697,110,837,837&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&ava=1&cs=200x200", "domain": "id143684"}, "rock": {"vk_id": 859818719, "vk_name": "Dmitry Kolesnikov", "avatar_url": "https://sun9-40.userapi.com/s/v1/ig2/X3iXcguBVfKh7JZjyxW6RxOjrv5tTHR14X3cukx_gZFaOwAM7Pr4eaP_ZuNjxxU8jbX18Vid3CWmfaMWwmPKJUo_.jpg?quality=95&crop=438,0,924,924&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&ava=1&cs=200x200", "domain": "rock_eight"}, "буц": {"vk_id": 203194115, "vk_name": "Buts Tuts", "avatar_url": "https://sun4-21.userapi.com/s/v1/ig1/ImerPvfQ5kEIofKZDcaxrOImIl5dLvrQZjlk4iTXQWB_H81yXU7Fby6UnNKH1dLwb-18pVxA.jpg?quality=96&crop=22,0,347,347&as=32x32,48x48,72x72,108x108,160x160,240x240&ava=1&cs=200x200", "domain": "id203194115"}, "kubik": {"vk_id": 63552804, "vk_name": "Vladimir Bezrodny", "avatar_url": "https://sun4-7.userapi.com/s/v1/ig2/eE1zUdlFC4vrBC2xnLXoQySfIm9i-QiVN4KX2JEiaXVJGCdGQ_Bx0qEgPnsJZs7Hs1dJiWlMgy5kFkYn7ZYoyBm_.jpg?quality=96&crop=0,192,864,864&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&ava=1&cs=200x200", "domain": "id63552804"}, "yuliy_cezar": {"vk_id": 106241917, "vk_name": "Yuliy Gureu", "avatar_url": "https://sun4-18.userapi.com/s/v1/ig2/NDHEai84vrJBCb-tx1xyYwlwxfkghZkhQJxfnuCpxZEMLp4k_SbU0YB8hsYDh_qbWneV34iqAnNrr0sOdTJL3U3N.jpg?quality=95&crop=522,319,1563,1563&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440&ava=1&cs=200x200", "domain": "yuliy_gureu"}, "dune": {"vk_id": 4532629, "vk_name": "Dmitry Stukalov", "avatar_url": "https://sun4-8.userapi.com/s/v1/ig2/s-YfNg3GDx2y3PAVhRIudNyzR7DmhSmAXqBD_atg2CBPiD-qll-Vzqxu2K9jxxR0TKZGS6iinPfxX9_0cdLlqtnq.jpg?quality=96&crop=350,132,876,876&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&ava=1&cs=200x200", "domain": "dune91"}, "jamlight": {"vk_id": 177971007, "vk_name": "Vladimir Kotelnikov", "avatar_url": "https://sun9-46.userapi.com/impg/_nb2NhfE_jv_qxgCOx2FOjBdyXDTRZoApoB7ow/mLrG7mi-98Y.jpg?quality=96&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&sign=027f3a6ab46c06112aaff21998198fb8&u=Gsgve_JGBJIKsdpKeqSEdgzA8QnKETeW3ILhU4seZNI&cs=200x200", "domain": "id177971007"}, "yoxter": {"vk_id": 693390, "vk_name": "Georgy Fedosov", "avatar_url": "https://sun4-7.userapi.com/s/v1/ig1/UMkphAMXXNkz8nPeHSmCR2qaLqZRzNbam6rqyTV11KLHIzEJ4fLe6X391kXHP3yD89Nghg.jpg?quality=96&crop=385,47,426,426&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&cs=200x200", "domain": "yoxter"}, "frzz": {"vk_id": 178878295, "vk_name": "Alexey Usoltsev", "avatar_url": "https://sun4-20.userapi.com/s/v1/ig2/2cw1pO9U1aNtbv7Fciu4hC9MwtSqJVh13f5BUBy1_vAl1g0q0dlVKEoLLNolJXhJrcAxouRvNL3qFYxWsaIBapgM.jpg?quality=95&crop=124,464,1796,1796&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440&ava=1&cs=200x200", "domain": "frxxzz"}, "sokol": {"vk_id": 753577095, "vk_name": "Shtrybabon Shtrybabonku", "avatar_url": "https://sun4-10.userapi.com/s/v1/ig2/zm34niq0Xw8wDdyUv4q7TH2da7td4425qV-IqwHUv2WtXDHMOpqdEygHR0aFEG3P2A436R7w3-1ZolGi7DeVp-xz.jpg?quality=95&crop=28,28,389,389&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&cs=200x200", "domain": "shtrybabon"}, "hanter": {"vk_id": 444200773, "vk_name": "Dmitry Minakov", "avatar_url": "https://sun9-39.userapi.com/s/v1/ig2/yaonsl5OnfVMH4c_UjppR9fvTWRgb10Pu76chQ-f9WOzi76fzRoeTBdaXOZrE1niSTNWveOLF4bM35WADdS9z920.jpg?quality=95&crop=336,246,816,816&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&ava=1&cs=200x200", "domain": "id444200773"}, "taeda": {"vk_id": 24192052, "vk_name": "Alexey Petrov", "avatar_url": "https://sun4-15.userapi.com/s/v1/ig1/cr8AN15LLx3CdTL8ECOGM_YX1fGP4qywFVEqj00iiPKotHK3WVjb385E3QVtEslpaA_crpOK.jpg?quality=96&crop=197,24,662,662&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640&ava=1&cs=200x200", "domain": "id24192052"}, "ryumaru": {"vk_id": 284967568, "vk_name": "Roman Pasko", "avatar_url": "https://sun9-64.userapi.com/s/v1/ig2/zQ4J8M2ljMjaVlkF5uno_clktXSBAeynUt4xK_Tb2KSZslBJacvpk9DxFjBh89lfz8crs35ICFBji2fo3RguBYZX.jpg?quality=95&crop=384,324,1228,1228&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080&ava=1&cs=200x200", "domain": "lpasko2015"}, "ruby": {"vk_id": 170637841, "vk_name": "Timur Batkenov", "avatar_url": "https://sun9-69.userapi.com/s/v1/ig2/0acBW2_TDctsdYvAP_fj3fhDoTmLhjxV_z88VFyUuyK_CoVyz6uGm-LFS-4yfoEsHySEgHK207TYshyh2TJs2LQJ.jpg?quality=95&crop=72,72,256,256&as=32x32,48x48,72x72,108x108,160x160,240x240&ava=1&cs=200x200", "domain": "batkenov"}, "cyneprepou4uk": {"vk_id": 234423097, "vk_name": "Kay Bleyz", "avatar_url": "https://sun4-20.userapi.com/s/v1/ig1/Xk0dmK5UCalV4mlCnbjeViJWJ8MmP4Lu9YgIJzOX3RV7CykI0Kd4ILoj-4wzWPpN9CALWWLv.jpg?quality=96&crop=0,181,406,406&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&cs=200x200", "domain": "cyneprepou4uk"}};
+
+    let currentFilter = { search: '', author: '' };
+    let currentRandom = null;
+
+    function getAvatar(author) {
+      const low = (author || '').toLowerCase();
+      if (AVATARS[low]) return AVATARS[low];
+      return `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(author)}`;
+    }
+
+    function rollRandomQuote() {
+      if (!QUOTES || QUOTES.length === 0) return;
+      const idx = Math.floor(Math.random() * QUOTES.length);
+      currentRandom = QUOTES[idx];
+      const tEl = document.getElementById('randomQuoteText');
+      const aEl = document.getElementById('randomQuoteAuthor');
+      const idEl = document.getElementById('randomQuoteId');
+      const avEl = document.getElementById('randomQuoteAvatar');
+
+      if (tEl) tEl.innerText = `«${currentRandom.text}»`;
+      if (aEl) aEl.innerText = currentRandom.author;
+      if (idEl) idEl.innerText = `#${currentRandom.id} в архиве`;
+      if (avEl) avEl.src = getAvatar(currentRandom.author);
+    }
+
+    function copyRandomQuote(btn) {
+      if (!currentRandom) return;
+      const fullText = `«${currentRandom.text}» — ${currentRandom.author} [Цитата #${currentRandom.id}]`;
+      navigator.clipboard.writeText(fullText).then(() => {
+        const old = btn.innerText;
+        btn.innerText = '✅ Скопировано!';
+        btn.style.color = '#22c55e';
+        setTimeout(() => {
+          btn.innerText = old;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    function copyCardQuote(id, btn) {
+      const q = QUOTES.find(x => String(x.id) === String(id));
+      if (!q) return;
+      const fullText = `«${q.text}» — ${q.author} [Цитата #${q.id}]`;
+      navigator.clipboard.writeText(fullText).then(() => {
+        const old = btn.innerText;
+        btn.innerText = '✅ Скопировано!';
+        btn.style.color = '#22c55e';
+        setTimeout(() => {
+          btn.innerText = old;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    function initFilters() {
+      const authorMap = {};
+      QUOTES.forEach(q => {
+        const a = q.author || 'Неизвестный';
+        authorMap[a] = (authorMap[a] || 0) + 1;
+      });
+
+      const sortedAuthors = Object.keys(authorMap).sort((a, b) => authorMap[b] - authorMap[a]);
+
+      const sel = document.getElementById('authorSelect');
+      sortedAuthors.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a;
+        opt.textContent = `${a} (${authorMap[a]})`;
+        sel.appendChild(opt);
+      });
+
+      const chipsEl = document.getElementById('authorChips');
+      const allChip = document.createElement('button');
+      allChip.className = 'author-chip active';
+      allChip.textContent = `Все авторы (${QUOTES.length})`;
+      allChip.onclick = () => selectAuthorChip('');
+      chipsEl.appendChild(allChip);
+
+      sortedAuthors.slice(0, 12).forEach(a => {
+        const chip = document.createElement('button');
+        chip.className = 'author-chip';
+        chip.textContent = `${a} (${authorMap[a]})`;
+        chip.onclick = () => selectAuthorChip(a);
+        chipsEl.appendChild(chip);
+      });
+    }
+
+    function selectAuthorChip(author) {
+      currentFilter.author = author;
+      document.getElementById('authorSelect').value = author;
+      document.querySelectorAll('.author-chip').forEach(c => {
+        if ((!author && c.textContent.startsWith('Все авторы')) || (author && c.textContent.startsWith(author))) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+      renderQuotesGrid();
+    }
+
+    function handleSearch() {
+      currentFilter.search = document.getElementById('searchInput').value.trim().toLowerCase();
+      renderQuotesGrid();
+    }
+
+    function handleAuthorChange() {
+      const a = document.getElementById('authorSelect').value;
+      selectAuthorChip(a);
+    }
+
+    function renderQuotesGrid() {
+      const grid = document.getElementById('quotesGrid');
+      const counter = document.getElementById('quoteCounter');
+
+      const filtered = QUOTES.filter(q => {
+        if (currentFilter.author && q.author !== currentFilter.author) return false;
+        if (currentFilter.search) {
+          const tMatch = (q.text || '').toLowerCase().includes(currentFilter.search);
+          const aMatch = (q.author || '').toLowerCase().includes(currentFilter.search);
+          const idMatch = String(q.id) === currentFilter.search.replace('#', '');
+          if (!tMatch && !aMatch && !idMatch) return false;
+        }
+        return true;
+      });
+
+      counter.innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; background: #0c1e32; border: 2px dashed #234568; border-radius: 8px; padding: 48px; text-align: center; color: #94a3b8;">
+            <div style="font-size: 28px; margin-bottom: 8px;">🤔</div>
+            <div style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px;">Ничего не найдено</div>
+            <div style="font-size: 13px;">Попробуйте изменить поисковый запрос или выбрать другого автора.</div>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(q => {
+        const av = getAvatar(q.author);
+        return `
+          <div class="quote-card">
+            <div>
+              <div class="quote-card-header">
+                <div class="quote-card-author">
+                  <img src="${av}" class="author-avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(q.author)}'">
+                  <span class="author-name">${q.author}</span>
+                </div>
+                <span class="quote-id-tag">#${q.id}</span>
+              </div>
+              <div class="quote-bubble">
+                «${q.text}»
+              </div>
+            </div>
+            <div class="quote-card-actions">
+              <a href="soccer.html#/player/${encodeURIComponent(q.author)}" class="nav-link-btn" style="padding: 3px 8px; font-size: 11px;" title="Искать игрока в футбольном рейтинге">👤 Профиль</a>
+              <button class="copy-btn" onclick="copyCardQuote('${q.id}', this)">📋 Копировать</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initFilters();
+      rollRandomQuote();
+      renderQuotesGrid();
+    });
+  </script>
+  <!-- Persistent Audio Deck & PJAX Router -->
+  <script src="audio/playlist-manifest.js"></script>
+<script src="audio-player.js"></script>
+</body>
+</html>
