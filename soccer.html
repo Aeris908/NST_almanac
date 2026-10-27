@@ -3814,11 +3814,11 @@
 
       <div class="header-meta-stats">
 
-        <span class="meta-stat-pill">🎮 <strong id="hdrMatches">2 414</strong> матчей</span>
+        <span class="meta-stat-pill">🎮 <strong>2 414</strong> матчей</span>
 
-        <span class="meta-stat-pill">⚽ <strong id="hdrGoals">15 531</strong> гол</span>
+        <span class="meta-stat-pill">⚽ <strong>15 531</strong> гол</span>
 
-        <span class="meta-stat-pill">👥 <strong id="hdrPlayers">103</strong> игрока</span>
+        <span class="meta-stat-pill">👥 <strong>103</strong> игрока</span>
 
         <a href="index.html" class="meta-vk-btn" style="background: rgba(255, 203, 5, 0.15); border-color: var(--nes-gold); color: var(--nes-gold) !important;" title="Вернуться на главную страницу Альманаха Nekketsu">🏛️ В Альманах</a>
         <a href="quotes.html" class="meta-vk-btn" style="background: rgba(255, 203, 5, 0.08); border-color: rgba(255, 203, 5, 0.4); color: var(--nes-gold) !important;" title="Золотой Цитатник Сообщества NST">💬 Цитатник ↗</a>
@@ -3868,7 +3868,7 @@
           <button class="filter-btn" onclick="filterDivision('Средняя', this)">🔰 Средняя лига (8)</button>
           <button class="filter-btn" onclick="filterDivision('Дворовая', this)">⚽ Дворовая лига (5)</button>
           <button class="filter-btn inactive-tab" id="btnInactiveFilter" onclick="filterDivision('inactive', this)">🏛️ Зал славы (11)</button>
-          <button class="filter-btn inactive-tab" id="btnAllInactiveFilter" onclick="filterDivision('all_inactive', this)">📦 Все неактивные (78)</button>
+          <button class="filter-btn inactive-tab" onclick="filterDivision('all_inactive', this)">📦 Все неактивные (78)</button>
         </div>
         <input type="text" class="clean-search" id="tableSearch" placeholder="Поиск по нику или имени..." oninput="renderTable()">
       </div>
@@ -3960,9 +3960,9 @@
 
           <button class="filter-btn inactive-tab" onclick="filterPlayerCards('hof', this)">⭐ Зал славы (11)</button>
 
-          <button class="filter-btn inactive-tab" id="btnAllInactiveCards" onclick="filterPlayerCards('all_inactive', this)">📦 Все неактивные (78)</button>
+          <button class="filter-btn inactive-tab" onclick="filterPlayerCards('all_inactive', this)">📦 Все неактивные (78)</button>
 
-          <button class="filter-btn" id="btnFullBaseCards" onclick="filterPlayerCards('all', this)">🌐 Полная база (100)</button>
+          <button class="filter-btn" onclick="filterPlayerCards('all', this)">🌐 Полная база (100)</button>
 
         </div>
 
@@ -4116,7 +4116,7 @@
 
             </div>
 
-            <div id="h2hBaseCount" style="font-size: 12px; color: #cbd5e1; font-weight: 600;">База включает 2 562 матча лиги, кубков и спецтурниров</div>
+            <div style="font-size: 12px; color: #cbd5e1; font-weight: 600;">База включает 2 562 матча лиги, кубков и спецтурниров</div>
 
           </div>
 
@@ -4492,15 +4492,6 @@
 
 
 
-    // Escapes a value that is embedded into an inline onclick="..." single-quoted string.
-    function attrTitle(str) {
-      return String(str || '')
-        .replace(/\\/g, '\\\\')
-        .replace(/'/g, "\\'")
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;');
-    }
-
     let currentDivisionFilter = 'active';
 
     let currentSortColumn = 'active_elo';
@@ -4509,7 +4500,7 @@
 
     let selectedSeasonId = '9';
 
-    let playerCardFilter = 'active';
+    let playerCardFilter = 'all';
 
     let seasonPlayerFilter = 'all';
 
@@ -4521,84 +4512,24 @@
     let teamPlayoffViewMode = 'bracket';
     let specialPlayoffViewMode = 'bracket';
 
-    // Currently pinned bracket path (declared early: render*Details resets it).
-    let lockedBracketPlayer = null;
-
     // Router
-    // pushState throws a SecurityError on file:// (origin "null"), so degrade to the hash API.
-    function safePushHash(hash) {
-      if (!hash || window.location.hash === hash) return;
-      try {
-        history.pushState(null, '', hash);
-      } catch (err) {
-        try { window.location.hash = hash; } catch (err2) {}
-      }
-    }
-
-    function safeReplaceHash(hash) {
-      if (!hash) return;
-      try {
-        history.replaceState(null, '', hash);
-      } catch (err) {
-        try { window.location.hash = hash; } catch (err2) {}
-      }
-    }
-
-    function getActiveTabId() {
-      const section = document.querySelector('.view-content.active');
-      return section ? section.id.replace('tab-', '') : 'leaderboard';
-    }
-
-    function hidePlayerModal() {
-      const modal = document.getElementById('playerModal');
-      if (modal) modal.classList.remove('active');
-    }
-
-    const VALID_TABS = ['leaderboard', 'players', 'seasons', 'teams', 'special', 'h2h', 'clutch'];
-    let lastRouteHash = '';
-    let lastRouteTs = 0;
-
     function handleRouting() {
       const hash = window.location.hash || '#/leaderboard';
-
-      // popstate AND hashchange fire on a real Back → do not render the view twice.
-      const now = Date.now();
-      if (hash === lastRouteHash && now - lastRouteTs < 200) return;
-      lastRouteHash = hash;
-      lastRouteTs = now;
-
       if (hash.startsWith('#/player/')) {
-        let pName = hash.replace('#/player/', '');
-        try { pName = decodeURIComponent(pName); } catch (err) { /* malformed %-escape */ }
-        if (!openPlayerModal(pName)) {
-          // Unknown nickname (e.g. a quote author without a league profile):
-          // show the full player grid with a prefilled search instead of a dead link.
-          hidePlayerModal();
-          switchTab('players');
-          const allBtn = document.getElementById('btnFullBaseCards');
-          if (allBtn) filterPlayerCards('all', allBtn);
-          const search = document.getElementById('cardsSearch');
-          if (search) search.value = pName;
-          renderCards();
-          safeReplaceHash('#/players');
-        }
+        const pName = decodeURIComponent(hash.replace('#/player/', ''));
+        openPlayerModal(pName);
       } else if (hash.startsWith('#/season/')) {
         const sId = hash.replace('#/season/', '');
-        switchTab('seasons', false);
+        switchTab('seasons');
         selectSeason(sId);
       } else {
-        hidePlayerModal();
         const tab = hash.replace('#/', '') || 'leaderboard';
         switchTab(tab);
       }
     }
 
-    // Browser Back/Forward must re-render the view, otherwise the URL and the visible tab diverge.
-    window.addEventListener('popstate', handleRouting);
-
-    function switchTab(tabId, pushHash = true) {
-      if (VALID_TABS.indexOf(tabId) === -1) tabId = 'leaderboard';
-      document.querySelectorAll('.view-content').forEach(s => s.classList.remove('active'));
+    function switchTab(tabId) {
+            document.querySelectorAll('.view-content').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
       const activeSection = document.getElementById(`tab-${tabId}`);
@@ -4620,12 +4551,9 @@
         setTimeout(() => drawBracketConnectors('specialBracketWrapper', 'specialBracketContainer', 'specialBracketSvg'), 60);
       }
 
-      if (pushHash) {
-        hidePlayerModal();
-        safePushHash(`#/${tabId}`);
+      if (window.location.hash !== `#/${tabId}` && !window.location.hash.startsWith('#/player/')) {
+        history.pushState(null, null, `#/${tabId}`);
       }
-
-      if (typeof window.scrollTo === 'function') window.scrollTo(0, 0);
     }
 
     // HUD Strip
@@ -4648,7 +4576,7 @@
         <div class="hud-card">
           <div class="hud-label">Овертаймы и пенальти</div>
           <div class="hud-val" style="color: var(--nes-cyan);">${m.total_ot_pk_matches}</div>
-          <div class="hud-sub">${m.total_matches_analyzed ? (m.total_ot_pk_matches / m.total_matches_analyzed * 100).toFixed(1) : '0.0'}% упорных матчей до золотого гола</div>
+          <div class="hud-sub">18.4% упорных матчей до золотого гола</div>
         </div>
         <div class="hud-card">
           <div class="hud-label">Активных / Всего игроков</div>
@@ -4658,45 +4586,21 @@
       `;
 
       const hofCount = DATA.profiles.filter(p => p.is_hall_of_fame).length;
-      const fmt = n => Number(n || 0).toLocaleString('ru-RU');
       const btnAct = document.getElementById('btnActiveFilter');
       const btnInact = document.getElementById('btnInactiveFilter');
       if (btnAct) btnAct.innerText = `▶ Все активные игроки (${m.active_players_count})`;
       if (btnInact) btnInact.innerText = `⭐ Зал славы (${hofCount})`;
-
-      // Counters in the filter bars were hardcoded and drifted away from the data (78/100 vs 70/92).
-      const btnAllInact = document.getElementById('btnAllInactiveFilter');
-      if (btnAllInact) btnAllInact.innerText = `📦 Все неактивные (${m.inactive_players_count})`;
-      const btnAllInactCards = document.getElementById('btnAllInactiveCards');
-      if (btnAllInactCards) btnAllInactCards.innerText = `📦 Все неактивные (${m.inactive_players_count})`;
-      const btnFullBase = document.getElementById('btnFullBaseCards');
-      if (btnFullBase) btnFullBase.innerText = `🌐 Полная база (${m.total_players_tracked})`;
-
-      // Keep the header stats in sync with the embedded dataset instead of stale literals.
-      const hdrMatches = document.getElementById('hdrMatches');
-      if (hdrMatches) hdrMatches.textContent = fmt(m.total_matches_analyzed);
-      const hdrGoals = document.getElementById('hdrGoals');
-      if (hdrGoals) hdrGoals.textContent = fmt(m.total_goals_recorded);
-      const hdrPlayers = document.getElementById('hdrPlayers');
-      if (hdrPlayers) hdrPlayers.textContent = fmt(m.total_players_tracked);
     }
 
     // Leaderboard
     function filterDivision(div, btn) {
       currentDivisionFilter = div;
-      document.querySelectorAll('#tab-leaderboard .filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderTable();
     }
 
     function sortTable(col) {
-      if (col === 'rank') {
-        // «Место» is only the row position: clicking it restores the default Elo ranking.
-        currentSortColumn = null;
-        sortAsc = false;
-        renderTable();
-        return;
-      }
       if (currentSortColumn === col) sortAsc = !sortAsc;
       else { currentSortColumn = col; sortAsc = false; }
       renderTable();
@@ -4726,16 +4630,12 @@
         list = list.filter(p => p.player.toLowerCase().includes(q) || (p.vk_name && p.vk_name.toLowerCase().includes(q)));
       }
 
-      if (currentSortColumn) {
-        list.sort((a, b) => {
-          let v1 = a[currentSortColumn];
-          let v2 = b[currentSortColumn];
-          if (typeof v1 === 'string') return sortAsc ? v1.localeCompare(v2) : v2.localeCompare(v1);
-          return sortAsc ? (v1 - v2) : (v2 - v1);
-        });
-      } else {
-        list.sort((a, b) => (b.active_elo || 0) - (a.active_elo || 0));
-      }
+      list.sort((a, b) => {
+        let v1 = a[currentSortColumn];
+        let v2 = b[currentSortColumn];
+        if (typeof v1 === 'string') return sortAsc ? v1.localeCompare(v2) : v2.localeCompare(v1);
+        return sortAsc ? (v1 - v2) : (v2 - v1);
+      });
 
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = list.map((p, idx) => {
@@ -4903,20 +4803,10 @@
 
     // Modal Profile
     function openPlayerModal(pName) {
-      const rawName = String(pName || '').trim();
-      const findProfile = n => DATA.profiles.find(x => x.player.toLowerCase() === String(n || '').trim().toLowerCase());
-      let p = findProfile(rawName);
-      // Pairs and composite values: "Kunio / ectoPower", "RVD & PacnyTHuK (Высшая)".
-      if (!p && rawName.includes('/')) p = findProfile(rawName.split('/')[0]);
-      if (!p && rawName.includes('&')) p = findProfile(rawName.split('&')[0]);
-      if (!p) p = findProfile(rawName.replace(/\s*\([^)]*\)\s*$/, ''));
-      if (!p) {
-        const low = rawName.toLowerCase();
-        p = DATA.profiles.find(x => x.player.replace(/\s*\([^)]*\)\s*$/, '').trim().toLowerCase() === low);
-      }
-      if (!p) return false;
+      const p = DATA.profiles.find(x => x.player.toLowerCase() === pName.toLowerCase());
+      if (!p) return;
 
-      safePushHash(`#/player/${encodeURIComponent(p.player)}`);
+      window.location.hash = `#/player/${p.player}`;
 
       const header = document.getElementById('modalHeader');
       const body = document.getElementById('modalBody');
@@ -5170,7 +5060,6 @@
       `;
 
       document.getElementById('playerModal').classList.add('active');
-      return true;
     }
 
     function filterPlayerModalMatches(cat, btn) {
@@ -5246,39 +5135,18 @@
       if (extLink) extLink.href = url;
 
       let embedUrl = url;
-      let externalOnly = false;
-      if (url.includes('youtube.com/watch?v=') || url.includes('youtube.com/watch?')) {
-        const m = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+      if (url.includes('youtube.com/watch?v=' || url.includes('youtube.com/watch?'))) {
+        const m = url.match(/v=([a-zA-Z0-9_-]+)/);
         if (m) embedUrl = `https://www.youtube.com/embed/${m[1]}?autoplay=1`;
       } else if (url.includes('youtu.be/')) {
         const m = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
         if (m) embedUrl = `https://www.youtube.com/embed/${m[1]}?autoplay=1`;
       } else if (url.includes('vk.com/video') || url.includes('vk.ru/video')) {
         const m = url.match(/video(-?\d+)_(\d+)/);
-        const hashMatch = url.match(/[?&]hash=([a-zA-Z0-9]+)/);
-        if (m && hashMatch) {
-          embedUrl = `https://vk.ru/video_ext.php?oid=${m[1]}&id=${m[2]}&hash=${hashMatch[1]}`;
-        } else {
-          // VK refuses video_ext.php without the per-video hash → blank iframe.
-          externalOnly = true;
-        }
+        if (m) embedUrl = `https://vk.ru/video_ext.php?oid=${m[1]}&id=${m[2]}&hash=`;
       }
 
-      if (externalOnly) {
-        const safeUrl = String(url).replace(/"/g, '&quot;').replace(/</g, '&lt;');
-        iframe.removeAttribute('src');
-        iframe.srcdoc = '<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"></head>'
-          + '<body style="margin:0;min-height:420px;display:flex;align-items:center;justify-content:center;background:#050d18;color:#cbd5e1;font-family:Rubik,Arial,sans-serif;text-align:center;">'
-          + '<div style="padding:28px;max-width:460px;">'
-          + '<div style="font-size:34px;margin-bottom:10px;">🎬</div>'
-          + '<div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">Видео хранится во ВКонтакте</div>'
-          + '<div style="font-size:13px;line-height:1.5;margin-bottom:16px;">ВКонтакте не разрешает встраивать ролики без служебного токена, поэтому запись открывается в новой вкладке.</div>'
-          + '<a href="' + safeUrl + '" target="_blank" rel="noopener" style="display:inline-block;background:#ffcb05;color:#000;font-weight:800;padding:10px 18px;border-radius:4px;text-decoration:none;">Открыть во ВКонтакте ↗</a>'
-          + '</div></body></html>';
-      } else {
-        iframe.removeAttribute('srcdoc');
-        iframe.src = embedUrl;
-      }
+      iframe.src = embedUrl;
       modal.style.display = 'flex';
     }
 
@@ -5286,17 +5154,13 @@
       if (e && e.target && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('videoPlayerIframe');
-      if (iframe) {
-        iframe.removeAttribute('srcdoc');
-        iframe.src = 'about:blank';
-      }
+      if (iframe) iframe.src = '';
       if (modal) modal.style.display = 'none';
     }
 
     function closePlayerModal() {
-      hidePlayerModal();
-      // Keep the URL on the tab the player was opened from (was always #/leaderboard before).
-      if (window.location.hash.startsWith('#/player/')) safePushHash(`#/${getActiveTabId()}`);
+      document.getElementById('playerModal').classList.remove('active');
+      window.location.hash = '#/leaderboard';
     }
 
     // Seasons Module
@@ -5309,7 +5173,7 @@
 
       bar.innerHTML = DATA.seasons.map(s => `
 
-        <button class="filter-btn season-tab-btn ${String(s.id) === String(selectedSeasonId) ? 'active' : ''}" onclick="selectSeason('${s.id}')">
+        <button class="filter-btn season-tab-btn ${s.id === selectedSeasonId ? 'active' : ''}" onclick="selectSeason('${s.id}')">
 
           ${s.name} (${s.year} г.)
 
@@ -5436,9 +5300,6 @@
       const s = DATA.seasons.find(x => String(x.id) === String(sId));
 
       if (!s) return;
-
-      // A rebuilt bracket starts unpinned, otherwise hover-highlighting stays dead.
-      lockedBracketPlayer = null;
 
 
 
@@ -5696,7 +5557,7 @@
 
               <div style="display: flex; align-items: center; justify-content: center; gap: 14px; flex: 2; flex-wrap: wrap;">
 
-                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: 1;${prof1 ? ' cursor: pointer;' : ''}"${prof1 ? ` onclick="openPlayerModal('${m.p1}')"` : ''}>
+                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: 1; cursor: pointer;" onclick="openPlayerModal('${m.p1}')">
 
                   <span style="font-family: var(--font-title); font-size: 14px; ${isP1Win ? 'color: var(--nes-gold); font-weight: 800;' : 'color: #fff;'}; text-align: right;">${m.p1}</span>
 
@@ -5712,7 +5573,7 @@
 
                 </div>
 
-                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; flex: 1;${prof2 ? ' cursor: pointer;' : ''}"${prof2 ? ` onclick="openPlayerModal('${m.p2}')"` : ''}>
+                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; flex: 1; cursor: pointer;" onclick="openPlayerModal('${m.p2}')">
 
                   <img src="${av2}" style="width: 24px; height: 24px; border: 1px solid #fff;" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${m.p2}'">
 
@@ -5748,7 +5609,7 @@
 
                     ` : `
 
-                      <button type="button" class="source-btn-video" onclick="event.stopPropagation(); openVideoModal('${m.video_url}', '${attrTitle(sMatchTitle)}')" title="Смотреть в плеере на сайте">
+                      <button type="button" class="source-btn-video" onclick="event.stopPropagation(); openVideoModal('${m.video_url}', '${sMatchTitle.replace(/'/g, "\'")}')" title="Смотреть в плеере на сайте">
 
                         🎬 Видео
 
@@ -6004,8 +5865,6 @@
 
                     const rankColor = idx === 0 ? 'var(--nes-gold)' : (idx === 1 ? '#cbd5e1' : (idx === 2 ? '#d97706' : '#94a3b8'));
 
-                    const hasProf = DATA.profiles.some(x => x.player.toLowerCase() === String(p.name || '').toLowerCase());
-
 
 
                     return `
@@ -6016,7 +5875,7 @@
 
                         <td>
 
-                          <div style="display: flex; align-items: center; gap: 8px;${hasProf ? ' cursor: pointer;' : ''}"${hasProf ? ` onclick="openPlayerModal('${p.name}')"` : ''}>
+                          <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;" onclick="openPlayerModal('${p.name}')">
 
                             <img src="${p.avatar}" style="width: 20px; height: 20px; border-radius: 2px;" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${p.name}'">
 
@@ -6038,9 +5897,7 @@
 
                         <td>
 
-                          ${hasProf
-                            ? `<button class="part-prof-btn" onclick="openPlayerModal('${p.name}')" title="Открыть анкету игрока">↗</button>`
-                            : `<span style="color: #64748b; font-size: 11px;" title="Анкета игрока ещё не заведена">—</span>`}
+                          <button class="part-prof-btn" onclick="openPlayerModal('${p.name}')" title="Открыть анкету игрока">↗</button>
 
                         </td>
 
@@ -6334,7 +6191,7 @@
 
                 if (g.video_url) {
 
-                  chipsHtml += `<button type="button" class="source-btn-video" style="font-size: 10px; padding: 2px 6px;" onclick="event.stopPropagation(); openVideoModal('${g.video_url}', '${attrTitle(sMatchTitle)}')">🎬 Видео</button>`;
+                  chipsHtml += `<button type="button" class="source-btn-video" style="font-size: 10px; padding: 2px 6px;" onclick="event.stopPropagation(); openVideoModal('${g.video_url}', '${sMatchTitle.replace(/'/g, "'")}')">🎬 Видео</button>`;
 
                 }
 
@@ -6432,7 +6289,7 @@
 
                 <div class="bracket-round-header" style="border-color: var(--nes-gold); color: var(--nes-gold); box-shadow: 0 0 10px rgba(255,183,3,0.3);">🏆 ЧЕМПИОН</div>
 
-                <div class="bracket-champion-box" data-player="${championName}" onmouseenter="highlightPlayerBracketPath('${championName}')" onmouseleave="clearPlayerBracketHighlight()" onclick="selectPlayerBracketPath('${championName}')">
+                <div class="bracket-champion-box" data-player="${championName}">
 
                   <div style="font-size: 28px;">👑</div>
 
@@ -7060,10 +6917,7 @@
 
       const topScorers = DATA.top_scorers_leaders || [];
 
-      // WiSe played a single season (1 bronze) — he is not an "old guard" veteran,
-      // so keep him out of the longevity block.
-      const veterans = (DATA.veterans_longevity || [])
-        .filter(v => String(v.player || '').trim().toLowerCase() !== 'wise');
+      const veterans = DATA.veterans_longevity || [];
 
 
 
@@ -7537,19 +7391,6 @@
 
     // Head-to-Head & Rivalries Engine
 
-    // "RVD" (blitz data) vs "RVD (МГБ)" (profile) used to be two different players.
-    function canonicalPlayerName(name) {
-      const raw = String(name || '').trim();
-      if (!raw) return raw;
-      const low = raw.toLowerCase();
-      const exact = (DATA.profiles || []).find(p => p.player.toLowerCase() === low);
-      if (exact) return exact.player;
-      const base = (DATA.profiles || []).find(p =>
-        p.player.replace(/\s*\([^)]*\)\s*$/, '').trim().toLowerCase() === low
-      );
-      return base ? base.player : raw;
-    }
-
     function getAllMatches() {
 
       const all = [];
@@ -7568,9 +7409,6 @@
 
           if (!mc.stage) mc.stage = mc.tour || 'Матч';
 
-          mc.p1 = canonicalPlayerName(mc.p1);
-          mc.p2 = canonicalPlayerName(mc.p2);
-
           all.push(mc);
 
         });
@@ -7586,22 +7424,6 @@
         if (!mc.league) mc.league = 'Турнир';
 
         if (!mc.stage) mc.stage = mc.tour || 'Матч';
-
-        mc.p1 = canonicalPlayerName(mc.p1);
-        mc.p2 = canonicalPlayerName(mc.p2);
-
-        // Some blitz/penalty entries only carry a text result ("победа Nick") plus a
-        // 0:0 fallback — that used to be counted as a draw in H2H and skewed win rates.
-        if (Number(mc.s1 || 0) === 0 && Number(mc.s2 || 0) === 0) {
-          const winMatch = String(mc.score || '').match(/победа\s+(.+)/i);
-          if (winMatch) {
-            const winner = normTeamName(winMatch[1]);
-            const n1 = normTeamName(mc.p1);
-            const n2 = normTeamName(mc.p2);
-            if (winner && n1 && winner.includes(n1) && !(n2 && winner.includes(n2))) { mc.s1 = 1; mc.s2 = 0; }
-            else if (winner && n2 && winner.includes(n2)) { mc.s1 = 0; mc.s2 = 1; }
-          }
-        }
 
         all.push(mc);
 
@@ -7639,7 +7461,7 @@
 
             if (!p) return;
 
-            const pNorm = canonicalPlayerName(p);
+            const pNorm = p.trim();
 
             const pLow = pNorm.toLowerCase();
 
@@ -7656,17 +7478,6 @@
       });
 
 
-
-      // Special tournaments were missing from both dropdowns (e.g. BZK played only a blitz).
-      (DATA.special_matches || []).forEach(m => {
-        [m.p1, m.p2].forEach(raw => {
-          if (!raw) return;
-          if (/[&+\/]/.test(raw)) return; // "sokol & PacnyTHuK" is a pair, not a player
-          const pNorm = canonicalPlayerName(raw);
-          const pLow = pNorm.toLowerCase();
-          if (!canonicalMap.has(pLow)) canonicalMap.set(pLow, pNorm);
-        });
-      });
 
       const masterNames = (DATA.profiles || []).map(p => p.player);
 
@@ -8236,12 +8047,6 @@
 
       initH2HControls();
 
-      // "2 562" was a stale literal: show how many matches the calculator actually scans.
-      const baseCount = document.getElementById('h2hBaseCount');
-      if (baseCount) {
-        baseCount.textContent = `База включает ${getAllMatches().length.toLocaleString('ru-RU')} матчей лиги, кубков и спецтурниров`;
-      }
-
 
 
       // Default pair selection
@@ -8492,45 +8297,6 @@
 
 
 
-    // --- Shared helpers for team/series scores -------------------------------
-    // Data mixes "5:3", "Победа Kamaz/Jamlight" and "Победа A & B (Высшая)".
-    // The old code compared "kamaz/jamlight" with "kamaz & jamlight" and silently
-    // awarded the win to the wrong pair, so both sides are normalized here.
-    function normTeamName(str) {
-      return String(str || '')
-        .toLowerCase()
-        .replace(/ё/g, 'е')
-        .replace(/[&+\/]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-    }
-
-    function resolveSeriesWinner(score, t1, t2) {
-      const raw = String(score || '').trim();
-      if (!raw) return null;
-
-      const numeric = raw.match(/^(\d+)\s*[:–—-]\s*(\d+)$/);
-      if (numeric) {
-        const a = parseInt(numeric[1], 10) || 0;
-        const b = parseInt(numeric[2], 10) || 0;
-        return a > b ? 't1' : (b > a ? 't2' : null);
-      }
-
-      const a = normTeamName(t1);
-      const b = normTeamName(t2);
-      const low = raw.toLowerCase();
-      const winIdx = low.indexOf('победа');
-      const after = normTeamName(winIdx >= 0 ? low.slice(winIdx + 6) : low);
-
-      if (a && b) {
-        if (after.includes(a) && !after.includes(b)) return 't1';
-        if (after.includes(b) && !after.includes(a)) return 't2';
-      }
-      if (a && after.includes(a)) return 't1';
-      if (b && after.includes(b)) return 't2';
-      return null;
-    }
-
     function renderTeamTournamentDetails() {
 
       const container = document.getElementById('teamTournamentDetailContainer');
@@ -8545,25 +8311,9 @@
 
       if (!t) return;
 
-      lockedBracketPlayer = null;
-
-      // Keep the selector bar in sync when we silently fell back to the first tournament.
-      if (t.id !== selectedTeamTournId) {
-        selectedTeamTournId = t.id;
-        renderTeamTournamentsBar();
-      }
 
 
-
-      const rawMatches = t.matches || [];
-      // Several tournaments ship only playoff series (t1/t2/score) — listing them is
-      // far better than a permanently empty "Все матчи" tab showing "0 из 0".
-      const matches = (rawMatches.length > 0 ? rawMatches : (t.playoff_matches || [])).map(m => Object.assign({}, m, {
-        t1: m.t1 || '',
-        t2: m.t2 || '',
-        score: m.score || '—',
-        tour: m.tour || m.stage || 'Плей-офф'
-      }));
+      const matches = t.matches || [];
 
       const divisions = t.divisions || {};
 
@@ -8893,10 +8643,9 @@
               const parts = String(m.score).split(':');
               s1 = parseInt(parts[0], 10) || 0;
               s2 = parseInt(parts[1], 10) || 0;
-            } else if (m.score) {
-              const seriesWinner = resolveSeriesWinner(m.score, p1, p2);
-              if (seriesWinner === 't1') { s1 = 1; s2 = 0; }
-              else if (seriesWinner === 't2') { s1 = 0; s2 = 1; }
+            } else if (m.score && String(m.score).toLowerCase().includes('победа')) {
+              if (String(m.score).toLowerCase().includes(p1.toLowerCase())) { s1 = 1; s2 = 0; }
+              else { s1 = 0; s2 = 1; }
             }
             return {
               p1: p1,
@@ -8913,8 +8662,8 @@
           const roundOrderDef = [
             { key: '1/4', label: '1/4 Финала', weight: 1 },
             { key: '1/2', label: 'Полуфинал', weight: 2 },
-            { key: 'финал', label: 'Гранд-Финал', weight: 4 },
-            { key: '3', label: 'За 3-е место', weight: 5 }
+            { key: '3', label: 'За 3-е место', weight: 3 },
+            { key: 'финал', label: 'Гранд-Финал', weight: 4 }
           ];
 
           function getTeamRoundDef(rName) {
@@ -9565,13 +9314,6 @@
 
       if (!t) return;
 
-      lockedBracketPlayer = null;
-
-      if (t.id !== selectedSpecialTournId) {
-        selectedSpecialTournId = t.id;
-        renderSpecialTournamentsBar();
-      }
-
 
 
       const matches = t.matches || [];
@@ -9704,7 +9446,7 @@
 
               <div style="display: flex; align-items: center; justify-content: center; gap: 14px; flex: 2; flex-wrap: wrap;">
 
-                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: 1;${prof1 ? ' cursor: pointer;' : ''}"${prof1 ? ` onclick="openPlayerModal('${m.p1}')"` : ''}>
+                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: 1; cursor: pointer;" onclick="openPlayerModal('${m.p1}')">
 
                   <span style="font-family: var(--font-title); font-size: 14px; color: #fff; text-align: right;">${m.p1}</span>
 
@@ -9718,7 +9460,7 @@
 
                 </div>
 
-                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; flex: 1;${prof2 ? ' cursor: pointer;' : ''}"${prof2 ? ` onclick="openPlayerModal('${m.p2}')"` : ''}>
+                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; flex: 1; cursor: pointer;" onclick="openPlayerModal('${m.p2}')">
 
                   <img src="${av2}" style="width: 24px; height: 24px; border: 1px solid #fff;" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${m.p2}'">
 
@@ -9826,9 +9568,9 @@
 
                         <td style="font-weight: 700; color: #fff;">${r.team}</td>
 
-                        <td style="font-family: var(--font-mono);">${((r.w || 0) + (r.wp || 0) + (r.l || 0) + (r.lp || 0)) || r.games || 0}</td>
+                        <td style="font-family: var(--font-mono);">${r.games}</td>
 
-                        <td style="font-family: var(--font-mono); color: var(--nes-green);">${(r.w || 0) + (r.wp || 0)}</td>
+                        <td style="font-family: var(--font-mono); color: var(--nes-green);">${r.w + (r.wp || 0)}</td>
 
                         <td style="font-family: var(--font-mono); color: var(--nes-red);">${r.l + (r.lp || 0)}</td>
 
@@ -10001,8 +9743,7 @@
       else if (specialSubTab === 'playoff') {
         const rawPlayoff = (t.playoff && t.playoff.length > 0) ? t.playoff : (t.matches || []).filter(m => {
           const st = (m.stage || m.tour || '').toLowerCase();
-          return st.includes('финал') || st.includes('1/') || st.includes('winners') || st.includes('losers') || st.includes('раунд')
-            || st.includes('3-е место') || st.includes('3 место') || st.includes('квалификация');
+          return st.includes('финал') || st.includes('1/') || st.includes('winners') || st.includes('losers') || st.includes('раунд');
         });
 
         if (rawPlayoff.length === 0) {
@@ -10033,10 +9774,9 @@
               const parts = String(m.score).split(':');
               s1 = parseInt(parts[0], 10) || 0;
               s2 = parseInt(parts[1], 10) || 0;
-            } else if (m.score) {
-              const seriesWinner = resolveSeriesWinner(m.score, p1, p2);
-              if (seriesWinner === 't1') { s1 = 1; s2 = 0; }
-              else if (seriesWinner === 't2') { s1 = 0; s2 = 1; }
+            } else if (m.score && String(m.score).toLowerCase().includes('победа')) {
+              if (String(m.score).toLowerCase().includes(p1.toLowerCase())) { s1 = 1; s2 = 0; }
+              else { s1 = 0; s2 = 1; }
             }
             return {
               p1: p1,
@@ -10061,18 +9801,6 @@
 
           function getSpecialRoundDef(rName) {
             const rLow = (rName || '').toLowerCase();
-
-            // Double-elimination / blitz stages must be recognised before the generic
-            // "final" rule, otherwise Winners Final + Losers Final + Суперфинал merge
-            // into one round and the losers' bracket jumps after the grand final.
-            if (rLow.includes('квалификация') || rLow.includes('qualif')) return { key: 'qual', label: 'Квалификация', weight: 0.5 };
-            if (rLow.includes('суперфинал') || rLow.includes('superfinal') || rLow.includes('super final')) return { key: 'super', label: 'Суперфинал', weight: 8 };
-            if (rLow.includes('losers') && (rLow.includes('final') || rLow.includes('финал'))) return { key: 'lf', label: 'Финал нижней сетки', weight: 7 };
-            if (rLow.includes('losers')) return { key: 'lr', label: 'Нижняя сетка', weight: 5.5 };
-            if (rLow.includes('winners') && (rLow.includes('final') || rLow.includes('финал'))) return { key: 'wf', label: 'Финал верхней сетки', weight: 4.5 };
-            if (rLow.includes('winners')) return { key: 'wr', label: 'Верхняя сетка', weight: 3.5 };
-            if (/^\d+\s*раунд/.test(rLow)) return { key: rLow, label: rName, weight: 0.75 };
-
             for (const ro of roundOrderDef) {
               if (ro.key === 'финал') {
                 if ((rLow.includes('финал') || rLow.includes('final')) && !rLow.includes('1/16') && !rLow.includes('1/8') && !rLow.includes('1/4') && !rLow.includes('1/2') && !rLow.includes('3')) {
@@ -10185,7 +9913,7 @@
                 <div class="bracket-champion-box" data-player="${championName}" onmouseenter="highlightPlayerBracketPath('${championName}')" onmouseleave="clearPlayerBracketHighlight()" onclick="selectPlayerBracketPath('${championName}')">
                   <div style="font-size: 32px; filter: drop-shadow(0 0 8px #ffcb05); margin-bottom: 6px;">👑</div>
                   <img src="${champAvatar}" class="bracket-champ-avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${championName}'">
-                  <div class="bracket-champ-name"${champProf ? ` onclick="openPlayerModal('${championName}')"` : ''} style="${champProf ? 'cursor: pointer;' : ''}">${championName}</div>
+                  <div class="bracket-champ-name" onclick="openPlayerModal('${championName}')">${championName}</div>
                   <div class="bracket-champ-sub">🥇 ПОБЕДИТЕЛЬ ТУРНИРА</div>
                   <div style="font-size: 10px; color: var(--nes-cyan); margin-top: 6px; font-weight: 800; text-transform: uppercase;">${t.title}</div>
                 </div>
@@ -10262,16 +9990,6 @@
       }
 
       else if (specialSubTab === 'about') {
-        // These four were only declared in the season/team renderers, so the whole
-        // "Описание и регламент" sub-tab threw "vkTopicUrl is not defined".
-        const chronicleText = String(t.full_chronicle || t.summary || t.description || '').trim();
-        const fullChronicleParas = chronicleText
-          ? chronicleText.split(/\n{2,}/).filter(Boolean)
-          : [`${t.title} — ${t.format || 'спецтурнир'}. Категория: ${t.category || '—'}. Победитель: ${t.champion || '—'}.`];
-        const keyEvents = t.key_events || [];
-        const vkTopicUrl = t.topic_id ? `https://vk.ru/topic-66162180_${t.topic_id}` : null;
-        const vkWallUrl = t.wall_post_id ? `https://vk.ru/wall-66162180_${t.wall_post_id}` : null;
-
         subContentHtml = `
 
           <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 20px;">
@@ -10619,43 +10337,29 @@ function initPortal() {
         </defs>
       `;
 
-      // The SVG origin is the wrapper's padding box, the rects are border-box: compensate the border.
-      const offX = wrapper.clientLeft || 0;
-      const offY = wrapper.clientTop || 0;
-      const normName = s => String(s || '').toLowerCase().replace(/\s*\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
-
       for (let r = 0; r < rounds.length - 1; r++) {
         const curRound = rounds[r];
-        if (!curRound) continue;
+        const nextRound = rounds[r + 1];
+        if (!curRound || !nextRound) continue;
 
         const curCards = Array.from(curRound.querySelectorAll('.bracket-match-card'));
-
-        // Winners can skip a column (bronze round sits between semis and final),
-        // so look through every later round instead of only rounds[r + 1].
-        const laterCards = [];
-        for (let k = r + 1; k < rounds.length; k++) {
-          laterCards.push(...rounds[k].querySelectorAll('.bracket-match-card, .bracket-champion-box'));
-        }
+        const nextCards = Array.from(nextRound.querySelectorAll('.bracket-match-card, .bracket-champion-box'));
 
         curCards.forEach(cCard => {
           const winnerRow = cCard.querySelector('.bracket-player-row.winner');
-          if (!winnerRow) return;
-          const winnerRaw = (winnerRow.getAttribute('data-player') || '').trim();
-          const winnerKey = normName(winnerRaw);
-          if (!winnerKey) return;
+          const winnerName = winnerRow ? (winnerRow.getAttribute('data-player') || '').trim().toLowerCase() : null;
+          if (!winnerName) return;
 
           let destEl = null;
-          for (const nCard of laterCards) {
+          for (const nCard of nextCards) {
             if (nCard.classList.contains('bracket-champion-box')) {
-              if (normName(nCard.getAttribute('data-player')) === winnerKey) {
+              const cName = (nCard.getAttribute('data-player') || '').trim().toLowerCase();
+              if (cName === winnerName) {
                 destEl = nCard;
                 break;
               }
             } else {
-              // Compare via JS instead of building a [data-player="..."] selector
-              // (names may contain quotes, parentheses or braces).
-              const matchRow = Array.from(nCard.querySelectorAll('.bracket-player-row[data-player]'))
-                .find(row => normName(row.getAttribute('data-player')) === winnerKey);
+              const matchRow = nCard.querySelector('.bracket-player-row[data-player="' + winnerRow.getAttribute('data-player') + '"]');
               if (matchRow) {
                 destEl = matchRow;
                 break;
@@ -10668,10 +10372,10 @@ function initPortal() {
           const cRect = winnerRow.getBoundingClientRect();
           const dRect = destEl.getBoundingClientRect();
 
-          const x1 = Math.round(cRect.right - wrapRect.left + sLeft - offX);
-          const y1 = Math.round(cRect.top + cRect.height / 2 - wrapRect.top + sTop - offY);
-          const x2 = Math.round(dRect.left - wrapRect.left + sLeft - offX);
-          const y2 = Math.round(dRect.top + dRect.height / 2 - wrapRect.top + sTop - offY);
+          const x1 = Math.round(cRect.right - wrapRect.left + sLeft);
+          const y1 = Math.round(cRect.top + cRect.height / 2 - wrapRect.top + sTop);
+          const x2 = Math.round(dRect.left - wrapRect.left + sLeft);
+          const y2 = Math.round(dRect.top + dRect.height / 2 - wrapRect.top + sTop);
 
           const midX = Math.round(x1 + (x2 - x1) * 0.5);
 
@@ -10683,44 +10387,34 @@ function initPortal() {
 
           pathsHtml += `
             <path d="M ${x1} ${y1} L ${midX} ${y1} L ${midX} ${y2} L ${x2} ${y2}"
-                  data-player="${winnerRaw}"
-                  class="bracket-connector-path path-player-${winnerKey.replace(/[^a-z0-9а-яё_-]+/g, '-')}"
+                  data-player="${winnerName}"
+                  class="bracket-connector-path path-player-${winnerName}"
                   fill="none"
                   stroke="${strokeColor}"
                   stroke-width="${strokeWidth}"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  filter="${filterId}"
                   marker-end="${markerId}" />
           `;
         });
       }
 
       svg.innerHTML = pathsHtml;
-
-      // Re-apply the pinned path: innerHTML wiped the .path-focused class.
-      if (lockedBracketPlayer) {
-        const lockedLow = String(lockedBracketPlayer).toLowerCase();
-        svg.querySelectorAll('.bracket-connector-path').forEach(path => {
-          if ((path.getAttribute('data-player') || '').toLowerCase() === lockedLow) {
-            path.classList.add('path-focused');
-          }
-        });
-      }
     }
 
     window.addEventListener('resize', () => {
-      // Only redraw the bracket that is actually visible (hidden ones measure 0x0).
-      if (seasonSubTab === 'playoff' && playoffViewMode === 'bracket' && document.getElementById('tab-seasons').classList.contains('active')) {
+      if (seasonSubTab === 'playoff' && playoffViewMode === 'bracket') {
         setTimeout(drawBracketConnectors, 40);
       }
-      if (teamSubTab === 'playoff' && teamPlayoffViewMode === 'bracket' && document.getElementById('tab-teams').classList.contains('active')) {
+      if (teamSubTab === 'playoff' && teamPlayoffViewMode === 'bracket') {
         setTimeout(() => drawBracketConnectors('teamBracketWrapper', 'teamBracketContainer', 'teamBracketSvg'), 40);
       }
-      if (specialSubTab === 'playoff' && specialPlayoffViewMode === 'bracket' && document.getElementById('tab-special').classList.contains('active')) {
+      if (specialSubTab === 'playoff' && specialPlayoffViewMode === 'bracket') {
         setTimeout(() => drawBracketConnectors('specialBracketWrapper', 'specialBracketContainer', 'specialBracketSvg'), 40);
       }
     });
+
+    let lockedBracketPlayer = null;
 
     function highlightPlayerBracketPath(playerName, force = false, wId = null, bId = null) {
       if (lockedBracketPlayer && !force) return;
@@ -10791,9 +10485,8 @@ function initPortal() {
         }
       });
 
-      // Quick chips active state (scoped to this tab: three brackets share the page)
-      const pillScope = wrapper.closest('.view-content') || document;
-      pillScope.querySelectorAll('.bracket-player-pill').forEach(btn => {
+      // Quick chips active state
+      document.querySelectorAll('.bracket-player-pill').forEach(btn => {
         if ((btn.getAttribute('data-player') || '').toLowerCase() === pLow) {
           btn.classList.add('active');
         } else {
@@ -10845,8 +10538,7 @@ function initPortal() {
       wrapper.querySelectorAll('.card-focused').forEach(el => el.classList.remove('card-focused'));
       wrapper.querySelectorAll('.champ-focused').forEach(el => el.classList.remove('champ-focused'));
       wrapper.querySelectorAll('.path-focused').forEach(el => el.classList.remove('path-focused'));
-      const pillScope = wrapper.closest('.view-content') || document;
-      pillScope.querySelectorAll('.bracket-player-pill').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.bracket-player-pill').forEach(btn => btn.classList.remove('active'));
 
       if (banner) {
         banner.classList.remove('active');

@@ -483,66 +483,33 @@
       if (avEl) avEl.src = getAvatar(currentRandom.author);
     }
 
-    function copyText(text) {
-      // navigator.clipboard only exists in secure contexts (https/localhost);
-      // opening the page straight from disk (file://) used to throw a TypeError.
-      if (navigator.clipboard && window.isSecureContext) {
-        return navigator.clipboard.writeText(text);
-      }
-      return new Promise((resolve, reject) => {
-        try {
-          const ta = document.createElement('textarea');
-          ta.value = text;
-          ta.setAttribute('readonly', '');
-          ta.style.position = 'fixed';
-          ta.style.top = '-1000px';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.select();
-          ta.setSelectionRange(0, ta.value.length);
-          const ok = document.execCommand('copy');
-          document.body.removeChild(ta);
-          if (ok) resolve(); else reject(new Error('execCommand copy failed'));
-        } catch (err) {
-          reject(err);
-        }
-      });
-    }
-
-    function flashCopyState(btn, ok) {
-      if (!btn) return;
-      if (!btn.dataset.label) btn.dataset.label = btn.innerText;
-      btn.innerText = ok ? '✅ Скопировано!' : '⚠️ Не удалось';
-      btn.style.color = ok ? '#22c55e' : '#f43f5e';
-      setTimeout(() => {
-        btn.innerText = btn.dataset.label;
-        btn.style.color = '';
-      }, 2000);
-    }
-
-    function esc(str) {
-      return String(str == null ? '' : str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
     function copyRandomQuote(btn) {
       if (!currentRandom) return;
       const fullText = `«${currentRandom.text}» — ${currentRandom.author} [Цитата #${currentRandom.id}]`;
-      copyText(fullText)
-        .then(() => flashCopyState(btn, true))
-        .catch(() => flashCopyState(btn, false));
+      navigator.clipboard.writeText(fullText).then(() => {
+        const old = btn.innerText;
+        btn.innerText = '✅ Скопировано!';
+        btn.style.color = '#22c55e';
+        setTimeout(() => {
+          btn.innerText = old;
+          btn.style.color = '';
+        }, 2000);
+      });
     }
 
     function copyCardQuote(id, btn) {
       const q = QUOTES.find(x => String(x.id) === String(id));
       if (!q) return;
       const fullText = `«${q.text}» — ${q.author} [Цитата #${q.id}]`;
-      copyText(fullText)
-        .then(() => flashCopyState(btn, true))
-        .catch(() => flashCopyState(btn, false));
+      navigator.clipboard.writeText(fullText).then(() => {
+        const old = btn.innerText;
+        btn.innerText = '✅ Скопировано!';
+        btn.style.color = '#22c55e';
+        setTimeout(() => {
+          btn.innerText = old;
+          btn.style.color = '';
+        }, 2000);
+      });
     }
 
     function initFilters() {
@@ -555,9 +522,6 @@
       const sortedAuthors = Object.keys(authorMap).sort((a, b) => authorMap[b] - authorMap[a]);
 
       const sel = document.getElementById('authorSelect');
-      if (sel && sel.options.length > 0) {
-        sel.options[0].textContent = `Все авторы (${QUOTES.length} цитат)`;
-      }
       sortedAuthors.forEach(a => {
         const opt = document.createElement('option');
         opt.value = a;
@@ -569,7 +533,6 @@
       const allChip = document.createElement('button');
       allChip.className = 'author-chip active';
       allChip.textContent = `Все авторы (${QUOTES.length})`;
-      allChip.dataset.author = '';
       allChip.onclick = () => selectAuthorChip('');
       chipsEl.appendChild(allChip);
 
@@ -577,7 +540,6 @@
         const chip = document.createElement('button');
         chip.className = 'author-chip';
         chip.textContent = `${a} (${authorMap[a]})`;
-        chip.dataset.author = a;
         chip.onclick = () => selectAuthorChip(a);
         chipsEl.appendChild(chip);
       });
@@ -586,9 +548,12 @@
     function selectAuthorChip(author) {
       currentFilter.author = author;
       document.getElementById('authorSelect').value = author;
-      // Match on the stored author, not on the label prefix ("RVD" would also match "RVD2").
       document.querySelectorAll('.author-chip').forEach(c => {
-        c.classList.toggle('active', (c.dataset.author || '') === author);
+        if ((!author && c.textContent.startsWith('Все авторы')) || (author && c.textContent.startsWith(author))) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
       });
       renderQuotesGrid();
     }
@@ -639,12 +604,12 @@
               <div class="quote-card-header">
                 <div class="quote-card-author">
                   <img src="${av}" class="author-avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(q.author)}'">
-                  <span class="author-name">${esc(q.author)}</span>
+                  <span class="author-name">${q.author}</span>
                 </div>
                 <span class="quote-id-tag">#${q.id}</span>
               </div>
               <div class="quote-bubble">
-                «${esc(q.text)}»
+                «${q.text}»
               </div>
             </div>
             <div class="quote-card-actions">
