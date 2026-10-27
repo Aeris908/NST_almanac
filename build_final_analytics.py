@@ -3,8 +3,28 @@ sys.stdout.reconfigure(encoding='utf-8')
 import os
 import re
 import json
-import requests
+import urllib.request
+import urllib.parse
+try:
+    import requests
+except ImportError:
+    requests = None
 from collections import defaultdict
+
+def http_get_json(url, headers=None, timeout=10):
+    if requests is not None:
+        try:
+            r = requests.get(url, headers=headers or {}, timeout=timeout)
+            if r.status_code == 200:
+                return r.json()
+        except Exception:
+            pass
+    try:
+        req = urllib.request.Request(url, headers=headers or {'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            return json.loads(response.read().decode('utf-8'))
+    except Exception:
+        return None
 
 TOKEN = "5b312f445b312f445b312f44e85875dc6155b315b312f4431ed8ef6bb3494dacba55020"
 API_VERSION = "5.199"
@@ -16,8 +36,9 @@ def call_vk(method, params):
         p = params.copy()
         p["access_token"] = TOKEN
         p["v"] = API_VERSION
-        resp = requests.get(f"https://api.vk.com/method/{method}", params=p, timeout=10)
-        return resp.json()
+        url = f"https://api.vk.com/method/{method}?" + urllib.parse.urlencode(p)
+        data = http_get_json(url, timeout=10)
+        return data if data else {}
     except Exception:
         return {}
 
@@ -199,9 +220,8 @@ print("Extracting matches from Sportcup API...")
 for cfg in t_configs:
     url = f"https://sportcup.org/rest/public/tournaments/{cfg['uuid']}/games?stageId=1"
     try:
-        r = requests.get(url, headers=headers, timeout=10)
-        if r.status_code == 200:
-            data = r.json()
+        data = http_get_json(url, headers=headers, timeout=10)
+        if data:
             games = data.get("list", [])
             for g in games:
                 if g.get("resultStatus") == "FINAL":

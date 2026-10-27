@@ -9041,10 +9041,10 @@ html_code = """<!DOCTYPE html>
         const m = url.match(/v=([a-zA-Z0-9_-]+)/);
         if (m) embedUrl = `https://www.youtube.com/embed/${m[1]}?autoplay=1`;
       } else if (url.includes('youtu.be/')) {
-        const m = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+        const m = url.match(/youtu\\.be\\/([a-zA-Z0-9_-]+)/);
         if (m) embedUrl = `https://www.youtube.com/embed/${m[1]}?autoplay=1`;
       } else if (url.includes('vk.com/video') || url.includes('vk.ru/video')) {
-        const m = url.match(/video(-?\d+)_(\d+)/);
+        const m = url.match(/video(-?\\d+)_(\\d+)/);
         if (m) embedUrl = `https://vk.ru/video_ext.php?oid=${m[1]}&id=${m[2]}&hash=`;
       }
 
