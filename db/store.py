@@ -15,6 +15,18 @@ ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "nst.db"
 
 
+def fold(text):
+    """Регистронезависимость текста базы: у встроенного `lower()` SQLite латиница и всё.
+
+    Подписи туров и ники по-русски через `lower()` не сворачиваются вообще, и поиск по ним
+    возвращал бы ноль. В Postgres ту же работу делает его `lower()` (он знает юникод), поэтому
+    генератор PG-схемы заменяет `fold(...)` на `lower(...)`.
+    """
+    return " ".join(str(text or "").split()).lower()
+
+
 def connect(path=None):
     """Соединение с базой: названный файл или тот, что лежит в `DB_PATH`."""
-    return sqlite3.connect(path or DB_PATH)
+    con = sqlite3.connect(path or DB_PATH)
+    con.create_function("fold", 1, fold, deterministic=True)
+    return con

@@ -1,6 +1,6 @@
 """HTTP-лицо правки базы: то же, что `db/api.py`, но для страницы с карандашами.
 
-Девять ручек, ни одна не работает без токена:
+Десять ручек, ни одна не работает без токена:
 
     GET  /api/state                 ревизия базы, сколько строк, сколько живых правок, очередь
     GET  /api/log?limit=20          журнал правок (для панели «откатить»)
@@ -8,6 +8,7 @@
     GET  /api/containers            чем можно принять новую игру: турниры-документы и сезоны
     GET  /api/doc?doc_key=…         рамка турнира для правки
     GET  /api/players?q=…           карточки игроков по нику — для переименования и слияния
+    GET  /api/search?season=…       строки по сезону, турниру, туру и игроку — когда кликать некуда
     GET  /api/publish               очередь публикаций: что ждёт выката и сколько правок живо
     POST /api/locate {a, b, ...}    какие строки базы подходят под то, что редактор видит на странице
     POST /api/edit {operation, args, persist, expect}   предпросмотр (persist=false) или запись
@@ -156,6 +157,13 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/players":
             found = (parse_qs(urlparse(self.path).query).get("q") or [""])[0]
             return self._reply(200, {"ok": True, "players": api.players(found)}, origin=origin)
+        if path == "/api/search":
+            asked = parse_qs(urlparse(self.path).query)
+            word = {name: (asked.get(name) or [""])[0] for name in
+                    ("season", "tournament", "tour", "player")}
+            hidden = (asked.get("include_hidden") or [""])[0] in ("1", "true", "yes")
+            return self._reply(200, {"ok": True, **api.search(include_hidden=hidden, **word)},
+                               origin=origin)
         if path == "/api/publish":
             return self._reply(200, {"ok": True, **api.publish_queue()}, origin=origin)
         return self._reply(404, {"ok": False, "error": f"нет ручки {path}"}, origin=origin)

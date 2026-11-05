@@ -68,6 +68,7 @@
     "/api/publish": "чтение очереди публикаций",
     "/api/containers": "список контейнеров",
     "/api/players": "поиск карточек игроков",
+    "/api/search": "поиск строк по сезону и турниру",
     "/api/doc": "чтение рамки турнира",
     "/api/edit": "правка базы",
   };
@@ -158,7 +159,8 @@
     bar.appendChild(login);
     bar.appendChild(el("span", "nst-edit-status", "подключение…"));
     const buttons = el("div", "nst-edit-actions");
-    for (const [label, action] of [["очередь", "queue"], ["новая игра", "match"],
+    for (const [label, action] of [["очередь", "queue"], ["найти", "search"],
+                                   ["новая игра", "match"],
                                    ["новый турнир", "tournament"], ["игроки", "players"],
                                    ["журнал", "log"], ["опубликовать", "publish"],
                                    ["обновить", "state"], ["скрыть", "hide"]]) {
@@ -167,6 +169,7 @@
       button.onclick = () => {
         if (action === "hide") return document.body.classList.remove("nst-edit-on");
         if (action === "queue") return showQueue();
+        if (action === "search") return showSearch();
         if (action === "match") return showNewMatch();
         if (action === "tournament") return showNewTournament();
         if (action === "players") return showPlayers("");
@@ -341,19 +344,23 @@
 
   const line = (label, value) => el("div", "nst-edit-line", `<b>${label}</b> ${value ?? "—"}`);
 
+  function candidateButton(row) {
+    // Надпись строки и статус приходят из источника (ник, подпись тура) — в панель они попадают
+    // текстом, иначе написание с углом или скобкой стало бы разметкой.
+    const button = el("button", "nst-edit-candidate",
+      `#${row.id} · ${safe(row.display)} · <i>${row.row_set}${row.manual ? " · ручная" : ""}`
+      + `${row.hidden_by ? " · скрыта как дубль" : ""}`
+      + `${row.status !== "played" ? " · " + safe(STATUS_WORDS[row.status] || row.status) : ""}</i>`);
+    button.type = "button";
+    button.onclick = () => showMatch(row);
+    return button;
+  }
+
   function showCandidates(candidates) {
     const box = el("div", "nst-edit-candidates");
     box.appendChild(el("p", "nst-edit-note",
       `под это описание подходит ${candidates.length} строк — выбери, какую править, а не ту, что первая`));
-    candidates.forEach((row) => {
-      const button = el("button", "nst-edit-candidate",
-        `#${row.id} · ${row.display} · <i>${row.row_set}${row.manual ? " · ручная" : ""}`
-        + `${row.hidden_by ? " · скрыта как дубль" : ""}`
-        + `${row.status !== "played" ? " · " + (STATUS_WORDS[row.status] || row.status) : ""}</i>`);
-      button.type = "button";
-      button.onclick = () => showMatch(row);
-      box.appendChild(button);
-    });
+    candidates.forEach((row) => box.appendChild(candidateButton(row)));
     openPanel("несколько строк", box);
   }
 
@@ -1037,6 +1044,86 @@
     box.appendChild(el("div", "nst-edit-delta"));
     openPanel("карточки игроков", box);
     if (query) await load();
+  }
+
+  async function showSearch() {
+    // Лоровед приходит «Сезон 7, Кубок лиг, 1/2 финала» или «где играл Bubnov», а не кликом по
+    // картинке: здесь строки ищутся по разрядникам архива, а карточка открывается та же, что и
+    // из таблицы турнира.
+    const box = el("div", "nst-edit-match");
+    box.appendChild(el("p", "nst-edit-note",
+      "четыре независимых фильтра: пустое поле не сужает поиск, «%» и «_» внутри написания — "
+      + "обычные символы, а не маска"));
+    const form = el("div", "nst-edit-form nst-edit-search");
+    const season = field("select", "nst-edit-pick");
+    const tournament = field("select", "nst-edit-pick");
+    const tour = field("input", "nst-edit-players", {type: "text", placeholder: "тур или этап"});
+    const player = field("input", "nst-edit-players",
+                         {type: "text", placeholder: "ник игрока или подпись стороны"});
+    const hidden = field("input", "nst-edit-flag", {type: "checkbox"});
+    const list = el("div", "nst-edit-search-list");
+
+    const choose = (node, values, blank) => {
+      const wanted = node.value;
+      node.innerHTML = "";
+      node.appendChild(field("option", null, {value: "", textContent: blank}));
+      for (const value of values) {
+        node.appendChild(field("option", null, {value, textContent: value}));
+      }
+      // Выбранное остаётся выбранным, только если оно всё ещё подходит под другие фильтры:
+      // турнир чужого сезона в списке исчезает, и молча держать его было бы правкой вслепую.
+      node.value = wanted && values.includes(wanted) ? wanted : "";
+    };
+
+    const load = async () => {
+      const query = new URLSearchParams();
+      if (season.value) query.set("season", season.value);
+      if (tournament.value) query.set("tournament", tournament.value);
+      if (tour.value.trim()) query.set("tour", tour.value.trim());
+      if (player.value.trim()) query.set("player", player.value.trim());
+      if (hidden.checked) query.set("include_hidden", "1");
+      let answer;
+      try {
+        answer = await call("/api/search?" + query.toString());
+      } catch (error) {
+        return say(error.message, "error");
+      }
+      choose(season, answer.seasons, "все сезоны");
+      choose(tournament, answer.tournaments, "все турниры");
+      list.innerHTML = "";
+      if (!answer.rows.length) {
+        list.appendChild(el("p", "nst-edit-note",
+          "под эти условия строк нет — снимите один фильтр или включите скрытые дубли"));
+      }
+      for (const row of answer.rows) list.appendChild(candidateButton(row));
+      list.appendChild(el("p", "nst-edit-note",
+        `подошло строк ${answer.total}, карточек ${answer.rows.length}`
+        // Обрезку объявляем только по строкам, которые реально успели прийти до свёртки связок:
+        // карточек всегда меньше строк, и по ним «показаны не все» выглядело бы правдой наугад.
+        + (answer.fetched >= answer.shown
+          ? ` — из-за лимита в ${answer.shown} строк список неполный, уточните сезон, турнир или тур`
+          : "")));
+      return undefined;
+    };
+
+    // Смена фильтра — тоже запрос: без проверки занятости быстрый двойной выбор сезона присылает
+    // два ответа, и панель успевает перерисоваться stale-списком.
+    for (const node of [season, tournament, hidden]) node.onchange = () => !isBusy() && load();
+    for (const node of [tour, player]) {
+      node.onkeydown = (event) => {
+        if (event.key === "Enter" && !isBusy()) load();
+      };
+    }
+    const go = el("button", null, "найти");
+    go.type = "button";
+    go.onclick = () => (isBusy() ? undefined : load());
+    form.append(season, tournament, tour, player);
+    const check = el("label", "nst-edit-check");
+    check.append(hidden, el("span", null, "показать и скрытые дубли"));
+    form.append(check, go);
+    box.append(form, list);
+    openPanel("поиск строки", box);
+    return load();
   }
 
   async function showQueue() {

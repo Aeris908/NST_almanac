@@ -262,6 +262,32 @@
   color: #94a3b8;
 }
 
+/* Поиск строки: два списка в одной плётке (width:100% для `pick` здесь был бы в столбик),
+   результаты — тот же список карточек, что и при нескольких кандидатах после клика. */
+.nst-edit-search .nst-edit-pick {
+  flex: 1 1 150px;
+  width: auto;
+}
+
+.nst-edit-search-list {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.nst-edit-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 100%;
+  color: #94a3b8;
+}
+
+.nst-edit-flag {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--nes-gold);
+}
+
 .nst-edit-warn {
   margin: 10px 0 0;
   padding: 8px 10px;
@@ -400,4 +426,89 @@ body.nst-edit-busy .match-history-row:hover::after {
 
 .nst-edit-publish-result b {
   color: var(--nes-gold);
+}
+
+/* ── телефон ───────────────────────────────────────────────────────────────
+   Лоровед сидит с телефона чаще, чем с панели управления: здесь планка становится
+   одной строкой с прокруткой (её высота предсказуема, и панель ложится ровно над ней),
+   карточка правки — листом на всю ширину, а поля — не мельче 16 px, иначе мобильный
+   браузер самовольно приближает экран при фокусе. */
+@media (max-width: 720px) {
+  .nst-edit-bar {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    max-width: none;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 8px;
+    align-items: center;
+  }
+
+  .nst-edit-title {
+    flex: 0 0 auto;
+    font-size: 10px;
+  }
+
+  .nst-edit-status {
+    flex: 0 0 auto;
+    min-width: 180px;
+  }
+
+  .nst-edit-actions {
+    flex: 0 0 auto;
+    margin-left: 0;
+  }
+
+  .nst-edit-bar button,
+  .nst-edit-panel button {
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .nst-edit-token {
+    flex: 0 0 130px;
+    min-height: 40px;
+    font-size: 16px;
+  }
+
+  .nst-edit-panel {
+    left: 6px;
+    right: 6px;
+    bottom: 62px;
+    width: auto;
+    max-height: calc(100vh - 112px);
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .nst-edit-panel input,
+  .nst-edit-panel select,
+  .nst-edit-panel textarea,
+  .nst-edit-players,
+  .nst-edit-pick,
+  .nst-edit-score,
+  .nst-edit-links {
+    font-size: 16px;
+  }
+
+  /* Поля в столбик: в 390 px две строки формы не читаются ни по одному написанию источника.
+     Счёт с двоеточием — исключение: две клетки рядом человек читает как результат, а не как
+     два несвязанных поля. */
+  .nst-edit-form > * {
+    flex: 1 1 100%;
+    width: auto;
+  }
+
+  .nst-edit-form > .nst-edit-score,
+  .nst-edit-form > .nst-edit-vs {
+    flex: 0 0 auto;
+    width: 72px;
+  }
+
+  .nst-edit-search-list {
+    max-height: none;
+  }
 }

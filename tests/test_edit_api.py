@@ -7,7 +7,7 @@
 
 import pytest
 from db import api, edit, serve
-from support import SCOREFUL, card, rosters, sides
+from support import SCOREFUL, SINGLES, WITH_PAIR, card, rosters, sides
 
 
 @pytest.fixture
@@ -142,6 +142,88 @@ def test_journal_survives_a_rebuilt_slice(con, find, db_path):
     moved = [entry for entry in entries if entry["id"] == answer["journal"][0]]
     assert moved and "match" not in moved[0], "запись о несуществующем матче обязана быть без подписи"
     assert all(isinstance(entry, dict) for entry in entries)
+
+
+def test_search_hides_mirrors_until_a_person_asks_for_them(db_path, con):
+    """Сезон, где есть скрытые дубли: по умолчанию поиск отдаёт витрину, а не оба её показа.
+
+    Числа сравниваются по `total` (строки до свёртки связок): карточек в обоих запросах может
+    быть одинаково, и по ним проверка не различила бы «скрыли» и «свернули в одну».
+    """
+    season = con.execute("""select t.season from tournaments t
+            where exists (select 1 from matches m where m.tournament_id = t.id
+                           and m.hidden_by is not null)
+            order by length(t.season), t.season limit 1""").fetchone()[0]
+    visible = api.search(season=season, db_path=db_path)
+    asked = api.search(season=season, include_hidden=True, db_path=db_path)
+    assert visible["rows"], "в этом сезоне не осталось ни одной видимой строки — проверка пуста"
+    assert not [row for row in visible["rows"] if row["hidden_by"]], "поиск показал скрытый дубль"
+    assert asked["total"] > visible["total"], "скрытые строки не добавились по запросу"
+
+
+def test_search_collapses_a_page_row_with_its_pool_twin(db_path, con, find):
+    """Игра Сезона 8–9 лежит в базе двумя строками: в поиске она должна быть одной карточкой."""
+    match_id = find(WITH_PAIR, what="строку страницы с копией в пуле")
+    where = con.execute(
+        """select t.season, t.name, m.tour from matches m
+             join tournaments t on t.id = m.tournament_id where m.id = ?""", (match_id,)).fetchone()
+    rows = api.search(season=where["season"], tournament=where["name"], tour=where["tour"],
+                      limit=200, db_path=db_path)["rows"]
+    held = [row for row in rows if row["id"] == match_id]
+    assert len(held) == 1, f"строка #{match_id} показана {len(held)} раз"
+    assert held[0]["linked"], "связка не подписана — человек не узнает, что правка пойдёт по обеим"
+
+    # Тот же поиск вместе со скрытыми дублями обязан показать ту же карточку: победителем связки
+    # становится видимый витрине показ, а не вторая строка с меньшим id.
+    both = api.search(season=where["season"], tournament=where["name"], tour=where["tour"],
+                      include_hidden=True, limit=200, db_path=db_path)["rows"]
+    same = [row for row in both if row["id"] == match_id or match_id in (row["linked"] or [])]
+    assert len(same) == 1, f"связка #{match_id} показала {len(same)} карточек вместо одной"
+    assert same[0]["id"] == match_id, "карточкой связки стал её второй показ"
+
+
+def test_search_facets_narrow_to_the_chosen_season(db_path, con):
+    """Подсказки турнира зависят от сезона: в чужом сезоне выбрать его уже нельзя."""
+    season = con.execute("""select season from tournaments group by season
+            having count(distinct name) < (select count(distinct name) from tournaments)
+            order by count(distinct name) desc limit 1""").fetchone()[0]
+    everything = api.search(db_path=db_path)
+    narrowed = api.search(season=season, db_path=db_path)
+    assert set(narrowed["tournaments"]) < set(everything["tournaments"]), "фильтр не сузил подсказки"
+    assert narrowed["seasons"] == everything["seasons"], "список сезонов зависит от самого сезона"
+
+
+def test_search_treats_a_percent_sign_as_text(db_path, con):
+    """`%` и `_` в написании — символы ника, а не маска: иначе опечатка вываливает весь архив."""
+    wild = api.search(player="%", db_path=db_path)
+    every = con.execute("select count(*) from matches where hidden_by is null").fetchone()[0]
+    assert wild["total"] < every, "поиск по «%» отдал базу целиком"
+    underscore = api.search(player="_", db_path=db_path)
+    assert underscore["total"] < every, "поиск по «_» отдал базу целиком"
+
+
+def test_search_answers_the_same_card_shape_as_locate(db_path, con, find):
+    """Панель открывает и клик по строке, и результат поиска одной функцией: поля обязаны совпасть.
+
+    Разъезд здесь молча превратился бы в пустые блоки карточки — панель ничего не роняет, она
+    просто показывает «—» там, где человек ждёт счёт или источник.
+    """
+    match_id, nick_a, nick_b = find(SINGLES.format(where="m.hidden_by is null"),
+                                    what="матч 1×1 с карточками на обеих сторонах")
+    located = api.locate(nick_a, nick_b, db_path=db_path)
+    assert located, f"клик по строке #{match_id} ничего не нашёл"
+    # Связку `locate` сворачивает в одну карточку, и победителем может оказаться не та строка,
+    # с которой начали: сравниваем формы по той, которую панель и показала бы человеку.
+    winner = located[0]
+    where = con.execute(
+        """select t.season, t.name, m.tour from matches m
+             join tournaments t on t.id = m.tournament_id where m.id = ?""",
+        (winner["id"],)).fetchone()
+    searched = [row for row in api.search(season=where["season"], tournament=where["name"],
+                                          tour=where["tour"], limit=200, db_path=db_path)["rows"]
+                if row["id"] == winner["id"]]
+    assert searched, "строка не нашлась поиском по своим же разрядникам"
+    assert set(winner) == set(searched[0]), "у поиска другой набор полей, чем у locate"
 
 
 def test_http_layer_checks_arguments_before_calling_the_api(find):

@@ -198,7 +198,7 @@ def _diff_keyed(before, after, field):
     return out
 
 
-LOCATE_SQL = """
+LOCATE_SELECT = """
 select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.note,
        m.in_rating_pool, m.phase, m.is_playoff, m.played_on, m.date_precision,
        m.source, m.source_ref, m.source_locator, m.source_page, m.source_text, m.source_date_raw,
@@ -215,6 +215,9 @@ select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.not
           from match_links l where l.match_id = m.id) as links,
        (select i.payload from incoming i
           where i.matched_match_id = m.id and i.verdict = 'conflict' limit 1) as review
+"""
+
+LOCATE_FROM = """
 from matches m
 join tournaments t on t.id = m.tournament_id
 join stages st on st.id = m.stage_id
@@ -223,9 +226,12 @@ join match_sides sb on sb.match_id = m.id and sb.side_index = 1
 left join tournament_docs d on d.id = m.doc_id
 """
 
+LOCATE_SQL = LOCATE_SELECT + LOCATE_FROM
+
 
 def _norm(text):
-    return " ".join(str(text or "").replace("&", " ").lower().split())
+    """Написание как маска: тот же регистр и пробелы, что считает `fold()` внутри базы."""
+    return store.fold(str(text or "").replace("&", " "))
 
 
 def _sides(row):
@@ -330,12 +336,16 @@ def _group_pairs(rows, con_path):
 
     ordered = []
     for key, members in groups.items():
-        winner = min(members, key=lambda row: VISIBLE_FIRST.get(row["row_set"], 9))
+        # Победителем связки обязан стать тот показ игры, который видит витрина: иначе поиск со
+        # скрытыми дублями молча подсовывал бы карточку второго показа вместо нужной строки.
+        winner = min(members, key=lambda row: (bool(row["hidden_by"]),
+                                               VISIBLE_FIRST.get(row["row_set"], 9), row["id"]))
         winner["linked"] = [other for other in key if other != winner["id"]]
         if winner["linked"]:
             winner["display"] += f" · связка #{', #'.join(str(other) for other in winner['linked'])}"
         ordered.append(winner)
-    return sorted(ordered, key=lambda row: VISIBLE_FIRST.get(row["row_set"], 9))
+    return sorted(ordered, key=lambda row: (bool(row["hidden_by"]),
+                                            VISIBLE_FIRST.get(row["row_set"], 9)))
 
 
 def _display(row):
@@ -344,6 +354,82 @@ def _display(row):
     place = row["tour"] or row["stage"] or ""
     return " • ".join(part for part in (row["season"], place, f"{row['label_a'] or row['players_a']} "
                                         f"{score} {row['label_b'] or row['players_b']}") if part)
+
+
+def _like(text):
+    """Написание человека как маска LIKE: `%` и `_` внутри ника или турнира — обычные символы.
+
+    Без этого «Sokol_5» нашёл бы половину архива, а случайный `%` в запросе превратился бы в
+    «покажи всё».
+    """
+    escaped = str(text or "").replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    return f"%{escaped}%"
+
+
+LOCATE_FROM = """
+from matches m
+join tournaments t on t.id = m.tournament_id
+join stages st on st.id = m.stage_id
+join match_sides sa on sa.match_id = m.id and sa.side_index = 0
+join match_sides sb on sb.match_id = m.id and sb.side_index = 1
+left join tournament_docs d on d.id = m.doc_id
+"""
+
+LOCATE_SQL = LOCATE_SELECT + LOCATE_FROM
+
+# Условия поиска по категориям архива. Пустое поле = «не фильтруем», поэтому одну и ту же фразу
+# собирают и список строк, и счётчик: иначе «показано 60 из …» считалось бы по другому набору.
+SEARCH_FILTER = """
+     (?1 = '' or fold(t.season) like ?6 escape '\\')
+ and (?2 = '' or fold(t.name) like ?7 escape '\\')
+ and (?3 = '' or fold(m.tour) like ?8 escape '\\'
+      or fold(st.name) like ?8 escape '\\')
+ and (?4 = '' or exists (
+        select 1 from match_sides s
+        join side_players sp on sp.side_id = s.id
+        join players p on p.id = sp.player_id
+       where s.match_id = m.id
+         and (fold(p.nick) like ?9 escape '\\'
+              or fold(s.label) like ?9 escape '\\')))
+ and (?5 = 1 or m.hidden_by is null)
+"""
+
+SEARCH_SQL = LOCATE_SQL + " where " + SEARCH_FILTER + " order by m.id limit ?10"
+SEARCH_COUNT_SQL = "select count(*)" + LOCATE_FROM + " where " + SEARCH_FILTER
+SEARCH_SEASONS_SQL = "select distinct season from tournaments order by season"
+SEARCH_TOURNAMENTS_SQL = """
+select distinct t.name from tournaments t
+where (?1 = '' or fold(t.season) like ?2 escape '\\') order by name
+"""
+
+
+def search(*, season="", tournament="", tour="", player="", include_hidden=False, limit=60,
+           db_path=DB_PATH):
+    """Строки по сезону, турниру, туру и игроку — когда указателя мышью нет.
+
+    `locate` ищет матч, на который человек показал пальцем на странице; здесь он приходит со
+    списком («все игры Сезона 7 в 1/2 финала», «где вообще играл Bubnov»). Связки сворачиваются
+    тем же кодом, что и в `locate`: копия строки страницы в пуле не должна плодить вторую карточку.
+    Скрытые дубли по умолчанию не показываются — правят то, что видит витрина.
+    """
+    asked = (_norm(season), _norm(tournament), _norm(tour), _norm(player))
+    taken = max(1, min(int(limit), 200))
+    params = (*asked, 1 if include_hidden else 0, *(_like(value) for value in asked))
+    con = store.connect(db_path)
+    con.row_factory = sqlite3.Row
+    total = con.execute(SEARCH_COUNT_SQL, params).fetchone()[0]
+    rows = [_candidate(row) for row in con.execute(SEARCH_SQL, (*params, taken))]
+    facets = {
+        "seasons": [row[0] for row in con.execute(SEARCH_SEASONS_SQL)],
+        "tournaments": [row[0] for row in con.execute(
+            SEARCH_TOURNAMENTS_SQL, (asked[0], _like(asked[0])))],
+    }
+    con.close()
+    collapsed = _group_pairs(rows, db_path)
+    # `fetched` — строк до свёртки связок: по нему панель честно говорит, что список обрезан
+    # лимитом, а не просто «карточек вышло меньше, чем строк» (связки съедают разницу сами).
+    return {"total": total, "shown": taken, "fetched": len(rows), "collapsed": len(collapsed),
+            "rows": collapsed, **facets}
 
 
 def match_row(con, match_id):
@@ -654,14 +740,11 @@ limit ?
 
 
 def players(query="", limit=30, db_path=DB_PATH):
-    """Карточки по нику: человек ищет игрока текстом, а не номером строки.
-
-    `%` и `_` в запросе — часть ника, а не маска: иначе «Sokol_5» нашёл бы половину архива.
-    """
-    escaped = str(query or "").replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    """Карточки по нику: человек ищет игрока текстом, а не номером строки."""
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
-    rows = [dict(row) for row in con.execute(PLAYERS_SQL, (f"%{escaped}%", max(1, min(int(limit), 200))))]
+    rows = [dict(row) for row in
+            con.execute(PLAYERS_SQL, (_like(_norm(query)), max(1, min(int(limit), 200))))]
     con.close()
     return rows
 
