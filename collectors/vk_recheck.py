@@ -52,18 +52,23 @@ FOREIGN = re.compile(
     r"tecmo|world cup|nhl ?9[48]|blades of steel|side pocket|street fighter|mortal|kontra|contra"
     r"|colin|mckinley|pocket fighter|ike ike|super spike|urban champion|exerion|iso\s?\d|basket"
     r"|шахмат|indie heat|indy heat|rush'n|general chaos|tiny toon|balloon fight|chip 'n dale"
-    r"|danny sullivan|guerrilla war|tetris|ice climber|ultimate mortal|hard skill|dodgeball bu\b(?!.*soccer)"
+    r"|danny sullivan|guerrilla war|tetris|ice climber|ultimate mortal|hard skill|dodgeball bu"
     r"|вышибал|kakutou|\bnkd\b|хокке|баскет|файтинг|тенис|боул|sensible|bombermen|бомбермэн"
     r"|killer instinct|excitebike|exitebike|eternal champions|prisoners of war|mario\b|guerrilla"
     r"|6x6|cups?\b.*rle|нхл|cs ?1\.6|counter|chip ['’]n dale|muscle|m\.u\.s\.c\.l\.e",
     re.I,
 )
-# Наш футбол: Goal 3 он же Kunio-kun no Nekketsu Soccer League он же Dodgeball Bu — Soccer Hen.
-# Goal 4 берём намеренно: он уже живёт в базе («Клубный Чемпионат по Goal 4. МЕЖСЕЗОНЬЕ» на 50 игр
-# и «Сольный рейтинг (Ladder) по Goal 4»), поэтому отрезать его от сверки значило бы соврать.
+# Наш футбол: Goal 3 он же Kunio-kun no Nekketsu Soccer League. Goal 4 берём намеренно: он уже
+# живёт в базе («Клубный Чемпионат по Goal 4. МЕЖСЕЗОНЬЕ» на 50 игр и «Сольный рейтинг (Ladder)
+# по Goal 4»), поэтому отрезать его от сверки значило бы соврать.
+# «Soccer Hen» из этого списка убран осознанно: ром тот же, но розыгрышей с таким названием в
+# архиве нет — под них не заводился ни турнир, ни лига. Две темы с этой строчкой («…Dodgeball
+# Bu - Soccer Hen. Season I» про Double Elimination на oball.ru и «…Soccer Hen [NES] (4P)» про
+# сам ром) не чемпионаты лиги, а раньше свёрка принимала первую за Season 1: заголовок давал
+# подпись «сезон №1», и строки чужого соревнования выглядели потерянными играми раннего сезона.
 SOCCER = re.compile(
     r"goal ?[34]|гол ?[34]|nekketsu soccer|soccer league|неккетсу soccer"
-    r"|kunio-kun no nekketsu|soccer hen|soccer \(сезон|сольный чемпионат|сольный турнир"
+    r"|kunio-kun no nekketsu|soccer \(сезон|сольный чемпионат|сольный турнир"
     r"|сольный рейтинг|рейтинговый сольный|молодёжн\w* чемпионат|командный чемпионат"
     r"|командник|командный турнир|командн\w* .*(2х2|2x2)|турнир по ?пенальти|пенальти"
     r"|блиц|минибатл|межсезон",

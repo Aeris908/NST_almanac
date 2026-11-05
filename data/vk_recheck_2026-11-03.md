@@ -5,7 +5,6 @@
 | обсуждение | в базе | строк | расхождений | ссылка |
 |---|---|---|---|---|
 | Регулярный сольный чемпионат по Kunio Kun no Nekketsu Socc | Season 1 Высшая (Единая) лига, Season 1 Мете | 135 | нет 0 · счёт 159 | [открыть](https://vk.com/topic-66162180_32593813) |
-| Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I | Season 1 Высшая (Единая) лига, Season 1 Мете | 135 | нет 16 · счёт 6 | [открыть](https://vk.com/topic-66162180_33045983) |
 | 8-й сольный чемпионат Soccer League (Goal3) | Season 8 Кубок лиг, Season 8 Высшая лига, Se | 440 | нет 2 · счёт 11 | [открыть](https://vk.com/topic-66162180_52002075) |
 | Soccer League. 4-й сезон | Season 4 Кубок лиг, Season 4 Высшая лига, Se | 375 | нет 0 · счёт 6 | [открыть](https://vk.com/topic-66162180_34973011) |
 | 9-й сольный чемпионат Soccer League (Goal3) | Season 9 Кубок лиг, Season 9 Высшая лига, Se | 294 | нет 0 · счёт 5 | [открыть](https://vk.com/topic-66162180_54769667) |
@@ -20,7 +19,6 @@
 | Soccer League. 2-й сезон | Season 2 Кубок лиг, Season 2 Высшая лига, Se | 342 | нет 0 · счёт 1 | [открыть](https://vk.com/topic-66162180_33103100) |
 | IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer Lea | IV Командный Чемпионат по Goal 3 | 75 | нет 1 · счёт 0 | [открыть](https://vk.com/topic-66162180_33672355) |
 | 5-й сольный чемпионат Soccer League (Goal3) | Season 5 Кубок лиг, Season 5 Высшая лига, Se | 264 | нет 0 · счёт 1 | [открыть](https://vk.com/topic-66162180_36630593) |
-| Nekketsu Koukou Dodgeball Bu: Soccer Hen [NES] (4P) - Футб | — | 0 | чисто | [открыть](https://vk.com/topic-66162180_31776158) |
 | Kunio-kun no Nekketsu Soccer League [NES] (4P) - Футбольна | — | 0 | чисто | [открыть](https://vk.com/topic-66162180_31776275) |
 | Летний командный турнир по Kunio-kun no Nekketsu Soccer Le | III Командный Чемпионат (Летний 2015) | 0 | чисто | [открыть](https://vk.com/topic-66162180_31898219) |
 | Второй сольный турнир по пенальти. Июль 2015 | 2-й Сольный Турнир по пенальти, 2-й Сольный  | 12 | чисто | [открыть](https://vk.com/topic-66162180_31987256) |
@@ -60,29 +58,29 @@
 
 | что найдено | сколько |
 |---|---|
-| Игра есть в обсуждении, её нет в базе | 23 |
-| Пара та, счёт расходится | 207 |
+| Игра есть в обсуждении, её нет в базе | 7 |
+| Пара та, счёт расходится | 201 |
 | Вики-календарь: ноги встречи нет в базе | 0 |
 | Вики-календарь: нога есть другим счётом | 0 |
 | Игра в базе есть, но в другом документе | 3 |
-| Обсуждение не нашло своего турнира в базе | 9 |
+| Обсуждение не нашло своего турнира в базе | 8 |
 | Турнир в базе есть, строк в нём нет | 3 |
 | Пустые турниры базы (все, включая те, что без обсуждения) | 4 |
-| Написание игрока вне справочника | 223 |
+| Написание игрока вне справочника | 203 |
 | Два ника в players — один игрок | 0 |
 | Видео из комментария не попало в базу | 8 |
 | Турнир не читается из комментариев (проверить источник) | 5 |
 
 - обсуждений в выгрузке всего (все дисциплины клуба): 375
-- футбольных обсуждений в сверке: 34
-- комментариев: 4612
+- футбольных обсуждений в сверке: 32
+- комментариев: 4559
 - единиц базы (турниры и документы): 59
 - вики-страниц вычитано: 42
 - вики-страниц не про футбол: 28
 - строк базы в сопоставленных единицах: 3388
 - строк источника, совпавших с базой: 1249
 
-## Игра есть в обсуждении, её нет в базе (23)
+## Игра есть в обсуждении, её нет в базе (7)
 1. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=60#post31235)
    - источник: `Rash vs CentZloy - 6:3`
    - пара: [['RASH'], ['Centurion']], счёт [6, 3] · форма 1×1 · нога 1/1
@@ -98,177 +96,97 @@
    - пара: [['esteban'], ['Dopi']], счёт [1, 5] · форма 1×1 · нога 1/1
    - турнир базы: IV Командный Чемпионат по Goal 3 · строк 75
    - ни в этом турнире, ни где-либо в базе такой пары нет
-4. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3695)
-   - источник: `Damian - ВОР95 - 4:1`
-   - пара: [['Damian'], ['BOР95']], счёт [4, 1] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-5. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3695)
-   - источник: `ВОР95 - Damian - 3:1`
-   - пара: [['BOР95'], ['Damian']], счёт [3, 1] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-6. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3761)
-   - источник: `Tymoschuk vs Lipetsk 8:5`
-   - пара: [['Bubnov'], ['Lipetsk']], счёт [8, 5] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-7. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3761)
-   - источник: `Lipetsk vs Tymoschuk 3:12`
-   - пара: [['Lipetsk'], ['Bubnov']], счёт [3, 12] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-8. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3898)
-   - источник: `ВОР95 vs Rock - 6:4`
-   - пара: [['BOР95'], ['Rock']], счёт [6, 4] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-9. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3898)
-   - источник: `Rock vs BOP95 - 8:4`
-   - пара: [['Rock'], ['BOР95']], счёт [8, 4] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-10. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4004)
-   - источник: `Lipetsk vs Damian 5:8`
-   - пара: [['Lipetsk'], ['Damian']], счёт [5, 8] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-11. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4004)
-   - источник: `Damian vs Lipetsk 10:6`
-   - пара: [['Damian'], ['Lipetsk']], счёт [10, 6] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-12. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4057)
-   - источник: `ВОР95 vs Lipetsk 5:3`
-   - пара: [['BOР95'], ['Lipetsk']], счёт [5, 3] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-13. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4057)
-   - источник: `Lipetsk vs ВОР95 2:5`
-   - пара: [['Lipetsk'], ['BOР95']], счёт [2, 5] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-14. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4162)
-   - источник: `Lipetsk vs Centurion - 10:0`
-   - пара: [['Lipetsk'], ['Centurion']], счёт [10, 0] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-15. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4162)
-   - источник: `Сenturion vs Lipetsk - 3:9`
-   - пара: [['Centurion'], ['Lipetsk']], счёт [3, 9] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-16. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4367)
-   - источник: `Lipetsk vs Rock - 3:2`
-   - пара: [['Lipetsk'], ['Rock']], счёт [3, 2] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-17. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4367)
-   - источник: `Rock vs Lipetsk - 7:0`
-   - пара: [['Rock'], ['Lipetsk']], счёт [7, 0] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-18. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4369)
-   - источник: `Damian vs Rock - 5:5`
-   - пара: [['Damian'], ['Rock']], счёт [5, 5] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-19. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4369)
-   - источник: `Rock vs Damian - 6:4`
-   - пара: [['Rock'], ['Damian']], счёт [6, 4] · форма 1×1 · нога 1/1
-   - турнир базы: Season 1 Высшая (Единая) лига, Season 1 Метеоры · строк 135
-   - ни в этом турнире, ни где-либо в базе такой пары нет
-20. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=0#post29943)
+4. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=0#post29943)
    - источник: `Vasya1995 vs Jamlight - 1:2`
    - пара: [['Vasya1995'], ['Jamlight']], счёт [1, 2] · форма 1×1 · нога 1/1
    - турнир базы: Season 3 Кубок лиг, Season 3 Высшая лига, Season 3 Дворовая лига, Season 3 Средняя лига · строк 308
    - ни в этом турнире, ни где-либо в базе такой пары нет
-21. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=0#post30847)
+5. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=0#post30847)
    - источник: `Vasya1995 vs Jamlight - 1:2`
    - пара: [['Vasya1995'], ['Jamlight']], счёт [1, 2] · форма 1×1 · нога 1/1
    - турнир базы: Season 4 Кубок лиг, Season 4 Высшая лига, Season 4 Дворовая лига, Season 4 Средняя лига · строк 375
    - ни в этом турнире, ни где-либо в базе такой пары нет
-22. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31611)
+6. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31611)
    - источник: `Memori vs Rodger - 2:0 (13:1, 11:1)`
    - пара: [['Memori'], ['Веселый Роджер']], счёт [2, 0] · форма 1×1 · нога 1/1
    - турнир базы: Season 4 Кубок лиг, Season 4 Высшая лига, Season 4 Дворовая лига, Season 4 Средняя лига · строк 375
    - ни в этом турнире, ни где-либо в базе такой пары нет
-23. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31642)
+7. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31642)
    - источник: `Memori vs Kubik - 0:2`
    - пара: [['Memori'], ['Kubik']], счёт [0, 2] · форма 1×1 · нога 1/1
    - турнир базы: Season 4 Кубок лиг, Season 4 Высшая лига, Season 4 Дворовая лига, Season 4 Средняя лига · строк 375
    - ни в этом турнире, ни где-либо в базе такой пары нет
 
-## Пара та, счёт расходится (207)
+## Пара та, счёт расходится (201)
 1. **4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]** · топик 34920573 · [комментарий](https://vk.com/topic-66162180_34920573?offset=20#post9742)
    - источник: `Буц - Christian - 1:5`
    - пара: [['Буц'], ['Christian']], счёт [1, 5] · нога 1/1
-   - база: id=36104 | tour=Winners 1/8 | scores=[4, 10] | status=played | a=Буц | b=Christian
+   - база: id=39113 | tour=Winners 1/8 | scores=[4, 10] | status=played | a=Буц | b=Christian
    - та же пара в этом турнире, но счёт другой
 2. **4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]** · топик 34920573 · [комментарий](https://vk.com/topic-66162180_34920573?offset=20#post9742)
    - источник: `Буц - Christian - 3:5 (Ответка на слабо)`
    - пара: [['Буц'], ['Christian']], счёт [3, 5] · нога 1/1
-   - база: id=36104 | tour=Winners 1/8 | scores=[4, 10] | status=played | a=Буц | b=Christian
+   - база: id=39113 | tour=Winners 1/8 | scores=[4, 10] | status=played | a=Буц | b=Christian
    - та же пара в этом турнире, но счёт другой
 3. **5-й сольный чемпионат Soccer League (Goal3)** · топик 36630593 · [комментарий](https://vk.com/topic-66162180_36630593?offset=0#post14336)
    - источник: `ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=35466 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
+   - база: id=38475 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
    - та же пара в этом турнире, но счёт другой
 4. **6-й сольный чемпионат Soccer League (Goal3)** · топик 39660451 · [комментарий](https://vk.com/topic-66162180_39660451?offset=0#post17541)
    - источник: `ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=35496 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
+   - база: id=38505 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
    - та же пара в этом турнире, но счёт другой
 5. **6-й сольный чемпионат Soccer League (Goal3)** · топик 39660451 · [комментарий](https://vk.com/topic-66162180_39660451?offset=80#post18193)
    - источник: `Cyneprepou4uk vs Wenderfit 6-0, 4-4 (8-4)`
    - пара: [['Cyneprepou4uk'], ['Wenderfit']], счёт [4, 4] · нога 2/2
-   - база: id=34568 | tour=3 Тур | scores=[6, 0] | status=played | a=Cyneprepou4uk | b=Wenderfit
+   - база: id=37577 | tour=3 Тур | scores=[6, 0] | status=played | a=Cyneprepou4uk | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
 6. **7-й сольный чемпионат Soccer League (Goal3)** · топик 49054760 · [комментарий](https://vk.com/topic-66162180_49054760?offset=0#post26785)
    - источник: `ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=35519 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
+   - база: id=38528 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
    - та же пара в этом турнире, но счёт другой
 7. **7-й сольный чемпионат Soccer League (Goal3)** · топик 49054760 · [комментарий](https://vk.com/topic-66162180_49054760?offset=80#post26919)
    - источник: `JohnnyBravo vs Romol 1:2, 1:3`
    - пара: [['JohnnyBravo'], ['Romol']], счёт [1, 3] · нога 2/2
-   - база: id=35524 | tour=Плей-офф / Кубок | scores=[1, 2] | status=played | a=JohnnyBravo | b=Romol
+   - база: id=38533 | tour=Плей-офф / Кубок | scores=[1, 2] | status=played | a=JohnnyBravo | b=Romol
    - та же пара в этом турнире, но счёт другой
 8. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=0#post31124)
    - источник: `Высшая, 1 тур. Memori vs Centurion - 3:0, 8:5 пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=33306 | tour=4 Тур | scores=[1, 6] | unit=Season 2 Высшая лига
+   - база: id=36315 | tour=4 Тур | scores=[1, 6] | unit=Season 2 Высшая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 9. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=20#post31175)
    - источник: `Средняя, 1 тур. CentZloy vs Aeris - 3:1 (OT), 0:3`
    - пара: [['Centurion'], ['Aeris']], счёт [3, 1] · нога 1/2
-   - база: id=34312 | tour=6 Тур | scores=[2, 6] | unit=Season 5 Средняя лига
+   - база: id=37321 | tour=6 Тур | scores=[2, 6] | unit=Season 5 Средняя лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 10. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=20#post31175)
    - источник: `Средняя, 1 тур. CentZloy vs Aeris - 3:1 (OT), 0:3`
    - пара: [['Centurion'], ['Aeris']], счёт [0, 3] · нога 2/2
-   - база: id=34312 | tour=6 Тур | scores=[2, 6] | unit=Season 5 Средняя лига
+   - база: id=37321 | tour=6 Тур | scores=[2, 6] | unit=Season 5 Средняя лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 11. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=40#post31180)
    - источник: `Средняя лига 2 тур Jamlight vs CentZloy 2-3,`
    - пара: [['Jamlight'], ['Centurion']], счёт [2, 3] · нога 1/1
-   - база: id=35474 | tour=Плей-офф / Кубок | scores=[3, 1] | unit=Season 5 Высшая лига
+   - база: id=38483 | tour=Плей-офф / Кубок | scores=[3, 1] | unit=Season 5 Высшая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 12. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=40#post31180)
    - источник: `Перехост CentZloy vs Jamlight 1-1(4-3 пен)`
    - пара: [['Centurion'], ['Jamlight']], счёт [1, 1] · нога 1/1
-   - база: id=35474 | tour=Плей-офф / Кубок | scores=[3, 1] | unit=Season 5 Высшая лига
+   - база: id=38483 | tour=Плей-офф / Кубок | scores=[3, 1] | unit=Season 5 Высшая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 13. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=60#post31232)
    - источник: `CentZloy vs Буц - 0:4`
    - пара: [['Centurion'], ['Буц']], счёт [0, 4] · нога 1/1
-   - база: id=34444 | tour=3 Тур | scores=[7, 5] | unit=Season 6 Высшая лига
+   - база: id=37453 | tour=3 Тур | scores=[7, 5] | unit=Season 6 Высшая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 14. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=60#post31232)
    - источник: `Буц vs CentZloy - 5:4 (пен)`
    - пара: [['Буц'], ['Centurion']], счёт [5, 4] · нога 1/1
-   - база: id=34444 | tour=3 Тур | scores=[7, 5] | unit=Season 6 Высшая лига
+   - база: id=37453 | tour=3 Тур | scores=[7, 5] | unit=Season 6 Высшая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 15. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=60#post31240)
    - источник: `Ric25 vs leonudomlya 1 -4`
@@ -293,7 +211,7 @@
 19. **9-й сольный чемпионат Soccer League (Goal3)** · топик 54769667 · [комментарий](https://vk.com/topic-66162180_54769667?offset=0#post32746)
    - источник: `Высшая, 1 тур. Memori vs Centurion - 3:0, 8:5 пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=33306 | tour=4 Тур | scores=[1, 6] | unit=Season 2 Высшая лига
+   - база: id=36315 | tour=4 Тур | scores=[1, 6] | unit=Season 2 Высшая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
 20. **9-й сольный чемпионат Soccer League (Goal3)** · топик 54769667 · [комментарий](https://vk.com/topic-66162180_54769667?offset=40#post32791)
    - источник: `Yuliy_Cezar vs yoxter 1:1 (ПК 5:3)`
@@ -315,970 +233,937 @@
    - пара: [['Yuliy_Cezar'], ['Ryumaru']], счёт [3, 0] · нога 1/1
    - база: id=354 | scores=[2, 0] | status=played | a=Yuliy_Cezar | b=Ryumaru
    - та же пара в этом турнире, но счёт другой
-24. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=0#post3525)
-   - источник: `1-й тур. Tymoschuk - Rock 7:4`
-   - пара: [['Bubnov'], ['Rock']], счёт [7, 4] · нога 1/1
-   - база: id=34588 | tour=4 Тур | scores=[1, 4] | unit=Season 6 Средняя лига
-   - такая пара в базе есть, но в другом турнире и с другим счётом
-25. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=0#post3525)
-   - источник: `Rock - Tymoschuk 6:8`
-   - пара: [['Rock'], ['Bubnov']], счёт [6, 8] · нога 1/1
-   - база: id=34588 | tour=4 Тур | scores=[1, 4] | unit=Season 6 Средняя лига
-   - такая пара в базе есть, но в другом турнире и с другим счётом
-26. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3994)
-   - источник: `BOP95 vs Tymoschuk - 4:10`
-   - пара: [['BOР95'], ['Bubnov']], счёт [4, 10] · нога 1/1
-   - база: id=33219 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
-   - та же пара в этом турнире, но счёт другой
-27. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3994)
-   - источник: `Tymoschuk vs BOP95 - 6:2`
-   - пара: [['Bubnov'], ['BOР95']], счёт [6, 2] · нога 1/1
-   - база: id=33219 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
-   - та же пара в этом турнире, но счёт другой
-28. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4022)
-   - источник: `5 тур Сenturion vs Tymoschuk - 1:8`
-   - пара: [['Centurion'], ['Bubnov']], счёт [1, 8] · нога 1/1
-   - база: id=33216 | tour=1 Круг | scores=[2, 2] | status=played | a=Bubnov | b=Centurion
-   - та же пара в этом турнире, но счёт другой
-29. **Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I** · топик 33045983 · [комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4022)
-   - источник: `Tymoschuk vs Centurion - 10:0`
-   - пара: [['Bubnov'], ['Centurion']], счёт [10, 0] · нога 1/1
-   - база: id=33216 | tour=1 Круг | scores=[2, 2] | status=played | a=Bubnov | b=Centurion
-   - та же пара в этом турнире, но счёт другой
-30. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30492)
+24. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30492)
    - источник: `Rustin Cohle vs Jamlight 0-2 (Rustin Cohle vs Jamlight 2-12`
    - пара: [['Rustin Cohle'], ['Jamlight']], счёт [0, 2] · нога 1/2
-   - база: id=34620 | tour=7 Тур | scores=[1, 2] | unit=Season 6 Средняя лига
+   - база: id=37629 | tour=7 Тур | scores=[1, 2] | unit=Season 6 Средняя лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
-31. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30492)
+25. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30492)
    - источник: `Rustin Cohle vs Jamlight 0-2 (Rustin Cohle vs Jamlight 2-12`
    - пара: [['Rustin Cohle'], ['Jamlight']], счёт [2, 12] · нога 2/2
-   - база: id=34620 | tour=7 Тур | scores=[1, 2] | unit=Season 6 Средняя лига
+   - база: id=37629 | tour=7 Тур | scores=[1, 2] | unit=Season 6 Средняя лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
-32. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30525)
+26. **Soccer (сезон 3)** · топик 49948732 · [комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30525)
    - источник: `Jamlight vs Кубик 0:2`
    - пара: [['Jamlight'], ['Kubik']], счёт [0, 2] · нога 1/1
-   - база: id=34198 | tour=11 Тур | scores=[6, 7] | unit=Season 4 Дворовая лига
+   - база: id=37207 | tour=11 Тур | scores=[6, 7] | unit=Season 4 Дворовая лига
    - такая пара в базе есть, но в другом турнире и с другим счётом
-33. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31610)
+27. **Soccer (сезон 4)** · топик 50374687 · [комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31610)
    - источник: `Кубик vs Jamlight 2:1`
    - пара: [['Kubik'], ['Jamlight']], счёт [2, 1] · нога 1/1
-   - база: id=34198 | tour=11 Тур | scores=[6, 7] | status=played | a=Jamlight | b=Kubik
+   - база: id=37207 | tour=11 Тур | scores=[6, 7] | status=played | a=Jamlight | b=Kubik
    - та же пара в этом турнире, но счёт другой
-34. **Soccer League. 2-й сезон** · топик 33103100 · [комментарий](https://vk.com/topic-66162180_33103100?offset=0#post3563)
+28. **Soccer League. 2-й сезон** · топик 33103100 · [комментарий](https://vk.com/topic-66162180_33103100?offset=0#post3563)
    - источник: `ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=33306 | tour=4 Тур | scores=[1, 6] | status=played | a=Centurion | b=Memori
+   - база: id=36315 | tour=4 Тур | scores=[1, 6] | status=played | a=Centurion | b=Memori
    - та же пара в этом турнире, но счёт другой
-35. **Soccer League. 3-й сезон** · топик 33967365 · [комментарий](https://vk.com/topic-66162180_33967365?offset=0#post6339)
+29. **Soccer League. 3-й сезон** · топик 33967365 · [комментарий](https://vk.com/topic-66162180_33967365?offset=0#post6339)
    - источник: `ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=33618 | tour=5 Тур | scores=[4, 3] | status=played | a=Memori | b=Centurion
+   - база: id=36627 | tour=5 Тур | scores=[4, 3] | status=played | a=Memori | b=Centurion
    - та же пара в этом турнире, но счёт другой
-36. **Soccer League. 3-й сезон** · топик 33967365 · [комментарий](https://vk.com/topic-66162180_33967365?offset=220#post7380)
+30. **Soccer League. 3-й сезон** · топик 33967365 · [комментарий](https://vk.com/topic-66162180_33967365?offset=220#post7380)
    - источник: `Dune vs Wenderfit 6 - 6 PK 5:4`
    - пара: [['Dune'], ['Wenderfit']], счёт [5, 4] · нога 2/2
-   - база: id=35446 | tour=Плей-офф / Кубок | scores=[6, 6] | status=played | a=Dune | b=Wenderfit
+   - база: id=38455 | tour=Плей-офф / Кубок | scores=[6, 6] | status=played | a=Dune | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-37. **Soccer League. 3-й сезон** · топик 33967365 · [комментарий](https://vk.com/topic-66162180_33967365?offset=220#post7380)
+31. **Soccer League. 3-й сезон** · топик 33967365 · [комментарий](https://vk.com/topic-66162180_33967365?offset=220#post7380)
    - источник: `Wenderfit vs Dune 3 - 3 PK 3:4`
    - пара: [['Wenderfit'], ['Dune']], счёт [3, 4] · нога 2/2
-   - база: id=35446 | tour=Плей-офф / Кубок | scores=[6, 6] | status=played | a=Dune | b=Wenderfit
+   - база: id=38455 | tour=Плей-офф / Кубок | scores=[6, 6] | status=played | a=Dune | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-38. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=0#post9794)
+32. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=0#post9794)
    - источник: `ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.`
    - пара: [['Memori'], ['Centurion']], счёт [8, 5] · нога 2/2
-   - база: id=35455 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
+   - база: id=38464 | tour=Плей-офф / Кубок | scores=[3, 0] | status=played | a=Memori | b=Centurion
    - та же пара в этом турнире, но счёт другой
-39. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=40#post10109)
+33. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=40#post10109)
    - источник: `ВОР95 vs Валера - 0:6, 3:10`
    - пара: [['BOР95'], ['Centurion']], счёт [3, 10] · нога 2/2
-   - база: id=35456 | tour=Плей-офф / Кубок | scores=[0, 6] | status=played | a=BOР95 | b=Centurion
+   - база: id=38465 | tour=Плей-офф / Кубок | scores=[0, 6] | status=played | a=BOР95 | b=Centurion
    - та же пара в этом турнире, но счёт другой
-40. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=240#post10926)
+34. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=240#post10926)
    - источник: `FC Pushistik - 3aBuCTb 1:2, 2:7, 3:4`
    - пара: [['FC Pushistik'], ['3aBuCTb']], счёт [2, 7] · нога 2/3
-   - база: id=35571 | tour=1/16 финала | scores=[3, 0] | status=played | a=3aBuCTb | b=FC Pushistik
+   - база: id=38580 | tour=1/16 финала | scores=[3, 0] | status=played | a=3aBuCTb | b=FC Pushistik
    - та же пара в этом турнире, но счёт другой
-41. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=240#post10926)
+35. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=240#post10926)
    - источник: `FC Pushistik - 3aBuCTb 1:2, 2:7, 3:4`
    - пара: [['FC Pushistik'], ['3aBuCTb']], счёт [3, 4] · нога 3/3
-   - база: id=35571 | tour=1/16 финала | scores=[3, 0] | status=played | a=3aBuCTb | b=FC Pushistik
+   - база: id=38580 | tour=1/16 финала | scores=[3, 0] | status=played | a=3aBuCTb | b=FC Pushistik
    - та же пара в этом турнире, но счёт другой
-42. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=260#post11084)
+36. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=260#post11084)
    - источник: `Kipriot - 3aBuCTb 6:3, PK-3:2, 4:3`
    - пара: [['Kipriot'], ['3aBuCTb']], счёт [3, 2] · нога 2/3
-   - база: id=35575 | tour=1/8 финала | scores=[3, 0] | status=played | a=Kipriot | b=3aBuCTb
+   - база: id=38584 | tour=1/8 финала | scores=[3, 0] | status=played | a=Kipriot | b=3aBuCTb
    - та же пара в этом турнире, но счёт другой
-43. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=260#post11084)
+37. **Soccer League. 4-й сезон** · топик 34973011 · [комментарий](https://vk.com/topic-66162180_34973011?offset=260#post11084)
    - источник: `Kipriot - 3aBuCTb 6:3, PK-3:2, 4:3`
    - пара: [['Kipriot'], ['3aBuCTb']], счёт [4, 3] · нога 3/3
-   - база: id=35575 | tour=1/8 финала | scores=[3, 0] | status=played | a=Kipriot | b=3aBuCTb
+   - база: id=38584 | tour=1/8 финала | scores=[3, 0] | status=played | a=Kipriot | b=3aBuCTb
    - та же пара в этом турнире, но счёт другой
-44. **Клубный Чемпионат по Goal 4. МЕЖСЕЗОНЬЕ** · топик 39731903 · [комментарий](https://vk.com/topic-66162180_39731903?offset=60#post19379)
+38. **Клубный Чемпионат по Goal 4. МЕЖСЕЗОНЬЕ** · топик 39731903 · [комментарий](https://vk.com/topic-66162180_39731903?offset=60#post19379)
    - источник: `вышка Яжежал vs Геймклуб 1-3`
    - пара: [['Яжежал'], ['Геймклуб']], счёт [1, 3] · нога 1/1
-   - база: id=35636 | tour=Баттл #1 (Круг 1) | scores=[4, 3] | status=played | a=Яжежал | b=Геймклуб
+   - база: id=38645 | tour=Баттл #1 (Круг 1) | scores=[4, 3] | status=played | a=Яжежал | b=Геймклуб
    - та же пара в этом турнире, но счёт другой
-45. **Клубный Чемпионат по Goal 4. МЕЖСЕЗОНЬЕ** · топик 39731903 · [комментарий](https://vk.com/topic-66162180_39731903?offset=60#post19563)
+39. **Клубный Чемпионат по Goal 4. МЕЖСЕЗОНЬЕ** · топик 39731903 · [комментарий](https://vk.com/topic-66162180_39731903?offset=60#post19563)
    - источник: `молодежка Геймклуб vs Мегадрайв 3-0`
    - пара: [['Геймклуб'], ['Мегадрайв']], счёт [3, 0] · нога 1/1
-   - база: id=35648 | tour=Баттл #16 (Круг 1) | scores=[8, 4] | status=played | a=Геймклуб | b=Мегадрайв
+   - база: id=38657 | tour=Баттл #16 (Круг 1) | scores=[8, 4] | status=played | a=Геймклуб | b=Мегадрайв
    - та же пара в этом турнире, но счёт другой
-46. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=0#post2292)
+40. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=0#post2292)
    - источник: `ВОР95 - Tymoschuk - 5:1`
    - пара: [['BOР95'], ['Bubnov']], счёт [5, 1] · нога 1/1
-   - база: id=33219 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
+   - база: id=36228 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-47. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=0#post2292)
+41. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=0#post2292)
    - источник: `Tymoschuk - BOP95 - 6:2`
    - пара: [['Bubnov'], ['BOР95']], счёт [6, 2] · нога 1/1
-   - база: id=33219 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
+   - база: id=36228 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-48. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=40#post2447)
+42. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=40#post2447)
    - источник: `Кирпич57 vs Сenturion 4:3`
    - пара: [['Кирпич57'], ['Centurion']], счёт [4, 3] · нога 1/1
-   - база: id=33232 | tour=1 Круг | scores=[6, 1] | status=played | a=Centurion | b=Кирпич57
+   - база: id=36241 | tour=1 Круг | scores=[6, 1] | status=played | a=Centurion | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-49. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=40#post2450)
+43. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=40#post2450)
    - источник: `Memori vs WiSe - 6:1`
    - пара: [['Memori'], ['WiSe']], счёт [6, 1] · нога 1/1
-   - база: id=33126 | tour=1 Круг | scores=[1, 3] | status=played | a=Memori | b=WiSe
+   - база: id=36135 | tour=1 Круг | scores=[1, 3] | status=played | a=Memori | b=WiSe
    - та же пара в этом турнире, но счёт другой
-50. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2509)
+44. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2509)
    - источник: `DanLavis vs Misfits: 1:3`
    - пара: [['Dan_Lavis'], ['Misfits']], счёт [1, 3] · нога 1/1
-   - база: id=33242 | tour=1 Круг | scores=[0, 0] | status=played | a=Misfits | b=Dan_Lavis
+   - база: id=36251 | tour=1 Круг | scores=[0, 0] | status=played | a=Misfits | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-51. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2520)
+45. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2520)
    - источник: `Ric25 - yoxter 7:2`
    - пара: [['Ric25'], ['yoxter']], счёт [7, 2] · нога 1/1
-   - база: id=33137 | tour=1 Круг | scores=[4, 0] | status=played | a=Ric25 | b=yoxter
+   - база: id=36146 | tour=1 Круг | scores=[4, 0] | status=played | a=Ric25 | b=yoxter
    - та же пара в этом турнире, но счёт другой
-52. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2525)
+46. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2525)
    - источник: `Misfits - BZK 1-2`
    - пара: [['Misfits'], ['Cyneprepou4uk']], счёт [1, 2] · нога 1/1
-   - база: id=33245 | tour=1 Круг | scores=[3, 3] | status=played | a=Cyneprepou4uk | b=Misfits
+   - база: id=36254 | tour=1 Круг | scores=[3, 3] | status=played | a=Cyneprepou4uk | b=Misfits
    - та же пара в этом турнире, но счёт другой
-53. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2529)
+47. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2529)
    - источник: `Centurion vs DanLavis - 4:3`
    - пара: [['Centurion'], ['Dan_Lavis']], счёт [4, 3] · нога 1/1
-   - база: id=33248 | tour=1 Круг | scores=[2, 2] | status=played | a=Dan_Lavis | b=Centurion
+   - база: id=36257 | tour=1 Круг | scores=[2, 2] | status=played | a=Dan_Lavis | b=Centurion
    - та же пара в этом турнире, но счёт другой
-54. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2530)
+48. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=60#post2530)
    - источник: `Ric25 vs Memori - 0:2`
    - пара: [['Ric25'], ['Memori']], счёт [0, 2] · нога 1/1
-   - база: id=33125 | tour=1 Круг | scores=[4, 0] | status=played | a=Memori | b=Ric25
+   - база: id=36134 | tour=1 Круг | scores=[4, 0] | status=played | a=Memori | b=Ric25
    - та же пара в этом турнире, но счёт другой
-55. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2537)
+49. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2537)
    - источник: `Eg_or3 - Yoxter - 4:3`
    - пара: [['Eg_or3'], ['yoxter']], счёт [4, 3] · нога 1/1
-   - база: id=33166 | tour=1 Круг | scores=[1, 3] | status=played | a=yoxter | b=Eg_or3
+   - база: id=36175 | tour=1 Круг | scores=[1, 3] | status=played | a=yoxter | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-56. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2552)
+50. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2552)
    - источник: `Gilmour - Ric25 3-6`
    - пара: [['Gilmour'], ['Ric25']], счёт [3, 6] · нога 1/1
-   - база: id=33142 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Gilmour
+   - база: id=36151 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-57. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2557)
+51. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2557)
    - источник: `Rustin Cohle - wenderfit 2-4`
    - пара: [['Rustin Cohle'], ['Wenderfit']], счёт [2, 4] · нога 1/1
-   - база: id=33158 | tour=1 Круг | scores=[6, 3] | status=played | a=Wenderfit | b=Rustin Cohle
+   - база: id=36167 | tour=1 Круг | scores=[6, 3] | status=played | a=Wenderfit | b=Rustin Cohle
    - та же пара в этом турнире, но счёт другой
-58. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2562)
+52. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2562)
    - источник: `DanLavis vs Кирпич: 4:2`
    - пара: [['Dan_Lavis'], ['Кирпич57']], счёт [4, 2] · нога 1/1
-   - база: id=33254 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=Dan_Lavis
+   - база: id=36263 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-59. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2567)
+53. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2567)
    - источник: `Memori vs Eg_or3 - 9:0`
    - пара: [['Memori'], ['Eg_or3']], счёт [9, 0] · нога 1/1
-   - база: id=33130 | tour=1 Круг | scores=[5, 3] | status=played | a=Memori | b=Eg_or3
+   - база: id=36139 | tour=1 Круг | scores=[5, 3] | status=played | a=Memori | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-60. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2568)
+54. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=80#post2568)
    - источник: `Tymoschuk - Misfits 9:0`
    - пара: [['Bubnov'], ['Misfits']], счёт [9, 0] · нога 1/1
-   - база: id=33238 | tour=1 Круг | scores=[1, 5] | status=played | a=Misfits | b=Bubnov
+   - база: id=36247 | tour=1 Круг | scores=[1, 5] | status=played | a=Misfits | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-61. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=100#post2590)
+55. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=100#post2590)
    - источник: `Psycho vs BOP95 - 1:8`
    - пара: [['psycho'], ['BOР95']], счёт [1, 8] · нога 1/1
-   - база: id=33222 | tour=1 Круг | scores=[6, 3] | status=played | a=BOР95 | b=psycho
+   - база: id=36231 | tour=1 Круг | scores=[6, 3] | status=played | a=BOР95 | b=psycho
    - та же пара в этом турнире, но счёт другой
-62. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=100#post2598)
+56. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=100#post2598)
    - источник: `Kirpich vs BZK - 2: 5`
    - пара: [['Кирпич57'], ['Cyneprepou4uk']], счёт [2, 5] · нога 1/1
-   - база: id=33246 | tour=1 Круг | scores=[4, 1] | status=played | a=Cyneprepou4uk | b=Кирпич57
+   - база: id=36255 | tour=1 Круг | scores=[4, 1] | status=played | a=Cyneprepou4uk | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-63. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2599)
+57. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2599)
    - источник: `wenderfit - Romario 8-0 (слот 3)`
    - пара: [['Wenderfit'], ['Romario']], счёт [8, 0] · нога 1/1
-   - база: id=33159 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Romario
+   - база: id=36168 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Romario
    - та же пара в этом турнире, но счёт другой
-64. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2601)
+58. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2601)
    - источник: `Romario - yoxter 3-6`
    - пара: [['Romario'], ['yoxter']], счёт [3, 6] · нога 1/1
-   - база: id=33168 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
+   - база: id=36177 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
    - та же пара в этом турнире, но счёт другой
-65. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2601)
+59. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2601)
    - источник: `yoxter - Romario 8-2`
    - пара: [['yoxter'], ['Romario']], счёт [8, 2] · нога 1/1
-   - база: id=33168 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
+   - база: id=36177 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
    - та же пара в этом турнире, но счёт другой
-66. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2635)
+60. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=120#post2635)
    - источник: `DanLavis - Psycho 4-2.`
    - пара: [['Dan_Lavis'], ['psycho']], счёт [4, 2] · нога 1/1
-   - база: id=33236 | tour=1 Круг | scores=[3, 0] | status=played | a=psycho | b=Dan_Lavis
+   - база: id=36245 | tour=1 Круг | scores=[3, 0] | status=played | a=psycho | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-67. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2639)
+61. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2639)
    - источник: `BOP95 vs Misfits - 5:2`
    - пара: [['BOР95'], ['Misfits']], счёт [5, 2] · нога 1/1
-   - база: id=33239 | tour=1 Круг | scores=[2, 6] | status=played | a=Misfits | b=BOР95
+   - база: id=36248 | tour=1 Круг | scores=[2, 6] | status=played | a=Misfits | b=BOР95
    - та же пара в этом турнире, но счёт другой
-68. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2642)
+62. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2642)
    - источник: `Kubik vs Centurion - 0:3`
    - пара: [['Kubik'], ['Centurion']], счёт [0, 3] · нога 1/1
-   - база: id=33233 | tour=1 Круг | scores=[2, 1] | status=played | a=Centurion | b=Kubik
+   - база: id=36242 | tour=1 Круг | scores=[2, 1] | status=played | a=Centurion | b=Kubik
    - та же пара в этом турнире, но счёт другой
-69. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2650)
+63. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2650)
    - источник: `Memori vs Wenderfit - 2:2`
    - пара: [['Memori'], ['Wenderfit']], счёт [2, 2] · нога 1/1
-   - база: id=33127 | tour=1 Круг | scores=[3, 3] | status=played | a=Memori | b=Wenderfit
+   - база: id=36136 | tour=1 Круг | scores=[3, 3] | status=played | a=Memori | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-70. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2652)
+64. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2652)
    - источник: `Wenderfit - Yoxter 2:3`
    - пара: [['Wenderfit'], ['yoxter']], счёт [2, 3] · нога 1/1
-   - база: id=33155 | tour=1 Круг | scores=[4, 1] | status=played | a=Wenderfit | b=yoxter
+   - база: id=36164 | tour=1 Круг | scores=[4, 1] | status=played | a=Wenderfit | b=yoxter
    - та же пара в этом турнире, но счёт другой
-71. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2659)
+65. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2659)
    - источник: `BZK - psycho 7-0`
    - пара: [['Cyneprepou4uk'], ['psycho']], счёт [7, 0] · нога 1/1
-   - база: id=33235 | tour=1 Круг | scores=[3, 2] | status=played | a=psycho | b=Cyneprepou4uk
+   - база: id=36244 | tour=1 Круг | scores=[3, 2] | status=played | a=psycho | b=Cyneprepou4uk
    - та же пара в этом турнире, но счёт другой
-72. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2661)
+66. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2661)
    - источник: `Centurion vs BOP95 0:4`
    - пара: [['Centurion'], ['BOР95']], счёт [0, 4] · нога 1/1
-   - база: id=33221 | tour=1 Круг | scores=[4, 2] | status=played | a=BOР95 | b=Centurion
+   - база: id=36230 | tour=1 Круг | scores=[4, 2] | status=played | a=BOР95 | b=Centurion
    - та же пара в этом турнире, но счёт другой
-73. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2663)
+67. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=140#post2663)
    - источник: `BZK - DanLavis 7-3`
    - пара: [['Cyneprepou4uk'], ['Dan_Lavis']], счёт [7, 3] · нога 1/1
-   - база: id=33249 | tour=1 Круг | scores=[3, 3] | status=played | a=Dan_Lavis | b=Cyneprepou4uk
+   - база: id=36258 | tour=1 Круг | scores=[3, 3] | status=played | a=Dan_Lavis | b=Cyneprepou4uk
    - та же пара в этом турнире, но счёт другой
-74. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2666)
+68. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2666)
    - источник: `Gilmour - Romario 6-2`
    - пара: [['Gilmour'], ['Romario']], счёт [6, 2] · нога 1/1
-   - база: id=33205 | tour=1 Круг | scores=[3, 2] | status=played | a=Romario | b=Gilmour
+   - база: id=36214 | tour=1 Круг | scores=[3, 2] | status=played | a=Romario | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-75. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2667)
+69. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2667)
    - источник: `BOP95 vs Kubik - 6:1`
    - пара: [['BOР95'], ['Kubik']], счёт [6, 1] · нога 1/1
-   - база: id=33255 | tour=1 Круг | scores=[1, 5] | status=played | a=Kubik | b=BOР95
+   - база: id=36264 | tour=1 Круг | scores=[1, 5] | status=played | a=Kubik | b=BOР95
    - та же пара в этом турнире, но счёт другой
-76. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2668)
+70. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2668)
    - источник: `Romario vs Memori - 1:7`
    - пара: [['Romario'], ['Memori']], счёт [1, 7] · нога 1/1
-   - база: id=33132 | tour=1 Круг | scores=[4, 1] | status=played | a=Memori | b=Romario
+   - база: id=36141 | tour=1 Круг | scores=[4, 1] | status=played | a=Memori | b=Romario
    - та же пара в этом турнире, но счёт другой
-77. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2672)
+71. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2672)
    - источник: `Dr1n vs BOP95 - 4:2`
    - пара: [['Dr1N'], ['BOР95']], счёт [4, 2] · нога 1/1
-   - база: id=33220 | tour=1 Круг | scores=[6, 1] | status=played | a=BOР95 | b=Dr1N
+   - база: id=36229 | tour=1 Круг | scores=[6, 1] | status=played | a=BOР95 | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-78. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2673)
+72. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2673)
    - источник: `----— Psycho - KubIk 3-2`
    - пара: [['psycho'], ['Kubik']], счёт [3, 2] · нога 1/1
-   - база: id=33256 | tour=1 Круг | scores=[6, 7] | status=played | a=Kubik | b=psycho
+   - база: id=36265 | tour=1 Круг | scores=[6, 7] | status=played | a=Kubik | b=psycho
    - та же пара в этом турнире, но счёт другой
-79. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2677)
+73. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2677)
    - источник: `Kirpich - Kubik 2 - 1`
    - пара: [['Кирпич57'], ['Kubik']], счёт [2, 1] · нога 1/1
-   - база: id=33259 | tour=1 Круг | scores=[0, 1] | status=played | a=Kubik | b=Кирпич57
+   - база: id=36268 | tour=1 Круг | scores=[0, 1] | status=played | a=Kubik | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-80. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2680)
+74. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2680)
    - источник: `Wenderfit - Gilmour 3:1`
    - пара: [['Wenderfit'], ['Gilmour']], счёт [3, 1] · нога 1/1
-   - база: id=33160 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Gilmour
+   - база: id=36169 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-81. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2681)
+75. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2681)
    - источник: `DanLavis - Tymoschuk: 0 : 4`
    - пара: [['Dan_Lavis'], ['Bubnov']], счёт [0, 4] · нога 1/1
-   - база: id=33217 | tour=1 Круг | scores=[6, 1] | status=played | a=Bubnov | b=Dan_Lavis
+   - база: id=36226 | tour=1 Круг | scores=[6, 1] | status=played | a=Bubnov | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-82. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2682)
+76. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=160#post2682)
    - источник: `Dr1N - Tymoschuk 1:4`
    - пара: [['Dr1N'], ['Bubnov']], счёт [1, 4] · нога 1/1
-   - база: id=33215 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
+   - база: id=36224 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-83. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2692)
+77. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2692)
    - источник: `BZK vs Dr1N 3-2`
    - пара: [['Cyneprepou4uk'], ['Dr1N']], счёт [3, 2] · нога 1/1
-   - база: id=33226 | tour=1 Круг | scores=[2, 2] | status=played | a=Dr1N | b=Cyneprepou4uk
+   - база: id=36235 | tour=1 Круг | scores=[2, 2] | status=played | a=Dr1N | b=Cyneprepou4uk
    - та же пара в этом турнире, но счёт другой
-84. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2696)
+78. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2696)
    - источник: `Tymoschuk vs BZK 4-4`
    - пара: [['Bubnov'], ['Cyneprepou4uk']], счёт [4, 4] · нога 1/1
-   - база: id=33243 | tour=1 Круг | scores=[2, 4] | status=played | a=Cyneprepou4uk | b=Bubnov
+   - база: id=36252 | tour=1 Круг | scores=[2, 4] | status=played | a=Cyneprepou4uk | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-85. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2697)
+79. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2697)
    - источник: `Psycho vs Dr1n 1-3`
    - пара: [['psycho'], ['Dr1N']], счёт [1, 3] · нога 1/1
-   - база: id=33224 | tour=1 Круг | scores=[3, 5] | status=played | a=Dr1N | b=psycho
+   - база: id=36233 | tour=1 Круг | scores=[3, 5] | status=played | a=Dr1N | b=psycho
    - та же пара в этом турнире, но счёт другой
-86. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2698)
+80. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=180#post2698)
    - источник: `Ric25 - Romario 5:1`
    - пара: [['Ric25'], ['Romario']], счёт [5, 1] · нога 1/1
-   - база: id=33141 | tour=1 Круг | scores=[6, 3] | status=played | a=Ric25 | b=Romario
+   - база: id=36150 | tour=1 Круг | scores=[6, 3] | status=played | a=Ric25 | b=Romario
    - та же пара в этом турнире, но счёт другой
-87. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2718)
+81. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2718)
    - источник: `Сenturion vs Misfits 4:1`
    - пара: [['Centurion'], ['Misfits']], счёт [4, 1] · нога 1/1
-   - база: id=33240 | tour=1 Круг | scores=[2, 3] | status=played | a=Misfits | b=Centurion
+   - база: id=36249 | tour=1 Круг | scores=[2, 3] | status=played | a=Misfits | b=Centurion
    - та же пара в этом турнире, но счёт другой
-88. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2721)
+82. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2721)
    - источник: `Ric25 vs Wenderfit 5:4`
    - пара: [['Ric25'], ['Wenderfit']], счёт [5, 4] · нога 1/1
-   - база: id=33136 | tour=1 Круг | scores=[3, 3] | status=played | a=Ric25 | b=Wenderfit
+   - база: id=36145 | tour=1 Круг | scores=[3, 3] | status=played | a=Ric25 | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-89. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2724)
+83. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2724)
    - источник: `BZK vs Kubik 3-3`
    - пара: [['Cyneprepou4uk'], ['Kubik']], счёт [3, 3] · нога 1/1
-   - база: id=33258 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Cyneprepou4uk
+   - база: id=36267 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Cyneprepou4uk
    - та же пара в этом турнире, но счёт другой
-90. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2731)
+84. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2731)
    - источник: `Memori vs Yoxter - 3:0`
    - пара: [['Memori'], ['yoxter']], счёт [3, 0] · нога 1/1
-   - база: id=33128 | tour=1 Круг | scores=[5, 1] | status=played | a=Memori | b=yoxter
+   - база: id=36137 | tour=1 Круг | scores=[5, 1] | status=played | a=Memori | b=yoxter
    - та же пара в этом турнире, но счёт другой
-91. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2732)
+85. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2732)
    - источник: `yoxter vs Gilmour 2:1`
    - пара: [['yoxter'], ['Gilmour']], счёт [2, 1] · нога 1/1
-   - база: id=33169 | tour=1 Круг | scores=[4, 2] | status=played | a=yoxter | b=Gilmour
+   - база: id=36178 | tour=1 Круг | scores=[4, 2] | status=played | a=yoxter | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-92. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2748)
+86. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2748)
    - источник: `Tymoschuk - psycho 4:1`
    - пара: [['Bubnov'], ['psycho']], счёт [4, 1] · нога 1/1
-   - база: id=33234 | tour=1 Круг | scores=[0, 5] | status=played | a=psycho | b=Bubnov
+   - база: id=36243 | tour=1 Круг | scores=[0, 5] | status=played | a=psycho | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-93. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2750)
+87. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2750)
    - источник: `Gilmour vs Memori - 1:3`
    - пара: [['Gilmour'], ['Memori']], счёт [1, 3] · нога 1/1
-   - база: id=33133 | tour=1 Круг | scores=[8, 0] | status=played | a=Memori | b=Gilmour
+   - база: id=36142 | tour=1 Круг | scores=[8, 0] | status=played | a=Memori | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-94. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2751)
+88. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2751)
    - источник: `Кирпич57 vs Dr1N - 1 : 2`
    - пара: [['Кирпич57'], ['Dr1N']], счёт [1, 2] · нога 1/1
-   - база: id=33227 | tour=1 Круг | scores=[3, 0] | status=played | a=Dr1N | b=Кирпич57
+   - база: id=36236 | tour=1 Круг | scores=[3, 0] | status=played | a=Dr1N | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-95. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2758)
+89. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=200#post2758)
    - источник: `Кирпич57 - Misfits 2 - 3`
    - пара: [['Кирпич57'], ['Misfits']], счёт [2, 3] · нога 1/1
-   - база: id=33253 | tour=1 Круг | scores=[5, 3] | status=played | a=Кирпич57 | b=Misfits
+   - база: id=36262 | tour=1 Круг | scores=[5, 3] | status=played | a=Кирпич57 | b=Misfits
    - та же пара в этом турнире, но счёт другой
-96. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2763)
+90. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2763)
    - источник: `Kubik - Dr1N 2 : 3`
    - пара: [['Kubik'], ['Dr1N']], счёт [2, 3] · нога 1/1
-   - база: id=33228 | tour=1 Круг | scores=[4, 3] | status=played | a=Dr1N | b=Kubik
+   - база: id=36237 | tour=1 Круг | scores=[4, 3] | status=played | a=Dr1N | b=Kubik
    - та же пара в этом турнире, но счёт другой
-97. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2764)
+91. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2764)
    - источник: `BOР95 - BZK 7-2`
    - пара: [['BOР95'], ['Cyneprepou4uk']], счёт [7, 2] · нога 1/1
-   - база: id=33244 | tour=1 Круг | scores=[7, 5] | status=played | a=Cyneprepou4uk | b=BOР95
+   - база: id=36253 | tour=1 Круг | scores=[7, 5] | status=played | a=Cyneprepou4uk | b=BOР95
    - та же пара в этом турнире, но счёт другой
-98. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2773)
+92. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2773)
    - источник: `10 тур. Сenturion vs Кирпич57 - 5:1`
    - пара: [['Centurion'], ['Кирпич57']], счёт [5, 1] · нога 1/1
-   - база: id=33232 | tour=1 Круг | scores=[6, 1] | status=played | a=Centurion | b=Кирпич57
+   - база: id=36241 | tour=1 Круг | scores=[6, 1] | status=played | a=Centurion | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-99. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2773)
+93. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2773)
    - источник: `Кирпич57 vs Centurion - 1:4`
    - пара: [['Кирпич57'], ['Centurion']], счёт [1, 4] · нога 1/1
-   - база: id=33232 | tour=1 Круг | scores=[6, 1] | status=played | a=Centurion | b=Кирпич57
+   - база: id=36241 | tour=1 Круг | scores=[6, 1] | status=played | a=Centurion | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-100. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2774)
+94. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2774)
    - источник: `Вор95 vs Кирпич57 - 7:2`
    - пара: [['BOР95'], ['Кирпич57']], счёт [7, 2] · нога 1/1
-   - база: id=33252 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=BOР95
+   - база: id=36261 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=BOР95
    - та же пара в этом турнире, но счёт другой
-101. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2775)
+95. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2775)
    - источник: `Kubik vs Misfits - 3:1`
    - пара: [['Kubik'], ['Misfits']], счёт [3, 1] · нога 1/1
-   - база: id=33257 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Misfits
+   - база: id=36266 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Misfits
    - та же пара в этом турнире, но счёт другой
-102. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2776)
+96. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2776)
    - источник: `Kubik vs Tymoschuk - 0:3`
    - пара: [['Kubik'], ['Bubnov']], счёт [0, 3] · нога 1/1
-   - база: id=33218 | tour=1 Круг | scores=[3, 1] | status=played | a=Bubnov | b=Kubik
+   - база: id=36227 | tour=1 Круг | scores=[3, 1] | status=played | a=Bubnov | b=Kubik
    - та же пара в этом турнире, но счёт другой
-103. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2777)
+97. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2777)
    - источник: `DanLavis vs BOP95 - 2:2`
    - пара: [['Dan_Lavis'], ['BOР95']], счёт [2, 2] · нога 1/1
-   - база: id=33223 | tour=1 Круг | scores=[3, 3] | status=played | a=BOР95 | b=Dan_Lavis
+   - база: id=36232 | tour=1 Круг | scores=[3, 3] | status=played | a=BOР95 | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-104. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2790)
+98. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2790)
    - источник: `Psycho - Kubik 5-3`
    - пара: [['psycho'], ['Kubik']], счёт [5, 3] · нога 1/1
-   - база: id=33256 | tour=1 Круг | scores=[6, 7] | status=played | a=Kubik | b=psycho
+   - база: id=36265 | tour=1 Круг | scores=[6, 7] | status=played | a=Kubik | b=psycho
    - та же пара в этом турнире, но счёт другой
-105. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2790)
+99. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2790)
    - источник: `Kubik - Psycho 4-6`
    - пара: [['Kubik'], ['psycho']], счёт [4, 6] · нога 1/1
-   - база: id=33256 | tour=1 Круг | scores=[6, 7] | status=played | a=Kubik | b=psycho
+   - база: id=36265 | tour=1 Круг | scores=[6, 7] | status=played | a=Kubik | b=psycho
    - та же пара в этом турнире, но счёт другой
-106. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2791)
+100. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2791)
    - источник: `Dr1N vs DanLavis 4 : 1`
    - пара: [['Dr1N'], ['Dan_Lavis']], счёт [4, 1] · нога 1/1
-   - база: id=33247 | tour=1 Круг | scores=[1, 5] | status=played | a=Dan_Lavis | b=Dr1N
+   - база: id=36256 | tour=1 Круг | scores=[1, 5] | status=played | a=Dan_Lavis | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-107. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2793)
+101. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=220#post2793)
    - источник: `BZK vs Dr1N 3-4`
    - пара: [['Cyneprepou4uk'], ['Dr1N']], счёт [3, 4] · нога 1/1
-   - база: id=33226 | tour=1 Круг | scores=[2, 2] | status=played | a=Dr1N | b=Cyneprepou4uk
+   - база: id=36235 | tour=1 Круг | scores=[2, 2] | status=played | a=Dr1N | b=Cyneprepou4uk
    - та же пара в этом турнире, но счёт другой
-108. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2794)
+102. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2794)
    - источник: `Ric25 - yoxter 8:3`
    - пара: [['Ric25'], ['yoxter']], счёт [8, 3] · нога 1/1
-   - база: id=33137 | tour=1 Круг | scores=[4, 0] | status=played | a=Ric25 | b=yoxter
+   - база: id=36146 | tour=1 Круг | scores=[4, 0] | status=played | a=Ric25 | b=yoxter
    - та же пара в этом турнире, но счёт другой
-109. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2794)
+103. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2794)
    - источник: `yoxter - Ric25 1:4`
    - пара: [['yoxter'], ['Ric25']], счёт [1, 4] · нога 1/1
-   - база: id=33137 | tour=1 Круг | scores=[4, 0] | status=played | a=Ric25 | b=yoxter
+   - база: id=36146 | tour=1 Круг | scores=[4, 0] | status=played | a=Ric25 | b=yoxter
    - та же пара в этом турнире, но счёт другой
-110. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2798)
+104. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2798)
    - источник: `WiSe vs Memori - 3:6`
    - пара: [['WiSe'], ['Memori']], счёт [3, 6] · нога 1/1
-   - база: id=33126 | tour=1 Круг | scores=[1, 3] | status=played | a=Memori | b=WiSe
+   - база: id=36135 | tour=1 Круг | scores=[1, 3] | status=played | a=Memori | b=WiSe
    - та же пара в этом турнире, но счёт другой
-111. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2811)
+105. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2811)
    - источник: `Romario vs Wenderfit 2-3`
    - пара: [['Romario'], ['Wenderfit']], счёт [2, 3] · нога 1/1
-   - база: id=33159 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Romario
+   - база: id=36168 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Romario
    - та же пара в этом турнире, но счёт другой
-112. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2811)
+106. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2811)
    - источник: `Wenderfit vs Romario 5-3`
    - пара: [['Wenderfit'], ['Romario']], счёт [5, 3] · нога 1/1
-   - база: id=33159 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Romario
+   - база: id=36168 | tour=1 Круг | scores=[1, 1] | status=played | a=Wenderfit | b=Romario
    - та же пара в этом турнире, но счёт другой
-113. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2816)
+107. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2816)
    - источник: `BZK - Misfits 5-5`
    - пара: [['Cyneprepou4uk'], ['Misfits']], счёт [5, 5] · нога 1/1
-   - база: id=33245 | tour=1 Круг | scores=[3, 3] | status=played | a=Cyneprepou4uk | b=Misfits
+   - база: id=36254 | tour=1 Круг | scores=[3, 3] | status=played | a=Cyneprepou4uk | b=Misfits
    - та же пара в этом турнире, но счёт другой
-114. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2816)
+108. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2816)
    - источник: `Misfits - BZK 3-2`
    - пара: [['Misfits'], ['Cyneprepou4uk']], счёт [3, 2] · нога 1/1
-   - база: id=33245 | tour=1 Круг | scores=[3, 3] | status=played | a=Cyneprepou4uk | b=Misfits
+   - база: id=36254 | tour=1 Круг | scores=[3, 3] | status=played | a=Cyneprepou4uk | b=Misfits
    - та же пара в этом турнире, но счёт другой
-115. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2824)
+109. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2824)
    - источник: `Ric25 vs Memori - 4:5`
    - пара: [['Ric25'], ['Memori']], счёт [4, 5] · нога 1/1
-   - база: id=33125 | tour=1 Круг | scores=[4, 0] | status=played | a=Memori | b=Ric25
+   - база: id=36134 | tour=1 Круг | scores=[4, 0] | status=played | a=Memori | b=Ric25
    - та же пара в этом турнире, но счёт другой
-116. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2824)
+110. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2824)
    - источник: `Memori vs Ric25 - 4:4`
    - пара: [['Memori'], ['Ric25']], счёт [4, 4] · нога 1/1
-   - база: id=33125 | tour=1 Круг | scores=[4, 0] | status=played | a=Memori | b=Ric25
+   - база: id=36134 | tour=1 Круг | scores=[4, 0] | status=played | a=Memori | b=Ric25
    - та же пара в этом турнире, но счёт другой
-117. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2828)
+111. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2828)
    - источник: `DanLavis vs Centurion - 0:2`
    - пара: [['Dan_Lavis'], ['Centurion']], счёт [0, 2] · нога 1/1
-   - база: id=33248 | tour=1 Круг | scores=[2, 2] | status=played | a=Dan_Lavis | b=Centurion
+   - база: id=36257 | tour=1 Круг | scores=[2, 2] | status=played | a=Dan_Lavis | b=Centurion
    - та же пара в этом турнире, но счёт другой
-118. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2828)
+112. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2828)
    - источник: `Centurion vs DanLavis - 3:1`
    - пара: [['Centurion'], ['Dan_Lavis']], счёт [3, 1] · нога 1/1
-   - база: id=33248 | tour=1 Круг | scores=[2, 2] | status=played | a=Dan_Lavis | b=Centurion
+   - база: id=36257 | tour=1 Круг | scores=[2, 2] | status=played | a=Dan_Lavis | b=Centurion
    - та же пара в этом турнире, но счёт другой
-119. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2829)
+113. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2829)
    - источник: `Gilmour - WiSe 1-3`
    - пара: [['Gilmour'], ['WiSe']], счёт [1, 3] · нога 1/1
-   - база: id=33151 | tour=1 Круг | scores=[6, 0] | status=played | a=WiSe | b=Gilmour
+   - база: id=36160 | tour=1 Круг | scores=[6, 0] | status=played | a=WiSe | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-120. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2829)
+114. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=240#post2829)
    - источник: `WiSe - Gilmour 2-1`
    - пара: [['WiSe'], ['Gilmour']], счёт [2, 1] · нога 1/1
-   - база: id=33151 | tour=1 Круг | scores=[6, 0] | status=played | a=WiSe | b=Gilmour
+   - база: id=36160 | tour=1 Круг | scores=[6, 0] | status=played | a=WiSe | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-121. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2830)
+115. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2830)
    - источник: `Ric25 - Gilmour 5:1`
    - пара: [['Ric25'], ['Gilmour']], счёт [5, 1] · нога 1/1
-   - база: id=33142 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Gilmour
+   - база: id=36151 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-122. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2830)
+116. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2830)
    - источник: `Gilmour - Ric25 2:4`
    - пара: [['Gilmour'], ['Ric25']], счёт [2, 4] · нога 1/1
-   - база: id=33142 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Gilmour
+   - база: id=36151 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-123. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2837)
+117. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2837)
    - источник: `Misfits - Tymoschuk 0:3`
    - пара: [['Misfits'], ['Bubnov']], счёт [0, 3] · нога 1/1
-   - база: id=33238 | tour=1 Круг | scores=[1, 5] | status=played | a=Misfits | b=Bubnov
+   - база: id=36247 | tour=1 Круг | scores=[1, 5] | status=played | a=Misfits | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-124. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2837)
+118. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2837)
    - источник: `Tymoschuk - Misfits 11:1`
    - пара: [['Bubnov'], ['Misfits']], счёт [11, 1] · нога 1/1
-   - база: id=33238 | tour=1 Круг | scores=[1, 5] | status=played | a=Misfits | b=Bubnov
+   - база: id=36247 | tour=1 Круг | scores=[1, 5] | status=played | a=Misfits | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-125. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2847)
+119. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2847)
    - источник: `Rustin Cohle - wenderfit 1:0`
    - пара: [['Rustin Cohle'], ['Wenderfit']], счёт [1, 0] · нога 1/1
-   - база: id=33158 | tour=1 Круг | scores=[6, 3] | status=played | a=Wenderfit | b=Rustin Cohle
+   - база: id=36167 | tour=1 Круг | scores=[6, 3] | status=played | a=Wenderfit | b=Rustin Cohle
    - та же пара в этом турнире, но счёт другой
-126. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2849)
+120. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2849)
    - источник: `Dr1N vs Kubik - 3:1`
    - пара: [['Dr1N'], ['Kubik']], счёт [3, 1] · нога 1/1
-   - база: id=33228 | tour=1 Круг | scores=[4, 3] | status=played | a=Dr1N | b=Kubik
+   - база: id=36237 | tour=1 Круг | scores=[4, 3] | status=played | a=Dr1N | b=Kubik
    - та же пара в этом турнире, но счёт другой
-127. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2849)
+121. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2849)
    - источник: `Kubik vs Dr1N - 0:1`
    - пара: [['Kubik'], ['Dr1N']], счёт [0, 1] · нога 1/1
-   - база: id=33228 | tour=1 Круг | scores=[4, 3] | status=played | a=Dr1N | b=Kubik
+   - база: id=36237 | tour=1 Круг | scores=[4, 3] | status=played | a=Dr1N | b=Kubik
    - та же пара в этом турнире, но счёт другой
-128. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2861)
+122. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2861)
    - источник: `yoxter vs Romario 3:0`
    - пара: [['yoxter'], ['Romario']], счёт [3, 0] · нога 1/1
-   - база: id=33168 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
+   - база: id=36177 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
    - та же пара в этом турнире, но счёт другой
-129. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2861)
+123. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2861)
    - источник: `Romario vs yoxter 0:5`
    - пара: [['Romario'], ['yoxter']], счёт [0, 5] · нога 1/1
-   - база: id=33168 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
+   - база: id=36177 | tour=1 Круг | scores=[9, 3] | status=played | a=yoxter | b=Romario
    - та же пара в этом турнире, но счёт другой
-130. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2863)
+124. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2863)
    - источник: `Kubik vs ВОР95 3:6`
    - пара: [['Kubik'], ['BOР95']], счёт [3, 6] · нога 1/1
-   - база: id=33255 | tour=1 Круг | scores=[1, 5] | status=played | a=Kubik | b=BOР95
+   - база: id=36264 | tour=1 Круг | scores=[1, 5] | status=played | a=Kubik | b=BOР95
    - та же пара в этом турнире, но счёт другой
-131. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2863)
+125. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2863)
    - источник: `ВОР95 vs Kubik 6:0`
    - пара: [['BOР95'], ['Kubik']], счёт [6, 0] · нога 1/1
-   - база: id=33255 | tour=1 Круг | scores=[1, 5] | status=played | a=Kubik | b=BOР95
+   - база: id=36264 | tour=1 Круг | scores=[1, 5] | status=played | a=Kubik | b=BOР95
    - та же пара в этом турнире, но счёт другой
-132. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2866)
+126. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2866)
    - источник: `ВОР95 vs Tymoschuk - 3:5`
    - пара: [['BOР95'], ['Bubnov']], счёт [3, 5] · нога 1/1
-   - база: id=33219 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
+   - база: id=36228 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-133. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2866)
+127. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=260#post2866)
    - источник: `Tymoschuk vs BOP95 - 4:4`
    - пара: [['Bubnov'], ['BOР95']], счёт [4, 4] · нога 1/1
-   - база: id=33219 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
+   - база: id=36228 | tour=1 Круг | scores=[3, 2] | status=played | a=BOР95 | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-134. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2874)
+128. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2874)
    - источник: `yoxter vs Eg_or3 3-2`
    - пара: [['yoxter'], ['Eg_or3']], счёт [3, 2] · нога 1/1
-   - база: id=33166 | tour=1 Круг | scores=[1, 3] | status=played | a=yoxter | b=Eg_or3
+   - база: id=36175 | tour=1 Круг | scores=[1, 3] | status=played | a=yoxter | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-135. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2874)
+129. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2874)
    - источник: `Eg_or3 vs yoxter 2-6`
    - пара: [['Eg_or3'], ['yoxter']], счёт [2, 6] · нога 1/1
-   - база: id=33166 | tour=1 Круг | scores=[1, 3] | status=played | a=yoxter | b=Eg_or3
+   - база: id=36175 | tour=1 Круг | scores=[1, 3] | status=played | a=yoxter | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-136. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2876)
+130. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2876)
    - источник: `Eg_or3 vs Memori - 2:2`
    - пара: [['Eg_or3'], ['Memori']], счёт [2, 2] · нога 1/1
-   - база: id=33130 | tour=1 Круг | scores=[5, 3] | status=played | a=Memori | b=Eg_or3
+   - база: id=36139 | tour=1 Круг | scores=[5, 3] | status=played | a=Memori | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-137. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2876)
+131. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2876)
    - источник: `Memori vs Eg_or3 - 4:1`
    - пара: [['Memori'], ['Eg_or3']], счёт [4, 1] · нога 1/1
-   - база: id=33130 | tour=1 Круг | scores=[5, 3] | status=played | a=Memori | b=Eg_or3
+   - база: id=36139 | tour=1 Круг | scores=[5, 3] | status=played | a=Memori | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-138. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2917)
+132. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2917)
    - источник: `Kubik vs Misfits 0:4`
    - пара: [['Kubik'], ['Misfits']], счёт [0, 4] · нога 1/1
-   - база: id=33257 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Misfits
+   - база: id=36266 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Misfits
    - та же пара в этом турнире, но счёт другой
-139. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2917)
+133. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2917)
    - источник: `Misfits vs Kubik 7:1`
    - пара: [['Misfits'], ['Kubik']], счёт [7, 1] · нога 1/1
-   - база: id=33257 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Misfits
+   - база: id=36266 | tour=1 Круг | scores=[5, 5] | status=played | a=Kubik | b=Misfits
    - та же пара в этом турнире, но счёт другой
-140. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2925)
+134. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2925)
    - источник: `13 Тур.Tymoschuk vs Centurion 1:0`
    - пара: [['Bubnov'], ['Centurion']], счёт [1, 0] · нога 1/1
-   - база: id=33216 | tour=1 Круг | scores=[2, 2] | status=played | a=Bubnov | b=Centurion
+   - база: id=36225 | tour=1 Круг | scores=[2, 2] | status=played | a=Bubnov | b=Centurion
    - та же пара в этом турнире, но счёт другой
-141. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2925)
+135. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=280#post2925)
    - источник: `Centurion vs Tymoschuk 4:3`
    - пара: [['Centurion'], ['Bubnov']], счёт [4, 3] · нога 1/1
-   - база: id=33216 | tour=1 Круг | scores=[2, 2] | status=played | a=Bubnov | b=Centurion
+   - база: id=36225 | tour=1 Круг | scores=[2, 2] | status=played | a=Bubnov | b=Centurion
    - та же пара в этом турнире, но счёт другой
-142. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2964)
+136. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2964)
    - источник: `ВОР95 vs psycho - 5:1`
    - пара: [['BOР95'], ['psycho']], счёт [5, 1] · нога 1/1
-   - база: id=33222 | tour=1 Круг | scores=[6, 3] | status=played | a=BOР95 | b=psycho
+   - база: id=36231 | tour=1 Круг | scores=[6, 3] | status=played | a=BOР95 | b=psycho
    - та же пара в этом турнире, но счёт другой
-143. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2964)
+137. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2964)
    - источник: `psycho vs BOP95 - 0:4`
    - пара: [['psycho'], ['BOР95']], счёт [0, 4] · нога 1/1
-   - база: id=33222 | tour=1 Круг | scores=[6, 3] | status=played | a=BOР95 | b=psycho
+   - база: id=36231 | tour=1 Круг | scores=[6, 3] | status=played | a=BOР95 | b=psycho
    - та же пара в этом турнире, но счёт другой
-144. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2965)
+138. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2965)
    - источник: `Memori vs Romario - 6:1`
    - пара: [['Memori'], ['Romario']], счёт [6, 1] · нога 1/1
-   - база: id=33132 | tour=1 Круг | scores=[4, 1] | status=played | a=Memori | b=Romario
+   - база: id=36141 | tour=1 Круг | scores=[4, 1] | status=played | a=Memori | b=Romario
    - та же пара в этом турнире, но счёт другой
-145. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2965)
+139. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2965)
    - источник: `Romario vs Memori - 2:4`
    - пара: [['Romario'], ['Memori']], счёт [2, 4] · нога 1/1
-   - база: id=33132 | tour=1 Круг | scores=[4, 1] | status=played | a=Memori | b=Romario
+   - база: id=36141 | tour=1 Круг | scores=[4, 1] | status=played | a=Memori | b=Romario
    - та же пара в этом турнире, но счёт другой
-146. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2977)
+140. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2977)
    - источник: `ВОР95 vs Dr1N 3 : 3`
    - пара: [['BOР95'], ['Dr1N']], счёт [3, 3] · нога 1/1
-   - база: id=33220 | tour=1 Круг | scores=[6, 1] | status=played | a=BOР95 | b=Dr1N
+   - база: id=36229 | tour=1 Круг | scores=[6, 1] | status=played | a=BOР95 | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-147. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2977)
+141. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2977)
    - источник: `Dr1N vs ВОР95 5 : 5`
    - пара: [['Dr1N'], ['BOР95']], счёт [5, 5] · нога 1/1
-   - база: id=33220 | tour=1 Круг | scores=[6, 1] | status=played | a=BOР95 | b=Dr1N
+   - база: id=36229 | tour=1 Круг | scores=[6, 1] | status=played | a=BOР95 | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-148. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2978)
+142. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2978)
    - источник: `Kubik vs Centurion 2:4`
    - пара: [['Kubik'], ['Centurion']], счёт [2, 4] · нога 1/1
-   - база: id=33233 | tour=1 Круг | scores=[2, 1] | status=played | a=Centurion | b=Kubik
+   - база: id=36242 | tour=1 Круг | scores=[2, 1] | status=played | a=Centurion | b=Kubik
    - та же пара в этом турнире, но счёт другой
-149. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2980)
+143. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2980)
    - источник: `ВОР95 vs Misfits - 5:4`
    - пара: [['BOР95'], ['Misfits']], счёт [5, 4] · нога 1/1
-   - база: id=33239 | tour=1 Круг | scores=[2, 6] | status=played | a=Misfits | b=BOР95
+   - база: id=36248 | tour=1 Круг | scores=[2, 6] | status=played | a=Misfits | b=BOР95
    - та же пара в этом турнире, но счёт другой
-150. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2980)
+144. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2980)
    - источник: `Misfits vs BOP95 - 1:4`
    - пара: [['Misfits'], ['BOР95']], счёт [1, 4] · нога 1/1
-   - база: id=33239 | tour=1 Круг | scores=[2, 6] | status=played | a=Misfits | b=BOР95
+   - база: id=36248 | tour=1 Круг | scores=[2, 6] | status=played | a=Misfits | b=BOР95
    - та же пара в этом турнире, но счёт другой
-151. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2982)
+145. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2982)
    - источник: `Gilmour vs Eg_or3 2-2`
    - пара: [['Gilmour'], ['Eg_or3']], счёт [2, 2] · нога 1/1
-   - база: id=33187 | tour=1 Круг | scores=[4, 1] | status=played | a=Eg_or3 | b=Gilmour
+   - база: id=36196 | tour=1 Круг | scores=[4, 1] | status=played | a=Eg_or3 | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-152. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2982)
+146. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2982)
    - источник: `Eg_or3 vs Gilmour 7-3`
    - пара: [['Eg_or3'], ['Gilmour']], счёт [7, 3] · нога 1/1
-   - база: id=33187 | tour=1 Круг | scores=[4, 1] | status=played | a=Eg_or3 | b=Gilmour
+   - база: id=36196 | tour=1 Круг | scores=[4, 1] | status=played | a=Eg_or3 | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-153. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2992)
+147. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2992)
    - источник: `Kubik vs DanLavis 3:0`
    - пара: [['Kubik'], ['Dan_Lavis']], счёт [3, 0] · нога 1/1
-   - база: id=33250 | tour=1 Круг | scores=[1, 1] | status=played | a=Dan_Lavis | b=Kubik
+   - база: id=36259 | tour=1 Круг | scores=[1, 1] | status=played | a=Dan_Lavis | b=Kubik
    - та же пара в этом турнире, но счёт другой
-154. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2998)
+148. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2998)
    - источник: `Ric25 - E_not 7:1`
    - пара: [['Ric25'], ['E_not']], счёт [7, 1] · нога 1/1
-   - база: id=33138 | tour=1 Круг | scores=[8, 1] | status=played | a=Ric25 | b=E_not
+   - база: id=36147 | tour=1 Круг | scores=[8, 1] | status=played | a=Ric25 | b=E_not
    - та же пара в этом турнире, но счёт другой
-155. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2998)
+149. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post2998)
    - источник: `E_not - Ric25 2:3`
    - пара: [['E_not'], ['Ric25']], счёт [2, 3] · нога 1/1
-   - база: id=33138 | tour=1 Круг | scores=[8, 1] | status=played | a=Ric25 | b=E_not
+   - база: id=36147 | tour=1 Круг | scores=[8, 1] | status=played | a=Ric25 | b=E_not
    - та же пара в этом турнире, но счёт другой
-156. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3001)
+150. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3001)
    - источник: `psycho vs Dr1N 3 : 2`
    - пара: [['psycho'], ['Dr1N']], счёт [3, 2] · нога 1/1
-   - база: id=33224 | tour=1 Круг | scores=[3, 5] | status=played | a=Dr1N | b=psycho
+   - база: id=36233 | tour=1 Круг | scores=[3, 5] | status=played | a=Dr1N | b=psycho
    - та же пара в этом турнире, но счёт другой
-157. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3001)
+151. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3001)
    - источник: `Dr1N vs psycho 3 : 3`
    - пара: [['Dr1N'], ['psycho']], счёт [3, 3] · нога 1/1
-   - база: id=33224 | tour=1 Круг | scores=[3, 5] | status=played | a=Dr1N | b=psycho
+   - база: id=36233 | tour=1 Круг | scores=[3, 5] | status=played | a=Dr1N | b=psycho
    - та же пара в этом турнире, но счёт другой
-158. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3007)
+152. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3007)
    - источник: `Ric25 - Eg_or3 4:0`
    - пара: [['Ric25'], ['Eg_or3']], счёт [4, 0] · нога 1/1
-   - база: id=33139 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Eg_or3
+   - база: id=36148 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-159. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3007)
+153. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3007)
    - источник: `Eg_or3 - Ric25 4:7`
    - пара: [['Eg_or3'], ['Ric25']], счёт [4, 7] · нога 1/1
-   - база: id=33139 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Eg_or3
+   - база: id=36148 | tour=1 Круг | scores=[5, 2] | status=played | a=Ric25 | b=Eg_or3
    - та же пара в этом турнире, но счёт другой
-160. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3010)
+154. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3010)
    - источник: `15 тур.BOP95 vs Centurion - 7:2`
    - пара: [['BOР95'], ['Centurion']], счёт [7, 2] · нога 1/1
-   - база: id=33221 | tour=1 Круг | scores=[4, 2] | status=played | a=BOР95 | b=Centurion
+   - база: id=36230 | tour=1 Круг | scores=[4, 2] | status=played | a=BOР95 | b=Centurion
    - та же пара в этом турнире, но счёт другой
-161. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3010)
+155. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3010)
    - источник: `Сenturion vs BOP95 - 1:5`
    - пара: [['Centurion'], ['BOР95']], счёт [1, 5] · нога 1/1
-   - база: id=33221 | tour=1 Круг | scores=[4, 2] | status=played | a=BOР95 | b=Centurion
+   - база: id=36230 | tour=1 Круг | scores=[4, 2] | status=played | a=BOР95 | b=Centurion
    - та же пара в этом турнире, но счёт другой
-162. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3018)
+156. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3018)
    - источник: `Memori vs Wenderfit - 5:2`
    - пара: [['Memori'], ['Wenderfit']], счёт [5, 2] · нога 1/1
-   - база: id=33127 | tour=1 Круг | scores=[3, 3] | status=played | a=Memori | b=Wenderfit
+   - база: id=36136 | tour=1 Круг | scores=[3, 3] | status=played | a=Memori | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-163. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3019)
+157. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=300#post3019)
    - источник: `Rustin Cohle vs Memori - 0:6`
    - пара: [['Rustin Cohle'], ['Memori']], счёт [0, 6] · нога 1/1
-   - база: id=33131 | tour=1 Круг | scores=[3, 1] | status=played | a=Memori | b=Rustin Cohle
+   - база: id=36140 | tour=1 Круг | scores=[3, 1] | status=played | a=Memori | b=Rustin Cohle
    - та же пара в этом турнире, но счёт другой
-164. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3023)
+158. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3023)
    - источник: `Gilmour vs Romario 6-4`
    - пара: [['Gilmour'], ['Romario']], счёт [6, 4] · нога 1/1
-   - база: id=33205 | tour=1 Круг | scores=[3, 2] | status=played | a=Romario | b=Gilmour
+   - база: id=36214 | tour=1 Круг | scores=[3, 2] | status=played | a=Romario | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-165. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3030)
+159. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3030)
    - источник: `11 Тур. Tymoschuk - Dr1N 4:3`
    - пара: [['Bubnov'], ['Dr1N']], счёт [4, 3] · нога 1/1
-   - база: id=33215 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
+   - база: id=36224 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-166. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3030)
+160. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3030)
    - источник: `Dr1N - Tymoschuk 0:3`
    - пара: [['Dr1N'], ['Bubnov']], счёт [0, 3] · нога 1/1
-   - база: id=33215 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
+   - база: id=36224 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-167. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3039)
+161. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3039)
    - источник: `Ric25 - Romario 6-2`
    - пара: [['Ric25'], ['Romario']], счёт [6, 2] · нога 1/1
-   - база: id=33141 | tour=1 Круг | scores=[6, 3] | status=played | a=Ric25 | b=Romario
+   - база: id=36150 | tour=1 Круг | scores=[6, 3] | status=played | a=Ric25 | b=Romario
    - та же пара в этом турнире, но счёт другой
-168. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3048)
+162. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3048)
    - источник: `Dr1N vs Centurion 3:2`
    - пара: [['Dr1N'], ['Centurion']], счёт [3, 2] · нога 1/1
-   - база: id=33229 | tour=1 Круг | scores=[2, 2] | status=played | a=Centurion | b=Dr1N
+   - база: id=36238 | tour=1 Круг | scores=[2, 2] | status=played | a=Centurion | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-169. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3048)
+163. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=320#post3048)
    - источник: `Сenturion vs Dr1N 1:0`
    - пара: [['Centurion'], ['Dr1N']], счёт [1, 0] · нога 1/1
-   - база: id=33229 | tour=1 Круг | scores=[2, 2] | status=played | a=Centurion | b=Dr1N
+   - база: id=36238 | tour=1 Круг | scores=[2, 2] | status=played | a=Centurion | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-170. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3070)
+164. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3070)
    - источник: `Yoxter vs Memori - 2:3`
    - пара: [['yoxter'], ['Memori']], счёт [2, 3] · нога 1/1
-   - база: id=33128 | tour=1 Круг | scores=[5, 1] | status=played | a=Memori | b=yoxter
+   - база: id=36137 | tour=1 Круг | scores=[5, 1] | status=played | a=Memori | b=yoxter
    - та же пара в этом турнире, но счёт другой
-171. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3095)
+165. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3095)
    - источник: `17 тур. Misfits vs Centurion 1:3`
    - пара: [['Misfits'], ['Centurion']], счёт [1, 3] · нога 1/1
-   - база: id=33240 | tour=1 Круг | scores=[2, 3] | status=played | a=Misfits | b=Centurion
+   - база: id=36249 | tour=1 Круг | scores=[2, 3] | status=played | a=Misfits | b=Centurion
    - та же пара в этом турнире, но счёт другой
-172. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3109)
+166. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3109)
    - источник: `Eg_or3 vs Romario 5:1`
    - пара: [['Eg_or3'], ['Romario']], счёт [5, 1] · нога 1/1
-   - база: id=33186 | tour=1 Круг | scores=[0, 5] | status=played | a=Eg_or3 | b=Romario
+   - база: id=36195 | tour=1 Круг | scores=[0, 5] | status=played | a=Eg_or3 | b=Romario
    - та же пара в этом турнире, но счёт другой
-173. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3113)
+167. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3113)
    - источник: `Misfits vs DanLavis: 6:3`
    - пара: [['Misfits'], ['Dan_Lavis']], счёт [6, 3] · нога 1/1
-   - база: id=33242 | tour=1 Круг | scores=[0, 0] | status=played | a=Misfits | b=Dan_Lavis
+   - база: id=36251 | tour=1 Круг | scores=[0, 0] | status=played | a=Misfits | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-174. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3113)
+168. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3113)
    - источник: `DanLavis vs Misfits: 2:6`
    - пара: [['Dan_Lavis'], ['Misfits']], счёт [2, 6] · нога 1/1
-   - база: id=33242 | tour=1 Круг | scores=[0, 0] | status=played | a=Misfits | b=Dan_Lavis
+   - база: id=36251 | tour=1 Круг | scores=[0, 0] | status=played | a=Misfits | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-175. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3114)
+169. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3114)
    - источник: `psycho vs DanLavis: 4:0`
    - пара: [['psycho'], ['Dan_Lavis']], счёт [4, 0] · нога 1/1
-   - база: id=33236 | tour=1 Круг | scores=[3, 0] | status=played | a=psycho | b=Dan_Lavis
+   - база: id=36245 | tour=1 Круг | scores=[3, 0] | status=played | a=psycho | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-176. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3114)
+170. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3114)
    - источник: `DanLavis vs psycho: 2:2`
    - пара: [['Dan_Lavis'], ['psycho']], счёт [2, 2] · нога 1/1
-   - база: id=33236 | tour=1 Круг | scores=[3, 0] | status=played | a=psycho | b=Dan_Lavis
+   - база: id=36245 | tour=1 Круг | scores=[3, 0] | status=played | a=psycho | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-177. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3126)
+171. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3126)
    - источник: `Ric25 - wenderfit 3:0`
    - пара: [['Ric25'], ['Wenderfit']], счёт [3, 0] · нога 1/1
-   - база: id=33136 | tour=1 Круг | scores=[3, 3] | status=played | a=Ric25 | b=Wenderfit
+   - база: id=36145 | tour=1 Круг | scores=[3, 3] | status=played | a=Ric25 | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-178. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3126)
+172. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3126)
    - источник: `wenderfit - Ric25 2:3`
    - пара: [['Wenderfit'], ['Ric25']], счёт [2, 3] · нога 1/1
-   - база: id=33136 | tour=1 Круг | scores=[3, 3] | status=played | a=Ric25 | b=Wenderfit
+   - база: id=36145 | tour=1 Круг | scores=[3, 3] | status=played | a=Ric25 | b=Wenderfit
    - та же пара в этом турнире, но счёт другой
-179. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3130)
+173. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3130)
    - источник: `DanLavis vs Kubik 3:1`
    - пара: [['Dan_Lavis'], ['Kubik']], счёт [3, 1] · нога 1/1
-   - база: id=33250 | tour=1 Круг | scores=[1, 1] | status=played | a=Dan_Lavis | b=Kubik
+   - база: id=36259 | tour=1 Круг | scores=[1, 1] | status=played | a=Dan_Lavis | b=Kubik
    - та же пара в этом турнире, но счёт другой
-180. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3158)
+174. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3158)
    - источник: `Rustin Cohle vs Gilmour 4 - 0`
    - пара: [['Rustin Cohle'], ['Gilmour']], счёт [4, 0] · нога 1/1
-   - база: id=33196 | tour=1 Круг | scores=[3, 1] | status=played | a=Rustin Cohle | b=Gilmour
+   - база: id=36205 | tour=1 Круг | scores=[3, 1] | status=played | a=Rustin Cohle | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-181. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3166)
+175. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3166)
    - источник: `Gilmour vs yoxter 3 - 3`
    - пара: [['Gilmour'], ['yoxter']], счёт [3, 3] · нога 1/1
-   - база: id=33169 | tour=1 Круг | scores=[4, 2] | status=played | a=yoxter | b=Gilmour
+   - база: id=36178 | tour=1 Круг | scores=[4, 2] | status=played | a=yoxter | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-182. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3166)
+176. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3166)
    - источник: `yoxter vs Gilmour 4 - 1`
    - пара: [['yoxter'], ['Gilmour']], счёт [4, 1] · нога 1/1
-   - база: id=33169 | tour=1 Круг | scores=[4, 2] | status=played | a=yoxter | b=Gilmour
+   - база: id=36178 | tour=1 Круг | scores=[4, 2] | status=played | a=yoxter | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-183. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3181)
+177. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3181)
    - источник: `E_not vs Memori - 0:3`
    - пара: [['E_not'], ['Memori']], счёт [0, 3] · нога 1/1
-   - база: id=33129 | tour=1 Круг | scores=[3, 2] | status=played | a=Memori | b=E_not
+   - база: id=36138 | tour=1 Круг | scores=[3, 2] | status=played | a=Memori | b=E_not
    - та же пара в этом турнире, но счёт другой
-184. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3181)
+178. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3181)
    - источник: `Memori vs E_not - 5:2`
    - пара: [['Memori'], ['E_not']], счёт [5, 2] · нога 1/1
-   - база: id=33129 | tour=1 Круг | scores=[3, 2] | status=played | a=Memori | b=E_not
+   - база: id=36138 | tour=1 Круг | scores=[3, 2] | status=played | a=Memori | b=E_not
    - та же пара в этом турнире, но счёт другой
-185. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3185)
+179. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3185)
    - источник: `Kubik vs Tymoschuk 2:6`
    - пара: [['Kubik'], ['Bubnov']], счёт [2, 6] · нога 1/1
-   - база: id=33218 | tour=1 Круг | scores=[3, 1] | status=played | a=Bubnov | b=Kubik
+   - база: id=36227 | tour=1 Круг | scores=[3, 1] | status=played | a=Bubnov | b=Kubik
    - та же пара в этом турнире, но счёт другой
-186. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3185)
+180. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=340#post3185)
    - источник: `Tymoschuk vs Kubik 7:3`
    - пара: [['Bubnov'], ['Kubik']], счёт [7, 3] · нога 1/1
-   - база: id=33218 | tour=1 Круг | scores=[3, 1] | status=played | a=Bubnov | b=Kubik
+   - база: id=36227 | tour=1 Круг | scores=[3, 1] | status=played | a=Bubnov | b=Kubik
    - та же пара в этом турнире, но счёт другой
-187. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3192)
+181. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3192)
    - источник: `Rustin Cohle - Ric25 1:3`
    - пара: [['Rustin Cohle'], ['Ric25']], счёт [1, 3] · нога 1/1
-   - база: id=33140 | tour=1 Круг | scores=[4, 2] | status=played | a=Ric25 | b=Rustin Cohle
+   - база: id=36149 | tour=1 Круг | scores=[4, 2] | status=played | a=Ric25 | b=Rustin Cohle
    - та же пара в этом турнире, но счёт другой
-188. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3203)
+182. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3203)
    - источник: `Memori vs Gilmour - 5:1`
    - пара: [['Memori'], ['Gilmour']], счёт [5, 1] · нога 1/1
-   - база: id=33133 | tour=1 Круг | scores=[8, 0] | status=played | a=Memori | b=Gilmour
+   - база: id=36142 | tour=1 Круг | scores=[8, 0] | status=played | a=Memori | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-189. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3203)
+183. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3203)
    - источник: `Gilmour vs Memori - 1:4`
    - пара: [['Gilmour'], ['Memori']], счёт [1, 4] · нога 1/1
-   - база: id=33133 | tour=1 Круг | scores=[8, 0] | status=played | a=Memori | b=Gilmour
+   - база: id=36142 | tour=1 Круг | scores=[8, 0] | status=played | a=Memori | b=Gilmour
    - та же пара в этом турнире, но счёт другой
-190. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3220)
+184. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3220)
    - источник: `psycho vs Centurion - 2:5`
    - пара: [['psycho'], ['Centurion']], счёт [2, 5] · нога 1/1
-   - база: id=33230 | tour=1 Круг | scores=[3, 3] | status=played | a=Centurion | b=psycho
+   - база: id=36239 | tour=1 Круг | scores=[3, 3] | status=played | a=Centurion | b=psycho
    - та же пара в этом турнире, но счёт другой
-191. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3220)
+185. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3220)
    - источник: `Сenturion vs psycho - 8:0`
    - пара: [['Centurion'], ['psycho']], счёт [8, 0] · нога 1/1
-   - база: id=33230 | tour=1 Круг | scores=[3, 3] | status=played | a=Centurion | b=psycho
+   - база: id=36239 | tour=1 Круг | scores=[3, 3] | status=played | a=Centurion | b=psycho
    - та же пара в этом турнире, но счёт другой
-192. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3222)
+186. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3222)
    - источник: `Dr1N - DanLavis 2 : 2`
    - пара: [['Dr1N'], ['Dan_Lavis']], счёт [2, 2] · нога 1/1
-   - база: id=33247 | tour=1 Круг | scores=[1, 5] | status=played | a=Dan_Lavis | b=Dr1N
+   - база: id=36256 | tour=1 Круг | scores=[1, 5] | status=played | a=Dan_Lavis | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-193. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3222)
+187. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3222)
    - источник: `DanLavis - Dr1N 0 - 2`
    - пара: [['Dan_Lavis'], ['Dr1N']], счёт [0, 2] · нога 1/1
-   - база: id=33247 | tour=1 Круг | scores=[1, 5] | status=played | a=Dan_Lavis | b=Dr1N
+   - база: id=36256 | tour=1 Круг | scores=[1, 5] | status=played | a=Dan_Lavis | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-194. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3224)
+188. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3224)
    - источник: `ВОР95 vs Кирпич57 - 9:2`
    - пара: [['BOР95'], ['Кирпич57']], счёт [9, 2] · нога 1/1
-   - база: id=33252 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=BOР95
+   - база: id=36261 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=BOР95
    - та же пара в этом турнире, но счёт другой
-195. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3224)
+189. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3224)
    - источник: `Кирпич57 vs BOP95 - 0:4`
    - пара: [['Кирпич57'], ['BOР95']], счёт [0, 4] · нога 1/1
-   - база: id=33252 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=BOР95
+   - база: id=36261 | tour=1 Круг | scores=[1, 3] | status=played | a=Кирпич57 | b=BOР95
    - та же пара в этом турнире, но счёт другой
-196. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3225)
+190. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3225)
    - источник: `Tymoschuk vs DanLavis: 5 : 0`
    - пара: [['Bubnov'], ['Dan_Lavis']], счёт [5, 0] · нога 1/1
-   - база: id=33217 | tour=1 Круг | scores=[6, 1] | status=played | a=Bubnov | b=Dan_Lavis
+   - база: id=36226 | tour=1 Круг | scores=[6, 1] | status=played | a=Bubnov | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-197. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3225)
+191. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3225)
    - источник: `DanLavis vs Tymoschuk: 3 : 4`
    - пара: [['Dan_Lavis'], ['Bubnov']], счёт [3, 4] · нога 1/1
-   - база: id=33217 | tour=1 Круг | scores=[6, 1] | status=played | a=Bubnov | b=Dan_Lavis
+   - база: id=36226 | tour=1 Круг | scores=[6, 1] | status=played | a=Bubnov | b=Dan_Lavis
    - та же пара в этом турнире, но счёт другой
-198. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3228)
+192. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3228)
    - источник: `17 тур. Psycho vs Tymoschuk 2-6`
    - пара: [['psycho'], ['Bubnov']], счёт [2, 6] · нога 1/1
-   - база: id=33234 | tour=1 Круг | scores=[0, 5] | status=played | a=psycho | b=Bubnov
+   - база: id=36243 | tour=1 Круг | scores=[0, 5] | status=played | a=psycho | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-199. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3228)
+193. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=360#post3228)
    - источник: `Tymoschuk vs Psycho 7-4`
    - пара: [['Bubnov'], ['psycho']], счёт [7, 4] · нога 1/1
-   - база: id=33234 | tour=1 Круг | scores=[0, 5] | status=played | a=psycho | b=Bubnov
+   - база: id=36243 | tour=1 Круг | scores=[0, 5] | status=played | a=psycho | b=Bubnov
    - та же пара в этом турнире, но счёт другой
-200. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3275)
+194. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3275)
    - источник: `Кирпич vs Dr1n 4 - 3`
    - пара: [['Кирпич57'], ['Dr1N']], счёт [4, 3] · нога 1/1
-   - база: id=33227 | tour=1 Круг | scores=[3, 0] | status=played | a=Dr1N | b=Кирпич57
+   - база: id=36236 | tour=1 Круг | scores=[3, 0] | status=played | a=Dr1N | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-201. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3275)
+195. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3275)
    - источник: `Dr1n vs Кирпич57 8 - 1`
    - пара: [['Dr1N'], ['Кирпич57']], счёт [8, 1] · нога 1/1
-   - база: id=33227 | tour=1 Круг | scores=[3, 0] | status=played | a=Dr1N | b=Кирпич57
+   - база: id=36236 | tour=1 Круг | scores=[3, 0] | status=played | a=Dr1N | b=Кирпич57
    - та же пара в этом турнире, но счёт другой
-202. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3276)
+196. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3276)
    - источник: `Кирпич57 vs Misfits 0 - 3`
    - пара: [['Кирпич57'], ['Misfits']], счёт [0, 3] · нога 1/1
-   - база: id=33253 | tour=1 Круг | scores=[5, 3] | status=played | a=Кирпич57 | b=Misfits
+   - база: id=36262 | tour=1 Круг | scores=[5, 3] | status=played | a=Кирпич57 | b=Misfits
    - та же пара в этом турнире, но счёт другой
-203. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3276)
+197. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3276)
    - источник: `Misfits vs Кирпич 2 - 0`
    - пара: [['Misfits'], ['Кирпич57']], счёт [2, 0] · нога 1/1
-   - база: id=33253 | tour=1 Круг | scores=[5, 3] | status=played | a=Кирпич57 | b=Misfits
+   - база: id=36262 | tour=1 Круг | scores=[5, 3] | status=played | a=Кирпич57 | b=Misfits
    - та же пара в этом турнире, но счёт другой
-204. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3359)
+198. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3359)
    - источник: `Dr1N vs Tymoschuk 0:4`
    - пара: [['Dr1N'], ['Bubnov']], счёт [0, 4] · нога 1/1
-   - база: id=33215 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
+   - база: id=36224 | tour=1 Круг | scores=[3, 3] | status=played | a=Bubnov | b=Dr1N
    - та же пара в этом турнире, но счёт другой
-205. **Третий сольный турнир по пенальти. Апрель-Май 2016.** · топик 33437511 · [комментарий](https://vk.com/topic-66162180_33437511?offset=60#post4870)
+199. **Третий сольный турнир по пенальти. Апрель-Май 2016.** · топик 33437511 · [комментарий](https://vk.com/topic-66162180_33437511?offset=60#post4870)
    - источник: `Группа В. TubusTD vs Romario 2:0 (5:0, 5:0)`
    - пара: [['tubustd'], ['Romario']], счёт [2, 0] · нога 1/1
-   - база: id=36054 | tour=Группа B | scores=[5, 0] | status=played | a=tubustd | b=Romario
+   - база: id=39063 | tour=Группа B | scores=[5, 0] | status=played | a=tubustd | b=Romario
    - та же пара в этом турнире, но счёт другой
-206. **Третий сольный турнир по пенальти. Апрель-Май 2016.** · топик 33437511 · [комментарий](https://vk.com/topic-66162180_33437511?offset=60#post4871)
+200. **Третий сольный турнир по пенальти. Апрель-Май 2016.** · топик 33437511 · [комментарий](https://vk.com/topic-66162180_33437511?offset=60#post4871)
    - источник: `Группа В. РаспуТНик vs Romario 2:0 (5:0, 5:0)`
    - пара: [['PacnyTHuK'], ['Romario']], счёт [2, 0] · нога 1/1
-   - база: id=36055 | tour=Группа B | scores=[5, 0] | status=played | a=PacnyTHuK | b=Romario
+   - база: id=39064 | tour=Группа B | scores=[5, 0] | status=played | a=PacnyTHuK | b=Romario
    - та же пара в этом турнире, но счёт другой
-207. **Третий сольный турнир по пенальти. Апрель-Май 2016.** · топик 33437511 · [комментарий](https://vk.com/topic-66162180_33437511?offset=60#post4876)
+201. **Третий сольный турнир по пенальти. Апрель-Май 2016.** · топик 33437511 · [комментарий](https://vk.com/topic-66162180_33437511?offset=60#post4876)
    - источник: `Группа В. РаспуТНик vs TubusTD 2:0 (5:1, 5:0)`
    - пара: [['PacnyTHuK'], ['tubustd']], счёт [2, 0] · нога 1/1
-   - база: id=36057 | tour=Группа B | scores=[5, 1] | status=played | a=PacnyTHuK | b=tubustd
+   - база: id=39066 | tour=Группа B | scores=[5, 1] | status=played | a=PacnyTHuK | b=tubustd
    - та же пара в этом турнире, но счёт другой
 
 ## Игра в базе есть, но в другом документе (3)
 1. **8-й сольный чемпионат Soccer League (Goal3)** · топик 52002075 · [комментарий](https://vk.com/topic-66162180_52002075?offset=0#post31124)
    - источник: `Высшая, 1 тур. Memori vs Centurion - 3:0, 8:5 пен.`
    - пара: [['Memori'], ['Centurion']], счёт [3, 0] · нога 1/2
-   - база: id=35429 | unit=Season 2 Высшая лига
+   - база: id=38438 | unit=Season 2 Высшая лига
    - игра в базе есть, но в другом документе — сверьте, что это не дубль
 2. **9-й сольный чемпионат Soccer League (Goal3)** · топик 54769667 · [комментарий](https://vk.com/topic-66162180_54769667?offset=0#post32746)
    - источник: `Высшая, 1 тур. Memori vs Centurion - 3:0, 8:5 пен.`
    - пара: [['Memori'], ['Centurion']], счёт [3, 0] · нога 1/2
-   - база: id=35429 | unit=Season 2 Высшая лига
+   - база: id=38438 | unit=Season 2 Высшая лига
    - игра в базе есть, но в другом документе — сверьте, что это не дубль
 3. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813 · [комментарий](https://vk.com/topic-66162180_32593813?offset=400#post3359)
    - источник: `Memori vs BOР95 4:3`
    - пара: [['Memori'], ['BOР95']], счёт [4, 3] · нога 1/1
-   - база: id=33672 | unit=Season 3 Высшая лига
+   - база: id=36681 | unit=Season 3 Высшая лига
    - игра в базе есть, но в другом документе — сверьте, что это не дубль
 
-## Обсуждение не нашло своего турнира в базе (9)
+## Обсуждение не нашло своего турнира в базе (8)
 1. **Kunio-kun no Nekketsu Soccer League [NES] (4P) - Футбольная лига** · топик 31776275
    - подпись обсуждения: goal3
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-2. **Nekketsu Koukou Dodgeball Bu: Soccer Hen [NES] (4P) - Футбол без правил** · топик 31776158
-   - подпись обсуждения: goal3
-   - ни один турнир базы не совпал с обсуждением по формату и номеру
-3. **Блиц-баттлы (Goal3 толпой) РЕГИСТРАЦИЯ ИГРОКОВ** · топик 37542091
+2. **Блиц-баттлы (Goal3 толпой) РЕГИСТРАЦИЯ ИГРОКОВ** · топик 37542091
    - подпись обсуждения: блиц  goal3
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-4. **Блиц-турниры по Goal 3/4. Регистрация на XIII блиц-турнир** · топик 40679835
+3. **Блиц-турниры по Goal 3/4. Регистрация на XIII блиц-турнир** · топик 40679835
    - подпись обсуждения: блиц №4 goal3
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-5. **Блиц-турниры по Kunio-kun no Nekketsu Soccer League** · топик 32023116
+4. **Блиц-турниры по Kunio-kun no Nekketsu Soccer League** · топик 32023116
    - подпись обсуждения: блиц  goal3
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-6. **Ваша любимая команда по Nekketsu Soccer League из 2-го столбика** · топик 32294899
+5. **Ваша любимая команда по Nekketsu Soccer League из 2-го столбика** · топик 32294899
    - подпись обсуждения: №2 goal3
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-7. **Минибатлы Goal 4** · топик 40638314
+6. **Минибатлы Goal 4** · топик 40638314
    - подпись обсуждения: минибатлы  goal4
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-8. **Регистрация на VIII блиц-турнир по гол3.** · топик 33887857
+7. **Регистрация на VIII блиц-турнир по гол3.** · топик 33887857
    - подпись обсуждения: блиц №8 goal3
    - ни один турнир базы не совпал с обсуждением по формату и номеру
-9. **Рейтинговый сольный сезон #002 по Goal 4 (заморожен)** · топик 40691294
+8. **Рейтинговый сольный сезон #002 по Goal 4 (заморожен)** · топик 40691294
    - подпись обсуждения: рейтинг №2 goal4
    - ни один турнир базы не совпал с обсуждением по формату и номеру
 
@@ -1307,11 +1192,10 @@
    - это team в базе
    - турнир в базе заведён, строк ноль
 
-## Написание игрока вне справочника (223)
+## Написание игрока вне справочника (203)
 - **RVD** — 24 строк, пример: `Flash - RVD - 1-4` ([комментарий](https://vk.com/topic-66162180_36630593?offset=80#post14793))
 - **XakoFEAR** — 15 строк, пример: `Palka Palych & XakoFEAR vs sokol & PacnyTHuK  0:4, 3:4, 1:8, 2:2 (РК 3:5)` ([комментарий](https://vk.com/topic-66162180_41270759?offset=60#post22578))
 - **МГБ** — 15 строк, пример: `МГБ vs Memori - 2:1` ([комментарий](https://vk.com/topic-66162180_49054760?offset=40#post26867))
-- **FieryKelsen** — 15 строк, пример: `FieryKelsen vs Centurion - 2:2` ([комментарий](https://vk.com/topic-66162180_33045983?offset=0#post3471))
 - **KC13** — 15 строк, пример: `Jamlight vs KC13 2-0 (Jamlight vs KC13 2-1, КС13 vs Jamlight 1-5)` ([комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30533))
 - **Рик** — 14 строк, пример: `Мафута - Рик 5:0` ([комментарий](https://vk.com/topic-66162180_34920573?offset=20#post9734))
 - **Анубис** — 10 строк, пример: `Раш - Анубис 2-1, 5-3 (ПК)` ([комментарий](https://vk.com/topic-66162180_49054760?offset=40#post26880))
@@ -1322,9 +1206,8 @@
 - **Хуба** — 6 строк, пример: `Хуба VS Киприот - 2-2(6-4), Киприот VS Хуба - 2-7` ([комментарий](https://vk.com/topic-66162180_39660451?offset=80#post18197))
 - **Pornce** — 5 строк, пример: `7 тур: Islambolt Pornce & Kunio VS Metallist & Cyneprepou4uk - 6:1` ([комментарий](https://vk.com/topic-66162180_41270759?offset=40#post22504))
 - **Metallist** — 5 строк, пример: `7 тур: Islambolt Pornce & Kunio VS Metallist & Cyneprepou4uk - 6:1` ([комментарий](https://vk.com/topic-66162180_41270759?offset=40#post22504))
+- **FieryKelsen** — 5 строк, пример: `Wenderfit - FieryKelsen 1:4` ([комментарий](https://vk.com/topic-66162180_33103100?offset=120#post3914))
 - **leon_udomlya** — 4 строк, пример: `Cyneprepou4uk vs leon_udomlya 2-1` ([комментарий](https://vk.com/topic-66162180_52002075?offset=40#post31189))
-- **Kpom** — 4 строк, пример: `Kpom - Tymoschuk - 1:3` ([комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3664))
-- **DopiPro** — 4 строк, пример: `DopiPro - Damian - 2:4` ([комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3694))
 - **KC_13** — 4 строк, пример: `KC_13 vs Кубик 1:2` ([комментарий](https://vk.com/topic-66162180_49948732?offset=60#post30270))
 - **Транзистор** — 4 строк, пример: `Распутник vs Транзистор 2:0 (5:4, 5:4)` ([комментарий](https://vk.com/topic-66162180_33437511?offset=40#post4823))
 - **Рик25** — 3 строк, пример: `Хуба Буба - Рик25 4-5` ([комментарий](https://vk.com/topic-66162180_39660451?offset=60#post18159))
@@ -1340,7 +1223,6 @@
 - **Спартакус** — 2 строк, пример: `Спартакус - Хантер 0 - 3 , 0 - 4` ([комментарий](https://vk.com/topic-66162180_54769667?offset=60#post32815))
 - **Хантер** — 2 строк, пример: `Спартакус - Хантер 0 - 3 , 0 - 4` ([комментарий](https://vk.com/topic-66162180_54769667?offset=60#post32815))
 - **кирпичи** — 2 строк, пример: `Чет ага не написали( котобус vs кирпичи 5:2` ([комментарий](https://vk.com/topic-66162180_33672355?offset=220#post6812))
-- **Крот** — 2 строк, пример: `Крот vs ВОР 1:8` ([комментарий](https://vk.com/topic-66162180_33045983?offset=40#post4236))
 - **абвабв** — 2 строк, пример: `абвабв vs кубик 0:2` ([комментарий](https://vk.com/topic-66162180_49948732?offset=60#post30267))
 - **Twisted** — 2 строк, пример: `Twisted - Ryumaru 0:2` ([комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31567))
 - **КС_13** — 2 строк, пример: `КС_13 vs Кубик 0:2` ([комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31622))
@@ -1362,7 +1244,6 @@
 - **Ukrop84ua** — 1 строк, пример: `Высшая лига, тур 9: PacnyTHuk & Jgunishka Vs Ukrop84ua & Alpharushin 5:1` ([комментарий](https://vk.com/topic-66162180_33672355?offset=100#post5910))
 - **котобус** — 1 строк, пример: `Чет ага не написали( котобус vs кирпичи 5:2` ([комментарий](https://vk.com/topic-66162180_33672355?offset=220#post6812))
 - **старспро** — 1 строк, пример: `техас+старспро vs кирпичи 5:4.` ([комментарий](https://vk.com/topic-66162180_33672355?offset=220#post6812))
-- **Krom** — 1 строк, пример: `Soccer Hen Season I 4 Тур Krom vs Centurion - 1:1` ([комментарий](https://vk.com/topic-66162180_33045983?offset=20#post3903))
 - **LLliypuk** — 1 строк, пример: `LLliypuk vs Jamlight 1-2 третий скриншот потерял` ([комментарий](https://vk.com/topic-66162180_49948732?offset=60#post30230))
 - **LLIypuK** — 1 строк, пример: `KC_13 vs LLIypuK - 2:0` ([комментарий](https://vk.com/topic-66162180_49948732?offset=160#post30490))
 - **Ryumary** — 1 строк, пример: `Ryumary vs Jamlight 0-2` ([комментарий](https://vk.com/topic-66162180_50374687?offset=20#post31621))
@@ -1387,22 +1268,22 @@
    - база: id=354 | a=Yuliy_Cezar | b=Ryumaru
    - в комментарии есть видео, в базе его нет
 3. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813
-   - база: id=33220 | a=BOР95 | b=Dr1N
+   - база: id=36229 | a=BOР95 | b=Dr1N
    - в комментарии есть видео, в базе его нет
 4. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813
-   - база: id=33220 | a=BOР95 | b=Dr1N
+   - база: id=36229 | a=BOР95 | b=Dr1N
    - в комментарии есть видео, в базе его нет
 5. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813
-   - база: id=33224 | a=Dr1N | b=psycho
+   - база: id=36233 | a=Dr1N | b=psycho
    - в комментарии есть видео, в базе его нет
 6. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813
-   - база: id=33224 | a=Dr1N | b=psycho
+   - база: id=36233 | a=Dr1N | b=psycho
    - в комментарии есть видео, в базе его нет
 7. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813
-   - база: id=33247 | a=Dan_Lavis | b=Dr1N
+   - база: id=36256 | a=Dan_Lavis | b=Dr1N
    - в комментарии есть видео, в базе его нет
 8. **Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон** · топик 32593813
-   - база: id=33247 | a=Dan_Lavis | b=Dr1N
+   - база: id=36256 | a=Dan_Lavis | b=Dr1N
    - в комментарии есть видео, в базе его нет
 
 ## Турнир не читается из комментариев (проверить источник) (5)
