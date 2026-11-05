@@ -14,6 +14,8 @@ import re
 import urllib.parse
 from pathlib import Path
 
+from portal.names import PLAYER_ID_LINK, clean_alias
+
 TOUR_HEAD = re.compile(r"(\d{1,2})\s*тур|тур\s*(\d{1,2})|\b№\s*(\d{1,2})\b", re.I)
 PAIR_CELL = re.compile(r"^(.{3,60}?)\s*(?:--|—|–|\bvs\.?\b|\bпротив\b)\s*(.{3,60}?)$", re.I)
 SCORE_CELL = re.compile(r"(\d{1,2})\s*[-:]\s*(\d{1,2})")
@@ -152,6 +154,41 @@ def tour_of(head):
     if not match:
         return ""
     return next((g for g in match.groups() if g), "").strip()
+
+
+DIVISION_HEAD = re.compile(r"^DIVISION\s+(METEORS|COMETS)", re.IGNORECASE | re.MULTILINE)
+DIVISION_WORDS = {"meteors": "Метеоры", "comets": "Кометы"}
+LIST_HEAD = "[id"
+
+
+def divisions(comments):
+    """Составы дивизионов из шапки темы: ники под заголовком `DIVISION METEORS|COMETS`.
+
+    Ранний чемпионат писался двумя дивизионами, и тур в отчёте указан не всегда. Принадлежность
+    ноги выясняется по этому списку — источник называет и дивизион, и аккаунт участника, — а не
+    по догадке, «с кем обычно играет» ник: догадка приписала бы строку чужому дивизиону, и
+    таблица лиги стала бы невыверяемой.
+    """
+    for comment in comments:
+        text = comment.get("text") or ""
+        heads = list(DIVISION_HEAD.finditer(text))
+        if not heads:
+            continue
+        found = {}
+        for head in heads:
+            name = DIVISION_WORDS[head.group(1).lower()]
+            lines = text[head.end():].splitlines()[1:]
+            nicks = []
+            for line in lines:
+                stripped = line.strip()
+                if not stripped.startswith(LIST_HEAD):
+                    break
+                link = PLAYER_ID_LINK.match(stripped)
+                if link:
+                    nicks.append(clean_alias(link.group(1)))
+            found[name] = nicks
+        return found
+    return {}
 
 
 def calendar_rows(page):

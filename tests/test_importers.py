@@ -11,6 +11,7 @@
 import sqlite3
 
 from db import import_live
+from portal.live_sources import divisions
 
 DOCS_ONE_TOURNAMENT = """
 select doc_id from matches
@@ -38,6 +39,39 @@ def test_live_calendar_rows_sit_in_the_season_of_their_document(con):
     """Сезон строки календаря — тот, что записан в рамке турнира, иначе строка уедет в чужой фасет."""
     lost = [row[0] for row in con.execute(LIVE_ROWS_OUTSIDE_DOC_SEASON)]
     assert not lost, f"игр календаря вне сезона своего документа: {len(lost)}"
+
+
+NAVIGATION = """НАВИГАЦИЯ
+УЧАСТНИКИ:
+
+DIVISION METEORS
+[id178285783|ВОР95]
+[id234043623|Tymoschuk]
+[id40657539|DanLavis]
+
+DIVISION COMETS
+[id286855730|Memori]
+[id693390|yoxter]
+
+ОБЩАЯ ИНФОРМАЦИЯ
+Количество участников - 20
+ПРИМЕР ВЫКЛАДЫВАНИЯ РЕЗУЛЬТАТОВ:
+1 Тур.
+ВОР95 - Tymoschuk - 5:1
+"""
+
+REPORT = "9 тур, метеоры\nBZK - BOР95 7-5"
+
+
+def test_divisions_are_read_from_the_roster_of_the_topic():
+    """Шапка темы называет дивизион и аккаунт: принадлежность ноги берётся оттуда, а не из догадки.
+
+    Списки обрезаются по первой строке вне блока, иначе «ОБЩАЯ ИНФОРМАЦИЯ» и образец выкладки
+    доехали бы до состава, а строка-пример («ВОР95 - Tymoschuk - 5:1») стала бы игрой.
+    """
+    found = divisions([{"text": NAVIGATION}, {"text": REPORT}])
+    assert found == {"Метеоры": ["BOР95", "Bubnov", "Dan_Lavis"], "Кометы": ["Memori", "yoxter"]}
+    assert divisions([{"text": REPORT}]) == {}
 
 
 def test_season_frames_have_no_document_but_have_a_season(db_path):
