@@ -54,13 +54,14 @@ HEAVY_FIELDS = ("match_history",)
 # Поле, по которому список словарей однозначен: один элемент — один ключ.
 IDENTITY_FIELDS = ("player", "id", "name", "doc_key", "rivalry", "club", "team", "stage")
 
-REVISION_SQL = """
-select coalesce(group_concat(
-    m.id || '|' || m.status || '|' || coalesce(m.hidden_by,'') || '|' || coalesce(m.duplicate_of,'')
-    || '|' || m.manual
-    || '|' || (select coalesce(group_concat(s.score,'/'), '') from match_sides s where s.match_id = m.id),
-    ';' order by m.id), '')
-from matches m
+REVISION_MATCHES_SQL = """
+select m.id, m.status, coalesce(m.hidden_by, '') as hidden_by,
+       coalesce(m.duplicate_of, '') as duplicate_of, m.manual
+from matches m order by m.id
+"""
+REVISION_SCORES_SQL = """
+select s.match_id, s.score from match_sides s
+order by s.match_id, s.side_index
 """
 
 
@@ -68,14 +69,24 @@ def revision(db_path=DB_PATH):
     """Отпечаток того, что правится: статус матча, его скрытость, метка ручной правки и счета сторон.
 
     По содержимому, а не по часам: две правки в одну секунду дали бы одинаковый `updated_at`, а
-    пересборка неизменного содержимого ревизию не сдвигает.
+    пересборка неизменного содержимого ревизию не сдвигает. Строку склеивает Python, а не
+    `group_concat`: у второго порядок зависит от плана запроса и от версии SQLite, а ревизия,
+    которая прыгает без правки, ломает optimistic lock — панель начинает отказывать в записи сама
+    у себя.
     """
     con = store.connect(db_path)
+    con.row_factory = sqlite3.Row
     try:
-        digest = hashlib.sha256(con.execute(REVISION_SQL).fetchone()[0].encode()).hexdigest()
+        scores = {}
+        for match_id, score in con.execute(REVISION_SCORES_SQL):
+            if score is not None:  # пустой счёт источника в склейку не входит, как и раньше
+                scores.setdefault(match_id, []).append(str(score))
+        lines = [f"{row['id']}|{row['status']}|{row['hidden_by']}|{row['duplicate_of']}"
+                 f"|{row['manual']}|{'/'.join(scores.get(row['id'], []))}"
+                 for row in con.execute(REVISION_MATCHES_SQL)]
     finally:
         con.close()
-    return digest[:16]
+    return hashlib.sha256(";".join(lines).encode()).hexdigest()[:16]
 
 
 @contextlib.contextmanager
@@ -205,10 +216,7 @@ select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.not
        t.season, t.name as tournament, st.name as stage, d.doc_key,
        sa.label as label_a, sb.label as label_b, sa.score as score_a, sb.score as score_b,
        sa.outcome as outcome_a, sb.outcome as outcome_b,
-       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
-          join players p on p.id = sp.player_id where sp.side_id = sa.id) as players_a,
-       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
-          join players p on p.id = sp.player_id where sp.side_id = sb.id) as players_b,
+       sa.id as side_a, sb.id as side_b,
        -- Редактор правит строку, не открывая базу: пусть карточка сразу показывает, откуда она
        -- взялась (ссылки источника) и что с ней не так (задача из очереди редактуры).
        (select json_group_array(json_object('kind', l.kind, 'url', l.url))
@@ -227,6 +235,24 @@ left join tournament_docs d on d.id = m.doc_id
 """
 
 LOCATE_SQL = LOCATE_SELECT + LOCATE_FROM
+
+
+def _with_rosters(con, rows):
+    """Строки `LOCATE_SQL` без состава сторон — вместе с ним: порядок задаёт `seat_index`.
+
+    Раньше список собирал `group_concat`, и порядок в нём зависел то ли от плана запроса, то ли от
+    версии SQLite: на 264 сторонах панель показывала состав перевёрнутым относительно подписи
+    источника, а человек правил не то, что видит. Здесь порядок берётся из того же места, откуда
+    его читает ядро, — из мест игроков.
+    """
+    found = edit.rosters(con, [value for row in rows for value in (row["side_a"], row["side_b"])])
+    out = []
+    for row in rows:
+        item = dict(row)
+        item["players_a"] = found.get(row["side_a"], "")
+        item["players_b"] = found.get(row["side_b"], "")
+        out.append(item)
+    return out
 
 
 def _norm(text):
@@ -287,7 +313,7 @@ def locate(a, b, *, season=None, tour=None, score=None, include_hidden=False, db
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     found = []
-    for row in con.execute(LOCATE_SQL):
+    for row in _with_rosters(con, con.execute(LOCATE_SQL).fetchall()):
         left, right = _sides(row)
         if not _pair_matches(want, left, right):
             continue
@@ -366,17 +392,6 @@ def _like(text):
     return f"%{escaped}%"
 
 
-LOCATE_FROM = """
-from matches m
-join tournaments t on t.id = m.tournament_id
-join stages st on st.id = m.stage_id
-join match_sides sa on sa.match_id = m.id and sa.side_index = 0
-join match_sides sb on sb.match_id = m.id and sb.side_index = 1
-left join tournament_docs d on d.id = m.doc_id
-"""
-
-LOCATE_SQL = LOCATE_SELECT + LOCATE_FROM
-
 # Условия поиска по категориям архива. Пустое поле = «не фильтруем», поэтому одну и ту же фразу
 # собирают и список строк, и счётчик: иначе «показано 60 из …» считалось бы по другому набору.
 SEARCH_FILTER = """
@@ -418,7 +433,8 @@ def search(*, season="", tournament="", tour="", player="", include_hidden=False
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     total = con.execute(SEARCH_COUNT_SQL, params).fetchone()[0]
-    rows = [_candidate(row) for row in con.execute(SEARCH_SQL, (*params, taken))]
+    rows = [_candidate(row)
+            for row in _with_rosters(con, con.execute(SEARCH_SQL, (*params, taken)).fetchall())]
     facets = {
         "seasons": [row[0] for row in con.execute(SEARCH_SEASONS_SQL)],
         "tournaments": [row[0] for row in con.execute(
@@ -616,10 +632,7 @@ MATCH_DISPLAY_SQL = """
 select t.season, coalesce(m.tour, st.name) as tour, st.name as stage,
        sa.label as label_a, sb.label as label_b, sa.score as score_a, sb.score as score_b,
        sa.outcome as outcome_a, sb.outcome as outcome_b, m.note,
-       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
-          join players p on p.id = sp.player_id where sp.side_id = sa.id) as players_a,
-       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
-          join players p on p.id = sp.player_id where sp.side_id = sb.id) as players_b
+       sa.id as side_a, sb.id as side_b
 from matches m
 join tournaments t on t.id = m.tournament_id
 join stages st on st.id = m.stage_id
@@ -662,7 +675,7 @@ def journal_entries(limit=20, db_path=DB_PATH):
         match_id = _match_of(con, row)
         display = con.execute(MATCH_DISPLAY_SQL, (match_id,)).fetchone() if match_id else None
         if display:
-            item["match"] = _display(display)
+            item["match"] = _display(_with_rosters(con, [display])[0])
         entries.append(item)
     con.close()
     return entries
@@ -687,11 +700,12 @@ def queue(db_path=DB_PATH):
         payload = json.loads(row["payload"] or "{}")
         match = con.execute(LOCATE_SQL + " where m.id = ?", (row["matched_match_id"],)).fetchone() \
             if row["matched_match_id"] else None
+        card = _with_rosters(con, [match])[0] if match else None
         tasks.append({"id": row["id"], "batch": row["batch"], "match_id": row["matched_match_id"],
                       "task": payload.get("задача") or "", "links": payload.get("ссылки") or [],
                       "tour": payload.get("тур") or "", "sides": payload.get("стороны") or [],
                       "shown": payload.get("как_выглядит") or "",
-                      "row": _candidate(match) if match else None})
+                      "row": _candidate(card) if card else None})
     con.close()
     return tasks
 

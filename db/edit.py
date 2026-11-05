@@ -144,18 +144,49 @@ def _store(value):
 
 
 SIDES_SQL = """
-select s.id, s.match_id, s.side_index, s.outcome, s.score, s.label,
-       (select group_concat(nick, ' & ') from
-          (select p.nick as nick from side_players sp join players p on p.id = sp.player_id
-             where sp.side_id = s.id order by sp.seat_index, p.nick)) as players
+select s.id, s.match_id, s.side_index, s.outcome, s.score, s.label
 from match_sides s where s.match_id = ? order by s.side_index
 """
+
+ROSTER_BY_SIDES_SQL = """
+select sp.side_id, p.nick from side_players sp join players p on p.id = sp.player_id
+where sp.side_id in ({}) order by sp.side_id, sp.seat_index, p.nick
+"""
+
+
+def rosters(con, side_ids):
+    """Кто стоит на сторонах — подписью по местам, а не по порядку вставки.
+
+    Один запрос на весь список сторон: `locate` и `search` перебирают связки десятками, и
+    выспрашивать состав каждой стороны отдельным подзапросом значило бы платить за каждый ряд.
+    """
+    wanted = [key for key in dict.fromkeys(side_ids) if key is not None]
+    if not wanted:
+        return {}
+    marks = ", ".join("?" * len(wanted))
+    found: dict[int, list] = {}
+    for side_id, nick in con.execute(ROSTER_BY_SIDES_SQL.format(marks), wanted):
+        found.setdefault(side_id, []).append(str(nick))
+    return {key: " & ".join(value) for key, value in found.items()}
 
 
 def sides_of(con, match_id):
     """Одна строка на сторону. У пары 2×2 на стороне два игрока, и считать их отдельными
-    сторонами нельзя: счёт и итог у стороны один."""
-    return con.execute(SIDES_SQL, (match_id,)).fetchall()
+    сторонами нельзя: счёт и итог у стороны один.
+
+    Состав читается одним запросом и склеивается здесь, а не `group_concat(... order by ...)`:
+    вторая форма требует SQLite не старше 3.44, а версия движка в рантайме публикации — не то,
+    от чего должно зависеть то, как человек видит состав.
+    """
+    cursor = con.execute(SIDES_SQL, (match_id,))
+    # Имена колонок берутся у курсора, а не из `sqlite3.Row`: стороны читают и соединения с
+    # row_factory, и простые — например сверку очередей.
+    names = [column[0] for column in cursor.description]
+    sides = [dict(zip(names, values)) for values in cursor]
+    found = rosters(con, [side["id"] for side in sides])
+    for side in sides:
+        side["players"] = found.get(side["id"], "")
+    return sides
 
 
 PAIR_SQL = """

@@ -226,6 +226,37 @@ def test_search_answers_the_same_card_shape_as_locate(db_path, con, find):
     assert set(winner) == set(searched[0]), "у поиска другой набор полей, чем у locate"
 
 
+def test_card_shows_the_roster_by_seats_and_not_by_insertion(db_path, con, find):
+    """Состав стороны панель показывает по местам, а не по порядку вставки.
+
+    На боевом срезе 264 из 498 сторон из двух игроков вставлены в порядке, обратный их
+    `seat_index`: пока список склеивал SQL, карточка предлагала человеку перевёрнутую пару, и
+    сохранение уводило пару в другую сторону — то есть правка «кто играл» меняла бы не то, что
+    видно на табло.
+    """
+    side_id, side_index, match_id = find("""
+        select s.id, s.side_index, s.match_id from match_sides s
+        where (select count(*) from side_players sp where sp.side_id = s.id) = 2
+          and (select count(*) from match_sides o
+                 join side_players op on op.side_id = o.id where o.match_id = s.match_id) = 4
+          and (select group_concat(p.nick, ' & ') from side_players sp
+                 join players p on p.id = sp.player_id where sp.side_id = s.id)
+           <> (select group_concat(p.nick, ' & ' order by sp.seat_index, p.nick) from side_players sp
+                 join players p on p.id = sp.player_id where sp.side_id = s.id)
+        order by s.id limit 1""", what="сторону 2×2, где вставка спорит с местами")
+    seats = [nick for (nick,) in con.execute(
+        """select p.nick from side_players sp join players p on p.id = sp.player_id
+            where sp.side_id = ? order by sp.seat_index, p.nick""", (side_id,))]
+    shown = {side["side_index"]: side for side in edit.sides_of(con, match_id)}
+    assert shown[side_index]["players"] == " & ".join(seats), "карточка показала состав не по местам"
+
+    # Клик по строке ищется всей парой составов: `locate` сверяет сторону как набор имён, и
+    # одно имя из двух в нём — не сторона, а половина.
+    opposite = shown[1 - side_index]["players"]
+    cards = api.locate(" & ".join(seats), opposite, db_path=db_path)
+    assert any(card["id"] == match_id for card in cards), "клик по такому составу не находит строку"
+
+
 def test_http_layer_checks_arguments_before_calling_the_api(find):
     """`serve._edit` — единственная защита от запроса без обязательного поля: ядро упало бы на
     KeyError, а человеку нужен внятный текст отказа."""

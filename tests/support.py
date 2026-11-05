@@ -54,7 +54,7 @@ def rosters(con, match_id):
     return {row["side_index"]: row["who"] or "" for row in con.execute(
         """select s.side_index, (select group_concat(p.nick, ' & ') from side_players sp
              join players p on p.id = sp.player_id where sp.side_id = s.id
-            order by sp.seat_index) as who
+            order by sp.seat_index, p.nick) as who
            from match_sides s where s.match_id = ? order by s.side_index""", (match_id,))}
 
 
