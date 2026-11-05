@@ -73,7 +73,7 @@ SEASON_ROSTERS = {
         ],
         "Дворовая лига": [
             "Aoshi", "yoxter", "Dynamik", "Dune", "E_not", "kot-from-ussr",
-            "AJ_Maker", "Mag.of.Shadow", "PacnyTHuK", "Legnahar", "Дядюшка АУ",
+            "AJ_Maker", "Mag.of.Shadow", "Palka Palych", "Legnahar", "Дядюшка АУ",
             "Mcfly", "Que", "Веселый Роджер", "Chabby_59"
         ]
     },

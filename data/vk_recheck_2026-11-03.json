@@ -7,14 +7,14 @@
   "единиц базы (турниры и документы)": 58,
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
-  "строк базы в сопоставленных единицах": 3350,
+  "строк базы в сопоставленных единицах": 3343,
   "строк источника, совпавших с базой": 1212
  },
  "counts": {
   "missing_in_db": 104,
   "score_diff": 131,
-  "wiki_missing_in_db": 8,
-  "wiki_score_diff": 9,
+  "wiki_missing_in_db": 0,
+  "wiki_score_diff": 0,
   "matched_elsewhere": 9,
   "unmatched_topic": 9,
   "empty_tournament": 3,
@@ -336,9 +336,7 @@
    "pid": "52913186",
    "title": "Дворовая Soccer League. Сезон 6 | VK",
    "rows": 124,
-   "matched": 107,
-   "differs": 9,
-   "missing": 8
+   "matched": 124
   },
   {
    "pid": "53570373",
@@ -3432,7 +3430,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 12257,
+     "id": 24113,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -3466,7 +3464,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 12257,
+     "id": 24113,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -3500,7 +3498,7 @@
     ],
     "url": "https://vk.com/topic-66162180_36630593?offset=0#post14336",
     "base": {
-     "id": 11612,
+     "id": 23475,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3534,7 +3532,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=0#post17541",
     "base": {
-     "id": 11642,
+     "id": 23505,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3568,7 +3566,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=80#post18193",
     "base": {
-     "id": 10714,
+     "id": 22577,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -3602,7 +3600,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=0#post26785",
     "base": {
-     "id": 11672,
+     "id": 23528,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3636,7 +3634,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=80#post26919",
     "base": {
-     "id": 11677,
+     "id": 23533,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -3670,7 +3668,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 9452,
+     "id": 21315,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -3701,7 +3699,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 10458,
+     "id": 22321,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -3732,7 +3730,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 10458,
+     "id": 22321,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -3763,7 +3761,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 11620,
+     "id": 23483,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3794,7 +3792,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 11620,
+     "id": 23483,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3825,7 +3823,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 10590,
+     "id": 22453,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -3856,7 +3854,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 10590,
+     "id": 22453,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -4023,7 +4021,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 9452,
+     "id": 21315,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4190,7 +4188,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=0#post3525",
     "base": {
-     "id": 10734,
+     "id": 22597,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4221,7 +4219,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=0#post3525",
     "base": {
-     "id": 10734,
+     "id": 22597,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4252,7 +4250,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 10766,
+     "id": 22629,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -4283,7 +4281,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 10766,
+     "id": 22629,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -4314,7 +4312,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 10344,
+     "id": 22207,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -4345,7 +4343,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 10344,
+     "id": 22207,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -4379,7 +4377,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33103100?offset=0#post3563",
     "base": {
-     "id": 9452,
+     "id": 21315,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4413,7 +4411,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=0#post6339",
     "base": {
-     "id": 9764,
+     "id": 21627,
      "tour": "5 Тур",
      "scores": [
       4,
@@ -4447,7 +4445,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 11592,
+     "id": 23455,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -4481,7 +4479,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 11592,
+     "id": 23455,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -4515,7 +4513,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=0#post9794",
     "base": {
-     "id": 11601,
+     "id": 23464,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -4549,7 +4547,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 11602,
+     "id": 23465,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -4583,7 +4581,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 11724,
+     "id": 23580,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -4617,7 +4615,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 11724,
+     "id": 23580,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -4651,7 +4649,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 11728,
+     "id": 23584,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -4685,7 +4683,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 11728,
+     "id": 23584,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -4719,7 +4717,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 11789,
+     "id": 23645,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -4753,7 +4751,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 11801,
+     "id": 23657,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -4787,7 +4785,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
     "base": {
-     "id": 10194,
+     "id": 22057,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -4818,7 +4816,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
     "base": {
-     "id": 10194,
+     "id": 22057,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -4849,7 +4847,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2450",
     "base": {
-     "id": 9317,
+     "id": 21180,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -4883,7 +4881,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=60#post2520",
     "base": {
-     "id": 9328,
+     "id": 21191,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -4917,7 +4915,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=60#post2530",
     "base": {
-     "id": 9316,
+     "id": 21179,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -4951,7 +4949,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2537",
     "base": {
-     "id": 9357,
+     "id": 21220,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -4985,7 +4983,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2552",
     "base": {
-     "id": 9333,
+     "id": 21196,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -5019,7 +5017,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2557",
     "base": {
-     "id": 9349,
+     "id": 21212,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -5053,7 +5051,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2567",
     "base": {
-     "id": 9321,
+     "id": 21184,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -5087,7 +5085,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
     "base": {
-     "id": 10762,
+     "id": 22625,
      "tour": "7 Тур",
      "scores": [
       5,
@@ -5118,7 +5116,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2599",
     "base": {
-     "id": 9350,
+     "id": 21213,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -5152,7 +5150,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 9359,
+     "id": 21222,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -5186,7 +5184,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 9359,
+     "id": 21222,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -5220,7 +5218,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2650",
     "base": {
-     "id": 9318,
+     "id": 21181,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -5254,7 +5252,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2652",
     "base": {
-     "id": 9346,
+     "id": 21209,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5288,7 +5286,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2656",
     "base": {
-     "id": 10816,
+     "id": 22679,
      "tour": "11 Тур",
      "scores": [
       1,
@@ -5319,7 +5317,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
     "base": {
-     "id": 9430,
+     "id": 21293,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -5350,7 +5348,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
     "base": {
-     "id": 9430,
+     "id": 21293,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -5381,7 +5379,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2666",
     "base": {
-     "id": 9396,
+     "id": 21259,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -5415,7 +5413,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2668",
     "base": {
-     "id": 9323,
+     "id": 21186,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5449,7 +5447,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
     "base": {
-     "id": 9456,
+     "id": 21319,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -5480,7 +5478,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
     "base": {
-     "id": 9456,
+     "id": 21319,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -5511,7 +5509,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2677",
     "base": {
-     "id": 9834,
+     "id": 21697,
      "tour": "1 Тур",
      "scores": [
       6,
@@ -5542,7 +5540,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2680",
     "base": {
-     "id": 9351,
+     "id": 21214,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -5576,7 +5574,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2692",
     "base": {
-     "id": 9468,
+     "id": 21331,
      "tour": "6 Тур",
      "scores": [
       3,
@@ -5607,7 +5605,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2692",
     "base": {
-     "id": 9468,
+     "id": 21331,
      "tour": "6 Тур",
      "scores": [
       3,
@@ -5638,7 +5636,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
     "base": {
-     "id": 10774,
+     "id": 22637,
      "tour": "8 Тур",
      "scores": [
       4,
@@ -5669,7 +5667,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2698",
     "base": {
-     "id": 9332,
+     "id": 21195,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -5703,7 +5701,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2721",
     "base": {
-     "id": 9327,
+     "id": 21190,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -5737,7 +5735,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2731",
     "base": {
-     "id": 9319,
+     "id": 21182,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -5771,7 +5769,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2732",
     "base": {
-     "id": 9360,
+     "id": 21223,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5805,7 +5803,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 9324,
+     "id": 21187,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -5839,7 +5837,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
     "base": {
-     "id": 9442,
+     "id": 21305,
      "tour": "4 Тур",
      "scores": [
       3,
@@ -5870,7 +5868,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
     "base": {
-     "id": 9442,
+     "id": 21305,
      "tour": "4 Тур",
      "scores": [
       3,
@@ -5901,7 +5899,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
     "base": {
-     "id": 10194,
+     "id": 22057,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -5932,7 +5930,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
     "base": {
-     "id": 10194,
+     "id": 22057,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -5963,7 +5961,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
     "base": {
-     "id": 9328,
+     "id": 21191,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5997,7 +5995,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
     "base": {
-     "id": 9328,
+     "id": 21191,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6031,7 +6029,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2798",
     "base": {
-     "id": 9317,
+     "id": 21180,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6065,7 +6063,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
     "base": {
-     "id": 9350,
+     "id": 21213,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6099,7 +6097,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
     "base": {
-     "id": 9350,
+     "id": 21213,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6133,7 +6131,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
     "base": {
-     "id": 9316,
+     "id": 21179,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6167,7 +6165,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
     "base": {
-     "id": 9316,
+     "id": 21179,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6201,7 +6199,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
     "base": {
-     "id": 9342,
+     "id": 21205,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6235,7 +6233,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
     "base": {
-     "id": 9342,
+     "id": 21205,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6269,7 +6267,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
     "base": {
-     "id": 9333,
+     "id": 21196,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6303,7 +6301,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
     "base": {
-     "id": 9333,
+     "id": 21196,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6337,7 +6335,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2847",
     "base": {
-     "id": 9349,
+     "id": 21212,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6371,7 +6369,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
     "base": {
-     "id": 9359,
+     "id": 21222,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -6405,7 +6403,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
     "base": {
-     "id": 9359,
+     "id": 21222,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -6439,7 +6437,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
     "base": {
-     "id": 9357,
+     "id": 21220,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6473,7 +6471,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
     "base": {
-     "id": 9357,
+     "id": 21220,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6507,7 +6505,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
     "base": {
-     "id": 9321,
+     "id": 21184,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6541,7 +6539,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
     "base": {
-     "id": 9321,
+     "id": 21184,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6575,7 +6573,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
     "base": {
-     "id": 9323,
+     "id": 21186,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6609,7 +6607,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
     "base": {
-     "id": 9323,
+     "id": 21186,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6643,7 +6641,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
     "base": {
-     "id": 9456,
+     "id": 21319,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -6674,7 +6672,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
     "base": {
-     "id": 9456,
+     "id": 21319,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -6705,7 +6703,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
     "base": {
-     "id": 9378,
+     "id": 21241,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6739,7 +6737,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
     "base": {
-     "id": 9378,
+     "id": 21241,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6773,7 +6771,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
     "base": {
-     "id": 9564,
+     "id": 21427,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -6804,7 +6802,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
     "base": {
-     "id": 9564,
+     "id": 21427,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -6835,7 +6833,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
     "base": {
-     "id": 9329,
+     "id": 21192,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -6869,7 +6867,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
     "base": {
-     "id": 9329,
+     "id": 21192,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -6903,7 +6901,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
     "base": {
-     "id": 9330,
+     "id": 21193,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6937,7 +6935,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
     "base": {
-     "id": 9330,
+     "id": 21193,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6971,7 +6969,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
     "base": {
-     "id": 9430,
+     "id": 21293,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -7002,7 +7000,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3018",
     "base": {
-     "id": 9318,
+     "id": 21181,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7036,7 +7034,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3019",
     "base": {
-     "id": 9322,
+     "id": 21185,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7070,7 +7068,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3023",
     "base": {
-     "id": 9396,
+     "id": 21259,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7104,7 +7102,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3039",
     "base": {
-     "id": 9332,
+     "id": 21195,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -7138,7 +7136,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
     "base": {
-     "id": 9478,
+     "id": 21341,
      "tour": "7 Тур",
      "scores": [
       4,
@@ -7169,7 +7167,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
     "base": {
-     "id": 9478,
+     "id": 21341,
      "tour": "7 Тур",
      "scores": [
       4,
@@ -7200,7 +7198,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3070",
     "base": {
-     "id": 9319,
+     "id": 21182,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -7234,7 +7232,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3109",
     "base": {
-     "id": 9377,
+     "id": 21240,
      "tour": "1 Круг",
      "scores": [
       0,
@@ -7268,7 +7266,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
     "base": {
-     "id": 9327,
+     "id": 21190,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7302,7 +7300,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
     "base": {
-     "id": 9327,
+     "id": 21190,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7336,7 +7334,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3130",
     "base": {
-     "id": 9564,
+     "id": 21427,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -7367,7 +7365,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3158",
     "base": {
-     "id": 9387,
+     "id": 21250,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7401,7 +7399,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
     "base": {
-     "id": 9360,
+     "id": 21223,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7435,7 +7433,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
     "base": {
-     "id": 9360,
+     "id": 21223,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7469,7 +7467,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
     "base": {
-     "id": 9320,
+     "id": 21183,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7503,7 +7501,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
     "base": {
-     "id": 9320,
+     "id": 21183,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7537,7 +7535,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3192",
     "base": {
-     "id": 9331,
+     "id": 21194,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7571,7 +7569,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
     "base": {
-     "id": 9324,
+     "id": 21187,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7605,7 +7603,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
     "base": {
-     "id": 9324,
+     "id": 21187,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7639,7 +7637,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
     "base": {
-     "id": 10166,
+     "id": 22029,
      "tour": "6 Тур",
      "scores": [
       5,
@@ -7670,7 +7668,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4870",
     "base": {
-     "id": 12207,
+     "id": 24063,
      "tour": "Группа B",
      "scores": [
       5,
@@ -7704,7 +7702,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4871",
     "base": {
-     "id": 12208,
+     "id": 24064,
      "tour": "Группа B",
      "scores": [
       5,
@@ -7738,7 +7736,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4876",
     "base": {
-     "id": 12210,
+     "id": 24066,
      "tour": "Группа B",
      "scores": [
       5,
@@ -7752,448 +7750,8 @@
     "hint": "та же пара в этом турнире, но счёт другой"
    }
   ],
-  "wiki_missing_in_db": [
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "2",
-    "line": "Mag.of.Shadow -- Palka Palych 1:1 (4:2 PK) 3:2 Видео",
-    "source_pair": [
-     [
-      "Mag.of.Shadow"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     1,
-     1
-    ],
-    "note": "1:1 (4:2 PK)",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "2",
-    "line": "Mag.of.Shadow -- Palka Palych 1:1 (4:2 PK) 3:2 Видео",
-    "source_pair": [
-     [
-      "Mag.of.Shadow"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     3,
-     2
-    ],
-    "note": "3:2",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "8",
-    "line": "kot-from-ussr -- Palka Palych 2:1 0:1 Видео",
-    "source_pair": [
-     [
-      "kot-from-ussr"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     2,
-     1
-    ],
-    "note": "2:1",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "8",
-    "line": "kot-from-ussr -- Palka Palych 2:1 0:1 Видео",
-    "source_pair": [
-     [
-      "kot-from-ussr"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     0,
-     1
-    ],
-    "note": "0:1",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "10",
-    "line": "Palka Palych -- Дядюшка АУ 5:4 (РК) 6:1 Видео",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "Дядюшка АУ"
-     ]
-    ],
-    "scores": [
-     5,
-     4
-    ],
-    "note": "5:4 (РК)",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "10",
-    "line": "Palka Palych -- Дядюшка АУ 5:4 (РК) 6:1 Видео",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "Дядюшка АУ"
-     ]
-    ],
-    "scores": [
-     6,
-     1
-    ],
-    "note": "6:1",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "11",
-    "line": "Palka Palych -- Веселый Роджер 4:3 2:3 Видео",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "Веселый Роджер"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "note": "4:3",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "11",
-    "line": "Palka Palych -- Веселый Роджер 4:3 2:3 Видео",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "Веселый Роджер"
-     ]
-    ],
-    "scores": [
-     2,
-     3
-    ],
-    "note": "2:3",
-    "url": "https://vk.com/page-66162180_52913186",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   }
-  ],
-  "wiki_score_diff": [
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "1",
-    "line": "E_not -- Palka Palych 7:2 4:3 Видео",
-    "source_pair": [
-     [
-      "E_not"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     7,
-     2
-    ],
-    "note": "7:2",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11644,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      3,
-      4
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "3",
-    "line": "legnahar -- Palka Palych 6:4 4:3 Видео",
-    "source_pair": [
-     [
-      "Legnahar"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     6,
-     4
-    ],
-    "note": "6:4",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11645,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      3,
-      4
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "4",
-    "line": "Palka Palych -- Mcfly 0:2 2:4 Видео",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "Mcfly"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "note": "2:4",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11648,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      0,
-      2
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "5",
-    "line": "AJ_Maker -- Palka Palych 4:0 3:3 (4:5 PK) Видео",
-    "source_pair": [
-     [
-      "AJ_Maker"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     4,
-     0
-    ],
-    "note": "4:0",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11651,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      5,
-      4
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "5",
-    "line": "AJ_Maker -- Palka Palych 4:0 3:3 (4:5 PK) Видео",
-    "source_pair": [
-     [
-      "AJ_Maker"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     3,
-     3
-    ],
-    "note": "3:3 (4:5 PK)",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11651,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      5,
-      4
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "6",
-    "line": "Palka Palych -- yoxter 1:5 1:3 Видео",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     1,
-     3
-    ],
-    "note": "1:3",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11653,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      1,
-      5
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "7",
-    "line": "Dune -- Palka Palych 4:3 3:1 Видео",
-    "source_pair": [
-     [
-      "Dune"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "note": "4:3",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11652,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      1,
-      3
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "12",
-    "line": "Aoshi -- Palka Palych 7:5 (PK) 4:1 Видео",
-    "source_pair": [
-     [
-      "Aoshi"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     7,
-     5
-    ],
-    "note": "7:5 (PK)",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11663,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      1,
-      4
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   },
-   {
-    "page": "52913186",
-    "title": "Дворовая Soccer League. Сезон 6 | VK",
-    "tour": "13",
-    "line": "dynamik -- Palka Palych 3:1 6:2 Видео",
-    "source_pair": [
-     [
-      "Dynamik"
-     ],
-     [
-      "Palka Palych"
-     ]
-    ],
-    "scores": [
-     3,
-     1
-    ],
-    "note": "3:1",
-    "url": "https://vk.com/page-66162180_52913186",
-    "base": {
-     "id": 11661,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      2,
-      6
-     ],
-     "unit": "Season 6 Высшая лига"
-    },
-    "hint": "нога встречи есть в базе другим счётом"
-   }
-  ],
+  "wiki_missing_in_db": [],
+  "wiki_score_diff": [],
   "matched_elsewhere": [
    {
     "topic": "52002075",
@@ -8216,7 +7774,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 11575,
+     "id": 23438,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8242,7 +7800,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 11575,
+     "id": 23438,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8268,7 +7826,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
     "base": {
-     "id": 10762,
+     "id": 22625,
      "unit": "Season 6 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8320,7 +7878,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
     "base": {
-     "id": 10774,
+     "id": 22637,
      "unit": "Season 6 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8346,7 +7904,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2793",
     "base": {
-     "id": 9468,
+     "id": 21331,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8372,7 +7930,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
     "base": {
-     "id": 12176,
+     "id": 24032,
      "unit": "3-й Сольный Турнир по пенальти"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8398,7 +7956,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
     "base": {
-     "id": 10167,
+     "id": 22030,
      "unit": "Season 4 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8424,7 +7982,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 9818,
+     "id": 21681,
      "unit": "Season 3 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
