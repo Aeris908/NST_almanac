@@ -4,25 +4,25 @@
   "обсуждений в выгрузке всего (все дисциплины клуба)": 375,
   "футбольных обсуждений в сверке": 34,
   "комментариев": 4612,
-  "единиц базы (турниры и документы)": 56,
+  "единиц базы (турниры и документы)": 61,
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
-  "строк базы в сопоставленных единицах": 3001,
-  "строк источника, совпавших с базой": 1087
+  "строк базы в сопоставленных единицах": 3350,
+  "строк источника, совпавших с базой": 1203
  },
  "counts": {
-  "missing_in_db": 163,
-  "score_diff": 142,
-  "wiki_missing_in_db": 17,
-  "wiki_score_diff": 1,
+  "missing_in_db": 112,
+  "score_diff": 132,
+  "wiki_missing_in_db": 20,
+  "wiki_score_diff": 9,
   "matched_elsewhere": 9,
-  "unmatched_topic": 10,
+  "unmatched_topic": 9,
   "empty_tournament": 3,
   "empty_unit": 4,
-  "unknown_name": 270,
+  "unknown_name": 249,
   "nick_twins": 0,
   "video_link": 2,
-  "no_lines_recognised": 8
+  "no_lines_recognised": 6
  },
  "topics": {
   "31776158": {
@@ -88,6 +88,7 @@
    "signature": "командный №4 goal3",
    "units": [
     "IV Командный Чемпионат по Goal 3",
+    "IV Командный Чемпионат по Goal 3",
     "IV Командный Чемпионат по Goal 3"
    ]
   },
@@ -132,7 +133,10 @@
   "34920573": {
    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
    "signature": "пенальти №4",
-   "units": []
+   "units": [
+    "4-й Сольный Турнир по пенальти",
+    "4-й Сольный Турнир по пенальти"
+   ]
   },
   "34973011": {
    "title": "Soccer League. 4-й сезон",
@@ -333,7 +337,9 @@
    "pid": "52913186",
    "title": "Дворовая Soccer League. Сезон 6 | VK",
    "rows": 124,
-   "matched": 124
+   "matched": 107,
+   "differs": 9,
+   "missing": 8
   },
   {
    "pid": "53570373",
@@ -358,9 +364,8 @@
    "pid": "53638616",
    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги ",
    "rows": 12,
-   "missing": 5,
-   "unknown": 6,
-   "differs": 1
+   "matched": 6,
+   "unknown": 6
   },
   {
    "pid": "53638617",
@@ -371,37 +376,6 @@
  ],
  "items": {
   "missing_in_db": [
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22419",
-    "comment_day": "2020-03-23",
-    "line": "2 тур: SaikoDelph & Jgunishka VS Aoshi & Aeris 5-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ],
-     [
-      "Aeris",
-      "Aoshi"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22419",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
    {
     "topic": "41270759",
     "title": "2-й Молодёжный Чемпионат по Goal 3",
@@ -429,627 +403,7 @@
      "units": [
       "2-й Молодёжный Чемпионат по Goal 3"
      ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22439",
-    "comment_day": "2020-03-29",
-    "line": "6 Тур: SaikoDelph & Jgunishka VS Daria_P & Memori 2-0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ],
-     [
-      "Daria_P",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     2,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22439",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22440",
-    "comment_day": "2020-03-29",
-    "line": "SaikoDelph & Jgunishka vs Daria_P & Memori - 3:3 (4:3 PK)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ],
-     [
-      "Daria_P",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     3,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22440",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22440",
-    "comment_day": "2020-03-29",
-    "line": "Daria_P & Memori vs SaikoDelph & Jgunishka - 2:2 (4:3 PK aka неестественно долгая серия пенальти)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Daria_P",
-      "Memori"
-     ],
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ]
-    ],
-    "scores": [
-     2,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22440",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22458",
-    "comment_day": "2020-03-30",
-    "line": "7 Тур: SaikoDelph & Jgunishka VS Dynamik & Dune 6-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ],
-     [
-      "Dune",
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     6,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22458",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22459",
-    "comment_day": "2020-03-30",
-    "line": "Bender & mafutа vs SaikoDelph & Jgunishka 3:0, 3:1, 2:4, 1:1(РК 2:3)",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Bender",
-      "mafuta"
-     ],
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ]
-    ],
-    "scores": [
-     3,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22459",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22459",
-    "comment_day": "2020-03-30",
-    "line": "Bender & mafutа vs SaikoDelph & Jgunishka 3:0, 3:1, 2:4, 1:1(РК 2:3)",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Bender",
-      "mafuta"
-     ],
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ]
-    ],
-    "scores": [
-     3,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22459",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22459",
-    "comment_day": "2020-03-30",
-    "line": "Bender & mafutа vs SaikoDelph & Jgunishka 3:0, 3:1, 2:4, 1:1(РК 2:3)",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Bender",
-      "mafuta"
-     ],
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22459",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22459",
-    "comment_day": "2020-03-30",
-    "line": "Bender & mafutа vs SaikoDelph & Jgunishka 3:0, 3:1, 2:4, 1:1(РК 2:3)",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "Bender",
-      "mafuta"
-     ],
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ]
-    ],
-    "scores": [
-     1,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22459",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22497",
-    "comment_day": "2020-04-05",
-    "line": "1 тур: lenin1st & ectoPower VS SaikoDelph & Jgunishka 5-0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "ectoPower",
-      "lenin1st"
-     ],
-     [
-      "Jgunishka",
-      "SaikoDelph"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22497",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22506",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs lenin1st & ectoPower 0:6, 1:6, 4:2, 0:6",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     0,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22506",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22506",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs lenin1st & ectoPower 0:6, 1:6, 4:2, 0:6",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     1,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22506",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22506",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs lenin1st & ectoPower 0:6, 1:6, 4:2, 0:6",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     4,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22506",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22507",
-    "comment_day": "2020-04-06",
-    "line": "Daria_P & Memori vs lenin1st & ectoPower 0:5, 1:1(РК 1:3), 1:3, 3:5",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Daria_P",
-      "Memori"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22507",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22507",
-    "comment_day": "2020-04-06",
-    "line": "Daria_P & Memori vs lenin1st & ectoPower 0:5, 1:1(РК 1:3), 1:3, 3:5",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Daria_P",
-      "Memori"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     1,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22507",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22507",
-    "comment_day": "2020-04-06",
-    "line": "Daria_P & Memori vs lenin1st & ectoPower 0:5, 1:1(РК 1:3), 1:3, 3:5",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Daria_P",
-      "Memori"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     1,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22507",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22507",
-    "comment_day": "2020-04-06",
-    "line": "Daria_P & Memori vs lenin1st & ectoPower 0:5, 1:1(РК 1:3), 1:3, 3:5",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "Daria_P",
-      "Memori"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     3,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22507",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22510",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs Daria_P & Memori 2:3, 4:3, 2:6, 1:5",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Daria_P",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     2,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22510",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22510",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs Daria_P & Memori 2:3, 4:3, 2:6, 1:5",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Daria_P",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22510",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22510",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs Daria_P & Memori 2:3, 4:3, 2:6, 1:5",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Daria_P",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     2,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22510",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22510",
-    "comment_day": "2020-04-06",
-    "line": "Aoshi & Aeris vs Daria_P & Memori 2:3, 4:3, 2:6, 1:5",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Daria_P",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22510",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
+     "rows": 142
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
@@ -1080,7 +434,7 @@
      "units": [
       "2-й Молодёжный Чемпионат по Goal 3"
      ],
-     "rows": 8
+     "rows": 142
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
@@ -1111,7 +465,7 @@
      "units": [
       "2-й Молодёжный Чемпионат по Goal 3"
      ],
-     "rows": 8
+     "rows": 142
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
@@ -1142,7 +496,7 @@
      "units": [
       "2-й Молодёжный Чемпионат по Goal 3"
      ],
-     "rows": 8
+     "rows": 142
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
@@ -1173,255 +527,7 @@
      "units": [
       "2-й Молодёжный Чемпионат по Goal 3"
      ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22535",
-    "comment_day": "2020-04-11",
-    "line": "Aoshi & Aeris vs Dynamik & Dune 3:8, 2:4, 1:5, 3:4",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Dune",
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     3,
-     8
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22535",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22535",
-    "comment_day": "2020-04-11",
-    "line": "Aoshi & Aeris vs Dynamik & Dune 3:8, 2:4, 1:5, 3:4",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Dune",
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22535",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22535",
-    "comment_day": "2020-04-11",
-    "line": "Aoshi & Aeris vs Dynamik & Dune 3:8, 2:4, 1:5, 3:4",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Dune",
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22535",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22535",
-    "comment_day": "2020-04-11",
-    "line": "Aoshi & Aeris vs Dynamik & Dune 3:8, 2:4, 1:5, 3:4",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "Aeris",
-      "Aoshi"
-     ],
-     [
-      "Dune",
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     3,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22535",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22537",
-    "comment_day": "2020-04-11",
-    "line": "Dynamik & Dune vs lenin1st & ectoPower 3:6, 4:6, 2:6, 2:11",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Dune",
-      "Dynamik"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     3,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22537",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22537",
-    "comment_day": "2020-04-11",
-    "line": "Dynamik & Dune vs lenin1st & ectoPower 3:6, 4:6, 2:6, 2:11",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Dune",
-      "Dynamik"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     4,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22537",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22537",
-    "comment_day": "2020-04-11",
-    "line": "Dynamik & Dune vs lenin1st & ectoPower 3:6, 4:6, 2:6, 2:11",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Dune",
-      "Dynamik"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     2,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22537",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22537",
-    "comment_day": "2020-04-11",
-    "line": "Dynamik & Dune vs lenin1st & ectoPower 3:6, 4:6, 2:6, 2:11",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "Dune",
-      "Dynamik"
-     ],
-     [
-      "ectoPower",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     2,
-     11
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22537",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 8
+     "rows": 142
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
@@ -1492,68 +598,6 @@
    {
     "topic": "33672355",
     "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "5958",
-    "comment_day": "2016-07-22",
-    "line": "Высшая лига, тур 8: Сenturion & BOP95 Vs PacnyTHuk & Jgunishka 0:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95",
-      "Centurion"
-     ],
-     [
-      "Jgunishka",
-      "PacnyTHuK"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=140#post5958",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "IV Командный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "5959",
-    "comment_day": "2016-07-22",
-    "line": "Высшая Лига, 2й Тур: Rock & edexy Vs PacnyTHuk & Jgunishka 0:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Rock",
-      "edexy"
-     ],
-     [
-      "Jgunishka",
-      "PacnyTHuK"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=140#post5959",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "IV Командный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
     "comment_id": "5992",
     "comment_day": "2016-07-31",
     "line": "Высшая Лига, 4й Тур: PacnyTHuk & Jgunishka Vs Transistor & Tymoschuk 5:2",
@@ -1578,71 +622,38 @@
      "units": [
       "IV Командный Чемпионат по Goal 3"
      ],
-     "rows": 8
+     "rows": 75
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
    {
     "topic": "33672355",
     "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "5996",
-    "comment_day": "2016-08-02",
-    "line": "ArmFly & Alpharushin vs Kunio & Memori - 1:5",
+    "comment_id": "6242",
+    "comment_day": "2016-08-29",
+    "line": "RVD - Ric25 vs Esteban - Dopi - 1:5",
     "leg": "1/1",
     "source_pair": [
      [
-      "Alpharushin",
-      "ArmFly"
+      "esteban"
      ],
      [
-      "Kunio",
-      "Memori"
+      "Dopi"
      ]
     ],
     "scores": [
      1,
      5
     ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=160#post5996",
-    "shape": "2×2",
+    "url": "https://vk.com/topic-66162180_33672355?offset=200#post6242",
+    "shape": "1×1",
     "tournament": {
      "units": [
       "IV Командный Чемпионат по Goal 3"
      ],
-     "rows": 8
+     "rows": 75
     },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "6208",
-    "comment_day": "2016-08-24",
-    "line": "Высшая Лига, 1й Тур: PacnyTHuk & Jgunishka Vs Kunio & Memori 3:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jgunishka",
-      "PacnyTHuK"
-     ],
-     [
-      "Kunio",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     3,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=200#post6208",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "IV Командный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
    },
    {
     "topic": "33672355",
@@ -1671,7 +682,7 @@
      "units": [
       "IV Командный Чемпионат по Goal 3"
      ],
-     "rows": 8
+     "rows": 75
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
@@ -1724,6 +735,64 @@
      1
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=20#post3695",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "3761",
+    "comment_day": "2016-03-02",
+    "line": "Tymoschuk vs Lipetsk 8:5",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Bubnov"
+     ],
+     [
+      "Lipetsk"
+     ]
+    ],
+    "scores": [
+     8,
+     5
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=20#post3761",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "3761",
+    "comment_day": "2016-03-02",
+    "line": "Lipetsk vs Tymoschuk 3:12",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Lipetsk"
+     ],
+     [
+      "Bubnov"
+     ]
+    ],
+    "scores": [
+     3,
+     12
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=20#post3761",
     "shape": "1×1",
     "tournament": {
      "units": [
@@ -1852,6 +921,64 @@
    {
     "topic": "33045983",
     "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4004",
+    "comment_day": "2016-03-12",
+    "line": "Lipetsk vs Damian 5:8",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Lipetsk"
+     ],
+     [
+      "Damian"
+     ]
+    ],
+    "scores": [
+     5,
+     8
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4004",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4004",
+    "comment_day": "2016-03-12",
+    "line": "Damian vs Lipetsk 10:6",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Damian"
+     ],
+     [
+      "Lipetsk"
+     ]
+    ],
+    "scores": [
+     10,
+     6
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4004",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
     "comment_id": "4022",
     "comment_day": "2016-03-13",
     "line": "5 тур Сenturion vs Tymoschuk - 1:8",
@@ -1898,6 +1025,180 @@
      0
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=40#post4022",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4057",
+    "comment_day": "2016-03-16",
+    "line": "ВОР95 vs Lipetsk 5:3",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "BOР95"
+     ],
+     [
+      "Lipetsk"
+     ]
+    ],
+    "scores": [
+     5,
+     3
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4057",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4057",
+    "comment_day": "2016-03-16",
+    "line": "Lipetsk vs ВОР95 2:5",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Lipetsk"
+     ],
+     [
+      "BOР95"
+     ]
+    ],
+    "scores": [
+     2,
+     5
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4057",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4162",
+    "comment_day": "2016-03-22",
+    "line": "Lipetsk vs Centurion - 10:0",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Lipetsk"
+     ],
+     [
+      "Centurion"
+     ]
+    ],
+    "scores": [
+     10,
+     0
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4162",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4162",
+    "comment_day": "2016-03-22",
+    "line": "Сenturion vs Lipetsk - 3:9",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Centurion"
+     ],
+     [
+      "Lipetsk"
+     ]
+    ],
+    "scores": [
+     3,
+     9
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4162",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4367",
+    "comment_day": "2016-04-03",
+    "line": "Lipetsk vs Rock - 3:2",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Lipetsk"
+     ],
+     [
+      "Rock"
+     ]
+    ],
+    "scores": [
+     3,
+     2
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4367",
+    "shape": "1×1",
+    "tournament": {
+     "units": [
+      "Season 1 Высшая (Единая) лига"
+     ],
+     "rows": 90
+    },
+    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
+   },
+   {
+    "topic": "33045983",
+    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
+    "comment_id": "4367",
+    "comment_day": "2016-04-03",
+    "line": "Rock vs Lipetsk - 7:0",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Rock"
+     ],
+     [
+      "Lipetsk"
+     ]
+    ],
+    "scores": [
+     7,
+     0
+    ],
+    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4367",
     "shape": "1×1",
     "tournament": {
      "units": [
@@ -2092,68 +1393,6 @@
      "rows": 375
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "49868493",
-    "title": "VI Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "29898",
-    "comment_day": "2023-08-17",
-    "line": "Alpharushin & Cyneprepou4uk vs ectoPower & Davitel 0-5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Alpharushin",
-      "Cyneprepou4uk"
-     ],
-     [
-      "Davitel",
-      "ectoPower"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_49868493?offset=40#post29898",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "VI Командный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "49868493",
-    "title": "VI Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "29919",
-    "comment_day": "2023-08-22",
-    "line": "Ric25 & Dune vs Alpharushin & Cyneprepou4uk 1-5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dune",
-      "Ric25"
-     ],
-     [
-      "Alpharushin",
-      "Cyneprepou4uk"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_49868493?offset=60#post29919",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "VI Командный Чемпионат по Goal 3"
-     ],
-     "rows": 8
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
    {
     "topic": "32593813",
@@ -4391,636 +3630,6 @@
    {
     "topic": "33437511",
     "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4800",
-    "comment_day": "2016-04-28",
-    "line": "Ric25 - Davitel 1-5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "Davitel"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4800",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4811",
-    "comment_day": "2016-04-29",
-    "line": "E_not VS Kunio - 0 : 5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "E_not"
-     ],
-     [
-      "Kunio"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4811",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4827",
-    "comment_day": "2016-04-30",
-    "line": "Damian vs mafuta 0:5 0:5",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "Damian"
-     ],
-     [
-      "mafuta"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4827",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4828",
-    "comment_day": "2016-04-30",
-    "line": "Memori vs Edexy - 5:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "edexy"
-     ]
-    ],
-    "scores": [
-     5,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4828",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4828",
-    "comment_day": "2016-04-30",
-    "line": "Edexy vs Memori - 2:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "edexy"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     2,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4828",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4832",
-    "comment_day": "2016-04-30",
-    "line": "ВОР95 vs Davitel - 4:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Davitel"
-     ]
-    ],
-    "scores": [
-     4,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4832",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4832",
-    "comment_day": "2016-04-30",
-    "line": "Davitel vs BOP95 - 5:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Davitel"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4832",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4840",
-    "comment_day": "2016-05-01",
-    "line": "Memori vs AJ_Maker - 5:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "AJ_Maker"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4840",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4842",
-    "comment_day": "2016-05-01",
-    "line": "edexy vs AJ_Maker - 5:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "edexy"
-     ],
-     [
-      "AJ_Maker"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4842",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4859",
-    "comment_day": "2016-05-03",
-    "line": "wanchous vs mafuta 0:5 1:5",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "wanchous"
-     ],
-     [
-      "mafuta"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4859",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4859",
-    "comment_day": "2016-05-03",
-    "line": "wanchous vs mafuta 0:5 1:5",
-    "leg": "2/2",
-    "source_pair": [
-     [
-      "wanchous"
-     ],
-     [
-      "mafuta"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4859",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4870",
-    "comment_day": "2016-05-04",
-    "line": "Группа В. TubusTD vs Romario 2:0 (5:0, 5:0)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "tubustd"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     2,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4870",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4871",
-    "comment_day": "2016-05-04",
-    "line": "Группа В. РаспуТНик vs Romario 2:0 (5:0, 5:0)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "PacnyTHuK"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     2,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4871",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4876",
-    "comment_day": "2016-05-04",
-    "line": "Группа В. РаспуТНик vs TubusTD 2:0 (5:1, 5:0)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "PacnyTHuK"
-     ],
-     [
-      "tubustd"
-     ]
-    ],
-    "scores": [
-     2,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4876",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4877",
-    "comment_day": "2016-05-04",
-    "line": "mafuta vs Dynamik 5:0,5:0",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "mafuta"
-     ],
-     [
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4877",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4890",
-    "comment_day": "2016-05-06",
-    "line": "Damian vs Wenderfit 5-0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Damian"
-     ],
-     [
-      "Wenderfit"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4890",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4890",
-    "comment_day": "2016-05-06",
-    "line": "Wenderfit vs Damian 4-5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Wenderfit"
-     ],
-     [
-      "Damian"
-     ]
-    ],
-    "scores": [
-     4,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4890",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4926",
-    "comment_day": "2016-05-09",
-    "line": "Rustin Cohle vs Dr1n 5-4,5-2",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     5,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=80#post4926",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4926",
-    "comment_day": "2016-05-09",
-    "line": "Rustin Cohle vs Dr1n 5-4,5-2",
-    "leg": "2/2",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=80#post4926",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4935",
-    "comment_day": "2016-05-10",
-    "line": "Damian vs Dynamik 1:5 1:5",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "Damian"
-     ],
-     [
-      "Dynamik"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=80#post4935",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4937",
-    "comment_day": "2016-05-10",
-    "line": "edexy vs Kipriot 5 : 0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "edexy"
-     ],
-     [
-      "Kipriot"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=80#post4937",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
     "comment_id": "5068",
     "comment_day": "2016-05-17",
     "line": "Tymoschuk vs Alpharushin - 7:1",
@@ -5044,333 +3653,77 @@
       "3-й Сольный Турнир по пенальти",
       "3-й Сольный Турнир по пенальти"
      ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5146",
-    "comment_day": "2016-05-26",
-    "line": "Goal 3 PK Tournament. Losers stage 1. Alpharushin vs Dopi 7 - 1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Alpharushin"
-     ],
-     [
-      "Dopi"
-     ]
-    ],
-    "scores": [
-     7,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5146",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5168",
-    "comment_day": "2016-05-29",
-    "line": "Ric25 - Edexy 1-7",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "edexy"
-     ]
-    ],
-    "scores": [
-     1,
-     7
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5168",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5417",
-    "comment_day": "2016-06-07",
-    "line": "Goal3 Losers stage 2 Alpharushin vs Huba_Buba_5 7:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Alpharushin"
-     ],
-     [
-      "Huba Buba"
-     ]
-    ],
-    "scores": [
-     7,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5417",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5421",
-    "comment_day": "2016-06-08",
-    "line": "edexy vs Memori - 7:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "edexy"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     7,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=120#post5421",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5556",
-    "comment_day": "2016-06-18",
-    "line": "edexy vs Alpharushin 7 : 6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "edexy"
-     ],
-     [
-      "Alpharushin"
-     ]
-    ],
-    "scores": [
-     7,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=120#post5556",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5598",
-    "comment_day": "2016-06-20",
-    "line": "Edexy vs Davitel - 4:7",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "edexy"
-     ],
-     [
-      "Davitel"
-     ]
-    ],
-    "scores": [
-     4,
-     7
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=120#post5598",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 20
+     "rows": 96
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
    }
   ],
   "score_diff": [
    {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22499",
-    "comment_day": "2020-04-05",
-    "line": "lenin1st & ectoPower vs Bender & mafuta 2:4, 1:6, 2:1, 3:1",
-    "leg": "1/4",
+    "topic": "34920573",
+    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
+    "comment_id": "9742",
+    "comment_day": "2017-03-13",
+    "line": "Буц - Christian - 1:5",
+    "leg": "1/1",
     "source_pair": [
      [
-      "ectoPower",
-      "lenin1st"
+      "Буц"
      ],
      [
-      "Bender",
-      "mafuta"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22499",
-    "base": {
-     "id": 2867,
-     "tour": "Матч за 3-е место",
-     "scores": [
-      5,
-      6
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "lenin1st & ectoPower",
-     "b": "Bender & mafuta"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22499",
-    "comment_day": "2020-04-05",
-    "line": "lenin1st & ectoPower vs Bender & mafuta 2:4, 1:6, 2:1, 3:1",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "ectoPower",
-      "lenin1st"
-     ],
-     [
-      "Bender",
-      "mafuta"
+      "Christian"
      ]
     ],
     "scores": [
      1,
-     6
+     5
     ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22499",
+    "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 2867,
-     "tour": "Матч за 3-е место",
+     "id": 318275,
+     "tour": "Winners 1/8",
      "scores": [
-      5,
-      6
+      4,
+      10
      ],
      "status": "played",
      "manual": 0,
-     "a": "lenin1st & ectoPower",
-     "b": "Bender & mafuta"
+     "a": "Буц",
+     "b": "Christian"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
    {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22499",
-    "comment_day": "2020-04-05",
-    "line": "lenin1st & ectoPower vs Bender & mafuta 2:4, 1:6, 2:1, 3:1",
-    "leg": "3/4",
+    "topic": "34920573",
+    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
+    "comment_id": "9742",
+    "comment_day": "2017-03-13",
+    "line": "Буц - Christian - 3:5 (Ответка на слабо)",
+    "leg": "1/1",
     "source_pair": [
      [
-      "ectoPower",
-      "lenin1st"
+      "Буц"
      ],
      [
-      "Bender",
-      "mafuta"
-     ]
-    ],
-    "scores": [
-     2,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22499",
-    "base": {
-     "id": 2867,
-     "tour": "Матч за 3-е место",
-     "scores": [
-      5,
-      6
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "lenin1st & ectoPower",
-     "b": "Bender & mafuta"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22499",
-    "comment_day": "2020-04-05",
-    "line": "lenin1st & ectoPower vs Bender & mafuta 2:4, 1:6, 2:1, 3:1",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "ectoPower",
-      "lenin1st"
-     ],
-     [
-      "Bender",
-      "mafuta"
+      "Christian"
      ]
     ],
     "scores": [
      3,
-     1
+     5
     ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22499",
+    "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 2867,
-     "tour": "Матч за 3-е место",
+     "id": 318275,
+     "tour": "Winners 1/8",
      "scores": [
-      5,
-      6
+      4,
+      10
      ],
      "status": "played",
      "manual": 0,
-     "a": "lenin1st & ectoPower",
-     "b": "Bender & mafuta"
+     "a": "Буц",
+     "b": "Christian"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -5395,7 +3748,7 @@
     ],
     "url": "https://vk.com/topic-66162180_36630593?offset=0#post14336",
     "base": {
-     "id": 2699,
+     "id": 317630,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -5429,7 +3782,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=0#post17541",
     "base": {
-     "id": 2729,
+     "id": 317660,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -5463,7 +3816,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=80#post18193",
     "base": {
-     "id": 1801,
+     "id": 316732,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -5497,7 +3850,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=0#post26785",
     "base": {
-     "id": 2752,
+     "id": 317690,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -5531,7 +3884,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=80#post26919",
     "base": {
-     "id": 2757,
+     "id": 317695,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -5565,7 +3918,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 539,
+     "id": 315470,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -5596,7 +3949,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 1545,
+     "id": 316476,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -5627,7 +3980,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 1545,
+     "id": 316476,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -5658,7 +4011,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 2707,
+     "id": 317638,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -5689,7 +4042,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 2707,
+     "id": 317638,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -5720,7 +4073,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 1677,
+     "id": 316608,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -5751,7 +4104,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 1677,
+     "id": 316608,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -5918,7 +4271,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 539,
+     "id": 315470,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -6085,7 +4438,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=0#post3525",
     "base": {
-     "id": 1821,
+     "id": 316752,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -6116,7 +4469,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=0#post3525",
     "base": {
-     "id": 1821,
+     "id": 316752,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -6147,7 +4500,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 1853,
+     "id": 316784,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -6178,7 +4531,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 1853,
+     "id": 316784,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -6209,7 +4562,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 1431,
+     "id": 316362,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -6240,7 +4593,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 1431,
+     "id": 316362,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -6274,7 +4627,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33103100?offset=0#post3563",
     "base": {
-     "id": 539,
+     "id": 315470,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -6308,7 +4661,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=0#post6339",
     "base": {
-     "id": 851,
+     "id": 315782,
      "tour": "5 Тур",
      "scores": [
       4,
@@ -6342,7 +4695,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 2679,
+     "id": 317610,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -6376,7 +4729,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 2679,
+     "id": 317610,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -6410,7 +4763,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=0#post9794",
     "base": {
-     "id": 2688,
+     "id": 317619,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -6444,7 +4797,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 2689,
+     "id": 317620,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -6478,7 +4831,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 2804,
+     "id": 317742,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -6512,7 +4865,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 2804,
+     "id": 317742,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -6546,7 +4899,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 2808,
+     "id": 317746,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -6580,7 +4933,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 2808,
+     "id": 317746,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -6614,7 +4967,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 2869,
+     "id": 317807,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -6648,7 +5001,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 2881,
+     "id": 317819,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -6682,7 +5035,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
     "base": {
-     "id": 1281,
+     "id": 316212,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -6713,7 +5066,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
     "base": {
-     "id": 1281,
+     "id": 316212,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -6744,7 +5097,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2450",
     "base": {
-     "id": 404,
+     "id": 315335,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6778,7 +5131,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=60#post2520",
     "base": {
-     "id": 415,
+     "id": 315346,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6812,7 +5165,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=60#post2530",
     "base": {
-     "id": 403,
+     "id": 315334,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6846,7 +5199,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2537",
     "base": {
-     "id": 444,
+     "id": 315375,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6880,7 +5233,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2552",
     "base": {
-     "id": 420,
+     "id": 315351,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6914,7 +5267,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2557",
     "base": {
-     "id": 436,
+     "id": 315367,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6948,7 +5301,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2567",
     "base": {
-     "id": 408,
+     "id": 315339,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6982,7 +5335,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
     "base": {
-     "id": 1849,
+     "id": 316780,
      "tour": "7 Тур",
      "scores": [
       5,
@@ -7013,7 +5366,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2599",
     "base": {
-     "id": 437,
+     "id": 315368,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -7047,7 +5400,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 446,
+     "id": 315377,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -7081,7 +5434,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 446,
+     "id": 315377,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -7115,7 +5468,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2650",
     "base": {
-     "id": 405,
+     "id": 315336,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7149,7 +5502,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2652",
     "base": {
-     "id": 433,
+     "id": 315364,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7183,7 +5536,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2656",
     "base": {
-     "id": 1903,
+     "id": 316834,
      "tour": "11 Тур",
      "scores": [
       1,
@@ -7214,7 +5567,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
     "base": {
-     "id": 517,
+     "id": 315448,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -7245,7 +5598,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
     "base": {
-     "id": 517,
+     "id": 315448,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -7276,7 +5629,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2666",
     "base": {
-     "id": 483,
+     "id": 315414,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7310,7 +5663,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2668",
     "base": {
-     "id": 410,
+     "id": 315341,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7344,7 +5697,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
     "base": {
-     "id": 543,
+     "id": 315474,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -7375,7 +5728,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
     "base": {
-     "id": 543,
+     "id": 315474,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -7406,7 +5759,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2677",
     "base": {
-     "id": 921,
+     "id": 315852,
      "tour": "1 Тур",
      "scores": [
       6,
@@ -7437,7 +5790,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2680",
     "base": {
-     "id": 438,
+     "id": 315369,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -7471,7 +5824,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2692",
     "base": {
-     "id": 555,
+     "id": 315486,
      "tour": "6 Тур",
      "scores": [
       3,
@@ -7502,7 +5855,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2692",
     "base": {
-     "id": 555,
+     "id": 315486,
      "tour": "6 Тур",
      "scores": [
       3,
@@ -7533,7 +5886,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
     "base": {
-     "id": 1861,
+     "id": 316792,
      "tour": "8 Тур",
      "scores": [
       4,
@@ -7564,7 +5917,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2698",
     "base": {
-     "id": 419,
+     "id": 315350,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -7598,7 +5951,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2721",
     "base": {
-     "id": 414,
+     "id": 315345,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7632,7 +5985,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2731",
     "base": {
-     "id": 406,
+     "id": 315337,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -7666,7 +6019,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2732",
     "base": {
-     "id": 447,
+     "id": 315378,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7700,7 +6053,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 411,
+     "id": 315342,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7734,7 +6087,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
     "base": {
-     "id": 529,
+     "id": 315460,
      "tour": "4 Тур",
      "scores": [
       3,
@@ -7765,7 +6118,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
     "base": {
-     "id": 529,
+     "id": 315460,
      "tour": "4 Тур",
      "scores": [
       3,
@@ -7796,7 +6149,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
     "base": {
-     "id": 1281,
+     "id": 316212,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -7827,7 +6180,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
     "base": {
-     "id": 1281,
+     "id": 316212,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -7858,7 +6211,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
     "base": {
-     "id": 415,
+     "id": 315346,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7892,7 +6245,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
     "base": {
-     "id": 415,
+     "id": 315346,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7926,7 +6279,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2798",
     "base": {
-     "id": 404,
+     "id": 315335,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -7960,7 +6313,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
     "base": {
-     "id": 437,
+     "id": 315368,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -7994,7 +6347,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
     "base": {
-     "id": 437,
+     "id": 315368,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -8028,7 +6381,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
     "base": {
-     "id": 403,
+     "id": 315334,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -8062,7 +6415,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
     "base": {
-     "id": 403,
+     "id": 315334,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -8096,7 +6449,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
     "base": {
-     "id": 429,
+     "id": 315360,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -8130,7 +6483,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
     "base": {
-     "id": 429,
+     "id": 315360,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -8164,7 +6517,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
     "base": {
-     "id": 420,
+     "id": 315351,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -8198,7 +6551,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
     "base": {
-     "id": 420,
+     "id": 315351,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -8232,7 +6585,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2847",
     "base": {
-     "id": 436,
+     "id": 315367,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -8266,7 +6619,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
     "base": {
-     "id": 446,
+     "id": 315377,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -8300,7 +6653,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
     "base": {
-     "id": 446,
+     "id": 315377,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -8334,7 +6687,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
     "base": {
-     "id": 444,
+     "id": 315375,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -8368,7 +6721,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
     "base": {
-     "id": 444,
+     "id": 315375,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -8402,7 +6755,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
     "base": {
-     "id": 408,
+     "id": 315339,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -8436,7 +6789,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
     "base": {
-     "id": 408,
+     "id": 315339,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -8470,7 +6823,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
     "base": {
-     "id": 410,
+     "id": 315341,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -8504,7 +6857,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
     "base": {
-     "id": 410,
+     "id": 315341,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -8538,7 +6891,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
     "base": {
-     "id": 543,
+     "id": 315474,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -8569,7 +6922,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
     "base": {
-     "id": 543,
+     "id": 315474,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -8600,7 +6953,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
     "base": {
-     "id": 465,
+     "id": 315396,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -8634,7 +6987,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
     "base": {
-     "id": 465,
+     "id": 315396,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -8668,7 +7021,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
     "base": {
-     "id": 651,
+     "id": 315582,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -8699,7 +7052,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
     "base": {
-     "id": 651,
+     "id": 315582,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -8730,7 +7083,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
     "base": {
-     "id": 416,
+     "id": 315347,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -8764,7 +7117,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
     "base": {
-     "id": 416,
+     "id": 315347,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -8798,7 +7151,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
     "base": {
-     "id": 417,
+     "id": 315348,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -8832,7 +7185,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
     "base": {
-     "id": 417,
+     "id": 315348,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -8866,38 +7219,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
     "base": {
-     "id": 517,
-     "tour": "3 Тур",
-     "scores": [
-      6,
-      2
-     ],
-     "unit": "Season 2 Высшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3010",
-    "comment_day": "2016-01-14",
-    "line": "Сenturion vs BOP95 - 1:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
-    "base": {
-     "id": 517,
+     "id": 315448,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -8928,7 +7250,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3018",
     "base": {
-     "id": 405,
+     "id": 315336,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -8962,7 +7284,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3019",
     "base": {
-     "id": 409,
+     "id": 315340,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -8996,7 +7318,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3023",
     "base": {
-     "id": 483,
+     "id": 315414,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -9030,7 +7352,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3039",
     "base": {
-     "id": 419,
+     "id": 315350,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -9064,7 +7386,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
     "base": {
-     "id": 565,
+     "id": 315496,
      "tour": "7 Тур",
      "scores": [
       4,
@@ -9095,7 +7417,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
     "base": {
-     "id": 565,
+     "id": 315496,
      "tour": "7 Тур",
      "scores": [
       4,
@@ -9126,7 +7448,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3070",
     "base": {
-     "id": 406,
+     "id": 315337,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -9160,7 +7482,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3109",
     "base": {
-     "id": 464,
+     "id": 315395,
      "tour": "1 Круг",
      "scores": [
       0,
@@ -9194,7 +7516,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
     "base": {
-     "id": 414,
+     "id": 315345,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -9228,7 +7550,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
     "base": {
-     "id": 414,
+     "id": 315345,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -9262,7 +7584,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3130",
     "base": {
-     "id": 651,
+     "id": 315582,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -9293,7 +7615,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3158",
     "base": {
-     "id": 474,
+     "id": 315405,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -9327,7 +7649,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
     "base": {
-     "id": 447,
+     "id": 315378,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -9361,7 +7683,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
     "base": {
-     "id": 447,
+     "id": 315378,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -9395,7 +7717,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
     "base": {
-     "id": 407,
+     "id": 315338,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -9429,7 +7751,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
     "base": {
-     "id": 407,
+     "id": 315338,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -9463,7 +7785,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3192",
     "base": {
-     "id": 418,
+     "id": 315349,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -9497,7 +7819,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
     "base": {
-     "id": 411,
+     "id": 315342,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -9531,7 +7853,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
     "base": {
-     "id": 411,
+     "id": 315342,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -9565,7 +7887,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
     "base": {
-     "id": 1253,
+     "id": 316184,
      "tour": "6 Тур",
      "scores": [
       5,
@@ -9578,312 +7900,104 @@
    {
     "topic": "33437511",
     "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4812",
-    "comment_day": "2016-04-29",
-    "line": "Rustin Cohle vs Dopi 0:5",
+    "comment_id": "4870",
+    "comment_day": "2016-05-04",
+    "line": "Группа В. TubusTD vs Romario 2:0 (5:0, 5:0)",
     "leg": "1/1",
     "source_pair": [
      [
-      "Rustin Cohle"
+      "tubustd"
      ],
      [
-      "Dopi"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4812",
-    "base": {
-     "id": 787,
-     "tour": "9 Тур",
-     "scores": [
-      5,
-      1
-     ],
-     "unit": "Season 2 Младшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4816",
-    "comment_day": "2016-04-29",
-    "line": "Memori vs Kipriot - 5:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "Kipriot"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4816",
-    "base": {
-     "id": 821,
-     "tour": "2 Тур",
-     "scores": [
-      6,
-      0
-     ],
-     "unit": "Season 3 Высшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4816",
-    "comment_day": "2016-04-29",
-    "line": "Kipriot vs Memori - 1:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kipriot"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4816",
-    "base": {
-     "id": 821,
-     "tour": "2 Тур",
-     "scores": [
-      6,
-      0
-     ],
-     "unit": "Season 3 Высшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4826",
-    "comment_day": "2016-04-30",
-    "line": "Wenderfit vs mafuta  0:5 0:5",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "Wenderfit"
-     ],
-     [
-      "mafuta"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4826",
-    "base": {
-     "id": 549,
-     "tour": "5 Тур",
-     "scores": [
-      7,
-      2
-     ],
-     "unit": "Season 2 Высшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4854",
-    "comment_day": "2016-05-03",
-    "line": "Wenderfit vs wanchous 4:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Wenderfit"
-     ],
-     [
-      "wanchous"
-     ]
-    ],
-    "scores": [
-     4,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4854",
-    "base": {
-     "id": 961,
-     "tour": "5 Тур",
-     "scores": [
-      1,
-      3
-     ],
-     "unit": "Season 3 Средняя лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4854",
-    "comment_day": "2016-05-03",
-    "line": "wanchous vs Wenderfit 2:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "wanchous"
-     ],
-     [
-      "Wenderfit"
+      "Romario"
      ]
     ],
     "scores": [
      2,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4854",
-    "base": {
-     "id": 961,
-     "tour": "5 Тур",
-     "scores": [
-      1,
-      3
-     ],
-     "unit": "Season 3 Средняя лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4869",
-    "comment_day": "2016-05-04",
-    "line": "Damian vs Wanchous 5:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Damian"
-     ],
-     [
-      "wanchous"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4869",
-    "base": {
-     "id": 715,
-     "tour": "5 Тур",
-     "scores": [
-      2,
-      4
-     ],
-     "unit": "Season 2 Младшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4875",
-    "comment_day": "2016-05-04",
-    "line": "Dopi vs Dr1N 5:0 5:0",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "Dopi"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     5,
      0
     ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4875",
+    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4870",
     "base": {
-     "id": 2784,
-     "tour": "1/8 финала",
+     "id": 318225,
+     "tour": "Группа B",
      "scores": [
-      3,
+      5,
+      0
+     ],
+     "status": "played",
+     "manual": 0,
+     "a": "tubustd",
+     "b": "Romario"
+    },
+    "hint": "та же пара в этом турнире, но счёт другой"
+   },
+   {
+    "topic": "33437511",
+    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
+    "comment_id": "4871",
+    "comment_day": "2016-05-04",
+    "line": "Группа В. РаспуТНик vs Romario 2:0 (5:0, 5:0)",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "PacnyTHuK"
+     ],
+     [
+      "Romario"
+     ]
+    ],
+    "scores": [
+     2,
+     0
+    ],
+    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4871",
+    "base": {
+     "id": 318226,
+     "tour": "Группа B",
+     "scores": [
+      5,
+      0
+     ],
+     "status": "played",
+     "manual": 0,
+     "a": "PacnyTHuK",
+     "b": "Romario"
+    },
+    "hint": "та же пара в этом турнире, но счёт другой"
+   },
+   {
+    "topic": "33437511",
+    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
+    "comment_id": "4876",
+    "comment_day": "2016-05-04",
+    "line": "Группа В. РаспуТНик vs TubusTD 2:0 (5:1, 5:0)",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "PacnyTHuK"
+     ],
+     [
+      "tubustd"
+     ]
+    ],
+    "scores": [
+     2,
+     0
+    ],
+    "url": "https://vk.com/topic-66162180_33437511?offset=60#post4876",
+    "base": {
+     "id": 318228,
+     "tour": "Группа B",
+     "scores": [
+      5,
       1
      ],
-     "unit": "Season 2 Кубок лиг"
+     "status": "played",
+     "manual": 0,
+     "a": "PacnyTHuK",
+     "b": "tubustd"
     },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4925",
-    "comment_day": "2016-05-09",
-    "line": "Dan_Lavis vs Kubik 3:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     3,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=80#post4925",
-    "base": {
-     "id": 651,
-     "tour": "2 Тур",
-     "scores": [
-      3,
-      2
-     ],
-     "unit": "Season 2 Младшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4925",
-    "comment_day": "2016-05-09",
-    "line": "Kubik vs Dan_Lavis 5:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     5,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=80#post4925",
-    "base": {
-     "id": 651,
-     "tour": "2 Тур",
-     "scores": [
-      3,
-      2
-     ],
-     "unit": "Season 2 Младшая лига"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
+    "hint": "та же пара в этом турнире, но счёт другой"
    },
    {
     "topic": "33437511",
@@ -9906,7 +8020,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=100#post5270",
     "base": {
-     "id": 2789,
+     "id": 317727,
      "tour": "1/4 финала",
      "scores": [
       4,
@@ -9919,118 +8033,171 @@
   ],
   "wiki_missing_in_db": [
    {
-    "page": "53638616",
-    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги | VK",
-    "tour": "1",
-    "line": "Kunio & Memori (Десять лет золота нет) vs Romix & Jgunishka 0:5 видео",
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "2",
+    "line": "Mag.of.Shadow -- Palka Palych 1:1 (4:2 PK) 3:2 Видео",
     "source_pair": [
      [
-      "Kunio",
-      "Memori"
+      "Mag.of.Shadow"
      ],
      [
-      "Jgunishka",
-      "Romix"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "note": "0:5",
-    "url": "https://vk.com/page-66162180_53638616",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638616",
-    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги | VK",
-    "tour": "4",
-    "line": "Ric25 & Dune vs Alpharushin & Cyneprepou4uk 1:5 видео",
-    "source_pair": [
-     [
-      "Dune",
-      "Ric25"
-     ],
-     [
-      "Alpharushin",
-      "Cyneprepou4uk"
+      "Palka Palych"
      ]
     ],
     "scores": [
      1,
-     5
+     1
     ],
-    "note": "1:5",
-    "url": "https://vk.com/page-66162180_53638616",
+    "note": "1:1 (4:2 PK)",
+    "url": "https://vk.com/page-66162180_52913186",
     "hint": "такой пары нет в базе ни с каким счётом"
    },
    {
-    "page": "53638616",
-    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги | VK",
-    "tour": "5",
-    "line": "Alpharushin & Cyneprepou4uk vs ectoPower & Davitel (Голубое тестирование) 0:5 видео",
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "2",
+    "line": "Mag.of.Shadow -- Palka Palych 1:1 (4:2 PK) 3:2 Видео",
     "source_pair": [
      [
-      "Alpharushin",
-      "Cyneprepou4uk"
+      "Mag.of.Shadow"
      ],
      [
-      "Davitel",
-      "ectoPower"
+      "Palka Palych"
      ]
     ],
     "scores": [
-     0,
-     5
+     3,
+     2
     ],
-    "note": "0:5",
-    "url": "https://vk.com/page-66162180_53638616",
+    "note": "3:2",
+    "url": "https://vk.com/page-66162180_52913186",
     "hint": "такой пары нет в базе ни с каким счётом"
    },
    {
-    "page": "53638616",
-    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги | VK",
-    "tour": "5",
-    "line": "Romix & Jgunishka vs Bubnov & lenin1st (Ланцет) 5:0 видео",
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "8",
+    "line": "kot-from-ussr -- Palka Palych 2:1 0:1 Видео",
     "source_pair": [
      [
-      "Jgunishka",
-      "Romix"
+      "kot-from-ussr"
      ],
      [
-      "Bubnov",
-      "lenin1st"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "note": "5:0",
-    "url": "https://vk.com/page-66162180_53638616",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638616",
-    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги | VK",
-    "tour": "6",
-    "line": "Kunio & Memori (Десять лет золота нет) vs Alpharushin & Cyneprepou4uk 2:5 видео",
-    "source_pair": [
-     [
-      "Kunio",
-      "Memori"
-     ],
-     [
-      "Alpharushin",
-      "Cyneprepou4uk"
+      "Palka Palych"
      ]
     ],
     "scores": [
      2,
-     5
+     1
     ],
-    "note": "2:5",
-    "url": "https://vk.com/page-66162180_53638616",
+    "note": "2:1",
+    "url": "https://vk.com/page-66162180_52913186",
+    "hint": "такой пары нет в базе ни с каким счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "8",
+    "line": "kot-from-ussr -- Palka Palych 2:1 0:1 Видео",
+    "source_pair": [
+     [
+      "kot-from-ussr"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     0,
+     1
+    ],
+    "note": "0:1",
+    "url": "https://vk.com/page-66162180_52913186",
+    "hint": "такой пары нет в базе ни с каким счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "10",
+    "line": "Palka Palych -- Дядюшка АУ 5:4 (РК) 6:1 Видео",
+    "source_pair": [
+     [
+      "Palka Palych"
+     ],
+     [
+      "Дядюшка АУ"
+     ]
+    ],
+    "scores": [
+     5,
+     4
+    ],
+    "note": "5:4 (РК)",
+    "url": "https://vk.com/page-66162180_52913186",
+    "hint": "такой пары нет в базе ни с каким счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "10",
+    "line": "Palka Palych -- Дядюшка АУ 5:4 (РК) 6:1 Видео",
+    "source_pair": [
+     [
+      "Palka Palych"
+     ],
+     [
+      "Дядюшка АУ"
+     ]
+    ],
+    "scores": [
+     6,
+     1
+    ],
+    "note": "6:1",
+    "url": "https://vk.com/page-66162180_52913186",
+    "hint": "такой пары нет в базе ни с каким счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "11",
+    "line": "Palka Palych -- Веселый Роджер 4:3 2:3 Видео",
+    "source_pair": [
+     [
+      "Palka Palych"
+     ],
+     [
+      "Веселый Роджер"
+     ]
+    ],
+    "scores": [
+     4,
+     3
+    ],
+    "note": "4:3",
+    "url": "https://vk.com/page-66162180_52913186",
+    "hint": "такой пары нет в базе ни с каким счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "11",
+    "line": "Palka Palych -- Веселый Роджер 4:3 2:3 Видео",
+    "source_pair": [
+     [
+      "Palka Palych"
+     ],
+     [
+      "Веселый Роджер"
+     ]
+    ],
+    "scores": [
+     2,
+     3
+    ],
+    "note": "2:3",
+    "url": "https://vk.com/page-66162180_52913186",
     "hint": "такой пары нет в базе ни с каким счётом"
    },
    {
@@ -10312,34 +8479,272 @@
   ],
   "wiki_score_diff": [
    {
-    "page": "53638616",
-    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги | VK",
-    "tour": "7",
-    "line": "Romix & Jgunishka vs ectoPower & Davitel (Голубое тестирование) 5:4 видео",
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "1",
+    "line": "E_not -- Palka Palych 7:2 4:3 Видео",
     "source_pair": [
      [
-      "Jgunishka",
-      "Romix"
+      "E_not"
      ],
      [
-      "Davitel",
-      "ectoPower"
+      "Palka Palych"
      ]
     ],
     "scores": [
-     5,
+     7,
+     2
+    ],
+    "note": "7:2",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317662,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      3,
+      4
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "3",
+    "line": "legnahar -- Palka Palych 6:4 4:3 Видео",
+    "source_pair": [
+     [
+      "Legnahar"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     6,
      4
     ],
-    "note": "5:4",
-    "url": "https://vk.com/page-66162180_53638616",
+    "note": "6:4",
+    "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 3011,
-     "tour": "Матч за 3-е место",
+     "id": 317663,
+     "tour": "Плей-офф / Кубок",
      "scores": [
-      7,
+      3,
+      4
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "4",
+    "line": "Palka Palych -- Mcfly 0:2 2:4 Видео",
+    "source_pair": [
+     [
+      "Palka Palych"
+     ],
+     [
+      "Mcfly"
+     ]
+    ],
+    "scores": [
+     2,
+     4
+    ],
+    "note": "2:4",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317666,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      0,
+      2
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "5",
+    "line": "AJ_Maker -- Palka Palych 4:0 3:3 (4:5 PK) Видео",
+    "source_pair": [
+     [
+      "AJ_Maker"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     4,
+     0
+    ],
+    "note": "4:0",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317669,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      5,
+      4
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "5",
+    "line": "AJ_Maker -- Palka Palych 4:0 3:3 (4:5 PK) Видео",
+    "source_pair": [
+     [
+      "AJ_Maker"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     3,
+     3
+    ],
+    "note": "3:3 (4:5 PK)",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317669,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      5,
+      4
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "6",
+    "line": "Palka Palych -- yoxter 1:5 1:3 Видео",
+    "source_pair": [
+     [
+      "Palka Palych"
+     ],
+     [
+      "yoxter"
+     ]
+    ],
+    "scores": [
+     1,
+     3
+    ],
+    "note": "1:3",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317671,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      1,
       5
      ],
-     "unit": "VI Командный Чемпионат по Goal 3"
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "7",
+    "line": "Dune -- Palka Palych 4:3 3:1 Видео",
+    "source_pair": [
+     [
+      "Dune"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     4,
+     3
+    ],
+    "note": "4:3",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317670,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      1,
+      3
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "12",
+    "line": "Aoshi -- Palka Palych 7:5 (PK) 4:1 Видео",
+    "source_pair": [
+     [
+      "Aoshi"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     7,
+     5
+    ],
+    "note": "7:5 (PK)",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317681,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      1,
+      4
+     ],
+     "unit": "Season 6 Высшая лига"
+    },
+    "hint": "нога встречи есть в базе другим счётом"
+   },
+   {
+    "page": "52913186",
+    "title": "Дворовая Soccer League. Сезон 6 | VK",
+    "tour": "13",
+    "line": "dynamik -- Palka Palych 3:1 6:2 Видео",
+    "source_pair": [
+     [
+      "Dynamik"
+     ],
+     [
+      "Palka Palych"
+     ]
+    ],
+    "scores": [
+     3,
+     1
+    ],
+    "note": "3:1",
+    "url": "https://vk.com/page-66162180_52913186",
+    "base": {
+     "id": 317679,
+     "tour": "Плей-офф / Кубок",
+     "scores": [
+      2,
+      6
+     ],
+     "unit": "Season 6 Высшая лига"
     },
     "hint": "нога встречи есть в базе другим счётом"
    }
@@ -10366,7 +8771,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 2662,
+     "id": 317593,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -10392,7 +8797,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 2662,
+     "id": 317593,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -10418,7 +8823,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
     "base": {
-     "id": 1849,
+     "id": 316780,
      "unit": "Season 6 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -10470,7 +8875,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
     "base": {
-     "id": 1861,
+     "id": 316792,
      "unit": "Season 6 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -10496,8 +8901,34 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2793",
     "base": {
-     "id": 555,
+     "id": 315486,
      "unit": "Season 2 Высшая лига"
+    },
+    "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
+   },
+   {
+    "topic": "32593813",
+    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
+    "comment_id": "3010",
+    "comment_day": "2016-01-14",
+    "line": "Сenturion vs BOP95 - 1:5",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Centurion"
+     ],
+     [
+      "BOР95"
+     ]
+    ],
+    "scores": [
+     1,
+     5
+    ],
+    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
+    "base": {
+     "id": 318194,
+     "unit": "3-й Сольный Турнир по пенальти"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
    },
@@ -10522,7 +8953,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
     "base": {
-     "id": 1254,
+     "id": 316185,
      "unit": "Season 4 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -10548,46 +8979,13 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 905,
+     "id": 315836,
      "unit": "Season 3 Высшая лига"
-    },
-    "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4795",
-    "comment_day": "2016-04-28",
-    "line": "BOP95 - Ric25__ 2:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     2,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=20#post4795",
-    "base": {
-     "id": 602,
-     "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
    }
   ],
   "unmatched_topic": [
-   {
-    "topic": "34920573",
-    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
-    "comments": 89,
-    "signature": "пенальти №4",
-    "hint": "ни один турнир базы не совпал с обсуждением по формату и номеру"
-   },
    {
     "topic": "31776275",
     "title": "Kunio-kun no Nekketsu Soccer League [NES] (4P) - Футбольная лига",
@@ -10698,17 +9096,6 @@
    }
   ],
   "unknown_name": [
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22454",
-    "line": "3 Тур: Thorogood & Ric25 VS SaikoDelph & Jgunishka 2-7",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22454",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
    {
     "topic": "41270759",
     "title": "2-й Молодёжный Чемпионат по Goal 3",
@@ -10900,138 +9287,6 @@
    {
     "topic": "41270759",
     "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Aoshi & Aeris 3:6, 3:4, 4:5, 4:4 (РК 6:5)",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Aoshi & Aeris 3:6, 3:4, 4:5, 4:4 (РК 6:5)",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Aoshi & Aeris 3:6, 3:4, 4:5, 4:4 (РК 6:5)",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Aoshi & Aeris 3:6, 3:4, 4:5, 4:4 (РК 6:5)",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Daria_P & Memori  vs Thorogood & Ric25 4:1, 4:2, 2:2 (РК 2:4), 3:1",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Daria_P & Memori  vs Thorogood & Ric25 4:1, 4:2, 2:2 (РК 2:4), 3:1",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Daria_P & Memori  vs Thorogood & Ric25 4:1, 4:2, 2:2 (РК 2:4), 3:1",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Daria_P & Memori  vs Thorogood & Ric25 4:1, 4:2, 2:2 (РК 2:4), 3:1",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Bender & mafuta 3:2, 0:1, 1:4, 1:6",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Bender & mafuta 3:2, 0:1, 1:4, 1:6",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Bender & mafuta 3:2, 0:1, 1:4, 1:6",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22552",
-    "line": "Thorogood & Ric25 vs Bender & mafuta 3:2, 0:1, 1:4, 1:6",
-    "unresolved": [
-     "Thorogood"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22552",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
     "comment_id": "22578",
     "line": "Palka Palych & XakoFEAR vs sokol & PacnyTHuK  0:4, 3:4, 1:8, 2:2 (РК 3:5)",
     "unresolved": [
@@ -11071,6 +9326,52 @@
      "XakoFEAR"
     ],
     "url": "https://vk.com/topic-66162180_41270759?offset=60#post22578",
+    "hint": "написания нет в players — это алиас, а не новый игрок"
+   },
+   {
+    "topic": "34920573",
+    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
+    "comment_id": "9734",
+    "line": "Мафута - Рик 5:0",
+    "unresolved": [
+     "Мафута",
+     "Рик"
+    ],
+    "url": "https://vk.com/topic-66162180_34920573?offset=20#post9734",
+    "hint": "написания нет в players — это алиас, а не новый игрок"
+   },
+   {
+    "topic": "34920573",
+    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
+    "comment_id": "9735",
+    "line": "Центзлой - Рик 1-5",
+    "unresolved": [
+     "Центзлой",
+     "Рик"
+    ],
+    "url": "https://vk.com/topic-66162180_34920573?offset=20#post9735",
+    "hint": "написания нет в players — это алиас, а не новый игрок"
+   },
+   {
+    "topic": "34920573",
+    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
+    "comment_id": "10131",
+    "line": "Липецк - Тубус 5:1",
+    "unresolved": [
+     "Липецк"
+    ],
+    "url": "https://vk.com/topic-66162180_34920573?offset=60#post10131",
+    "hint": "написания нет в players — это алиас, а не новый игрок"
+   },
+   {
+    "topic": "34920573",
+    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
+    "comment_id": "10179",
+    "line": "Transistor vs Valera 5:0",
+    "unresolved": [
+     "Valera"
+    ],
+    "url": "https://vk.com/topic-66162180_34920573?offset=60#post10179",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -12230,17 +10531,6 @@
    {
     "topic": "33672355",
     "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "6242",
-    "line": "RVD - Ric25 vs Esteban - Dopi - 1:5",
-    "unresolved": [
-     "Esteban"
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=200#post6242",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
     "comment_id": "6812",
     "line": "Чет ага не написали( котобус vs кирпичи 5:2",
     "unresolved": [
@@ -12312,8 +10602,7 @@
     "comment_id": "3614",
     "line": "FieryKelsen - Lipetsk - 7:1",
     "unresolved": [
-     "FieryKelsen",
-     "Lipetsk"
+     "FieryKelsen"
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=20#post3614",
     "hint": "написания нет в players — это алиас, а не новый игрок"
@@ -12324,7 +10613,6 @@
     "comment_id": "3614",
     "line": "Lipetsk - FieryKelsen - 4:4",
     "unresolved": [
-     "Lipetsk",
      "FieryKelsen"
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=20#post3614",
@@ -12411,28 +10699,6 @@
    {
     "topic": "33045983",
     "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "3761",
-    "line": "Tymoschuk vs Lipetsk 8:5",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=20#post3761",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "3761",
-    "line": "Lipetsk vs Tymoschuk 3:12",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=20#post3761",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
     "comment_id": "3903",
     "line": "Soccer Hen Season I 4 Тур Krom vs Centurion - 1:1",
     "unresolved": [
@@ -12466,72 +10732,6 @@
    {
     "topic": "33045983",
     "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4004",
-    "line": "Lipetsk vs Damian 5:8",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4004",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4004",
-    "line": "Damian vs Lipetsk 10:6",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4004",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4057",
-    "line": "ВОР95 vs Lipetsk 5:3",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4057",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4057",
-    "line": "Lipetsk vs ВОР95 2:5",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4057",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4162",
-    "line": "Lipetsk vs Centurion - 10:0",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4162",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4162",
-    "line": "Сenturion vs Lipetsk - 3:9",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4162",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
     "comment_id": "4236",
     "line": "Крот vs ВОР 1:8",
     "unresolved": [
@@ -12549,28 +10749,6 @@
      "Крот"
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=40#post4236",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4367",
-    "line": "Lipetsk vs Rock - 3:2",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4367",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33045983",
-    "title": "Nekketsu Koukou Dodgeball Bu - Soccer Hen. Season I",
-    "comment_id": "4367",
-    "line": "Rock vs Lipetsk - 7:0",
-    "unresolved": [
-     "Lipetsk"
-    ],
-    "url": "https://vk.com/topic-66162180_33045983?offset=40#post4367",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -13542,17 +11720,6 @@
    {
     "topic": "33437511",
     "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "4813",
-    "line": "BOP95 vs Farmazon 5:1",
-    "unresolved": [
-     "Farmazon"
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=40#post4813",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
     "comment_id": "4823",
     "line": "Распутник vs Транзистор 2:0 (5:4, 5:4)",
     "unresolved": [
@@ -13732,14 +11899,6 @@
   ],
   "no_lines_recognised": [
    {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "tournament": "IV Командный Чемпионат по Goal 3",
-    "rows": 8,
-    "comments": 267,
-    "hint": "ни одна строка турнира не узнана в комментариях — вероятно, источник другой (вики-таблица)"
-   },
-   {
     "topic": "34840496",
     "title": "IX Блиц-турнир по гол3 (сольный)",
     "tournament": "IX Блиц-турнир по Goal 3, IX Блиц-турнир по Goal 3",
@@ -13764,14 +11923,6 @@
     "hint": "ни одна строка турнира не узнана в комментариях — вероятно, источник другой (вики-таблица)"
    },
    {
-    "topic": "49868493",
-    "title": "VI Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "tournament": "VI Командный Чемпионат по Goal 3",
-    "rows": 8,
-    "comments": 94,
-    "hint": "ни одна строка турнира не узнана в комментариях — вероятно, источник другой (вики-таблица)"
-   },
-   {
     "topic": "36341322",
     "title": "X Юбилейный Блиц-турнир по гол3 (сольный)",
     "tournament": "X Юбилейный Блиц-турнир по Goal 3, X Юбилейный Блиц-турнир по Goal 3",
@@ -13790,8 +11941,8 @@
    {
     "topic": "33395877",
     "title": "Предварительная регистрация команд для участия в IV Командном Чемпионате по Kunio-kun no Nekketsu Soccer League. (Goal 3)",
-    "tournament": "IV Командный Чемпионат по Goal 3, IV Командный Чемпионат по Goal 3",
-    "rows": 8,
+    "tournament": "IV Командный Чемпионат по Goal 3, IV Командный Чемпионат по Goal 3, IV Командный Чемпионат по Goal 3",
+    "rows": 75,
     "comments": 30,
     "hint": "ни одна строка турнира не узнана в комментариях — вероятно, источник другой (вики-таблица)"
    }
