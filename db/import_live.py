@@ -225,8 +225,26 @@ def renumber_group_first(con, doc_id):
         con.execute("update matches set order_in_source = ? where id = ?", (rank, row["id"]))
 
 
+def containers(con):
+    """Куда ложится строка носителя: имя турнира → (`doc_id` или пусто, сезон рамки).
+
+    Сезон берётся из рамки, а не из носителя: у строк командных календарей его в носителе нет
+    вовсе, и `ensure_tournament` на пустом месте заводил второй контейнер того же чемпионата с
+    сезоном «—» — после этого игры темы и игры календаря лежали бы в разных турнирах.
+    """
+    found = {re.sub(r"\s+", " ", (row["title"] or "")).strip(): (row["id"], row["season"])
+             for row in con.execute(
+                 "select id, json_extract(payload, '$.title') as title,"
+                 " json_extract(payload, '$.season_year') as season from tournament_docs")}
+    # Рамки сезонов документов не имеют: строка дивизиона раннего чемпионата ищется по имени
+    # турнира, а сезон приходит из самой рамки.
+    found.update({row["name"]: (None, row["season"]) for row in
+                  con.execute("select name, season from tournaments where kind = 'league'")})
+    return found
+
+
 def load(db_path=DB_PATH):
-    """Носитель → `matches`. Строки получают `doc_id` того же документа, что и плей-офф."""
+    """Носитель → `matches`: строка привязывается к документу рамки либо к сезонной рамке."""
     if not CARRIER.exists():
         print("файл data/vk_live_matches.json не найден — живые результаты в базу не заносятся")
         return 0
@@ -246,13 +264,7 @@ def load(db_path=DB_PATH):
         con.execute(f"delete from match_sides where match_id in ({placeholders})", doomed)
         con.execute(f"delete from matches where id in ({placeholders})", doomed)
 
-    # Сезон строки берётся из документа: у носителя командных календарей его нет вовсе, и
-    # `ensure_tournament` на пустом месте заводил второй контейнер того же чемпионата с сезоном
-    # «—» — после этого игры темы и игры календаря лежали бы в разных турнирах.
-    docs = {re.sub(r"\s+", " ", (row["title"] or "")).strip(): (row["id"], row["season"])
-            for row in con.execute(
-                "select id, json_extract(payload, '$.title') as title,"
-                " json_extract(payload, '$.season_year') as season from tournament_docs")}
+    places = containers(con)
     from db.import_stores import Importer
 
     imp = Importer(con)
@@ -260,16 +272,16 @@ def load(db_path=DB_PATH):
     renumbered = set()
     queued = []
     for game in games:
-        found = docs.get(game["tournament"])
+        found = places.get(game["tournament"])
         if found is None:
             skipped += 1
             continue
         doc_id, doc_season = found
         s1, s2 = game["score"]
         links = [("video", url) for url in game.get("links") or []]
-        special = game.get("kind") == "special"
-        if special:
-            # Комментарий темы и есть доказательство ноги — ссылку кладём рядом с видео.
+        # Комментарий темы и есть доказательство ноги — ссылку кладём рядом с видео. Для строк
+        # сезона и дивизионов другого доказательства нет вовсе: без ссылки строка недоказуема.
+        if game.get("kind") in ("special", "league"):
             links.append(("vk_post", game["page_url"]))
         label_a = " & ".join(game["team_a"])
         label_b = " & ".join(game["team_b"])
@@ -293,7 +305,7 @@ def load(db_path=DB_PATH):
         added += 1
         if game.get("review"):
             queued.append((match_id, game))
-        if special:
+        if game.get("kind") == "special":
             renumbered.add(doc_id)
 
     for doc_id in sorted(renumbered):

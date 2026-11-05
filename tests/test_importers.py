@@ -8,6 +8,10 @@
 Проверка идёт по свойствам собранной базы, а не по номерам строк: их пересоздаёт каждая сборка.
 """
 
+import sqlite3
+
+from db import import_live
+
 DOCS_ONE_TOURNAMENT = """
 select doc_id from matches
 where doc_id is not null and tournament_id is not null
@@ -34,3 +38,20 @@ def test_live_calendar_rows_sit_in_the_season_of_their_document(con):
     """Сезон строки календаря — тот, что записан в рамке турнира, иначе строка уедет в чужой фасет."""
     lost = [row[0] for row in con.execute(LIVE_ROWS_OUTSIDE_DOC_SEASON)]
     assert not lost, f"игр календаря вне сезона своего документа: {len(lost)}"
+
+
+def test_season_frames_have_no_document_but_have_a_season(db_path):
+    """Рамка сезона — не документ: строка дивизиона привязывается по имени и берёт сезон из рамки."""
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    try:
+        found = import_live.containers(con)
+        season_row = con.execute("select name, season from tournaments where kind = 'league' limit 1").fetchone()
+        assert season_row, "в собранной базе нет ни одной сезонной рамки"
+        assert found[season_row["name"]] == (None, season_row["season"])
+        doc = con.execute("select id, json_extract(payload, '$.title') as title,"
+                          " json_extract(payload, '$.season_year') as season from tournament_docs"
+                          " where kind = 'team' limit 1").fetchone()
+        assert found[doc["title"].strip()] == (doc["id"], doc["season"])
+    finally:
+        con.close()
