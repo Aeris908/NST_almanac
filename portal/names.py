@@ -54,7 +54,9 @@ def clean_alias(name):
         return ALIAS_MAP_LOWER[n.lower()]
     if "(" in n and "мгб" not in n.lower():
         stripped = TEAM_SUFFIX.sub("", n).strip()
-        if stripped:
+        # Рекурсия только когда хвост действительно снялся: незакрытая скобка («Rock (») не
+        # меняет строку, а повторный вызов на ней ушёл бы в бесконечность.
+        if stripped and stripped != n:
             return clean_alias(stripped)
     return n
 
