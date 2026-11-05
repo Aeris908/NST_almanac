@@ -12,7 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-DB_PATH = ROOT / "data" / "nst.db"
+from db import store  # noqa: E402
+DB_PATH = store.DB_PATH
 
 # (что проверяем, запрос: должен вернуть пустоту, максимум строк в отчёте)
 CHECKS = [
@@ -126,7 +127,7 @@ def _year_problem(elo, match):
 
 
 def run(path=DB_PATH):
-    con = sqlite3.connect(path)
+    con = store.connect(path)
     problems = []
     for name, sql in CHECKS:
         try:

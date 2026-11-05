@@ -25,9 +25,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from db import api, edit  # noqa: E402
+from db import api, edit, store  # noqa: E402
 
-DB_PATH = edit.DB_PATH
+DB_PATH = store.DB_PATH
 QUEUED, APPLIED, FAILED = "queued", "applied", "failed"
 # Причина провала держится текстом, а не отдельным запросом к сборке: человеку нужны последние
 # строки её вывода, а не весь лог.
@@ -110,7 +110,7 @@ def pending(db_path=DB_PATH):
     Закрытые запросы остаются в списке: лороведу надо видеть не только что ждёт, но и что уже
     ушло в выкат и почему провалилось, иначе очередь выглядит пустой без объяснений.
     """
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     try:
         if not _has_table(con):

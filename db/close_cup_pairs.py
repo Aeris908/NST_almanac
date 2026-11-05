@@ -20,8 +20,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from portal.names import clean_alias  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 CUP_SEASONS = tuple(f"Season {n}" for n in range(2, 8))
 CUP_SOURCE = "cup_tables"
 
@@ -67,7 +68,7 @@ def rounds_agree(page_leg, pool_leg):
 
 def main(db_path=DB_PATH):
     sys.stdout.reconfigure(encoding="utf-8")
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     pool = {}
     for leg in con.execute(POOL_SQL, CUP_SEASONS):

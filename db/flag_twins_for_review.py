@@ -8,12 +8,12 @@
 """
 
 import json
-import sqlite3
 import sys
 from pathlib import Path
+from db import store
 
 ROOT = Path(__file__).resolve().parent.parent
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 BATCH = "twins_2026-11-03"
 
 ROWS_SQL = """
@@ -38,7 +38,7 @@ def signature(row):
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
-    con = sqlite3.connect(DB_PATH)
+    con = store.connect(DB_PATH)
     rows = list(con.execute(ROWS_SQL))
     pool = {}
     for row in rows:

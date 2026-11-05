@@ -28,8 +28,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from portal.names import clean_alias  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 
 SIDES_SQL = """
 select m.id, m.tournament_id, coalesce(m.tour, s.name) as tour,
@@ -65,7 +66,7 @@ def is_mirror(first, second):
 
 def main(db_path=DB_PATH):
     sys.stdout.reconfigure(encoding="utf-8")
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     groups = defaultdict(list)
     for row in con.execute(SIDES_SQL):

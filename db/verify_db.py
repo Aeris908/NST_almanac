@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 import build_final_analytics as bfa  # noqa: E402
+from db import store  # noqa: E402
 
 FIELDS = ("season", "tournament", "stage", "p1", "p2", "s1", "s2",
           "ot", "pk", "is_playoff", "is_technical", "technical_loser", "note")
@@ -33,7 +34,7 @@ def pool_row(row):
 
 
 def main():
-    con = sqlite3.connect(ROOT / "data" / "nst.db")
+    con = store.connect()
     con.row_factory = sqlite3.Row
     rows = [dict(r) for r in con.execute(SELECT)]
     pool = [pool_row(row) for row in bfa.all_matches]

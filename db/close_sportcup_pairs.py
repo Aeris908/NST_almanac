@@ -6,7 +6,6 @@
 счёта (одинаковые счета в сериях — главная причина, почему «похожесть» для склейки не годится).
 """
 
-import sqlite3
 import sys
 from pathlib import Path
 
@@ -15,8 +14,9 @@ sys.path.insert(0, str(ROOT))
 
 import build_final_analytics as bfa  # noqa: E402
 from portal.match_catalog import from_sportcup_api  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 SEASONS = ("Season 8", "Season 9")
 
 
@@ -68,7 +68,7 @@ def page_rows_by_season(con):
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
-    con = sqlite3.connect(DB_PATH)
+    con = store.connect(DB_PATH)
     con.execute("PRAGMA foreign_keys = ON")
 
     pool_by_uuid = dict(con.execute(

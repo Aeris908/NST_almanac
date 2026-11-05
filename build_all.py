@@ -1,12 +1,17 @@
 """Build every page of the NST Almanac and assemble the deployable bundle in deploy/.
 
 Run with ``python build_all.py`` (or double-click build.bat on Windows).
+Add ``--from-store`` to publish the store as it stands: the three steps that regenerate
+``data/nst.db`` are skipped, so manual edits survive the build.
 """
 
+import argparse
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+from db import store
 
 ROOT = Path(__file__).resolve().parent
 DEPLOY_DIR = ROOT / "deploy"
@@ -22,13 +27,18 @@ BUILDERS = (
     ("Building quotes almanac (quotes.html)", "build_quotes_page.py"),
     ("Building landing hub (index.html)", "build_landing_page.py"),
 )
+# Шаги, которые пересоздают срез. Их немного, и они всегда идут первыми: пропуск означает
+# «читать базу такой, какая она есть», а не «собрать её заново из носителей».
+STORE_STEPS = ("db/build_db.py", "db/import_stores.py", "db/import_live.py")
 
 PAGES = ("index.html", "soccer.html", "quotes.html")
 ASSETS = ("audio-player.js", "audio-player.css", "soccer.css", "soccer.js", "editor.js", "editor.css")
 
 
-def build_pages():
+def build_pages(from_store=False):
     for title, script in BUILDERS:
+        if from_store and script in STORE_STEPS:
+            continue
         print(f"\n--> {title} ({script})")
         subprocess.run([sys.executable, str(ROOT / script)], cwd=ROOT, check=True)
 
@@ -44,9 +54,19 @@ def copy_to_deploy():
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Собрать страницы альманаха и уложить готовый бандл в deploy/.")
+    parser.add_argument("--from-store", action="store_true",
+                        help="не перегенерировать data/nst.db: собрать сайт из того среза, "
+                             "который уже лежит в базе")
+    args = parser.parse_args()
+    if args.from_store and not store.DB_PATH.exists():
+        sys.exit("базы data/nst.db нет: --from-store читает готовый срез, а не создаёт его — "
+                 "сначала обычный прогон python build_all.py")
     sys.stdout.reconfigure(encoding="utf-8")
-    print("=== BUILDING FULL NEKKETSU ALMANAC SUITE ===")
-    build_pages()
+    print("=== BUILDING FULL NEKKETSU ALMANAC SUITE ==="
+          + (" (from the existing store)" if args.from_store else ""))
+    build_pages(from_store=args.from_store)
     print("\n--> Copying the finished bundle to deploy/")
     copy_to_deploy()
     print(f"\n=== deploy/ is ready for hosting: {DEPLOY_DIR}")

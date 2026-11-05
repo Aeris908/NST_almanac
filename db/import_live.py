@@ -32,12 +32,13 @@ sys.path.insert(0, str(ROOT))
 from portal.live_sources import load_pages, team_meetings  # noqa: E402
 from portal.penalty_sources import penalty_games  # noqa: E402
 from portal.youth_sources import TOPIC_ID, TOURNAMENT, group_stage  # noqa: E402
+from db import store  # noqa: E402
 
 CARRIER = ROOT / "data" / "vk_live_matches.json"
 YOUTH_REPORT = ROOT / "data" / "youth2_group_report.json"
 YOUTH_SHEET = ROOT / "data" / "gsheet_youth"
 PENALTY_REPORT = ROOT / "data" / "penalty_report.json"
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 SOURCE = "vk_live"
 YOUTH_SEASON = "Молодёжные турниры"
 
@@ -230,7 +231,7 @@ def load(db_path=DB_PATH):
         print("файл data/vk_live_matches.json не найден — живые результаты в базу не заносятся")
         return 0
     games = json.loads(CARRIER.read_text(encoding="utf-8"))
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA foreign_keys = ON")
 

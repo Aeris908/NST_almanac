@@ -10,8 +10,9 @@ import sqlite3
 from pathlib import Path
 
 from db.fields import flags_of
+from db import store
 
-DB_PATH = Path(__file__).resolve().parent.parent / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 
 BASE_SQL = """
 select m.id, t.season, m.league, m.tour, s.name as stage,
@@ -83,7 +84,7 @@ def connect(db_path):
         raise SystemExit(
             f"Нет базы {db_path}. Соберите её: python db/build_db.py && python db/import_stores.py"
         )
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     return con
 

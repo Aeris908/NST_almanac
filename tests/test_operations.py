@@ -249,10 +249,10 @@ def test_rename_player_moves_nick_and_slug_together(con, find, fingerprint, undo
     undone(before)
 
 
-def test_merge_player_moves_sides_alias_and_rowids(con, find, fingerprint, unchanged):
+def test_merge_player_moves_sides_alias_and_side_ids(con, find, fingerprint, unchanged):
     """Слияние: партии переезжают, ушедшее написание становится алиасом, карточка исчезает.
 
-    Откат возвращает всё — включая rowid строк состава: журнал адресует `side_players` именно по
+    Откат возвращает всё — включая id строк состава: журнал адресует `side_players` именно по
     нему, и «вернулся тот же состав под другими номерами» для массовой правки неприемлем.
     """
     keep, drop = find("""

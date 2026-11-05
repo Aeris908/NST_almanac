@@ -38,18 +38,13 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from db.fields import outcome_of  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 TABLES = ("matches", "match_sides", "players", "tournaments", "stages", "match_links",
           "tournament_docs", "side_players", "player_aliases", "incoming")
-# У части таблиц нет колонки `id`: у side_players и player_aliases составной ключ, а строку
-# журнала надо в чём-то держать. Для них это скрытый rowid — он стабилен, пока строку не удалили.
-KEY_COLUMN = {"side_players": "rowid", "player_aliases": "rowid"}
-
-
-def key_column(table):
-    return KEY_COLUMN.get(table, "id")
-
+# Каждая таблица журнала адресуется по `id`: у side_players и player_aliases он появился не зря —
+# скрытый SQLite rowid серверная база не повторяет.
 
 # Порядок возврата удалённых строк: родитель раньше детей, иначе FOREIGN KEY не пустит вставку.
 RESTORE_ORDER = {"players": 0, "player_aliases": 0, "tournaments": 0, "stages": 0,
@@ -72,7 +67,7 @@ class EditError(ValueError):
 def connect(db_path=DB_PATH):
     if not Path(db_path).exists():
         raise EditError(f"Нет базы {db_path}. Сначала: python db/build_db.py && python db/import_stores.py")
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA foreign_keys = ON")
     con.execute("PRAGMA busy_timeout = 5000")
@@ -98,8 +93,7 @@ def journal(con, editor, changes, match_ids, op=""):
         ids.append(con.execute("select last_insert_rowid()").fetchone()[0])
         if field == EXISTS:
             continue  # строку уже вставил или удалил сам вызывающий код — запись нужна для отката
-        con.execute(f"update {table} set {field} = ? where {key_column(table)} = ?",
-                    (_store(new), row_id))
+        con.execute(f"update {table} set {field} = ? where id = ?", (_store(new), row_id))
     for match_id in match_ids:
         con.execute("update matches set manual = 1, updated_at = ? where id = ?", (_now(), match_id))
     return ids
@@ -108,17 +102,13 @@ def journal(con, editor, changes, match_ids, op=""):
 def row_json(con, table, row_id):
     """Снимок строки для журнала: по нему откат вернёт удалённую ссылку, игрока или игру.
 
-    Таблицы без `id` не имеют колонки, в которую можно было бы вернуть строку на её прежнее
-    место, поэтому ключ уезжает в служебное поле `_key`.
+    Снимок берётся целиком, вместе с `id`: откат вставляет строку на её прежнее место, и номера
+    строк состава не съезжают.
     """
-    key = key_column(table)
-    row = con.execute(f"select * from {table} where {key} = ?", (row_id,)).fetchone()
+    row = con.execute(f"select * from {table} where id = ?", (row_id,)).fetchone()
     if row is None:
         raise EditError(f"строки {table} #{row_id} в базе нет")
-    data = {column: row[column] for column in row.keys()}
-    if key != "id":
-        data["_key"] = row_id
-    return json.dumps(data, ensure_ascii=False)
+    return json.dumps({column: row[column] for column in row.keys()}, ensure_ascii=False)
 
 
 def restore_row(con, entry):
@@ -127,17 +117,16 @@ def restore_row(con, entry):
     Знак у записи читается из `new_value`: он заполнен, когда правка строку создала, и пуст,
     когда удалила (тогда снимок лежит в `old_value`).
     """
-    table, row_id, key = entry["table_name"], entry["row_id"], key_column(entry["table_name"])
+    table, row_id = entry["table_name"], entry["row_id"]
     if entry["new_value"] is not None:
-        con.execute(f"delete from {table} where {key} = ?", (row_id,))
+        con.execute(f"delete from {table} where id = ?", (row_id,))
         return
     row = json.loads(entry["old_value"])
-    stored = row.pop("_key", row_id)
     known = {column[1] for column in con.execute(f"pragma table_info({table})")}
     columns = [name for name in row if name != "id" and name in known]
-    con.execute(f"insert into {table}({key}, {', '.join(columns)}) "
+    con.execute(f"insert into {table}(id, {', '.join(columns)}) "
                 f"values (?, {', '.join('?' * len(columns))})",
-                [stored] + [row[name] for name in columns])
+                [row_id] + [row[name] for name in columns])
 
 
 def _now():
@@ -828,9 +817,9 @@ def descendants(con, match_id):
     out = []
     for side in con.execute("select id from match_sides where match_id = ?", (match_id,)):
         out.append(("match_sides", side["id"], EXISTS, row_json(con, "match_sides", side["id"]), None))
-        for rowid, in con.execute("select rowid from side_players where side_id = ?",
-                                  (side["id"],)):
-            out.append(("side_players", rowid, EXISTS, row_json(con, "side_players", rowid), None))
+        for seat in con.execute("select id from side_players where side_id = ?", (side["id"],)):
+            out.append(("side_players", seat["id"], EXISTS,
+                        row_json(con, "side_players", seat["id"]), None))
     for link in con.execute("select id from match_links where match_id = ?", (match_id,)):
         out.append(("match_links", link["id"], EXISTS, row_json(con, "match_links", link["id"]), None))
     return out
@@ -940,27 +929,26 @@ def merge_player(con, keep_id, drop_id, editor):
                         f"слияние посадило бы игрока по обе стороны одной игры")
 
     changes = []
-    for side in con.execute(
-            """select distinct sp.side_id, sp.rowid from side_players sp where sp.player_id = ?""",
-            (drop_id,)):
+    for seat in con.execute("select side_id, id from side_players where player_id = ?", (drop_id,)):
         together = con.execute(
-            """select rowid, player_id from side_players where side_id = ? and player_id = ?""",
-            (side["side_id"], keep_id)).fetchone()
+            "select id from side_players where side_id = ? and player_id = ?",
+            (seat["side_id"], keep_id)).fetchone()
         if together:
-            changes.append(("side_players", side["rowid"], EXISTS,
-                            row_json(con, "side_players", side["rowid"]), None))
-            con.execute("delete from side_players where rowid = ?", (side["rowid"],))
+            # оставляемый уже стоит в этой стороне: двух одинаковых строк UNIQUE (side_id,
+            # player_id) не пустил бы, поэтому слияние здесь просто убирает лишнюю.
+            changes.append(("side_players", seat["id"], EXISTS,
+                            row_json(con, "side_players", seat["id"]), None))
+            con.execute("delete from side_players where id = ?", (seat["id"],))
         else:
-            changes.append(("side_players", side["rowid"], "player_id", drop_id, keep_id))
-            con.execute("update side_players set player_id = ? where rowid = ?",
-                        (keep_id, side["rowid"]))
+            changes.append(("side_players", seat["id"], "player_id", drop_id, keep_id))
+            con.execute("update side_players set player_id = ? where id = ?", (keep_id, seat["id"]))
     alias = (drop["nick"],)
     if not con.execute("select 1 from player_aliases where alias = ?", alias).fetchone():
         con.execute("insert into player_aliases(alias, player_id, source) values (?, ?, 'editor')",
                     (drop["nick"], keep_id))
-        rowid = con.execute("select rowid from player_aliases where alias = ?", alias).fetchone()[0]
-        changes.append(("player_aliases", rowid, EXISTS, None,
-                        row_json(con, "player_aliases", rowid)))
+        row_id = con.execute("select id from player_aliases where alias = ?", alias).fetchone()[0]
+        changes.append(("player_aliases", row_id, EXISTS, None,
+                        row_json(con, "player_aliases", row_id)))
     changes.append(("players", drop_id, EXISTS, row_json(con, "players", drop_id), None))
     con.execute("delete from players where id = ?", (drop_id,))
     return _write(con, editor, "merge-player", 0, changes, [])
@@ -1234,7 +1222,7 @@ select exists(
         or (table_name = 'match_links'
             and row_id in (select id from match_links where match_id = ?))
         or (table_name = 'side_players'
-            and row_id in (select sp.rowid from side_players sp
+            and row_id in (select sp.id from side_players sp
                              join match_sides s on s.id = sp.side_id where s.match_id = ?))
     )
 )
@@ -1328,8 +1316,7 @@ def undo(con, what):
         if entry["field"] == EXISTS:
             restore_row(con, entry)  # созданную правкой строку откат удаляет
         else:
-            con.execute(f"update {entry['table_name']} set {entry['field']} = ? where "
-                        f"{key_column(entry['table_name'])} = ?",
+            con.execute(f"update {entry['table_name']} set {entry['field']} = ? where id = ?",
                         (_restore(entry["old_value"]), entry["row_id"]))
     for entry in entries:
         con.execute("update corrections set reverted_at = ? where id = ?", (_now(), entry["id"]))
@@ -1362,7 +1349,7 @@ def _entry_match_id(con, entry):
     if table == "side_players":
         row = con.execute(
             """select s.match_id from side_players sp join match_sides s on s.id = sp.side_id
-                where sp.rowid = ?""", (entry["row_id"],)).fetchone()
+                where sp.id = ?""", (entry["row_id"],)).fetchone()
         if row:
             return row[0]
         snapshot = json.loads(entry["new_value"] or entry["old_value"] or "{}")

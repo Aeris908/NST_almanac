@@ -19,7 +19,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-DB_PATH = ROOT / "data" / "nst.db"
+from db import store  # noqa: E402
+
+DB_PATH = store.DB_PATH
 
 # Ключ строки игры в документе -> колонка базы. Одно поле на ключ: набор ключей одинаков у всех
 # строк документа (это проверяет импортёр), поэтому порядок берёт сам документ.
@@ -153,7 +155,7 @@ def docs_from_db(kind, db_path=DB_PATH, exclude_live=False, exclude_manual=False
         raise SystemExit(
             f"Нет базы {db_path}. Соберите её: python db/build_db.py && python db/import_stores.py"
         )
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     docs = []
     for record in con.execute(DOCS_SQL, (kind,)):

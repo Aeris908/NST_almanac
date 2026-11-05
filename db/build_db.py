@@ -15,8 +15,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import build_final_analytics as bfa  # noqa: E402
 from db.fields import phase_of  # noqa: E402
 from portal.name_tables import ALIAS_MAP  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = Path("data/nst.db")
+DB_PATH = store.DB_PATH
 SCHEMA_PATH = Path(__file__).resolve().parent / "schema.sql"
 
 KNOCKOUT_ORDER = [
@@ -39,6 +40,10 @@ STEP_MARKER = "-- === steps ==="
 VIEWS = ("v_singles_pool", "v_rating_pool")
 # Для шага достройки существующей базы это значит «уже сделано», а не поломку.
 HARMLESS = ("duplicate column name", "already exists")
+# Таблицы без `id`: строка журнала правок адресовала их по скрытому SQLite rowid, а у Postgres
+# такого понятия нет. Им выдаётся обычный id, и адресация в db/edit.py становится одинаковой
+# на обоих движках.
+SURROGATE_KEY_TABLES = ("side_players", "player_aliases")
 
 
 def apply_steps(con, steps):
@@ -53,9 +58,36 @@ def apply_steps(con, steps):
                 raise
 
 
+def table_ddl(body, table):
+    """Описание таблицы из db/schema.sql — оно же источник для перестройки на месте."""
+    found = re.search(rf"CREATE TABLE {table} \(.*?\n\);", body, re.IGNORECASE | re.DOTALL)
+    if not found:
+        raise RuntimeError(f"в db/schema.sql не нашлось описания таблицы {table}")
+    return found.group(0)
+
+
+def ensure_surrogate_keys(con, body):
+    """Перестраивает таблицы без `id`, если схема уже требует его.
+
+    `alter table add column` не умеет добавлять PRIMARY KEY, поэтому таблица собирается заново
+    из актуального описания, а строки переезжают под своими прежними номерами: `rowid`
+    становится `id`, и старые снимки журнала продолжают указывать на те же строки. Идемпотентно —
+    если `id` уже на месте, вызов ничего не делает.
+    """
+    for table in SURROGATE_KEY_TABLES:
+        columns = [row[1] for row in con.execute(f"pragma table_info({table})")]
+        if not columns or "id" in columns:
+            continue
+        kept = ", ".join(columns)
+        con.execute(f"alter table {table} rename to {table}_mig")
+        con.execute(table_ddl(body, table))
+        con.execute(f"insert into {table}(id, {kept}) select rowid, {kept} from {table}_mig")
+        con.execute(f"drop table {table}_mig")
+
+
 def apply_schema(con):
-    """Схема применяется в обоих состояниях базы: тело — при первой сборке, секции «steps» и
-    вьюхи — всегда. Шаги идемпотентны, поэтому правка схемы не требует `--rebuild` и не выбрасывает
+    """Схема применяется в обоих состояниях базы: тело — при первой сборке, секции «steps»,
+    достройка id и вьюхи — всегда. Поэтому правка схемы не требует `--rebuild` и не выбрасывает
     правки редактора вместе со старым файлом."""
     schema = SCHEMA_PATH.read_text(encoding="utf-8")
     body, rest = schema.split(STEP_MARKER, 1)
@@ -64,13 +96,17 @@ def apply_schema(con):
         "select count(*) from sqlite_master where type = 'table' and name = 'matches'"
     ).fetchone()[0]:
         con.executescript(body)
+    # Вьюхи падают на `no such table`, если их переживёт перестройка таблицы, поэтому снимаются
+    # до шагов и собираются после — порядок, а не экономия: они пересоздаются всегда.
+    con.executescript("".join(f"drop view if exists {name};\n" for name in VIEWS))
     apply_steps(con, steps)
-    con.executescript("".join(f"drop view if exists {name};\n" for name in VIEWS) + views)
+    ensure_surrogate_keys(con, body)
+    con.executescript(views)
 
 
 def open_db(path, rebuild=False):
     if rebuild and path.exists():
-        con = sqlite3.connect(path)
+        con = store.connect(path)
         # Отменённая правка — уже не правка: её откат вернул строке состояние носителя, и терять
         # при пересборке нечего. Живая запись журнала, наоборот, блокирует пересоздание файла.
         live = con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0]
@@ -79,7 +115,7 @@ def open_db(path, rebuild=False):
             sys.exit(f"В базе {live} действующих записей журнала правок — пересоздание уничтожит их. "
                      f"Отмените их (`python db/edit.py undo last`) либо сделайте резервную копию файла.")
         path.unlink()
-    con = sqlite3.connect(path)
+    con = store.connect(path)
     apply_schema(con)
     return con
 

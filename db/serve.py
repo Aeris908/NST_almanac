@@ -38,7 +38,7 @@ from urllib.parse import parse_qs, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from db import api, edit  # noqa: E402
+from db import api, edit, store  # noqa: E402
 from portal.env_file import secret  # noqa: E402
 
 TOKEN_ENV = "NST_EDITOR_TOKEN"
@@ -256,7 +256,7 @@ def main(argv=None):
     if not token():
         sys.exit(f"Нет {TOKEN_ENV}: сервер правки не поднимается без секрета. "
                  f"Задайте его в окружении (см. .env.example), а не в файлах репозитория.")
-    if not (ROOT / "data" / "nst.db").exists():
+    if not store.DB_PATH.exists():
         sys.exit("Нет базы data/nst.db — сначала python build_all.py (или db/build_db.py + import_stores).")
 
     print(f"правка доступна на http://{args.host}:{args.port}  (операции: {', '.join(OPERATIONS)})")

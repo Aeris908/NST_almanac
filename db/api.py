@@ -45,8 +45,9 @@ sys.path.insert(0, str(ROOT))
 from db import edit  # noqa: E402
 from portal.build_soccer import compose_payload  # noqa: E402
 from portal.names import clean_alias  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 # Десять тысяч строк на игрока: в общий снимок попадает только длина, а сами строки — для тех
 # игроков, у которых действительно что-то сдвинулось (см. `_attach_history`).
 HEAVY_FIELDS = ("match_history",)
@@ -69,7 +70,7 @@ def revision(db_path=DB_PATH):
     По содержимому, а не по часам: две правки в одну секунду дали бы одинаковый `updated_at`, а
     пересборка неизменного содержимого ревизию не сдвигает.
     """
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     try:
         digest = hashlib.sha256(con.execute(REVISION_SQL).fetchone()[0].encode()).hexdigest()
     finally:
@@ -277,7 +278,7 @@ def locate(a, b, *, season=None, tour=None, score=None, include_hidden=False, db
     """
     want = {_side_names(a), _side_names(b)}
     score = str(score or "").strip() or None
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     found = []
     for row in con.execute(LOCATE_SQL):
@@ -320,7 +321,7 @@ def _group_pairs(rows, con_path):
     должен видеть одну игру, а не гадать, какую из двух копий править."""
     if not rows:
         return rows
-    con = sqlite3.connect(con_path)
+    con = store.connect(con_path)
     groups = {}
     for row in rows:
         key = tuple(sorted(edit.pair_ids(con, row["id"])))
@@ -434,8 +435,8 @@ def _apply(con, operation, editor, args):
 
 
 def _clone(db_path, target):
-    source = sqlite3.connect(db_path)
-    destination = sqlite3.connect(target)
+    source = store.connect(db_path)
+    destination = store.connect(target)
     try:
         source.backup(destination)
     finally:
@@ -562,7 +563,7 @@ def journal_entries(limit=20, db_path=DB_PATH):
     `op` — метка операции, `op_live` — сколько её записей действует ещё: по ним панель решает,
     есть ли что откатывать целиком (`undo op:<метка>`), когда поверх лежат более новые правки.
     """
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     # Действующие записи по всем меткам — одним запросом: журнал зовётся на каждый показ панели.
     live_by_op = dict(con.execute(LIVE_BY_OP_SQL))
@@ -593,7 +594,7 @@ def queue(db_path=DB_PATH):
     Задача без перехода к матчу бесполезна — редактор получил бы список и пошёл искать встречу
     руками по таблице турнира. Поэтому к каждой записи прикладывается карточка строки.
     """
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     tasks = []
     for row in con.execute(QUEUE_SQL):
@@ -620,7 +621,7 @@ def containers(db_path=DB_PATH):
     Сезон берётся из `tournaments`, а не выдумывается: строка обязана попасть в тот же бакет,
     который читает страница сезона, иначе игра просто не покажется.
     """
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     docs = [dict(row) for row in con.execute(CONTAINERS_SQL)]
     seasons = [row[0] for row in con.execute(
@@ -631,7 +632,7 @@ def containers(db_path=DB_PATH):
 
 def doc_frame(doc_key, db_path=DB_PATH):
     """Рамка турнира глазами редактора: JSON, который он правит, плюс служебные поля читателя."""
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     row = con.execute(
         """select id, kind, doc_key, title, payload, match_field, match_keys, manual
@@ -658,7 +659,7 @@ def players(query="", limit=30, db_path=DB_PATH):
     `%` и `_` в запросе — часть ника, а не маска: иначе «Sokol_5» нашёл бы половину архива.
     """
     escaped = str(query or "").replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     rows = [dict(row) for row in con.execute(PLAYERS_SQL, (f"%{escaped}%", max(1, min(int(limit), 200))))]
     con.close()
@@ -667,7 +668,7 @@ def players(query="", limit=30, db_path=DB_PATH):
 
 def state(db_path=DB_PATH):
     """Что редактор видит о базе, прежде чем править: ревизия, размер, живые правки, очередь."""
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     try:
         return {
             "revision": revision(db_path),

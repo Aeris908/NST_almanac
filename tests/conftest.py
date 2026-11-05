@@ -21,12 +21,13 @@ sys.path.insert(0, str(ROOT))
 from db import edit  # noqa: E402
 
 LIVE_DB = ROOT / "data" / "nst.db"
-# `updated_at` правка меняет всегда (журнал его пишется), поэтому в сверку «до ↔ после откатa»
+# `updated_at` правка меняет всегда (журнал его пишется), поэтому в сверку «до ↔ после отката»
 # он входить не должен — иначе каждый тест падал бы на колонке, которая и не обещала возврата.
 VOLATILE = {"updated_at"}
-# Состав стороны восстанавливается пересборкой (`resync_rosters`), и rowid у строк при этом
-# новые: сравнивается набор «сторона + игрок + место», а возврат rowid проверяет отдельный тест.
-KEYLESS = {"side_players"}
+# У каждой таблицы срез берёт `id`: он ловит и «строка уехала», и «строка вернулась под другим
+# номером» после отката удаления. Исключение — состав стороны: `resync_rosters` пересобирает его
+# заново, и номера строк заведомо новые. Возврат id покрывает отдельный тест на слияние игроков.
+RESYNCED = {"side_players"}
 FINGERPRINT_TABLES = ("tournaments", "stages", "players", "player_aliases", "tournament_docs",
                       "matches", "match_sides", "side_players", "match_links")
 
@@ -72,10 +73,8 @@ def fingerprint(con):
         for table in FINGERPRINT_TABLES:
             columns = [row[1] for row in con.execute(f"pragma table_info({table})")
                        if row[1] not in VOLATILE]
-            # rowid везде, кроме таблиц с составным ключом: он ловит и «строка уехала», и
-            # «строка вернулась под другим номером» после отката удаления.
-            selected = columns if table in KEYLESS else ["rowid"] + columns
-            rows = con.execute(f"select {', '.join(selected)} from {table}").fetchall()
+            taken = [name for name in columns if table not in RESYNCED or name != "id"]
+            rows = con.execute(f"select {', '.join(taken)} from {table}").fetchall()
             # `str(Row)` печатает адрес объекта, а не значения: снимать надо в tuple.
             state[table] = sorted(str(tuple(row)) for row in rows)
         return state

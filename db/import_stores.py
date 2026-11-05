@@ -29,8 +29,9 @@ from portal.cup_tables import DEFAULT_CUP_YEAR, HISTORIC_CUPS_DATA  # noqa: E402
 from portal.match_catalog import build as build_catalog  # noqa: E402
 from portal.names import clean_alias  # noqa: E402
 from portal.season_pages import enrich_vk_source, special_match_rows  # noqa: E402
+from db import store  # noqa: E402
 
-DB_PATH = ROOT / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 # Носители документов читаются с диска, а не из базы: база — это то, что импортёр пишет, и
 # кормиться ею он не должен.
 SPECIAL_SOURCE = ROOT / "special_tournaments_data.json"
@@ -606,7 +607,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     carriers = store_rows()
 
-    con = sqlite3.connect(args.db)
+    con = store.connect(args.db)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA foreign_keys = ON")
     reset_review_queues(con)

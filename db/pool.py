@@ -2,8 +2,9 @@
 
 import sqlite3
 from pathlib import Path
+from db import store
 
-DB_PATH = Path(__file__).resolve().parent.parent / "data" / "nst.db"
+DB_PATH = store.DB_PATH
 
 READ_SQL = """
 select id, season, tournament, stage, p1, p2, s1, s2, ot, pk, is_playoff,
@@ -26,7 +27,7 @@ def pool_from_db(db_path=DB_PATH):
         raise SystemExit(
             f"Нет базы {db_path}. Соберите её: python db/build_db.py (или просто python build_all.py)."
         )
-    con = sqlite3.connect(db_path)
+    con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     pool = []
     for row in con.execute(READ_SQL):
