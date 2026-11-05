@@ -464,7 +464,7 @@
 
     function getAvatar(author) {
       const low = (author || '').toLowerCase();
-      if (AVATARS[low]) return AVATARS[low];
+      if (AVATARS[low]) return AVATARS[low].avatar_url || AVATARS[low];
       return `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(author)}`;
     }
 

@@ -1,0 +1,270 @@
+-- Единая база матчей NEKKETSU SPORTS TOURNAMENTS.
+-- Один матч существует ровно один раз; источники (VK, wiki, Sportcup, CSV, руки) — это
+-- колонка source, а не отдельное хранилище. Текущий SQLITE_FILE переезжает в Postgres
+-- без изменения схемы: типы общие, сериалы не используются.
+
+PRAGMA foreign_keys = ON;
+
+-- ────────────────────────────── справочники ──────────────────────────────
+
+CREATE TABLE disciplines (
+    id      INTEGER PRIMARY KEY,
+    slug    TEXT NOT NULL UNIQUE,          -- soccer | team2x2 | special | mini_battles
+    name    TEXT NOT NULL
+);
+
+CREATE TABLE players (
+    id       INTEGER PRIMARY KEY,
+    slug     TEXT NOT NULL UNIQUE,         -- в URL и в UI, меняется реже ника
+    nick     TEXT NOT NULL,                -- текущее написание, правится по месту
+    kind     TEXT NOT NULL DEFAULT 'player'
+        CHECK (kind IN ('player', 'clan')),   -- клан = сторона без привязки к человеку
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Никнеймы, под которыми игрок встречается в источниках (K-R = Kubik и т.п.).
+-- Ключ — нормализованный алиас: один игрок может иметь несколько написаний.
+CREATE TABLE player_aliases (
+    alias       TEXT PRIMARY KEY,
+    player_id   INTEGER NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+    source      TEXT
+);
+
+CREATE TABLE tournaments (
+    id            INTEGER PRIMARY KEY,
+    discipline_id INTEGER NOT NULL REFERENCES disciplines(id),
+    season        TEXT NOT NULL,           -- 'Season 8'
+    kind          TEXT NOT NULL,           -- league | cup | minor | special | team
+    name          TEXT NOT NULL,           -- 'Season 8 Высшая лига'
+    year          INTEGER                  -- только если известен
+);
+CREATE UNIQUE INDEX tournaments_uniq ON tournaments(season, kind, name);
+
+CREATE TABLE stages (
+    id            INTEGER PRIMARY KEY,
+    tournament_id INTEGER NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
+    name          TEXT NOT NULL,           -- 'Регулярный сезон' | '1/4 финала'
+    order_index   INTEGER NOT NULL         -- порядок раунда внутри турнира
+);
+CREATE UNIQUE INDEX stages_uniq ON stages(tournament_id, name);
+
+-- Серия баттлов (мини-баттлы): несколько матчей под одним именем, составы мешаются.
+CREATE TABLE series (
+    id            INTEGER PRIMARY KEY,
+    tournament_id INTEGER NOT NULL REFERENCES tournaments(id),
+    name          TEXT NOT NULL,
+    order_index   INTEGER NOT NULL DEFAULT 0
+);
+
+-- ────────────────────────────── матчи ──────────────────────────────
+
+CREATE TABLE matches (
+    id           INTEGER PRIMARY KEY,
+    tournament_id INTEGER NOT NULL REFERENCES tournaments(id),
+    stage_id     INTEGER NOT NULL REFERENCES stages(id),
+    series_id    INTEGER REFERENCES series(id),
+    game_index   INTEGER,                  -- номер игры внутри серии
+    row_set      TEXT NOT NULL DEFAULT 'catalog'
+        CHECK (row_set IN ('pool', 'catalog', 'special', 'team')),
+    doc_id       INTEGER REFERENCES tournament_docs(id),
+                                          -- строка спец- или командного турнира: какой документ её показал
+    league       TEXT,                     -- «Высшая лига»: страница показывает это поле
+    tour         TEXT,                     -- «5 Тур»: отдельное от stage, на витрине нужны оба
+    is_playoff   INTEGER NOT NULL DEFAULT 0,
+    phase        TEXT NOT NULL DEFAULT 'regular'
+        CHECK (phase IN ('regular', 'overtime', 'penalties', 'overtime_penalties')),
+        -- веса Elo 0.75/0.25; источники разводят овертайм и буллиты двумя флагами,
+        -- и 230 строк каталога подняты BOTH: матч дошёл до серии после ничьей в овертайме
+    played_on    TEXT,                     -- ISO 'YYYY-MM-DD', NULL если дата не известна
+    date_precision TEXT NOT NULL DEFAULT 'none'
+        CHECK (date_precision IN ('exact', 'month', 'season', 'source_order', 'none')),
+    order_in_source INTEGER NOT NULL DEFAULT 0,   -- Elo считается последовательно: без
+                                          -- этого поля нельзя вставить матч «в середину»
+    status       TEXT NOT NULL DEFAULT 'played'
+        CHECK (status IN ('played', 'technical', 'void', 'scheduled')),
+    in_rating_pool INTEGER NOT NULL DEFAULT 0,  -- 1 = участвует в расчёте Elo мастер-таблицы
+    manual         INTEGER NOT NULL DEFAULT 0,  -- 1 = заведено редактором, импортёр её не тронет
+    source       TEXT NOT NULL,            -- vk_wall | vk_wiki | sportcup_api | special_data | team_data | manual
+    source_ref   TEXT,                     -- уникальный идентификатор игры у источника (uuid Sportcup)
+    source_locator TEXT,                    -- где искать: id страницы вики, файл и позиция, id турнира
+    source_page  TEXT,                     -- vk_page: тема/страница источника
+    source_text  TEXT,                     -- vk_text: как источник описал эту игру одной строкой
+    series_detail TEXT,                    -- 'games': счёт по ногам серии ("2:0, 1:2, 3:1") из спецтурниров
+    source_date_raw TEXT,                  -- vk_date как в источнике: unix-секунды либо год (кубковые строки)
+    note         TEXT NOT NULL DEFAULT '',
+    -- duplicate_of = «та же игра уже есть в базе» (служебная bookkeeping-связь: строка
+    -- каталога может указывать на строку пула, это не повод её прятать на витрине).
+    -- hidden_by    = «эта строка — второй показ той же игры на витрине», ставится только
+    -- внутри одного row_set, и именно по нему читатель скрывает дубль.
+    duplicate_of INTEGER REFERENCES matches(id),
+    hidden_by    INTEGER REFERENCES matches(id),
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE UNIQUE INDEX matches_source_uniq ON matches(source, source_ref) WHERE source_ref IS NOT NULL;
+
+-- Сторона матча. Именно сторона получает результат и счёт, а не пара p1/p2:
+-- 1×1 = 2 стороны по 1 игроку, 2×2 = 2 стороны по 2, баттл = N сторон × M игроков.
+CREATE TABLE match_sides (
+    id          INTEGER PRIMARY KEY,
+    match_id    INTEGER NOT NULL REFERENCES matches(id) ON DELETE CASCADE,
+    side_index  INTEGER NOT NULL,          -- 0 и 1 для двухстороннего матча
+    outcome     TEXT NOT NULL
+        CHECK (outcome IN ('win', 'loss', 'draw', 'none')),
+    score       INTEGER,                   -- NULL, если источник записал результат словами
+    label       TEXT,                      -- как сторона названа в источнике, если игроков нет
+    UNIQUE (match_id, side_index)
+);
+
+CREATE TABLE side_players (
+    side_id     INTEGER NOT NULL REFERENCES match_sides(id) ON DELETE CASCADE,
+    player_id   INTEGER NOT NULL REFERENCES players(id),
+    seat_index  INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (side_id, player_id)
+);
+
+-- Ссылки на подтверждение: пост VK с отчётом, видео, страница вики.
+CREATE TABLE match_links (
+    id        INTEGER PRIMARY KEY,
+    match_id  INTEGER NOT NULL REFERENCES matches(id) ON DELETE CASCADE,
+    kind      TEXT NOT NULL CHECK (kind IN ('vk_post', 'video', 'wiki', 'api')),
+    url       TEXT NOT NULL
+);
+
+-- ────────────────────────────── редактор и выгрузки ──────────────────────────────
+
+-- Журнал правок: одна строка = одно изменение поля. Откат = применить old_value обратно.
+CREATE TABLE corrections (
+    id          INTEGER PRIMARY KEY,
+    table_name  TEXT NOT NULL,
+    row_id      INTEGER NOT NULL,
+    field       TEXT NOT NULL,
+    old_value   TEXT,
+    new_value   TEXT,
+    editor      TEXT NOT NULL,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    reverted_at TEXT                       -- NULL = правка действует
+);
+
+-- Куда сборщики кладут выгруженное, чтобы показать дельту до записи в матчах.
+CREATE TABLE incoming (
+    id          INTEGER PRIMARY KEY,
+    batch       TEXT NOT NULL,             -- 'vk_wall_2026-11-02'
+    source      TEXT NOT NULL,
+    source_ref  TEXT,
+    payload     TEXT NOT NULL,             -- JSON как его отдаёт источник
+    fetched_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    verdict     TEXT NOT NULL DEFAULT 'unreviewed'
+        CHECK (verdict IN ('unreviewed', 'new', 'same', 'conflict', 'rejected')),
+    matched_match_id INTEGER REFERENCES matches(id)
+);
+
+-- === steps ===
+-- Достройка существующей базы. Эти шаги идут и при полной сборке, поэтому каждый идемпотентен
+-- сам: «already exists» и «duplicate column name» db/build_db.py считает нормой. Новый объект —
+-- сюда, отдельного списка миграций в проекте нет.
+
+-- Документ турнира: то, что ведёт человек текстом, — заголовок, описание, хроника, призовой
+-- фонд, итоговые таблицы (groups / divisions / playoff / ladder). Списки игр в payload остаются
+-- пустыми: сами игры живут в matches, а читатель (db/docs.py) навешивает их обратно. Иначе одна
+-- и та же игра существовала бы в базе дважды — уже по-разному в двух местах.
+create table if not exists tournament_docs (
+    id          INTEGER PRIMARY KEY,
+    kind        TEXT NOT NULL CHECK (kind IN ('special', 'team')),
+    doc_key     TEXT NOT NULL UNIQUE,       -- 'blitz_10' | 'team_champ_6' — id носителя
+    title       TEXT NOT NULL,
+    payload     TEXT NOT NULL,              -- JSON-рамка: весь документ, но списки игр пустые
+    match_field TEXT NOT NULL,              -- ключ, которым документ показывает свои игры
+    match_keys  TEXT NOT NULL,              -- порядок ключей строки игры, как их дал носитель
+    manual      INTEGER NOT NULL DEFAULT 0, -- 1 = рамку правил редактор, импортёр её не перезапишет
+    order_index INTEGER NOT NULL DEFAULT 0
+);
+alter table matches add column doc_id INTEGER REFERENCES tournament_docs(id);
+
+-- Состав стороны, который вписал человек. Разбор источника ошибается именно здесь (не тот ник
+-- подставился, потерялся партнёр), а `side_players` — производный список: он перестраивается по
+-- этому тексту (`db/edit.py: sync_side_players`), поэтому правка игроков остаётся одной
+-- journalable-колонкой и откатывается тем же журналом. NULL = «как принёс источник».
+alter table match_sides add column roster TEXT;
+
+-- Место строки, как его назвал источник: «1/4 финала», «Группа F». Появляется, когда человек
+-- переносил игру в другой тур (db/edit.py set-place) у строки без `source_ref`: по месту
+-- импортёр узнаёт ту же игру, и без этой памяти следующий импорт принёс бы её вторым рядом.
+alter table matches add column source_place TEXT;
+
+-- Откат «последней операции» не может группироваться по секунде: две правки, сделанные в одну
+-- секунду (или автоматически подряд), откатились бы вместе. У каждой операции теперь свой метка.
+alter table corrections add column op TEXT;
+update corrections set op = 'op#' || id where op is null;
+
+-- Очередь публикаций: лоровед копит правки в базе, а выкат остаётся за сборкой (`python
+-- build_all.py`) — перерисовать прод-сайт по клику нельзя, и этого никто не просил. Здесь видно,
+-- что человек считает готовым к выкату: запрос помнит отпечаток базы (тот же, что отдаёт
+-- `db/api.py:revision`) и число действующих правок на момент постановки. Строки этой таблицы в
+-- журнал правок НЕ пишутся: запрос публикации — не редактура архива, поэтому он не откатывается
+-- `undo`. Меняет таблицу только `db/publish.py`.
+create table if not exists publish_requests (
+    id               INTEGER PRIMARY KEY,
+    revision         TEXT NOT NULL,            -- отпечаток базы на момент запроса
+    corrections_live INTEGER NOT NULL,         -- сколько действующих правок должно уйти в выкат
+    editor           TEXT NOT NULL,            -- кто поставил запрос (подпись, как в журнале)
+    note             TEXT NOT NULL DEFAULT '', -- что публикуем — по-человечески одной строкой
+    created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    status           TEXT NOT NULL DEFAULT 'queued'
+        CHECK (status IN ('queued', 'applied', 'failed')),
+    applied_at       TEXT,                     -- NULL = сборка запрос ещё не брала
+    detail           TEXT NOT NULL DEFAULT ''  -- почему сборка провалилась (хвост её вывода)
+);
+
+-- === views ===
+-- Плоский вид «как в текущем пуле Python», чтобы сборку можно было переключить
+-- на базу и сверить вывод страницы байт-в-байт. Только матчи, где в каждой стороне
+-- ровно один игрок: иначе JOIN выдал бы по числу комбинаций составов.
+CREATE VIEW v_singles_pool AS
+SELECT
+    m.id,
+    t.season,
+    t.name                                        AS tournament,
+    s.name                                        AS stage,
+    pa.nick                                       AS p1,
+    pb.nick                                       AS p2,
+    sa.score                                      AS s1,
+    sb.score                                      AS s2,
+    (m.phase = 'overtime')                        AS ot,
+    (m.phase = 'penalties')                       AS pk,
+    m.is_playoff,
+    (m.status = 'technical')                      AS is_technical,
+    (CASE WHEN sa.outcome = 'none' THEN pa.nick
+          WHEN sb.outcome = 'none' THEN pb.nick END) AS technical_loser,
+    m.note,
+    m.order_in_source,
+    m.played_on,
+    m.date_precision,
+    m.source_date_raw,
+    m.row_set,
+    m.source,
+    -- Год турнира-документа («2017 (Весна)»): у строк спец- и командных турниров своей даты нет,
+    -- а рейтинг считается последовательно и без года партию куда ставить невозможно.
+    json_extract(d.payload, '$.season_year')               AS doc_year,
+    d.doc_key                                             AS doc_key
+FROM matches m
+JOIN tournaments t ON t.id = m.tournament_id
+JOIN stages s      ON s.id = m.stage_id
+JOIN match_sides sa ON sa.match_id = m.id AND sa.side_index = 0
+JOIN match_sides sb ON sb.match_id = m.id AND sb.side_index = 1
+JOIN side_players a ON a.side_id = sa.id
+JOIN side_players b ON b.side_id = sb.id
+JOIN players pa ON pa.id = a.player_id
+JOIN players pb ON pb.id = b.player_id
+LEFT JOIN tournament_docs d ON d.id = m.doc_id
+WHERE m.duplicate_of IS NULL AND m.status <> 'void'
+  AND (select count(*) from side_players sp where sp.side_id = sa.id) = 1
+  AND (select count(*) from side_players sp where sp.side_id = sb.id) = 1;
+
+-- То, по чему считается Elo мастер-таблицы. Флаг ставит не только импортёр пула: игру в рейтинг
+-- берёт и редактор (db/edit.py set-rating, rate-scope), поэтому вьюха отдаёт ровно помеченное,
+-- а проверка года и формата сторон живёт в самом редакторе и в db/validate.py.
+CREATE VIEW v_rating_pool AS
+SELECT * FROM v_singles_pool
+WHERE id IN (select id from matches where in_rating_pool = 1);

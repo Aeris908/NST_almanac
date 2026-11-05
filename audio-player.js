@@ -176,7 +176,7 @@
 
     const major = bytes[3];
     const tagSize = ((bytes[6] & 0x7F) << 21) | ((bytes[7] & 0x7F) << 14) | ((bytes[8] & 0x7F) << 7) | (bytes[9] & 0x7F);
-    
+
     let offset = 10;
     const maxOffset = Math.min(bytes.length, 10 + tagSize);
     const result = {};
@@ -184,7 +184,7 @@
     while (offset < maxOffset - 10) {
       if (bytes[offset] === 0) break; // Padding
       const frameId = String.fromCharCode(bytes[offset], bytes[offset+1], bytes[offset+2], bytes[offset+3]);
-      
+
       let frameSize = 0;
       if (major === 4) {
         frameSize = ((bytes[offset+4] & 0x7F) << 21) | ((bytes[offset+5] & 0x7F) << 14) | ((bytes[offset+6] & 0x7F) << 7) | (bytes[offset+7] & 0x7F);
@@ -197,7 +197,7 @@
 
       const encoding = bytes[offset + headerSize];
       const frameData = bytes.subarray(offset + headerSize + 1, offset + headerSize + frameSize);
-      
+
       let text = '';
       try {
         if (encoding === 0) {
@@ -294,7 +294,7 @@
     document.getElementById('deckPlayBtn').addEventListener('click', togglePlay);
     document.getElementById('deckPrevBtn').addEventListener('click', prevTrack);
     document.getElementById('deckNextBtn').addEventListener('click', nextTrack);
-    
+
     const volSlider = document.getElementById('deckVol');
     volSlider.addEventListener('input', (e) => {
       const v = parseFloat(e.target.value);
@@ -469,7 +469,6 @@
         osc.start(ctx.currentTime + i * 0.12);
         osc.stop(ctx.currentTime + i * 0.12 + 0.25);
       });
-      const cur = currentPlaylist[currentTrackIdx];
       const titleEl = document.getElementById('deckTrackTitle');
       if (titleEl) {
         titleEl.textContent = `♫ [8-Bit Chime] Закиньте MP3 в ${DISCIPLINE_PLAYLISTS[currentDiscipline].folder} ♫`;
@@ -479,7 +478,7 @@
     }
   }
 
-  function handleAudioError(e) {
+  function handleAudioError() {
     const curTrack = currentPlaylist[currentTrackIdx];
     console.info(`Audio track not found: ${curTrack ? curTrack.file : ''}`);
     const titleEl = document.getElementById('deckTrackTitle');

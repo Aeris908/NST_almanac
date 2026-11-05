@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NEKKETSU SOCCER LEAGUE &bull; Чемпионат по Goal 3 (NES / Famicom)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="audio-player.css">
+
+  <link rel="stylesheet" href="soccer.css">
+
+  <!-- Слой редактора: живёт рядом с витриной и молчит, пока в адресе нет ?edit=1.
+       Адрес сервера правки — здесь же; для продакшена его задаёт сборка или обработчик. -->
+  <meta name="nst-editor-api" content="@@EDITOR_API@@">
+  <link rel="stylesheet" href="editor.css">
+
+</head>
+
+<body data-discipline="soccer">
+
+
+
+  <!-- Retro Header -->
+
+  <header>
+
+    <div class="header-inner">
+
+      <a href="#/leaderboard" class="logo-block">
+
+        <div class="logo-badge">GOAL 3</div>
+
+        <div class="logo-text">
+
+          <h1>NEKKETSU SOCCER LEAGUE</h1>
+
+          <p>ОФИЦИАЛЬНЫЙ КИБЕРСПОРТИВНЫЙ ПОРТАЛ СООБЩЕСТВА NST (2015–2026)</p>
+
+        </div>
+
+      </a>
+
+      <div class="header-meta-stats">
+
+        <span class="meta-stat-pill">🎮 <strong>@@MATCHES@@</strong> матчей</span>
+
+        <span class="meta-stat-pill">⚽ <strong>@@GOALS@@</strong> гол</span>
+
+        <span class="meta-stat-pill">👥 <strong>@@PLAYERS@@</strong> игрока</span>
+
+        <a href="index.html" class="meta-vk-btn" style="background: rgba(255, 203, 5, 0.15); border-color: var(--nes-gold); color: var(--nes-gold) !important;" title="Вернуться на главную страницу Альманаха Nekketsu">🏛️ В Альманах</a>
+        <a href="quotes.html" class="meta-vk-btn" style="background: rgba(255, 203, 5, 0.08); border-color: rgba(255, 203, 5, 0.4); color: var(--nes-gold) !important;" title="Золотой Цитатник Сообщества NST">💬 Цитатник ↗</a>
+
+        <a href="https://vk.ru/nekketsu" target="_blank" class="meta-vk-btn">VK Сообщество ↗</a>
+
+      </div>
+
+    </div>
+
+    <div class="nav-bar-container">
+
+      <nav class="nav-bar">
+
+        <button class="nav-btn active" onclick="switchTab('leaderboard')">🏆 Рейтинг</button>
+
+        <button class="nav-btn" onclick="switchTab('players')">👤 Карточки игроков</button>
+
+        <button class="nav-btn" onclick="switchTab('seasons')">📅 Сезоны (1–9)</button>
+
+        <button class="nav-btn" onclick="switchTab('teams')">⚡ Клубные 2х2</button>
+
+        <button class="nav-btn" onclick="switchTab('special')">🎯 Спецтурниры</button>
+
+        <button class="nav-btn" onclick="switchTab('h2h')">⚔️ Личные встречи</button>
+
+        <button class="nav-btn" onclick="switchTab('clutch')">🏛️ Зал славы</button>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+
+  <main class="container">
+
+    <!-- TAB 1: LEADERBOARD -->
+    <section id="tab-leaderboard" class="view-content active">
+      <!-- HUD Metrics inside Leaderboard tab -->
+      <div class="hud-metrics" id="hudStrip"></div>
+      <div class="controls-row">
+        <div class="filter-tabs">
+          <button class="filter-btn active" id="btnActiveFilter" onclick="filterDivision('active', this)">▶ Все активные (22)</button>
+          <button class="filter-btn" onclick="filterDivision('Высшая', this)">⚡ Высшая лига (9)</button>
+          <button class="filter-btn" onclick="filterDivision('Средняя', this)">🔰 Средняя лига (8)</button>
+          <button class="filter-btn" onclick="filterDivision('Дворовая', this)">⚽ Дворовая лига (5)</button>
+          <button class="filter-btn inactive-tab" id="btnInactiveFilter" onclick="filterDivision('inactive', this)">🏛️ Зал славы (11)</button>
+          <button class="filter-btn inactive-tab" onclick="filterDivision('all_inactive', this)">📦 Все неактивные (78)</button>
+        </div>
+        <input type="text" class="clean-search" id="tableSearch" placeholder="Поиск по нику или имени..." oninput="renderTable()">
+      </div>
+
+      <div id="hofCriteriaBanner" style="display: none; background: rgba(255, 183, 3, 0.08); border: 2px solid var(--nes-gold); padding: 14px 18px; margin-bottom: 16px; box-shadow: 3px 3px 0 #000;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+          <div style="font-size: 32px; line-height: 1;">🏛️</div>
+          <div>
+            <div style="font-family: var(--font-title); font-size: 15px; color: var(--nes-gold); margin-bottom: 6px;">
+              КРИТЕРИИ ЗАЛА СЛАВЫ NEKKETSU LEAGUE (HALL OF FAME)
+            </div>
+            <div style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">
+              В Зал Славы включены только легендарные ветераны <strong>Высшей (элитной) лиги</strong>, завершившие активную карьеру: чемпионы сезонов, обладатели Кубка Лиг и первопроходцы сцены с огромным стажем матчей на высшем уровне. Игроки низших дивизионов и случайные участники сюда не допускаются.
+            </div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; color: #94a3b8;">
+              <span>🥇 <strong>Титулы:</strong> Золото Высшей лиги / Кубок Лиг</span>
+              <span>⚔️ <strong>Опыт:</strong> Десятки матчей против сильнейших топов</span>
+              <span>👑 <strong>Статус:</strong> Инактив (Легенда сцены)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-box">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th onclick="sortTable('rank')">Место</th>
+
+              <th onclick="sortTable('player')">Игрок</th>
+
+              <th onclick="sortTable('league')">Лига и статус</th>
+
+              <th onclick="sortTable('active_elo')">Текущий рейтинг ▾</th>
+
+              <th onclick="sortTable('peak_elo')">Рекорд рейтинга</th>
+
+              <th onclick="sortTable('matches')">Матчи</th>
+
+              <th onclick="sortTable('wins')">Победы / Поражения</th>
+
+              <th onclick="sortTable('win_rate')">% побед</th>
+
+              <th onclick="sortTable('goals_for')">Мячи (Разница)</th>
+
+              <th title="Победы в основное время / в овертайме / по пенальти">Осн / ОТ / Пен</th>
+
+              <th>Профиль</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="tableBody"></tbody>
+
+        </table>
+
+      </div>
+
+      <div style="font-size: 12px; color: #94a3b8; margin-top: -15px; margin-bottom: 25px;">
+
+        💡 <em>Текущий рейтинг рассчитывается по системе силы соперников (Elo). За пропуск сезонов начисляется штраф за простой, который уменьшается при возвращении в турниры.</em>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- TAB 2: PLAYERS CARDS -->
+
+    <section id="tab-players" class="view-content">
+
+      <div class="controls-row">
+
+        <div class="filter-tabs">
+
+          <button class="filter-btn active" onclick="filterPlayerCards('active', this)">🟢 Все активные (22)</button>
+
+          <button class="filter-btn" onclick="filterPlayerCards('Высшая', this)">🏆 Высшая лига (9)</button>
+
+          <button class="filter-btn" onclick="filterPlayerCards('Средняя', this)">⚡ Средняя лига (8)</button>
+
+          <button class="filter-btn" onclick="filterPlayerCards('Дворовая', this)">🍺 Дворовая лига (5)</button>
+
+          <button class="filter-btn inactive-tab" onclick="filterPlayerCards('hof', this)">⭐ Зал славы (11)</button>
+
+          <button class="filter-btn inactive-tab" onclick="filterPlayerCards('all_inactive', this)">📦 Все неактивные (78)</button>
+
+          <button class="filter-btn" onclick="filterPlayerCards('all', this)">🌐 Полная база (100)</button>
+
+        </div>
+
+        <input type="text" class="clean-search" id="cardsSearch" placeholder="Поиск по имени игрока..." oninput="renderCards()">
+
+      </div>
+
+      <div id="hofCardsCriteriaBanner" style="display: none; background: rgba(255, 183, 3, 0.08); border: 2px solid var(--nes-gold); padding: 14px 18px; margin-bottom: 16px; box-shadow: 3px 3px 0 #000;">
+
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+
+          <div style="font-size: 32px; line-height: 1;">🏛️</div>
+
+          <div>
+
+            <div style="font-family: var(--font-title); font-size: 15px; color: var(--nes-gold); margin-bottom: 6px;">
+
+              КРИТЕРИИ ЗАЛА СЛАВЫ NEKKETSU LEAGUE (HALL OF FAME)
+
+            </div>
+
+            <div style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">
+
+              В Зал Славы включены только легендарные ветераны <strong>Высшей (элитной) лиги</strong>, завершившие активную карьеру: чемпионы сезонов, обладатели Кубка Лиг и первопроходцы сцены с огромным стажем матчей на высшем уровне. Игроки низших дивизионов и случайные участники сюда не допускаются.
+
+            </div>
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; color: #94a3b8;">
+
+              <span>🥇 <strong>Титулы:</strong> Золото Высшей лиги / Кубок Лиг</span>
+
+              <span>⚔️ <strong>Опыт:</strong> Десятки матчей против сильнейших топов</span>
+
+              <span>👑 <strong>Статус:</strong> Инактив (Легенда сцены)</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="cards-grid" id="cardsGrid"></div>
+
+    </section>
+
+
+
+    <!-- TAB 3: SEASONS ARCHIVE -->
+
+    <section id="tab-seasons" class="view-content">
+
+      <div class="season-banner">
+
+        <div class="season-title">🏆 АРХИВ ОФИЦИАЛЬНЫХ СЕЗОНОВ NST (1–9)</div>
+
+        <div class="season-meta">
+
+          <span>🎮 Goal 3 (NES)</span>
+
+          <span>🏆 9 Регулярных Чемпионатов</span>
+
+          <span>📅 2014 – 2021 гг.</span>
+
+        </div>
+
+        <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px; line-height: 1.5;">
+
+          Полная история всех девяти официальных номерных чемпионатов сообщества Nekketsu Soccer League. Турнирные таблицы Высшей, Средней, Младшей и Дворовой лиг, списки призёров, обладатели кубков и протоколы всех сыгранных матчей.
+
+        </p>
+
+      </div>
+
+
+
+      <!-- Quick Tournament Selector Bar (Unified across all blocks) -->
+
+      <div style="margin-bottom: 20px;">
+
+        <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px;">ВЫБЕРИТЕ СЕЗОН:</div>
+
+        <div class="seasons-bar" id="seasonsBar" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+
+      </div>
+
+
+
+      <!-- Main Detailed Container for Selected Season -->
+
+      <div id="seasonDetails"></div>
+
+    </section>
+
+
+
+    <!-- TAB 4: CLUTCH & RECORDS -->
+
+    <section id="tab-clutch" class="view-content">
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+
+        <div class="table-box" style="padding: 18px;">
+
+          <h2 style="font-family: var(--font-title); font-size: 18px; color: var(--nes-gold); margin-bottom: 12px;">⚡ Лидеры по победам в овертаймах и пенальти</h2>
+
+          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">Статистика самых стойких игроков в матчах до золотого гола</div>
+
+          <div id="clutchLeaders"></div>
+
+        </div>
+
+        <div class="table-box" style="padding: 18px;">
+
+          <h2 style="font-family: var(--font-title); font-size: 18px; color: var(--nes-cyan); margin-bottom: 12px;">🏆 Исторические рекорды лиги NST</h2>
+
+          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">Выдающиеся матчи и достижения за всю историю турниров</div>
+
+          <div id="recordsBox"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- TAB 5: HEAD-TO-HEAD -->
+
+    <section id="tab-h2h" class="view-content">
+
+      <div class="season-card-box">
+
+        <h2 style="font-family: var(--font-title); font-size: 22px; color: #ffffff; margin-bottom: 8px;">⚔️ Личные встречи и история противостояний</h2>
+
+        <div style="font-size: 13px; color: #cbd5e1; margin-bottom: 20px;">Интерактивный калькулятор очных дуэлей 1 на 1 и статистика главных дерби лиги NST за все 9 сезонов и спецтурниры</div>
+
+
+
+        <!-- Interactive 1x1 Comparator -->
+
+        <div class="duel-arena-card">
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+
+            <div style="font-family: var(--font-body); font-size: 15px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+
+              <span>🥊 АРЕНА ЛИЧНЫХ ВСТРЕЧ &bull; ДУЭЛЬ 1 НА 1</span>
+
+            </div>
+
+            <div style="font-size: 12px; color: #cbd5e1; font-weight: 600;">База включает @@MATCHES@@ матча лиги, кубков и спецтурниров</div>
+
+          </div>
+
+
+
+          <div class="duel-select-group">
+
+            <div class="duel-fighter-col">
+
+              <div class="duel-corner-label duel-corner-p1">
+
+                <span>🔴 ИГРОК 1 (КРАСНЫЙ УГОЛ)</span>
+
+              </div>
+
+              <select id="h2hSelectP1" class="duel-select" onchange="updateH2HComparison()"></select>
+
+            </div>
+
+
+
+            <div class="duel-vs-divider">
+
+              VS
+
+            </div>
+
+
+
+            <div class="duel-fighter-col">
+
+              <div class="duel-corner-label duel-corner-p2">
+
+                <span>🟣 ИГРОК 2 (ПУРПУРНЫЙ УГОЛ)</span>
+
+              </div>
+
+              <select id="h2hSelectP2" class="duel-select" onchange="updateH2HComparison()"></select>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Quick presets -->
+
+          <div class="h2h-presets-bar">
+
+            <div class="h2h-presets-label">⚡ БЫСТРЫЙ ВЫБОР КУЛЬТОВЫХ ДЕРБИ СООБЩЕСТВА:</div>
+
+            <div class="h2h-presets-list" id="h2hPresets">
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('ectoPower', 'PacnyTHuK')">👑 ectoPower vs PacnyTHuK</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('Kunio', 'Ric25')">🛡️ Kunio vs Ric25</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('ectoPower', 'mafuta')">🔥 ectoPower vs mafuta</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('Romix', 'ectoPower')">⚡ Romix vs ectoPower</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('Jamlight', 'Kubik')">🎯 Jamlight vs Kubik</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('Aoshi', 'Kubik')">⚽ Aoshi vs Kubik</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('Aoshi', 'Chocopie')">🥊 Aoshi vs Chocopie</button>
+
+              <button class="h2h-preset-chip" onclick="selectH2HPair('Kunio', 'Memori')">🦅 Kunio vs Memori</button>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Battle Result Container -->
+
+          <div id="h2hComparisonResult"></div>
+
+        </div>
+
+
+
+        <!-- Curated community rivalries -->
+
+        <h3 style="font-family: var(--font-title); font-size: 18px; color: #ffffff; margin: 28px 0 14px 0;">🔥 Легендарные противостояния и криптониты лиги</h3>
+
+        <div id="h2hList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px;"></div>
+
+      </div>
+
+    </section>
+
+
+
+  
+
+    
+
+    <!-- TAB 7: TEAM TOURNAMENTS (2X2) -->
+
+    <section id="tab-teams" class="view-content">
+
+      <div class="season-banner">
+
+        <div class="season-title">👥 ОФИЦИАЛЬНЫЕ КОМАНДНЫЕ ЧЕМПИОНАТЫ GOAL 3 (2х2)</div>
+
+        <div class="season-meta">
+
+          <span>🎮 Goal 3 (NES) & Goal 4</span>
+
+          <span>🏆 Эпоха Командных Битв (2012–2023)</span>
+
+          <span>👥 Парный формат 2 на 2 & Клубы</span>
+
+        </div>
+
+        <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px; line-height: 1.5;">
+
+          Золотая летопись официальных командных чемпионатов сообщества NST: выберите турнир для детального просмотра всех сыгранных матчей, таблиц дивизионов, сетки плей-офф и составов легендарных дуэтов.
+
+        </p>
+
+      </div>
+
+
+
+      <!-- Quick Tournament Selector Bar (like in Seasons tab!) -->
+
+      <div style="margin-bottom: 20px;">
+
+        <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px;">ВЫБЕРИТЕ КОМАНДНЫЙ ЧЕМПИОНАТ:</div>
+
+        <div class="seasons-bar" id="teamTournamentsBar" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+
+      </div>
+
+
+
+      <!-- Main Detailed Container for Selected Tournament -->
+
+      <div id="teamTournamentDetailContainer"></div>
+
+    </section>
+
+
+
+    <!-- TAB 6: SPECIAL TOURNAMENTS -->
+
+    <section id="tab-special" class="view-content">
+
+      <div class="season-banner">
+
+        <div class="season-title">🏅 АРХИВ СПЕЦТУРНИРОВ, МОЛОДЁЖКИ И МЕЖСЕЗОНЬЯ NST</div>
+
+        <div class="season-meta">
+
+          <span>🎮 Goal 3 & Goal 4</span>
+
+          <span>🏆 9 Официальных Кубков и Турниров</span>
+
+          <span>👥 Участие Легенд и Молодых Игроков</span>
+
+        </div>
+
+        <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px; line-height: 1.5;">
+
+          Полный архив официальных молодёжных первенств (наставники + новички), клубных чемпионатов межсезонья с Премьер и Молодёжной лигами, культовых сольных турниров 1x1, чемпионатов по пенальти и скоростных блиц-турниров сообщества за 2015–2022 гг.
+
+        </p>
+
+      </div>
+
+
+
+      <!-- Quick Special Tournament Selector Bar (Unified with Seasons & Team tabs!) -->
+
+      <div style="margin-bottom: 20px;">
+
+        <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px;">ВЫБЕРИТЕ СПЕЦТУРНИР:</div>
+
+        <div class="seasons-bar" id="specialTournamentsBar" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+
+      </div>
+
+
+
+      <!-- Main Detailed Container for Selected Special Tournament -->
+
+      <div id="specialTournamentDetailContainer"></div>
+
+    </section>
+
+
+
+    
+
+
+
+  </main>
+
+
+
+  <!-- Player Profile Modal -->
+
+  <div class="modal-overlay" id="playerModal" onclick="closePlayerModal(event)">
+
+    <div class="modal-box" onclick="event.stopPropagation()">
+
+      <button class="modal-close" onclick="closePlayerModal()">&times;</button>
+
+      <div class="modal-header" id="modalHeader"></div>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Video Player Modal (Кинозал Nekketsu) -->
+
+  <div class="modal-overlay video-modal-overlay" id="videoModal" style="display: none;" onclick="closeVideoModal(event)">
+
+    <div class="video-modal-box" onclick="event.stopPropagation()">
+
+      <div class="video-modal-header">
+
+        <div class="video-modal-title">
+
+          <span style="font-size: 16px;">🎬</span>
+
+          <span id="videoModalTitle" style="font-family: var(--font-title); font-size: 14px; color: var(--nes-cyan); letter-spacing: 0.5px;">Запись матча</span>
+
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+
+          <a id="videoModalExternalLink" href="#" target="_blank" rel="noopener" class="video-external-btn" title="Смотреть на оригинальном видеохостинге">
+
+            В новой вкладке ↗
+
+          </a>
+
+          <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+
+        </div>
+
+      </div>
+
+      <div class="video-player-container">
+
+        <iframe id="videoPlayerIframe" src="" frameborder="0" scrolling="no" style="overflow: hidden; display: block;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Match Protocol Modal (Отчёт из ВК) -->
+
+  <div class="modal-overlay video-modal-overlay" id="protocolModal" style="display: none;" onclick="closeProtocolModal(event)">
+
+    <div class="video-modal-box" onclick="event.stopPropagation()" style="max-width: 620px;">
+
+      <div class="video-modal-header">
+
+        <div class="video-modal-title">
+
+          <span style="font-size: 16px;">📋</span>
+
+          <span id="protocolModalTitle" style="font-family: var(--font-title); font-size: 14px; color: var(--nes-cyan); letter-spacing: 0.5px;">Протокол матча из ВК</span>
+
+        </div>
+
+        <button class="modal-close" onclick="closeProtocolModal()">&times;</button>
+
+      </div>
+
+      <div style="padding: 20px;">
+
+        <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+
+          <span id="protocolModalDate" style="color: #cbd5e1; font-weight: 600;">📅 Дата</span>
+
+          <span id="protocolModalPage" style="color: var(--nes-gold); font-weight: 700;">📄 Лист в теме</span>
+
+        </div>
+
+        <div style="background: rgba(0,0,0,0.55); border: 1px solid #1e3a58; border-left: 4px solid var(--nes-cyan); border-radius: 4px; padding: 16px; margin-bottom: 18px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);">
+
+          <div style="font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 8px;">
+
+            💬 Исходный отчёт игрока:
+
+          </div>
+
+          <pre id="protocolModalText" style="white-space: pre-wrap; word-break: break-word; font-family: var(--font-body); font-size: 13px; color: #f8fafc; line-height: 1.5; margin: 0;"></pre>
+
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+
+          <a id="protocolModalVkLink" href="#" target="_blank" rel="noopener" class="source-btn-vk" style="font-size: 12px; padding: 6px 14px; text-decoration: none;">
+
+            Перейти к теме в ВК ↗
+
+          </a>
+
+          <button type="button" class="filter-btn" onclick="closeProtocolModal()" style="padding: 6px 16px;">
+
+            Закрыть
+
+          </button>
+
+        </div>
+
+        <div style="font-size: 11px; color: #64748b; margin-top: 12px; line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px;">
+
+          💡 <em>ВКонтакте показывает регламент вверху каждой страницы темы. Чтобы увидеть сообщение на самом сайте ВК, прокрутите чуть ниже закреплённой шапки.</em>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <footer>
+
+    <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+
+      <div><strong>NEKKETSU SPORTS TOURNAMENTS</strong> &bull; Полный архив матчей и статистика игроков Goal 3</div>
+
+      <div>Киберспортивный портал сообщества &bull; 2015–2026 гг.</div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- Embedded Complete Dataset -->
+
+  <script>
+
+    const DATA = __DATA_PLACEHOLDER__;
+
+  </script>
+
+
+
+  <!-- Main Application Script -->
+
+  <script src="soccer.js"></script>
+
+  <!-- Карандаши: без ?edit=1 не рисуют ни кнопки, ни запроса -->
+  <script src="editor.js" defer></script>
+
+  <!-- Persistent Audio Deck & PJAX Router -->
+  <script src="audio/playlist-manifest.js"></script>
+  <script src="audio-player.js"></script>
+</body>
+
+</html>
+

@@ -1,68 +1,86 @@
+"""Player match histories and the season-by-season recaps that the soccer portal renders."""
+
 import sys
-sys.stdout.reconfigure(encoding='utf-8')
-import json
-import os
 from collections import defaultdict
-import build_final_analytics
 
-# Load base data
-with open("nekketsu_master_table.json", "r", encoding="utf-8") as f:
-    master_db = json.load(f)
+from db.pool import pool_from_db
 
-# Load avatars
-with open("player_avatars.json", "r", encoding="utf-8") as f:
-    avatars = json.load(f)
+sys.stdout.reconfigure(encoding="utf-8")
 
-all_matches = build_final_analytics.all_matches
+UNKNOWN_SEASON = "Unknown"
+DEFAULT_MATCH_STAGE = "Матч"
 
-# Enhance players with match breakdown: reg_w, ot_w, pk_w, reg_l, ot_l, pk_l, matches list
-player_matches = defaultdict(list)
-player_stats_addon = defaultdict(lambda: {
-    "reg_w": 0, "ot_w": 0, "pk_w": 0,
-    "reg_l": 0, "ot_l": 0, "pk_l": 0,
-    "draws": 0
-})
+# Win/loss buckets per player, counted separately for overtime and penalty shoot-outs.
+EMPTY_TALLY = {"reg_w": 0, "ot_w": 0, "pk_w": 0, "reg_l": 0, "ot_l": 0, "pk_l": 0, "draws": 0}
 
-for m in all_matches:
-    p1 = m["p1"]
-    p2 = m["p2"]
-    s1 = m["s1"]
-    s2 = m["s2"]
-    ot = m.get("ot", False)
-    pk = m.get("pk", False)
-    season = m.get("season", "Unknown")
-    tourn = m.get("tournament", "")
-    stage = m.get("stage", "Матч")
 
-    # For p1
-    p1_res = "W" if s1 > s2 else ("L" if s1 < s2 else "D")
-    p2_res = "W" if s2 > s1 else ("L" if s2 < s1 else "D")
+def _outcome(score, opponent_score):
+    """'W'/'L'/'D' seen from one side of a finished game."""
+    if score > opponent_score:
+        return "W"
+    if score < opponent_score:
+        return "L"
+    return "D"
 
-    player_matches[p1].append({
-        "season": season, "tournament": tourn, "stage": stage,
-        "opponent": p2, "score_for": s1, "score_against": s2,
-        "result": p1_res, "ot": ot, "pk": pk
-    })
-    player_matches[p2].append({
-        "season": season, "tournament": tourn, "stage": stage,
-        "opponent": p1, "score_for": s2, "score_against": s1,
-        "result": p2_res, "ot": ot, "pk": pk
-    })
 
-    if s1 > s2:
-        if pk: player_stats_addon[p1]["pk_w"] += 1; player_stats_addon[p2]["pk_l"] += 1
-        elif ot: player_stats_addon[p1]["ot_w"] += 1; player_stats_addon[p2]["ot_l"] += 1
-        else: player_stats_addon[p1]["reg_w"] += 1; player_stats_addon[p2]["reg_l"] += 1
-    elif s2 > s1:
-        if pk: player_stats_addon[p2]["pk_w"] += 1; player_stats_addon[p1]["pk_l"] += 1
-        elif ot: player_stats_addon[p2]["ot_w"] += 1; player_stats_addon[p1]["ot_l"] += 1
-        else: player_stats_addon[p2]["reg_w"] += 1; player_stats_addon[p1]["reg_l"] += 1
+def _match_record(season, tournament, stage, opponent, score_for, score_against, ot, pk):
+    """One row of a player's personal game log."""
+    return {
+        "season": season,
+        "tournament": tournament,
+        "stage": stage,
+        "opponent": opponent,
+        "score_for": score_for,
+        "score_against": score_against,
+        "result": _outcome(score_for, score_against),
+        "ot": ot,
+        "pk": pk,
+    }
+
+
+def _count_decision(addon, winner, loser, ot, pk):
+    """Credit both sides with the right flavour of win/loss: penalty, overtime or regular."""
+    if pk:
+        win_key, loss_key = "pk_w", "pk_l"
+    elif ot:
+        win_key, loss_key = "ot_w", "ot_l"
     else:
-        player_stats_addon[p1]["draws"] += 1
-        player_stats_addon[p2]["draws"] += 1
+        win_key, loss_key = "reg_w", "reg_l"
+    addon[winner][win_key] += 1
+    addon[loser][loss_key] += 1
 
-# Seasons database with full recaps
-seasons_data = [
+
+def build_player_stats(matches):
+    """Personal game logs and overtime/penalty-aware win-loss tallies for every player."""
+    player_matches = defaultdict(list)
+    player_stats_addon = defaultdict(lambda: dict(EMPTY_TALLY))
+
+    for match in matches:
+        p1 = match["p1"]
+        p2 = match["p2"]
+        s1 = match["s1"]
+        s2 = match["s2"]
+        ot = match.get("ot", False)
+        pk = match.get("pk", False)
+        season = match.get("season", UNKNOWN_SEASON)
+        tournament = match.get("tournament", "")
+        stage = match.get("stage", DEFAULT_MATCH_STAGE)
+
+        player_matches[p1].append(_match_record(season, tournament, stage, p2, s1, s2, ot, pk))
+        player_matches[p2].append(_match_record(season, tournament, stage, p1, s2, s1, ot, pk))
+
+        if s1 > s2:
+            _count_decision(player_stats_addon, p1, p2, ot, pk)
+        elif s2 > s1:
+            _count_decision(player_stats_addon, p2, p1, ot, pk)
+        else:
+            player_stats_addon[p1]["draws"] += 1
+            player_stats_addon[p2]["draws"] += 1
+
+    return player_matches, player_stats_addon
+
+
+SEASON_RECAPS = [
     {
         "id": "1",
         "name": "Season 1",
@@ -78,8 +96,8 @@ seasons_data = [
         "highlights": [
             "Memori занял 1-е место в регулярной сетке (92 очка, +94 разница), но mafuta завоевал итоговое чемпионство.",
             "Формирование первых легендарных противостояний: Ric25 vs Memori, WiSe vs Wenderfit.",
-            "Открытый стиль игры — команды забивали в среднем по 7–8 мячей за матч."
-        ]
+            "Открытый стиль игры — команды забивали в среднем по 7–8 мячей за матч.",
+        ],
     },
     {
         "id": "2",
@@ -96,8 +114,8 @@ seasons_data = [
         "highlights": [
             "Гранд-финал: mafuta 5 : 2 Kunio — первый крупный финал для будущей легенды Kunio.",
             "Дебют ectoPower на соревновательной арене — бронзовый призер плей-офф.",
-            "Введение жесткого регламента по пингу и сетевым задержкам."
-        ]
+            "Введение жесткого регламента по пингу и сетевым задержкам.",
+        ],
     },
     {
         "id": "3",
@@ -114,8 +132,8 @@ seasons_data = [
         "highlights": [
             "«Хет-трик чемпионств» mafuta: три победы в трех сезонах подряд (2015–2016).",
             "Зарождение главного исторического соперничества: mafuta vs ectoPower.",
-            "Ric25 выигрывает тяжелейший матч за 3-е место."
-        ]
+            "Ric25 выигрывает тяжелейший матч за 3-е место.",
+        ],
     },
     {
         "id": "4",
@@ -132,8 +150,8 @@ seasons_data = [
         "highlights": [
             "Конец непобедимой серии mafuta: Транзистор берёт титул чемпиона Высшей лиги.",
             "Дебют Aeris (knucklesss) в элитной соревновательной сетке.",
-            "Рекордные 34 участника в турнирной таблице."
-        ]
+            "Рекордные 34 участника в турнирной таблице.",
+        ],
     },
     {
         "id": "5",
@@ -150,8 +168,8 @@ seasons_data = [
         "highlights": [
             "Первый чемпионский титул ectoPower в Высшей лиге.",
             "Триумф RVD (МГБ) в Кубке Лиг — первый «кубковый киллер» сообщества.",
-            "Восхождение PacnyTHuK как стабильного финалиста мейджоров."
-        ]
+            "Восхождение PacnyTHuK как стабильного финалиста мейджоров.",
+        ],
     },
     {
         "id": "6",
@@ -168,8 +186,8 @@ seasons_data = [
         "highlights": [
             "Легендарный буллитный триллер: ectoPower побеждает Transistor 5:4 по пенальти.",
             "Золотой дубль ectoPower (Чемпионат + Кубок в один сезон).",
-            "Последний активный сольный сезон Транзистора перед длительным инактивом."
-        ]
+            "Последний активный сольный сезон Транзистора перед длительным инактивом.",
+        ],
     },
     {
         "id": "7",
@@ -186,8 +204,8 @@ seasons_data = [
         "highlights": [
             "Ностальгический финал: ectoPower побеждает mafuta.",
             "Второй Кубок Лиг для RVD (МГБ).",
-            "Romix берет бронзовые медали турнира."
-        ]
+            "Romix берет бронзовые медали турнира.",
+        ],
     },
     {
         "id": "8",
@@ -204,8 +222,8 @@ seasons_data = [
         "highlights": [
             "PacnyTHuK 5 : 3 ectoPower — свержение гегемона в гранд-финале Кубка.",
             "Взлёт Sokol: 22 победы в 27 матчах и штурм вершин ладдера.",
-            "Aeris показывает топ-класс в Средней лиге (победы над Dune 3:0 и Jamlight 4:2, 3:1)."
-        ]
+            "Aeris показывает топ-класс в Средней лиге (победы над Dune 3:0 и Jamlight 4:2, 3:1).",
+        ],
     },
     {
         "id": "9",
@@ -223,21 +241,27 @@ seasons_data = [
             "Kunio — чемпион Высшей лиги благодаря «железному занавесу» в обороне.",
             "Финал Кубка: ectoPower 5 : 0 Rock — безоговорочный триумф GOAT сцены.",
             "Матч века: Ric25 8 : 9 Memori — рекордные 17 голов в одной встрече.",
-            "Hanter выигрывает Дворовую лигу с феноменальным винрейтом 85.7%."
-        ]
-    }
+            "Hanter выигрывает Дворовую лигу с феноменальным винрейтом 85.7%.",
+        ],
+    },
 ]
 
-# Enrich seasons_data with deep VK community chronicles and archives
-try:
-    import tournament_chronicles_data
-    for s in seasons_data:
-        s_id = str(s.get("id"))
-        if s_id in tournament_chronicles_data.SEASONS_CHRONICLES:
-            chron = tournament_chronicles_data.SEASONS_CHRONICLES[s_id]
-            for k, v in chron.items():
-                s[k] = v
-except Exception as e:
-    print("Warning enriching seasons_data:", e)
 
-print("Data structures ready!")
+def enrich_recaps_with_chronicles(recaps):
+    """Merge the deep VK community chronicles into the season recaps, in place."""
+    try:
+        import tournament_chronicles_data
+
+        for recap in recaps:
+            chronicle = tournament_chronicles_data.SEASONS_CHRONICLES.get(str(recap.get("id")))
+            if chronicle:
+                recap.update(chronicle)
+    except Exception as error:
+        print("Warning enriching seasons_data:", error)
+    return recaps
+
+
+player_matches, player_stats_addon = build_player_stats(pool_from_db())
+seasons_data = enrich_recaps_with_chronicles(SEASON_RECAPS)
+
+print("Data structures ready!", file=sys.stderr)

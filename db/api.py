@@ -1,0 +1,766 @@
+"""API правки базы: операция — и дельта по затронутым числам, а не весь payload страницы.
+
+Контракт для шага 5 (карандаши в UI). Один вызов делает три вещи: применяет правку тем же кодом,
+что и `db/edit.py`, пересчитывает payload страницы (`portal.build_soccer.compose_payload`) и
+возвращает только то, что в нём сдвинулось — вместо 3.9 МБ. Предпросмотр (`persist=False`) считает
+по копии базы и живую не трогает: «что сдвинется» и «что станет» считает один и тот же код, другого
+способа не будет.
+
+Дельта повторяет форму payload: лист — это `[было, стало]`, а списки словарей с опознавательным
+полем (`player`, `id`, `name`) разбираются по нему, поэтому правка счёта приезжает как
+«ectoPower: active_elo 1725 → 1719», а не как новый массив из 92 профилей. Порядок в таких списках
+тоже данные (место в мастер-таблице = ранг), поэтому перестановка уезжает в `__order__`. Тяжёлые списки —
+истории игроков и таблицы матчей — в снимке свёрнуты в длину: изменённая строка едет в поле `match`,
+а если список изменился по составу, приходит `{«__length__»: [было, стало]}` — значит, нужен пересбор.
+
+`expect` — ревизия из предпросмотра. Между «посмотрел» и «записал» база может измениться под другим
+редактором; тогда запись отклоняется, а не перетирает чужую правку.
+
+Транспорта здесь нет намеренно: страница публичная, поэтому личность редактора обязана
+проверяться на сервере в каждом вызове, а `editor` обязан приходить из этой проверки, а не из
+запроса. Лицом API служит `db/serve.py`; CLI ниже печатает ровно тот JSON, который вернёт
+обработчик.
+
+    python db/api.py show 2928                                  # ревизия и строка глазами страницы
+    python db/api.py set-score 2928 5 1 --editor aeros           # предпросмотр, база цела
+    python db/api.py set-score 2928 5 1 --editor aeros --apply   # запись
+    python db/api.py undo last --editor aeros --apply --expect <revision>
+    python db/api.py undo op:<метка> --editor aeros --apply   # операцию целиком, какой бы старой она ни была
+"""
+
+import argparse
+import contextlib
+import hashlib
+import io
+import json
+import sqlite3
+import sys
+import tempfile
+import time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from db import edit  # noqa: E402
+from portal.build_soccer import compose_payload  # noqa: E402
+from portal.names import clean_alias  # noqa: E402
+
+DB_PATH = ROOT / "data" / "nst.db"
+# Десять тысяч строк на игрока: в общий снимок попадает только длина, а сами строки — для тех
+# игроков, у которых действительно что-то сдвинулось (см. `_attach_history`).
+HEAVY_FIELDS = ("match_history",)
+# Поле, по которому список словарей однозначен: один элемент — один ключ.
+IDENTITY_FIELDS = ("player", "id", "name", "doc_key", "rivalry", "club", "team", "stage")
+
+REVISION_SQL = """
+select coalesce(group_concat(
+    m.id || '|' || m.status || '|' || coalesce(m.hidden_by,'') || '|' || coalesce(m.duplicate_of,'')
+    || '|' || m.manual
+    || '|' || (select coalesce(group_concat(s.score,'/'), '') from match_sides s where s.match_id = m.id),
+    ';' order by m.id), '')
+from matches m
+"""
+
+
+def revision(db_path=DB_PATH):
+    """Отпечаток того, что правится: статус матча, его скрытость, метка ручной правки и счета сторон.
+
+    По содержимому, а не по часам: две правки в одну секунду дали бы одинаковый `updated_at`, а
+    пересборка неизменного содержимого ревизию не сдвигает.
+    """
+    con = sqlite3.connect(db_path)
+    try:
+        digest = hashlib.sha256(con.execute(REVISION_SQL).fetchone()[0].encode()).hexdigest()
+    finally:
+        con.close()
+    return digest[:16]
+
+
+@contextlib.contextmanager
+def _quiet():
+    """Сборка страницы печатает отчёты в stdout. Для API это не ответ, а мусор: уводим их в stderr —
+    чтобы `python db/api.py ... | jq` работал и чтобы ни одна строчка не потерялась, в том числе
+    когда пересчёт упал на середине."""
+    buffer = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buffer):
+            yield
+    finally:
+        sys.stderr.write(buffer.getvalue())
+
+
+def _identity(items):
+    """Поле, по которому список словарей можно сопоставить элемент с элементом, или None."""
+    if not items or not all(isinstance(item, dict) for item in items):
+        return None
+    for field in IDENTITY_FIELDS:
+        if all(field in item for item in items):
+            keys = [str(item[field]) for item in items]
+            if len(set(keys)) == len(keys):
+                return field
+    return None
+
+
+def _light(value):
+    """Снимок payload: тяжёлые списки сворачиваются в `<поле>_count`, остальное — как в странице."""
+    if isinstance(value, dict):
+        out = {}
+        for key, item in value.items():
+            if key in HEAVY_FIELDS and isinstance(item, list):
+                out[f"{key}_count"] = len(item)
+            else:
+                out[key] = _light(item)
+        return out
+    if isinstance(value, list):
+        return [_light(item) for item in value]
+    return value
+
+
+def snapshot(db_path=DB_PATH):
+    """Payload страницы в сравнимом виде — за один пересчёт, тем же кодом, что публикует сайт.
+
+    Истории игроков вынесены отдельно: в общий снимок они не влезают (4 МБ на 92 игрока), но
+    дельта по двум затронутым игрокам стоит ровно нескольких строк.
+    """
+    with _quiet():
+        payload = compose_payload(db_path)
+    return {"view": _light(payload),
+            "history": {p["player"]: p.get("match_history") or [] for p in payload["profiles"]}}
+
+
+def _attach_history(delta, before, after):
+    """Для игроков, у которых сдвинулись числа, добавить и сдвинувшиеся строки истории."""
+    for name, changes in delta.get("profiles", {}).items():
+        if not isinstance(changes, dict):
+            # Состав профилей изменился (завелся новый игрок или пропал последний матч): это
+            # `__length__` или `[было, стало]`, а не набор полей — строк истории тут не бывает.
+            continue
+        rows = _diff_list(before["history"].get(name, []), after["history"].get(name, []))
+        if rows:
+            changes["match_history"] = rows
+
+
+def diff(before, after):
+    """Дерево изменений: только то, что разное. Пустой словарь = правка не сдвинула ничего видимого."""
+    if before == after:
+        return {}
+    if isinstance(before, dict) and isinstance(after, dict):
+        out = {}
+        for key in sorted(set(before) | set(after), key=str):
+            if key not in before or key not in after:
+                out[key] = [before.get(key), after.get(key)]
+                continue
+            nested = diff(before[key], after[key])
+            if nested:
+                out[key] = nested
+        return out
+    if isinstance(before, list) and isinstance(after, list):
+        return _diff_list(before, after)
+    return [before, after]
+
+
+def _diff_list(before, after):
+    field = _identity(before)
+    if field is not None and field == _identity(after):
+        return _diff_keyed(before, after, field)
+    if len(before) != len(after):
+        # Состав изменился (строку скрыли, вернули, добавили). Позиционное сравнение показало бы
+        # хвост целиком, поэтому честно: этот список нужно пересобрать, а не латать.
+        return {"__length__": [len(before), len(after)]}
+    out = {}
+    for index, (old, new) in enumerate(zip(before, after)):
+        nested = diff(old, new)
+        if nested:
+            out[str(index)] = nested
+    return out
+
+
+def _diff_keyed(before, after, field):
+    old_items = {str(item[field]): item for item in before}
+    new_items = {str(item[field]): item for item in after}
+    out = {}
+    # Порядок в таблицах сам по себе данные: мастер-таблица и лидеры читаются по месту в списке.
+    # Поэтому перестановка уезжает в `__order__`, а не остаётся незамеченной.
+    order_before = [str(item[field]) for item in before]
+    order_after = [str(item[field]) for item in after]
+    if order_before != order_after:
+        out["__order__"] = [order_before, order_after]
+    for key in sorted(old_items.keys() | new_items.keys()):
+        old, new = old_items.get(key), new_items.get(key)
+        if old is None or new is None:
+            out[key] = [old, new]
+            continue
+        nested = diff(old, new)
+        if nested:
+            out[key] = nested
+    return out
+
+
+LOCATE_SQL = """
+select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.note,
+       m.in_rating_pool, m.phase, m.is_playoff, m.played_on, m.date_precision,
+       m.source, m.source_ref, m.source_locator, m.source_page, m.source_text, m.source_date_raw,
+       t.season, t.name as tournament, st.name as stage, d.doc_key,
+       sa.label as label_a, sb.label as label_b, sa.score as score_a, sb.score as score_b,
+       sa.outcome as outcome_a, sb.outcome as outcome_b,
+       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
+          join players p on p.id = sp.player_id where sp.side_id = sa.id) as players_a,
+       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
+          join players p on p.id = sp.player_id where sp.side_id = sb.id) as players_b,
+       -- Редактор правит строку, не открывая базу: пусть карточка сразу показывает, откуда она
+       -- взялась (ссылки источника) и что с ней не так (задача из очереди редактуры).
+       (select json_group_array(json_object('kind', l.kind, 'url', l.url))
+          from match_links l where l.match_id = m.id) as links,
+       (select i.payload from incoming i
+          where i.matched_match_id = m.id and i.verdict = 'conflict' limit 1) as review
+from matches m
+join tournaments t on t.id = m.tournament_id
+join stages st on st.id = m.stage_id
+join match_sides sa on sa.match_id = m.id and sa.side_index = 0
+join match_sides sb on sb.match_id = m.id and sb.side_index = 1
+left join tournament_docs d on d.id = m.doc_id
+"""
+
+
+def _norm(text):
+    return " ".join(str(text or "").replace("&", " ").lower().split())
+
+
+def _sides(row):
+    """Обе стороны строки: как её показал источник и как её помнит база. Порядок не важен —
+    страница рисует пару то так, то эдак."""
+    left = {_side_names(row["label_a"]), _side_names(row["players_a"])}
+    right = {_side_names(row["label_b"]), _side_names(row["players_b"])}
+    return left, right
+
+
+def _side_names(text):
+    """Сторона как состав карточек: «Bubnov & E_not», «E_not & Bubnov», «E_not & Tymoschuk» — одно.
+
+    Порядок игроков страница меняет (в истории партнёр идёт за игроком), а написание — тем более:
+    таблица турнира показывает слово источника, карточка — каноник из справочника. Сверять клик
+    строкой означало бы «в базе нет такой строки» ровно там, где человек смотрит чаще всего.
+    """
+    names = {clean_alias(part.strip()).lower() for part in str(text or "").split("&") if part.strip()}
+    return " ".join(sorted(names))
+
+
+def _shown(row):
+    """Что строка показывает в колонке счёта, или None — если сверять клик не по чему.
+
+    Строка без счёта (суперфинал Сольного по пенальти, выводные встречи молодёжки) рисует не
+    «N:N», а свою заметку. Сверять такой клик по цифрам означало бы «ничего не найдено» ровно
+    на тех строках, ради которых человек и открывает редактор.
+    """
+    if row["score_a"] is not None and row["score_b"] is not None:
+        return {f"{row['score_a']}:{row['score_b']}", f"{row['score_b']}:{row['score_a']}"}
+    note = (row["note"] or "").strip()
+    return {note.replace(" ", "")} if note else None
+
+
+def _pair_matches(want, left, right):
+    """Пара указана верно в любую сторону: страница рисует «A vs B» и «B vs A» одним матчем.
+
+    Каждая сторона сравнивается со всеми своими написаниями (подпись источника и ники из базы).
+    """
+    a, b = sorted(want)
+    return (a in left and b in right) or (a in right and b in left)
+
+
+def locate(a, b, *, season=None, tour=None, score=None, include_hidden=False, db_path=DB_PATH):
+    """Строки базы, похожие на то, что редактор увидел на странице.
+
+    Идентификатора у строки в payload страницы нет, поэтому редактор указывает на неё текстом
+    (пара, счёт, тур), а наружу отдаются **все** кандидаты: если под описание подходит две строки,
+    выбирает человек, а не совпадение по первому.
+    """
+    want = {_side_names(a), _side_names(b)}
+    score = str(score or "").strip() or None
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    found = []
+    for row in con.execute(LOCATE_SQL):
+        left, right = _sides(row)
+        if not _pair_matches(want, left, right):
+            continue
+        if season and _norm(row["season"]) != _norm(season):
+            continue
+        if tour and _norm(tour) not in (_norm(row["tour"]), _norm(row["stage"])):
+            continue
+        shown = _shown(row)
+        if score and shown is not None and score.replace(" ", "") not in shown:
+            continue
+        if row["hidden_by"] and not include_hidden:
+            continue
+        found.append(_candidate(row))
+    con.close()
+    return _group_pairs(found, db_path)
+
+
+def _candidate(row):
+    """Строка LOCATE_SQL в том виде, в котором её показывает панель редактора."""
+    return dict(row, display=_display(row),
+                links=json.loads(row["links"] or "[]"),
+                review=json.loads(row["review"]) if row["review"] else None,
+                sides=[
+            {"side_index": 0, "label": row["label_a"], "players": row["players_a"],
+             "score": row["score_a"], "outcome": row["outcome_a"]},
+            {"side_index": 1, "label": row["label_b"], "players": row["players_b"],
+             "score": row["score_b"], "outcome": row["outcome_b"]},
+        ])
+
+
+# Порядок, по которому из связки выбирается «та самая» строка: сначала то, что показывает страница.
+VISIBLE_FIRST = {"catalog": 0, "special": 1, "team": 2, "pool": 3}
+
+
+def _group_pairs(rows, con_path):
+    """Собрать связки в один кандидат: игра Сезона 8–9 лежит в базе двумя строками, и редактор
+    должен видеть одну игру, а не гадать, какую из двух копий править."""
+    if not rows:
+        return rows
+    con = sqlite3.connect(con_path)
+    groups = {}
+    for row in rows:
+        key = tuple(sorted(edit.pair_ids(con, row["id"])))
+        groups.setdefault(key, []).append(row)
+    con.close()
+
+    ordered = []
+    for key, members in groups.items():
+        winner = min(members, key=lambda row: VISIBLE_FIRST.get(row["row_set"], 9))
+        winner["linked"] = [other for other in key if other != winner["id"]]
+        if winner["linked"]:
+            winner["display"] += f" · связка #{', #'.join(str(other) for other in winner['linked'])}"
+        ordered.append(winner)
+    return sorted(ordered, key=lambda row: VISIBLE_FIRST.get(row["row_set"], 9))
+
+
+def _display(row):
+    score = (f"{row['score_a']}:{row['score_b']}" if row["score_a"] is not None
+             else (row["note"] or "—"))
+    place = row["tour"] or row["stage"] or ""
+    return " • ".join(part for part in (row["season"], place, f"{row['label_a'] or row['players_a']} "
+                                        f"{score} {row['label_b'] or row['players_b']}") if part)
+
+
+def match_row(con, match_id):
+    """Строка матча так, как её показывает страница: стороны, счёт, статус, документ."""
+    row = con.execute(
+        """select m.id, m.row_set, m.status, m.manual, m.note, m.hidden_by, m.source, m.source_ref,
+                  t.season, t.name tournament, s.name stage, m.league, m.tour, d.doc_key, d.title doc_title
+           from matches m
+           join tournaments t on t.id = m.tournament_id
+           join stages s on s.id = m.stage_id
+           left join tournament_docs d on d.id = m.doc_id
+           where m.id = ?""", (match_id,)).fetchone()
+    if not row:
+        return None
+    out = {key: row[key] for key in row.keys() if row[key] not in (None, "")}
+    # Подпись стороны есть не у всех строк (пуловые заводятся ником), а UI рисует именно её:
+    # пустое поле заполняем игроками, чтобы форма `sides` не зависела от среза строки.
+    out["sides"] = [{"side_index": side["side_index"], "players": side["players"],
+                     "label": side["label"] or side["players"], "score": side["score"],
+                     "outcome": side["outcome"]}
+                    for side in edit.sides_of(con, match_id)]
+    return out
+
+
+def _publish():
+    """Слой очереди публикаций: запросы на выкат ставит и закрывает `db/publish.py`.
+
+    Модуль импортируется внутри функции, а не в шапке файла: `db/publish.py` сам зовёт `db/api.py`,
+    чтобы считать отпечаток базы тем же кодом, что видит панель. Цикл на уровне модулей оставил бы
+    один из двух файлов наполовину загруженным — здесь он возникает только на вызове.
+    """
+    from db import publish
+    return publish
+
+
+def _apply(con, operation, editor, args):
+    """Одна операция на одном соединении — те же функции вызывает CLI `db/edit.py`."""
+    if operation == "set-score":
+        return edit.set_score(con, args["match_id"], args["s1"], args["s2"], editor)
+    if operation == "set-players":
+        return edit.set_players(con, args["match_id"], args["sides"], editor)
+    if operation == "set-source":
+        return edit.set_source(con, args["match_id"], editor, args.get("note"), args.get("links"))
+    if operation == "set-place":
+        return edit.set_place(con, args["match_id"], editor, args.get("tour"),
+                              args.get("league"), args.get("stage"))
+    if operation == "set-date":
+        return edit.set_date(con, args["match_id"], editor, args.get("played_on"),
+                             args.get("source_date_raw"))
+    if operation == "set-phase":
+        return edit.set_phase(con, args["match_id"], editor, args.get("phase"), args.get("playoff"))
+    if operation == "set-provenance":
+        return edit.set_provenance(con, args["match_id"], editor, args.get("source"),
+                                   args.get("source_ref"), args.get("source_locator"),
+                                   args.get("source_page"), args.get("source_text"))
+    if operation == "drop-match":
+        return edit.drop_match(con, args["match_id"], editor)
+    if operation == "drop-tournament":
+        return edit.drop_tournament(con, args["doc_key"], editor)
+    if operation == "rename-player":
+        return edit.rename_player(con, args["player_id"], args["nick"], editor)
+    if operation == "merge-player":
+        return edit.merge_player(con, args["keep_id"], args["drop_id"], editor)
+    if operation == "add-match":
+        return edit.add_match(con, args, editor)
+    if operation == "add-tournament":
+        return edit.add_tournament(con, args, editor)
+    if operation == "set-doc":
+        return edit.set_doc(con, args["doc_key"], editor, args.get("title"), args.get("frame"))
+    if operation == "set-rating":
+        return edit.set_rating(con, args["match_id"], bool(args.get("rated", True)), editor)
+    if operation == "rate-scope":
+        return edit.set_rating_scope(con, bool(args.get("rated", True)), editor,
+                                     args.get("season"), args.get("doc_key"))
+    if operation == "void":
+        return edit.set_status(con, args["match_id"], "void", editor, args.get("reason", ""))
+    if operation == "unvoid":
+        return edit.set_status(con, args["match_id"], "played", editor)
+    if operation == "unhide":
+        return edit.unhide(con, args["match_id"], editor)
+    if operation == "publish-request":
+        # Запрос в очередь публикаций — не редактура архива: журнал правок его не ведёт, таблица
+        # меняется только функциями db/publish.py. На витрине этот вызов не меняет ничего — цифры
+        # обновит сборка, а не панель.
+        return _publish().request(con, editor, args.get("note", ""))
+    if operation == "undo":
+        return edit.undo(con, args["what"])
+    raise edit.EditError(f"неизвестная операция {operation}")
+
+
+def _clone(db_path, target):
+    source = sqlite3.connect(db_path)
+    destination = sqlite3.connect(target)
+    try:
+        source.backup(destination)
+    finally:
+        destination.close()
+        source.close()
+
+
+@contextlib.contextmanager
+def _preview_db(db_path):
+    """Копия базы в temp: предпросмотр правит её, живой файл остаётся нетронутым."""
+    folder = Path(tempfile.mkdtemp(prefix="nst-preview-"))
+    target = folder / "nst.db"
+    try:
+        _clone(db_path, target)
+        yield target
+    finally:
+        for leftover in folder.glob("*"):
+            leftover.unlink()
+        folder.rmdir()
+
+
+def _apply_and_snapshot(target, operation, editor, args):
+    con = edit.connect(target)
+    try:
+        result = _apply(con, operation, editor, args)
+        match_id = result.get("match_id")
+        row = match_row(con, match_id) if match_id else None
+        after = snapshot(target)
+    finally:
+        con.close()
+    return result, row, after
+
+
+def mutate(operation, args, editor, *, persist=False, expect=None, db_path=DB_PATH):
+    """Предпросмотр или запись правки + дельта по затронутым числам.
+
+    Снимок берётся ДО правки — на живой базе для записи и на копии для предпросмотра: смотреть
+    «что сдвинется» надо на том же коде, который потом публикует страницу.
+    """
+    if not editor:
+        raise edit.EditError("не указан редактор: правка без подписи не записывается")
+
+    started = time.perf_counter()
+    base = revision(db_path)
+    if expect is not None and expect != base:
+        raise edit.EditError(
+            f"база изменилась с момента предпросмотра: ожидалась {expect}, сейчас {base}. "
+            f"Пересмотри правку.")
+
+    before = snapshot(db_path)
+    if persist:
+        result, row, after = _apply_and_snapshot(Path(db_path), operation, editor, args)
+    else:
+        with _preview_db(Path(db_path)) as clone:
+            result, row, after = _apply_and_snapshot(clone, operation, editor, args)
+
+    changed = diff(before["view"], after["view"])
+    _attach_history(changed, before, after)
+
+    return {
+        "ok": True,
+        "operation": operation,
+        "persisted": persist,
+        "editor": editor,
+        "revision": base,
+        "revision_after": revision(db_path),
+        "changes": [{"table": table, "row_id": row_id, "field": field, "old": old, "new": new}
+                    for table, row_id, field, old, new in result.get("changes", [])],
+        "journal": result.get("journal", []) if persist else [],
+        "linked": result.get("linked", []),
+        "op": result.get("op", ""),
+        "created": result.get("created", []),
+        "reverted": [entry["id"] for entry in result.get("entries", [])],
+        "released": result.get("released", 0),
+        "match": row,
+        "delta": changed,
+        "recomputed_in_ms": int((time.perf_counter() - started) * 1000),
+    }
+
+
+LOG_SQL = """
+select c.id, c.table_name, c.row_id, c.field, c.old_value, c.new_value, c.editor, c.created_at,
+       c.reverted_at, c.op
+from corrections c
+order by c.id desc limit ?
+"""
+
+LIVE_BY_OP_SQL = "select op, count(*) from corrections where reverted_at is null group by op"
+
+MATCH_DISPLAY_SQL = """
+select t.season, coalesce(m.tour, st.name) as tour, st.name as stage,
+       sa.label as label_a, sb.label as label_b, sa.score as score_a, sb.score as score_b,
+       sa.outcome as outcome_a, sb.outcome as outcome_b, m.note,
+       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
+          join players p on p.id = sp.player_id where sp.side_id = sa.id) as players_a,
+       (select coalesce(group_concat(p.nick, ' & '), '') from side_players sp
+          join players p on p.id = sp.player_id where sp.side_id = sb.id) as players_b
+from matches m
+join tournaments t on t.id = m.tournament_id
+join stages st on st.id = m.stage_id
+join match_sides sa on sa.match_id = m.id and sa.side_index = 0
+join match_sides sb on sb.match_id = m.id and sb.side_index = 1
+where m.id = ?
+"""
+
+
+def _match_of(con, entry):
+    """Матч, к которому относится запись журнала: `matches.row_id` или сторона внутри матча.
+
+    Импортёры пересоздают строки, и id из журнала может указать на сторону, которой в новой базе
+    уже нет. Запись журнала от этого не перестаёт быть записью — просто не показываем матч.
+    """
+    if entry["table_name"] == "matches":
+        return entry["row_id"]
+    if entry["table_name"] == "match_sides":
+        side = con.execute("select match_id from match_sides where id = ?", (entry["row_id"],)).fetchone()
+        return side[0] if side else None
+    return None
+
+
+def journal_entries(limit=20, db_path=DB_PATH):
+    """Журнал правок для панели редактора: кто, что и по какому матчу менял, и жива ли правка.
+
+    `op` — метка операции, `op_live` — сколько её записей действует ещё: по ним панель решает,
+    есть ли что откатывать целиком (`undo op:<метка>`), когда поверх лежат более новые правки.
+    """
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    # Действующие записи по всем меткам — одним запросом: журнал зовётся на каждый показ панели.
+    live_by_op = dict(con.execute(LIVE_BY_OP_SQL))
+    entries = []
+    for row in con.execute(LOG_SQL, (limit,)):
+        item = dict(row)
+        item["live"] = item["reverted_at"] is None
+        # Запись без метки — сама по себе одна операция: её живой счёт равен ей самой.
+        item["op_live"] = live_by_op.get(item["op"], 0) if item["op"] else int(item["live"])
+        match_id = _match_of(con, row)
+        display = con.execute(MATCH_DISPLAY_SQL, (match_id,)).fetchone() if match_id else None
+        if display:
+            item["match"] = _display(display)
+        entries.append(item)
+    con.close()
+    return entries
+
+
+QUEUE_SQL = """
+select id, batch, source, matched_match_id, payload
+from incoming where verdict = 'conflict' order by batch, id
+"""
+
+
+def queue(db_path=DB_PATH):
+    """Очередь редактуры: задача, ссылки источника и строка, которую ради неё править.
+
+    Задача без перехода к матчу бесполезна — редактор получил бы список и пошёл искать встречу
+    руками по таблице турнира. Поэтому к каждой записи прикладывается карточка строки.
+    """
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    tasks = []
+    for row in con.execute(QUEUE_SQL):
+        payload = json.loads(row["payload"] or "{}")
+        match = con.execute(LOCATE_SQL + " where m.id = ?", (row["matched_match_id"],)).fetchone() \
+            if row["matched_match_id"] else None
+        tasks.append({"id": row["id"], "batch": row["batch"], "match_id": row["matched_match_id"],
+                      "task": payload.get("задача") or "", "links": payload.get("ссылки") or [],
+                      "tour": payload.get("тур") or "", "sides": payload.get("стороны") or [],
+                      "shown": payload.get("как_выглядит") or "",
+                      "row": _candidate(match) if match else None})
+    con.close()
+    return tasks
+
+
+CONTAINERS_SQL = """
+select kind, doc_key, title from tournament_docs order by kind desc, order_index, id
+"""
+
+
+def containers(db_path=DB_PATH):
+    """Чем редактор может принять новую игру: документы турниров и сезонные бакеты.
+
+    Сезон берётся из `tournaments`, а не выдумывается: строка обязана попасть в тот же бакет,
+    который читает страница сезона, иначе игра просто не покажется.
+    """
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    docs = [dict(row) for row in con.execute(CONTAINERS_SQL)]
+    seasons = [row[0] for row in con.execute(
+        "select distinct season from tournaments order by season")]
+    con.close()
+    return {"docs": docs, "seasons": seasons}
+
+
+def doc_frame(doc_key, db_path=DB_PATH):
+    """Рамка турнира глазами редактора: JSON, который он правит, плюс служебные поля читателя."""
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    row = con.execute(
+        """select id, kind, doc_key, title, payload, match_field, match_keys, manual
+           from tournament_docs where doc_key = ?""", (doc_key,)).fetchone()
+    con.close()
+    if not row:
+        raise edit.EditError(f"Турнира {doc_key!r} в базе нет")
+    return {**dict(row), "frame": json.loads(row["payload"])}
+
+
+PLAYERS_SQL = """
+select p.id, p.nick, p.slug, p.kind,
+       (select count(*) from side_players sp where sp.player_id = p.id) as sides
+from players p
+where p.nick like ? escape '\\'
+order by sides desc, p.nick
+limit ?
+"""
+
+
+def players(query="", limit=30, db_path=DB_PATH):
+    """Карточки по нику: человек ищет игрока текстом, а не номером строки.
+
+    `%` и `_` в запросе — часть ника, а не маска: иначе «Sokol_5» нашёл бы половину архива.
+    """
+    escaped = str(query or "").replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    rows = [dict(row) for row in con.execute(PLAYERS_SQL, (f"%{escaped}%", max(1, min(int(limit), 200))))]
+    con.close()
+    return rows
+
+
+def state(db_path=DB_PATH):
+    """Что редактор видит о базе, прежде чем править: ревизия, размер, живые правки, очередь."""
+    con = sqlite3.connect(db_path)
+    try:
+        return {
+            "revision": revision(db_path),
+            "matches": con.execute("select count(*) from matches").fetchone()[0],
+            "visible": con.execute("select count(*) from matches where hidden_by is null").fetchone()[0],
+            "manual": con.execute("select count(*) from matches where manual = 1").fetchone()[0],
+            "corrections_live": con.execute(
+                "select count(*) from corrections where reverted_at is null").fetchone()[0],
+            "queue": con.execute("select count(*) from incoming where verdict = 'conflict'").fetchone()[0],
+        }
+    finally:
+        con.close()
+
+
+def publish_queue(db_path=DB_PATH):
+    """Очередь публикаций глазами панели: что стоит в очереди и сколько правок ещё живо.
+
+    Число живых правок приходит тем же вызовом, что и состояние базы: человек сверяет запрос
+    очереди с той же цифрой, что видит в статус-строке, а не с второй, посчитанной по-своему.
+    """
+    layer = _publish()
+    return {"requests": layer.pending(db_path),
+            "corrections_live": state(db_path)["corrections_live"]}
+
+
+def main(argv=None):
+    sys.stdout.reconfigure(encoding="utf-8")
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    common = argparse.ArgumentParser(add_help=False)
+    common.add_argument("--editor", default="owner")
+    common.add_argument("--apply", action="store_true", help="записать; без него — предпросмотр")
+    common.add_argument("--expect", help="ревизия из предпросмотра: не писать, если база изменилась")
+    commands = parser.add_subparsers(dest="operation", required=True)
+
+    for name, help_text in (("show", "ревизия и строка глазами страницы"),
+                            ("void", "снять матч с зачёта"), ("unvoid", "вернуть матч на зачёт"),
+                            ("unhide", "вернуть строку на витрину")):
+        sub = commands.add_parser(name, help=help_text, parents=[common])
+        sub.add_argument("match_id", type=int)
+        if name == "void":
+            sub.add_argument("--reason", default="")
+
+    sub = commands.add_parser("set-score", help="править счёт матча", parents=[common])
+    sub.add_argument("match_id", type=int)
+    sub.add_argument("s1", type=int)
+    sub.add_argument("s2", type=int)
+
+    sub = commands.add_parser("set-players", help="править, кто играл в матче", parents=[common])
+    sub.add_argument("match_id", type=int)
+    sub.add_argument("a", help="состав первой стороны; пара 2×2 — через « & »")
+    sub.add_argument("b", help="состав второй стороны")
+
+    sub = commands.add_parser("undo",
+                              help="откатить: 'last', op:<метка> операции или id записи журнала",
+                              parents=[common])
+    sub.add_argument("what", metavar="'last'|op:<метка>|<id>")
+
+    args = parser.parse_args(argv)
+    try:
+        return _run(args)
+    except edit.EditError as error:
+        print(json.dumps({"ok": False, "error": str(error)}, ensure_ascii=False))
+        return 1
+
+
+def _run(args):
+    if args.operation == "show":
+        con = edit.connect()
+        try:
+            answer = {"ok": True, "revision": revision(), "match": match_row(con, args.match_id)}
+        finally:
+            con.close()
+        print(json.dumps(answer, ensure_ascii=False, indent=2))
+        return 0
+
+    response = mutate(args.operation, _operation_args(args), args.editor,
+                      persist=args.apply, expect=args.expect)
+    print(json.dumps(response, ensure_ascii=False, indent=2))
+    return 0
+
+
+def _operation_args(args):
+    if args.operation == "set-score":
+        return {"match_id": args.match_id, "s1": args.s1, "s2": args.s2}
+    if args.operation == "set-players":
+        return {"match_id": args.match_id, "sides": [args.a, args.b]}
+    if args.operation == "undo":
+        return {"what": args.what}
+    if args.operation == "void":
+        return {"match_id": args.match_id, "reason": args.reason}
+    return {"match_id": args.match_id}
+
+
+if __name__ == "__main__":
+    sys.exit(main())

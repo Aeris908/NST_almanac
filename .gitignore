@@ -2,6 +2,7 @@
 # Python & Caches
 # ==========================================
 __pycache__/
+.ruff_cache/
 *.py[cod]
 *$py.class
 *.so
@@ -73,3 +74,11 @@ desktop.ini
 .env
 .env.local
 *.secret
+
+# ==========================================
+# Generated store & raw dumps
+# ==========================================
+# Хранилище пересоздаёт python db/build_db.py, живые выгрузки VK занимают 109 МБ —
+# в git попадают только носители из data/*.json, которые питают импортёры.
+data/nst.db
+data/vk_dump_*/

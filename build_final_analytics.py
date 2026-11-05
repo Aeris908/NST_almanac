@@ -1,53 +1,60 @@
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
-import os
-import re
+"""Collect the Goal 3 match pool, rate it with Elo and export the master table plus dashboard."""
+
 import json
-import urllib.request
+import os
+import sys
 import urllib.parse
+import urllib.request
+from collections import defaultdict, namedtuple
+from dataclasses import dataclass
+from pathlib import Path
+
 try:
     import requests
 except ImportError:
     requests = None
-from collections import defaultdict
 
-def http_get_json(url, headers=None, timeout=10):
-    if requests is not None:
-        try:
-            r = requests.get(url, headers=headers or {}, timeout=timeout)
-            if r.status_code == 200:
-                return r.json()
-        except Exception:
-            pass
-    try:
-        req = urllib.request.Request(url, headers=headers or {'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=timeout) as response:
-            return json.loads(response.read().decode('utf-8'))
-    except Exception:
-        return None
+sys.stdout.reconfigure(encoding="utf-8")
 
-TOKEN = "5b312f445b312f445b312f44e85875dc6155b315b312f4431ed8ef6bb3494dacba55020"
+from portal.env_file import secret  # noqa: E402
+
+VK_METHOD_URL = "https://api.vk.com/method/{method}"
+VK_GROUP_GET_METHOD = "groups.getById"
+VK_GROUP_SLUG = "nekketsu"
+VK_GROUP_NAME_FALLBACK = "NEKKETSU SPORTS TOURNAMENTS"
+SPORTCUP_GAMES_URL = "https://sportcup.org/rest/public/tournaments/{uuid}/games?stageId=1"
+SPORTCUP_SNAPSHOT_PATH = Path("data/sportcup_games.json")
+HTTP_TIMEOUT_SECONDS = 10
+SPORTCUP_HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+URLLIB_FALLBACK_HEADERS = {"User-Agent": "Mozilla/5.0"}
+
+# Read from the environment (see .env.example); without it the build stays offline
+# and the group name falls back to the constant above.
+VK_API_TOKEN = secret("VK_API_TOKEN")
 API_VERSION = "5.199"
 GROUP_ID = 66162180
 
-# 1. VK API helper
-def call_vk(method, params):
-    try:
-        p = params.copy()
-        p["access_token"] = TOKEN
-        p["v"] = API_VERSION
-        url = f"https://api.vk.com/method/{method}?" + urllib.parse.urlencode(p)
-        data = http_get_json(url, timeout=10)
-        return data if data else {}
-    except Exception:
-        return {}
+COMMUNITY_NAME = "NEKKETSU SPORTS TOURNAMENTS"
+COMMUNITY_URL = "https://vk.ru/nekketsu"
+GAME_TITLE = "Kunio-kun no Nekketsu Soccer League (Goal 3)"
+# This module writes the analytics snapshot behind the Markdown dashboard. The master table
+# the site reads (nekketsu_master_table.json, at the repo root) is regenerated from the same
+# match pool by build_master_table.py — see portal/master_table.py for its rating model.
+ANALYTICS_TABLE_PATH = Path("data/analytics_master_table.json")
+# Override to reproduce the pool before the Season 8 corrections (point at a missing file
+# to disable them entirely) — used by the parity check in the migration to a database.
+DECISIONS_PATH = Path(os.environ.get("SPORTCUP_DECISIONS", "data/sportcup_decisions.json"))
+DASHBOARD_PATH = Path("nekketsu_dashboard.md")
+GENERATION_DATE = "2026-10-24"
+TOP_DOMINATORS_LIMIT = 10
+MIN_MATCHES_FOR_DEFENSIVE = 30
 
-print("Verifying VK API connection...")
-group_info = call_vk("groups.getById", {"group_id": "nekketsu"})
-g_name = group_info.get("response", {}).get("groups", [{}])[0].get("name", "NEKKETSU SPORTS TOURNAMENTS") if group_info.get("response") else "NEKKETSU SPORTS TOURNAMENTS"
-print(f"Connected to VK Group: {g_name} (ID: {GROUP_ID})")
+SEASON_8 = "Season 8"
+SEASON_9 = "Season 9"
+CUP_TOURNAMENT = "Кубок лиг"
+REGULAR_STAGE = "Регулярный сезон"
+TECHNICAL_DEFEAT_NOTE = "Техническое поражение (снят с турнира)"
 
-# Nickname normalization map
 NAME_MAP = {
     "ectopower": "ectoPower",
     "ecto": "ectoPower",
@@ -195,15 +202,16 @@ NAME_MAP = {
     "gagagatch": "gagagatch",
 }
 
+
 def norm(name):
+    """Canonical spelling of a nickname, or the trimmed input when it is unmapped."""
     if not name:
         return "Unknown"
     clean = str(name).strip().lower()
     return NAME_MAP.get(clean, str(name).strip())
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
-t_configs = [
+T_CONFIGS = [
     # Season 8 (Regular stage)
     {"season": "Season 8", "league": "Дворовая", "uuid": "9748124e-86ad-45b1-b422-20bbd62bef28"},
     {"season": "Season 8", "league": "Средняя", "uuid": "5500f1f3-db8b-400e-9838-1f90981db281"},
@@ -214,47 +222,167 @@ t_configs = [
     {"season": "Season 9", "league": "Высшая", "uuid": "vpe8isci7oea"},
 ]
 
-all_matches = []
 
-print("Extracting matches from Sportcup API...")
-for cfg in t_configs:
-    url = f"https://sportcup.org/rest/public/tournaments/{cfg['uuid']}/games?stageId=1"
+def http_get_json(url, headers=None, timeout=HTTP_TIMEOUT_SECONDS):
+    """Fetch JSON through requests when installed, otherwise through urllib; None on failure."""
+    if requests is not None:
+        try:
+            response = requests.get(url, headers=headers or {}, timeout=timeout)
+            if response.status_code == 200:
+                return response.json()
+        except Exception:
+            pass
     try:
-        data = http_get_json(url, headers=headers, timeout=10)
-        if data:
-            games = data.get("list", [])
-            for g in games:
-                if g.get("resultStatus") == "FINAL":
-                    p1 = norm(g["member1"]["title"])
-                    p2 = norm(g["member2"]["title"])
-                    s1 = g["scoreMember1"]
-                    s2 = g["scoreMember2"]
-                    ot = g.get("overtimeWin", False)
-                    pk = g.get("afterGameWin", False)
-                    if s1 is not None and s2 is not None:
-                        is_tech = (cfg["season"] == "Season 8" and (p1 == "RVD (МГБ)" or p2 == "RVD (МГБ)"))
-                        all_matches.append({
-                            "season": cfg["season"],
-                            "tournament": f"{cfg['season']} {cfg['league']} лига",
-                            "stage": "Регулярный сезон",
-                            "p1": p1,
-                            "p2": p2,
-                            "s1": int(s1),
-                            "s2": int(s2),
-                            "ot": ot,
-                            "pk": pk,
-                            "is_playoff": False,
-                            "is_technical": is_tech,
-                            "is_forfeit": is_tech,
-                            "note": "Техническое поражение (снят с турнира)" if is_tech else ""
-                        })
-    except Exception as e:
-        print(f"Error {cfg['uuid']}: {e}")
+        req = urllib.request.Request(url, headers=headers or URLLIB_FALLBACK_HEADERS)
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except Exception:
+        return None
 
-print(f"Sportcup matches loaded: {len(all_matches)}")
 
-# Comments extra regular matches (K-R in Season 9 Middle League)
-kr_matches = [
+def call_vk(method, params):
+    """Call one VK API method and return its payload, or an empty dict on any error."""
+    try:
+        request_params = params.copy()
+        if VK_API_TOKEN:
+            request_params["access_token"] = VK_API_TOKEN
+        request_params["v"] = API_VERSION
+        url = VK_METHOD_URL.format(method=method) + "?" + urllib.parse.urlencode(request_params)
+        data = http_get_json(url, timeout=HTTP_TIMEOUT_SECONDS)
+        return data if data else {}
+    except Exception:
+        return {}
+
+
+def verify_vk_connection():
+    """Probe the VK group the comment archives live in and log its public name."""
+    if not VK_API_TOKEN:
+        print(f"VK API token not set, skipping the group check (ID: {GROUP_ID})")
+        return
+    print("Verifying VK API connection...")
+    group_info = call_vk(VK_GROUP_GET_METHOD, {"group_id": VK_GROUP_SLUG})
+    groups = (group_info.get("response") or {}).get("groups") or [{}]
+    group_name = groups[0].get("name", VK_GROUP_NAME_FALLBACK)
+    print(f"Connected to VK Group: {group_name} (ID: {GROUP_ID})")
+
+
+def load_sportcup_snapshot():
+    """Frozen Sportcup responses (see collectors/sportcup sync tool); empty when absent."""
+    if not SPORTCUP_SNAPSHOT_PATH.exists():
+        return {}
+    snapshot = json.loads(SPORTCUP_SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    return {stage["uuid"]: stage.get("response") for stage in snapshot["stages"]}
+
+
+def fetch_sportcup_games(config, snapshot):
+    """Raw games of one stage: from the snapshot, live only when the snapshot lacks it."""
+    if config["uuid"] in snapshot:
+        return snapshot[config["uuid"]]
+    response = http_get_json(
+        SPORTCUP_GAMES_URL.format(uuid=config["uuid"]),
+        headers=SPORTCUP_HEADERS,
+        timeout=HTTP_TIMEOUT_SECONDS,
+    )
+    if not response:
+        raise RuntimeError(
+            f"Sportcup не отдал {config['season']} {config['league']} ({config['uuid']}), "
+            f"этого стейджа нет ни в снапшоте, ни в сети. Сборка прервана, чтобы не "
+            f"опубликовать часть лиги; обновите снапшот: python collectors/sync_sportcup.py"
+        )
+    return response
+
+
+@dataclass(frozen=True)
+class SportcupDecisions:
+    """Editorial decisions about ambiguous Sportcup rows, kept in data/sportcup_decisions.json."""
+
+    voided: frozenset = frozenset()
+    played_as_normal: frozenset = frozenset()
+    notes: dict = None
+
+    def __post_init__(self):
+        if self.notes is None:
+            object.__setattr__(self, "notes", {})
+
+
+def load_sportcup_decisions():
+    """Read which unfinished fixtures are dropped and which technical rows get a custom note."""
+    if not DECISIONS_PATH.exists():
+        print(f"Warning: {DECISIONS_PATH} not found, every FINAL row stays in the pool.")
+        return SportcupDecisions()
+    raw = json.loads(DECISIONS_PATH.read_text(encoding="utf-8"))
+    return SportcupDecisions(
+        voided=frozenset(item["uuid"] for item in raw.get("void", [])),
+        played_as_normal=frozenset(item["uuid"] for item in raw.get("played_as_normal", [])),
+        notes={item["uuid"]: item["note"] for item in raw.get("technical_note_override", [])},
+    )
+
+
+def technical_loser_of(game):
+    """Raw title of the side that lost on technical grounds, or None when the source names no winner."""
+    winner = game.get("winner")
+    if not winner:
+        return None
+    for side in (game["member1"], game["member2"]):
+        if side.get("uuid") != winner:
+            return side.get("title")
+    return None
+
+
+def fetch_sportcup_matches(configs):
+    """Load every finished game of the configured Sportcup stages."""
+    snapshot = load_sportcup_snapshot()
+    print(f"Loading Sportcup matches from "
+          f"{SPORTCUP_SNAPSHOT_PATH if snapshot else 'the live API'}...")
+    decisions = load_sportcup_decisions()
+    matches = []
+    voided = 0
+    for config in configs:
+        data = fetch_sportcup_games(config, snapshot)
+        for game in data.get("list", []):
+            if game.get("resultStatus") != "FINAL":
+                continue
+            uuid = game.get("uuid")
+            if uuid in decisions.voided:
+                voided += 1
+                continue
+            p1 = norm(game["member1"]["title"])
+            p2 = norm(game["member2"]["title"])
+            s1 = game["scoreMember1"]
+            s2 = game["scoreMember2"]
+            if s1 is None or s2 is None:
+                continue
+            # technicalWin без названного победителя — это «не играли», а не чьё-то поражение:
+            # технический результат присваиваем только когда источник указал, кто выиграл.
+            loser = norm(technical_loser_of(game))
+            is_technical = loser is not None and bool(game.get("technicalWin")) \
+                and uuid not in decisions.played_as_normal
+            matches.append(
+                {
+                    "season": config["season"],
+                    "tournament": f"{config['season']} {config['league']} лига",
+                    "stage": REGULAR_STAGE,
+                    "p1": p1,
+                    "p2": p2,
+                    "s1": int(s1),
+                    "s2": int(s2),
+                    "ot": game.get("overtimeWin", False),
+                    "pk": game.get("afterGameWin", False),
+                    "is_playoff": False,
+                    "is_technical": is_technical,
+                    "is_forfeit": is_technical,
+                    "technical_loser": loser if is_technical else None,
+                    "note": decisions.notes.get(uuid, TECHNICAL_DEFEAT_NOTE) if is_technical else "",
+                    "source": "sportcup_api",
+                    "source_ref": uuid,
+                }
+            )
+    print(f"Sportcup matches loaded: {len(matches)}"
+          + (f" (снято с зачёта как несыгранных: {voided})" if voided else ""))
+    return matches
+
+
+KR_MATCHES = [
     ("frzz", "Kubik", 2, 1, False, False, "Season 9", "Средняя лига"),
     ("Kubik", "frzz", 5, 2, False, False, "Season 9", "Средняя лига"),
     ("Yuliy_Cezar", "Kubik", 4, 1, False, False, "Season 9", "Средняя лига"),
@@ -264,22 +392,8 @@ kr_matches = [
     ("Kubik", "Dune", 4, 2, False, False, "Season 9", "Средняя лига"),
     ("Kubik", "Dune", 4, 1, False, False, "Season 9", "Средняя лига"),
 ]
-for p1, p2, s1, s2, ot, pk, season, league in kr_matches:
-    all_matches.append({
-        "season": season,
-        "tournament": f"{season} {league}",
-        "stage": "Регулярный сезон",
-        "p1": norm(p1),
-        "p2": norm(p2),
-        "s1": s1,
-        "s2": s2,
-        "ot": ot,
-        "pk": pk,
-        "is_playoff": False
-    })
 
-# Add Season 8 Playoff Matches
-s8_playoffs = [
+S8_PLAYOFFS = [
     # 1/16
     ("Sokol", "E_not", 2, 0, False, False, "1/16 финала"),
     ("Sokol", "E_not", 3, 1, False, False, "1/16 финала"),
@@ -331,22 +445,7 @@ s8_playoffs = [
     ("PacnyTHuK", "ectoPower", 2, 1, False, False, "Финал"),
 ]
 
-for p1, p2, s1, s2, ot, pk, stage in s8_playoffs:
-    all_matches.append({
-        "season": "Season 8",
-        "tournament": "Season 8 Кубок лиг",
-        "stage": stage,
-        "p1": norm(p1),
-        "p2": norm(p2),
-        "s1": s1,
-        "s2": s2,
-        "ot": ot,
-        "pk": pk,
-        "is_playoff": True
-    })
-
-# Add Season 9 Playoff Matches
-s9_playoffs = [
+S9_PLAYOFFS = [
     # 1/16
     ("Jamlight", "Taeda", 2, 0, False, False, "1/16 финала"),
     ("Hanter", "Dune", 3, 2, False, False, "1/16 финала"),
@@ -371,22 +470,7 @@ s9_playoffs = [
     ("ectoPower", "Rock", 5, 0, False, False, "Финал"),
 ]
 
-for p1, p2, s1, s2, ot, pk, stage in s9_playoffs:
-    all_matches.append({
-        "season": "Season 9",
-        "tournament": "Season 9 Кубок лиг",
-        "stage": stage,
-        "p1": norm(p1),
-        "p2": norm(p2),
-        "s1": s1,
-        "s2": s2,
-        "ot": ot,
-        "pk": pk,
-        "is_playoff": True
-    })
-
-# Add Historical Landmark Matches (Seasons 4 to 7)
-historical_matches = [
+HISTORICAL_MATCHES = [
     # Season 4
     ("mafuta", "Transistor", 4, 2, False, False, "Season 4", "Финал Кубка"),
     ("Transistor", "Kipriot", 4, 1, False, False, "Season 4", "1/2 финала"),
@@ -428,10 +512,28 @@ historical_matches = [
     ("mafuta", "E_not", 4, 2, False, False, "Season 7", "1/4 финала"),
 ]
 
-for p1, p2, s1, s2, ot, pk, season, stage in historical_matches:
-    all_matches.append({
+
+def _regular_match(season, league, p1, p2, s1, s2, ot, pk):
+    """Regular-stage fixture recovered from the VK comments."""
+    return {
         "season": season,
-        "tournament": f"{season} Кубок лиг",
+        "tournament": f"{season} {league}",
+        "stage": REGULAR_STAGE,
+        "p1": norm(p1),
+        "p2": norm(p2),
+        "s1": s1,
+        "s2": s2,
+        "ot": ot,
+        "pk": pk,
+        "is_playoff": False,
+    }
+
+
+def _cup_match(season, stage, p1, p2, s1, s2, ot, pk):
+    """Cup knockout tie recovered from the VK comments."""
+    return {
+        "season": season,
+        "tournament": f"{season} {CUP_TOURNAMENT}",
         "stage": stage,
         "p1": norm(p1),
         "p2": norm(p2),
@@ -439,373 +541,541 @@ for p1, p2, s1, s2, ot, pk, season, stage in historical_matches:
         "s2": s2,
         "ot": ot,
         "pk": pk,
-        "is_playoff": True
-    })
+        "is_playoff": True,
+    }
 
-print(f"Total comprehensive match dataset: {len(all_matches)} games.")
 
-# Elo calculation
+def load_archived_matches():
+    """Manual fixtures Sportcup does not cover, appended in the historical ingestion order."""
+    matches = []
+    for i, (p1, p2, s1, s2, ot, pk, season, league) in enumerate(KR_MATCHES):
+        row = _regular_match(season, league, p1, p2, s1, s2, ot, pk)
+        row.update({"source": "manual", "source_ref": f"KR_MATCHES#{i}"})
+        matches.append(row)
+    for i, (p1, p2, s1, s2, ot, pk, stage) in enumerate(S8_PLAYOFFS):
+        row = _cup_match(SEASON_8, stage, p1, p2, s1, s2, ot, pk)
+        row.update({"source": "manual", "source_ref": f"S8_PLAYOFFS#{i}"})
+        matches.append(row)
+    for i, (p1, p2, s1, s2, ot, pk, stage) in enumerate(S9_PLAYOFFS):
+        row = _cup_match(SEASON_9, stage, p1, p2, s1, s2, ot, pk)
+        row.update({"source": "manual", "source_ref": f"S9_PLAYOFFS#{i}"})
+        matches.append(row)
+    for i, (p1, p2, s1, s2, ot, pk, season, stage) in enumerate(HISTORICAL_MATCHES):
+        row = _cup_match(season, stage, p1, p2, s1, s2, ot, pk)
+        row.update({"source": "manual", "source_ref": f"HISTORICAL_MATCHES#{i}"})
+        matches.append(row)
+    return matches
+
+
+def fetch_all_matches():
+    """Full match pool: live Sportcup data plus the archived fixtures."""
+    matches = fetch_sportcup_matches(T_CONFIGS)
+    matches.extend(load_archived_matches())
+    print(f"Total comprehensive match dataset: {len(matches)} games.")
+    return matches
+
+
+# Elo model: FIDE-style expectation with a heavier K for playoffs and for young accounts.
 INITIAL_ELO = 1500
-elo = defaultdict(lambda: INITIAL_ELO)
-peak_elo = defaultdict(lambda: INITIAL_ELO)
-lowest_elo = defaultdict(lambda: INITIAL_ELO)
-matches_played = defaultdict(int)
-wins = defaultdict(int)
-losses = defaultdict(int)
-draws_or_ot_wins = defaultdict(int)
-goals_for = defaultdict(int)
-goals_against = defaultdict(int)
-clean_sheets = defaultdict(int)
-playoff_wins = defaultdict(int)
-playoff_losses = defaultdict(int)
+ELO_RATING_SCALE = 400.0
+ELO_K_PLAYOFF = 32
+ELO_K_REGULAR = 24
+ELO_K_LEARNING_WINDOW = 15
+DECISIVE_WIN_SCORE = 1.0
+DECISIVE_LOSS_SCORE = 0.0
+OVERTIME_WIN_SCORE = 0.75
+OVERTIME_LOSS_SCORE = 0.25
+DRAW_SCORE = 0.5
 
-h2h = defaultdict(lambda: defaultdict(lambda: {"w": 0, "l": 0, "gf": 0, "ga": 0}))
+# Dominator Score weights.
+ELO_DOMINATOR_WEIGHT = 1.5
+WIN_RATE_DOMINATOR_WEIGHT = 3.5
+MAJOR_TITLE_DOMINATOR_WEIGHT = 50
+MINOR_TITLE_DOMINATOR_WEIGHT = 20
+MAJOR_FINAL_DOMINATOR_WEIGHT = 15
+GOAL_DIFF_DOMINATOR_WEIGHT = 0.35
+GAMES_PLAYED_DOMINATOR_WEIGHT = 0.25
 
-for m in all_matches:
-    p1 = m["p1"]
-    p2 = m["p2"]
-    s1 = m["s1"]
-    s2 = m["s2"]
-    ot = m["ot"]
-    pk = m["pk"]
-    is_playoff = m["is_playoff"]
+H2H_KEY_PLAYERS = [
+    "ectoPower",
+    "PacnyTHuK",
+    "Kunio",
+    "Romix",
+    "mafuta",
+    "Sokol",
+    "Буц",
+    "Yuliy_Cezar",
+    "Rock",
+    "Ric25",
+]
 
-    matches_played[p1] += 1
-    matches_played[p2] += 1
-    goals_for[p1] += s1
-    goals_against[p1] += s2
-    goals_for[p2] += s2
-    goals_against[p2] += s1
-
-    if s2 == 0:
-        clean_sheets[p1] += 1
-    if s1 == 0:
-        clean_sheets[p2] += 1
-
-    h2h[p1][p2]["gf"] += s1
-    h2h[p1][p2]["ga"] += s2
-    h2h[p2][p1]["gf"] += s2
-    h2h[p2][p1]["ga"] += s1
-
-    if s1 > s2:
-        winner, loser = p1, p2
-        w_score, l_score = 1.0, 0.0
-        if ot or pk:
-            w_score, l_score = 0.75, 0.25
-        wins[p1] += 1
-        losses[p2] += 1
-        h2h[p1][p2]["w"] += 1
-        h2h[p2][p1]["l"] += 1
-        if is_playoff:
-            playoff_wins[p1] += 1
-            playoff_losses[p2] += 1
-    elif s2 > s1:
-        winner, loser = p2, p1
-        w_score, l_score = 1.0, 0.0
-        if ot or pk:
-            w_score, l_score = 0.75, 0.25
-        wins[p2] += 1
-        losses[p1] += 1
-        h2h[p2][p1]["w"] += 1
-        h2h[p1][p2]["l"] += 1
-        if is_playoff:
-            playoff_wins[p2] += 1
-            playoff_losses[p1] += 1
-    else:
-        w_score, l_score = 0.5, 0.5
-
-    r1 = elo[p1]
-    r2 = elo[p2]
-    e1 = 1.0 / (1.0 + 10.0 ** ((r2 - r1) / 400.0))
-    e2 = 1.0 / (1.0 + 10.0 ** ((r1 - r2) / 400.0))
-
-    k = 32 if (is_playoff or matches_played[p1] < 15 or matches_played[p2] < 15) else 24
-    score1 = w_score if s1 >= s2 else l_score
-    score2 = w_score if s2 >= s1 else l_score
-
-    new_r1 = r1 + k * (score1 - e1)
-    new_r2 = r2 + k * (score2 - e2)
-
-    elo[p1] = round(new_r1, 1)
-    elo[p2] = round(new_r2, 1)
-
-    peak_elo[p1] = max(peak_elo[p1], elo[p1])
-    peak_elo[p2] = max(peak_elo[p2], elo[p2])
-    lowest_elo[p1] = min(lowest_elo[p1], elo[p1])
-    lowest_elo[p2] = min(lowest_elo[p2], elo[p2])
-
+# Season honours per player: league titles, cup titles, minor titles, major finals, Hall of Fame, tier label.
+# NOTE: "Kubik" is listed twice in the source table; the later row wins and that is what the portal shows.
+TitleRecord = namedtuple("TitleRecord", "premier cup minor finals hall_of_fame tier")
 TITLES = {
-    "ectoPower": {"premier": 4, "cup": 2, "minor": 0, "finals": 9, "hall_of_fame": True, "tier": "GOAT (Tier S+)"},
-    "mafuta": {"premier": 3, "cup": 4, "minor": 0, "finals": 8, "hall_of_fame": True, "tier": "Legend / Dynasty (Tier S+)"},
-    "Kunio": {"premier": 2, "cup": 0, "minor": 0, "finals": 4, "hall_of_fame": True, "tier": "Apex Veteran (Tier S)"},
-    "PacnyTHuK": {"premier": 0, "cup": 1, "minor": 0, "finals": 3, "hall_of_fame": True, "tier": "Clutch Giant (Tier S)"},
-    "RVD (МГБ)": {"premier": 0, "cup": 2, "minor": 0, "finals": 2, "hall_of_fame": True, "tier": "Playoff Slayer (Tier S)"},
-    "Transistor": {"premier": 1, "cup": 0, "minor": 0, "finals": 3, "hall_of_fame": True, "tier": "Elite Champion (Tier A+)"},
-    "Sokol": {"premier": 0, "cup": 0, "minor": 1, "finals": 0, "hall_of_fame": False, "tier": "Phenom (Tier A+)"},
-    "Буц": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": False, "tier": "Heavyweight (Tier A)"},
-    "Romix": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": True, "tier": "Stalwart / Iron Contender (Tier A)"},
-    "Yuliy_Cezar": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": False, "tier": "Rising Force (Tier A)"},
-    "Hanter": {"premier": 0, "cup": 0, "minor": 1, "finals": 0, "hall_of_fame": False, "tier": "Division Conqueror (Tier A)"},
-    "Rock": {"premier": 0, "cup": 0, "minor": 0, "finals": 1, "hall_of_fame": True, "tier": "Grand Finalist (Tier A)"},
-    "Ric25": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": True, "tier": "Premier Mainstay (Tier A-)"},
-    "leonudomlya": {"premier": 0, "cup": 0, "minor": 1, "finals": 0, "hall_of_fame": False, "tier": "Veteran Fighter (Tier B+)"},
-    "Aeris": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": True, "tier": "Veteran Fighter (Tier B+)"},
-    "Jamlight": {"premier": 0, "cup": 0, "minor": 1, "finals": 0, "hall_of_fame": True, "tier": "Division Champion (Tier B+)"},
-    "Kubik": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": False, "tier": "Core Veteran (Tier B)"},
-    "Memori": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": True, "tier": "Organizer & Player (Tier B)"},
-    "Dune": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": False, "tier": "Division Fighter (Tier B)"},
-    "Kubik": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": False, "tier": "Tactical Challenger (Tier B)"},
+    "ectoPower": TitleRecord(4, 2, 0, 9, True, "GOAT (Tier S+)"),
+    "mafuta": TitleRecord(3, 4, 0, 8, True, "Legend / Dynasty (Tier S+)"),
+    "Kunio": TitleRecord(2, 0, 0, 4, True, "Apex Veteran (Tier S)"),
+    "PacnyTHuK": TitleRecord(0, 1, 0, 3, True, "Clutch Giant (Tier S)"),
+    "RVD (МГБ)": TitleRecord(0, 2, 0, 2, True, "Playoff Slayer (Tier S)"),
+    "Transistor": TitleRecord(1, 0, 0, 3, True, "Elite Champion (Tier A+)"),
+    "Sokol": TitleRecord(0, 0, 1, 0, False, "Phenom (Tier A+)"),
+    "Буц": TitleRecord(0, 0, 0, 0, False, "Heavyweight (Tier A)"),
+    "Romix": TitleRecord(0, 0, 0, 0, True, "Stalwart / Iron Contender (Tier A)"),
+    "Yuliy_Cezar": TitleRecord(0, 0, 0, 0, False, "Rising Force (Tier A)"),
+    "Hanter": TitleRecord(0, 0, 1, 0, False, "Division Conqueror (Tier A)"),
+    "Rock": TitleRecord(0, 0, 0, 1, True, "Grand Finalist (Tier A)"),
+    "Ric25": TitleRecord(0, 0, 0, 0, True, "Premier Mainstay (Tier A-)"),
+    "leonudomlya": TitleRecord(0, 0, 1, 0, False, "Veteran Fighter (Tier B+)"),
+    "Aeris": TitleRecord(0, 0, 0, 0, True, "Veteran Fighter (Tier B+)"),
+    "Jamlight": TitleRecord(0, 0, 1, 0, True, "Division Champion (Tier B+)"),
+    "Memori": TitleRecord(0, 0, 0, 0, True, "Organizer & Player (Tier B)"),
+    "Dune": TitleRecord(0, 0, 0, 0, False, "Division Fighter (Tier B)"),
+    "Kubik": TitleRecord(0, 0, 0, 0, False, "Tactical Challenger (Tier B)"),
 }
 
-leaderboard = []
-for p in matches_played:
-    gp = matches_played[p]
-    w = wins[p]
-    l = losses[p]
-    win_rate = round((w / gp) * 100, 1) if gp > 0 else 0
-    gf = goals_for[p]
-    ga = goals_against[p]
-    gd = gf - ga
-    gpg = round(gf / gp, 2) if gp > 0 else 0
-    gapg = round(ga / gp, 2) if gp > 0 else 0
-    t_info = TITLES.get(p, {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "hall_of_fame": False, "tier": "Challenger"})
-    total_titles = t_info["premier"] + t_info["cup"] + t_info["minor"]
+UNRANKED_TITLE_RECORD = TitleRecord(0, 0, 0, 0, False, "Challenger")
 
-    # Dominator Score
-    # Elo difference from 1500 + win_rate*4 + major titles*50 + minor titles*20 + GD*0.4 + games*0.2
-    major_titles = t_info["premier"] + t_info["cup"]
-    dom_score = round(
-        (elo[p] - 1500) * 1.5 + 
-        win_rate * 3.5 + 
-        major_titles * 50 + 
-        t_info["minor"] * 20 + 
-        t_info["finals"] * 15 + 
-        gd * 0.35 + 
-        gp * 0.25, 
-        1
+
+@dataclass
+class PlayerRatings:
+    """Per-player aggregates accumulated while replaying the match pool."""
+
+    elo: dict
+    peak_elo: dict
+    lowest_elo: dict
+    matches_played: dict
+    wins: dict
+    losses: dict
+    goals_for: dict
+    goals_against: dict
+    clean_sheets: dict
+    playoff_wins: dict
+    playoff_losses: dict
+    head_to_head: dict
+
+
+def _result_scores(s1, s2, ot, pk):
+    """Elo target scores of both sides: draws split a point, overtime/penalty wins weigh 0.75."""
+    if s1 == s2:
+        return DRAW_SCORE, DRAW_SCORE
+    if ot or pk:
+        winner_score, loser_score = OVERTIME_WIN_SCORE, OVERTIME_LOSS_SCORE
+    else:
+        winner_score, loser_score = DECISIVE_WIN_SCORE, DECISIVE_LOSS_SCORE
+    return (winner_score, loser_score) if s1 > s2 else (loser_score, winner_score)
+
+
+def build_player_ratings(matches):
+    """Replay the pool in order and accumulate Elo ratings, tallies and head-to-head records."""
+    elo = defaultdict(lambda: INITIAL_ELO)
+    peak_elo = defaultdict(lambda: INITIAL_ELO)
+    lowest_elo = defaultdict(lambda: INITIAL_ELO)
+    matches_played = defaultdict(int)
+    wins = defaultdict(int)
+    losses = defaultdict(int)
+    goals_for = defaultdict(int)
+    goals_against = defaultdict(int)
+    clean_sheets = defaultdict(int)
+    playoff_wins = defaultdict(int)
+    playoff_losses = defaultdict(int)
+    head_to_head = defaultdict(lambda: defaultdict(lambda: {"w": 0, "l": 0, "gf": 0, "ga": 0}))
+
+    for match in matches:
+        p1 = match["p1"]
+        p2 = match["p2"]
+        s1 = match["s1"]
+        s2 = match["s2"]
+        is_playoff = match["is_playoff"]
+
+        matches_played[p1] += 1
+        matches_played[p2] += 1
+        goals_for[p1] += s1
+        goals_against[p1] += s2
+        goals_for[p2] += s2
+        goals_against[p2] += s1
+
+        if s2 == 0:
+            clean_sheets[p1] += 1
+        if s1 == 0:
+            clean_sheets[p2] += 1
+
+        head_to_head[p1][p2]["gf"] += s1
+        head_to_head[p1][p2]["ga"] += s2
+        head_to_head[p2][p1]["gf"] += s2
+        head_to_head[p2][p1]["ga"] += s1
+
+        if s1 > s2:
+            wins[p1] += 1
+            losses[p2] += 1
+            head_to_head[p1][p2]["w"] += 1
+            head_to_head[p2][p1]["l"] += 1
+            if is_playoff:
+                playoff_wins[p1] += 1
+                playoff_losses[p2] += 1
+        elif s2 > s1:
+            wins[p2] += 1
+            losses[p1] += 1
+            head_to_head[p2][p1]["w"] += 1
+            head_to_head[p1][p2]["l"] += 1
+            if is_playoff:
+                playoff_wins[p2] += 1
+                playoff_losses[p1] += 1
+
+        score1, score2 = _result_scores(s1, s2, match["ot"], match["pk"])
+
+        r1 = elo[p1]
+        r2 = elo[p2]
+        e1 = 1.0 / (1.0 + 10.0 ** ((r2 - r1) / ELO_RATING_SCALE))
+        e2 = 1.0 / (1.0 + 10.0 ** ((r1 - r2) / ELO_RATING_SCALE))
+
+        is_inexperienced = (
+            matches_played[p1] < ELO_K_LEARNING_WINDOW or matches_played[p2] < ELO_K_LEARNING_WINDOW
+        )
+        k = ELO_K_PLAYOFF if (is_playoff or is_inexperienced) else ELO_K_REGULAR
+
+        elo[p1] = round(r1 + k * (score1 - e1), 1)
+        elo[p2] = round(r2 + k * (score2 - e2), 1)
+
+        peak_elo[p1] = max(peak_elo[p1], elo[p1])
+        peak_elo[p2] = max(peak_elo[p2], elo[p2])
+        lowest_elo[p1] = min(lowest_elo[p1], elo[p1])
+        lowest_elo[p2] = min(lowest_elo[p2], elo[p2])
+
+    return PlayerRatings(
+        elo=elo,
+        peak_elo=peak_elo,
+        lowest_elo=lowest_elo,
+        matches_played=matches_played,
+        wins=wins,
+        losses=losses,
+        goals_for=goals_for,
+        goals_against=goals_against,
+        clean_sheets=clean_sheets,
+        playoff_wins=playoff_wins,
+        playoff_losses=playoff_losses,
+        head_to_head=head_to_head,
     )
 
-    leaderboard.append({
-        "player": p,
-        "tier": t_info["tier"],
-        "elo": elo[p],
-        "peak_elo": peak_elo[p],
-        "lowest_elo": lowest_elo[p],
-        "matches": gp,
-        "wins": w,
-        "losses": l,
-        "win_rate": win_rate,
-        "goals_for": gf,
-        "goals_against": ga,
-        "goal_diff": gd,
-        "gpg": gpg,
-        "gapg": gapg,
-        "clean_sheets": clean_sheets[p],
-        "playoff_wins": playoff_wins[p],
-        "playoff_losses": playoff_losses[p],
-        "premier_titles": t_info["premier"],
-        "cup_titles": t_info["cup"],
-        "minor_titles": t_info["minor"],
-        "total_titles": total_titles,
-        "major_finals": t_info["finals"],
-        "hall_of_fame": t_info["hall_of_fame"],
-        "dominator_score": dom_score
-    })
 
-# Primary sorting by Elo descending
-leaderboard.sort(key=lambda x: (x["elo"], x["dominator_score"]), reverse=True)
+def _dominator_score(ratings, player, win_rate, titles, goal_diff, games_played):
+    """Composite ranking value: Elo lead over baseline, win rate, silverware and goal difference."""
+    major_titles = titles.premier + titles.cup
+    return round(
+        (ratings.elo[player] - INITIAL_ELO) * ELO_DOMINATOR_WEIGHT
+        + win_rate * WIN_RATE_DOMINATOR_WEIGHT
+        + major_titles * MAJOR_TITLE_DOMINATOR_WEIGHT
+        + titles.minor * MINOR_TITLE_DOMINATOR_WEIGHT
+        + titles.finals * MAJOR_FINAL_DOMINATOR_WEIGHT
+        + goal_diff * GOAL_DIFF_DOMINATOR_WEIGHT
+        + games_played * GAMES_PLAYED_DOMINATOR_WEIGHT,
+        1,
+    )
 
-# Select key players for H2H matrix
-key_players = ["ectoPower", "PacnyTHuK", "Kunio", "Romix", "mafuta", "Sokol", "Буц", "Yuliy_Cezar", "Rock", "Ric25"]
-h2h_matrix = {}
-for p1 in key_players:
-    h2h_matrix[p1] = {}
-    for p2 in key_players:
-        if p1 == p2:
-            continue
-        rec = h2h[p1][p2]
-        if rec["w"] + rec["l"] > 0:
-            h2h_matrix[p1][p2] = f"{rec['w']}-{rec['l']} ({rec['gf']}:{rec['ga']})"
-        else:
-            h2h_matrix[p1][p2] = "-"
 
-# Save nekketsu_master_table.json
-out_json = {
-    "game": "Kunio-kun no Nekketsu Soccer League (Goal 3)",
-    "community": {
-        "name": "NEKKETSU SPORTS TOURNAMENTS",
-        "url": "https://vk.ru/nekketsu",
-        "group_id": GROUP_ID
+def build_leaderboard(ratings):
+    """One row per tracked player, ordered by Elo and then by Dominator Score."""
+    leaderboard = []
+    for player, games_played in ratings.matches_played.items():
+        victories = ratings.wins[player]
+        goals_for = ratings.goals_for[player]
+        goals_against = ratings.goals_against[player]
+        goal_diff = goals_for - goals_against
+        win_rate = round((victories / games_played) * 100, 1) if games_played > 0 else 0
+        goals_per_game = round(goals_for / games_played, 2) if games_played > 0 else 0
+        conceded_per_game = round(goals_against / games_played, 2) if games_played > 0 else 0
+        titles = TITLES.get(player, UNRANKED_TITLE_RECORD)
+        leaderboard.append(
+            {
+                "player": player,
+                "tier": titles.tier,
+                "elo": ratings.elo[player],
+                "peak_elo": ratings.peak_elo[player],
+                "lowest_elo": ratings.lowest_elo[player],
+                "matches": games_played,
+                "wins": victories,
+                "losses": ratings.losses[player],
+                "win_rate": win_rate,
+                "goals_for": goals_for,
+                "goals_against": goals_against,
+                "goal_diff": goal_diff,
+                "gpg": goals_per_game,
+                "gapg": conceded_per_game,
+                "clean_sheets": ratings.clean_sheets[player],
+                "playoff_wins": ratings.playoff_wins[player],
+                "playoff_losses": ratings.playoff_losses[player],
+                "premier_titles": titles.premier,
+                "cup_titles": titles.cup,
+                "minor_titles": titles.minor,
+                "total_titles": titles.premier + titles.cup + titles.minor,
+                "major_finals": titles.finals,
+                "hall_of_fame": titles.hall_of_fame,
+                "dominator_score": _dominator_score(
+                    ratings, player, win_rate, titles, goal_diff, games_played
+                ),
+            }
+        )
+
+    leaderboard.sort(key=lambda row: (row["elo"], row["dominator_score"]), reverse=True)
+    return leaderboard
+
+
+def build_head_to_head_matrix(ratings):
+    """Win-loss balance of the headline rivalries, as `w-l (gf:ga)` strings."""
+    matrix = {}
+    for player in H2H_KEY_PLAYERS:
+        matrix[player] = {}
+        for rival in H2H_KEY_PLAYERS:
+            if player == rival:
+                continue
+            record = ratings.head_to_head[player][rival]
+            if record["w"] + record["l"] > 0:
+                matrix[player][rival] = f"{record['w']}-{record['l']} ({record['gf']}:{record['ga']})"
+            else:
+                matrix[player][rival] = "-"
+    return matrix
+
+
+CHAMPIONSHIP_CHRONOLOGY = [
+    {
+        "season": "Season 1",
+        "year": "2015",
+        "league_champion": "mafuta",
+        "cup_winner": "mafuta",
+        "format": "Mednafen NES 1x1",
     },
-    "database_metrics": {
-        "total_matches_analyzed": len(all_matches),
-        "total_players_tracked": len(leaderboard),
-        "total_goals_recorded": sum(m["s1"] + m["s2"] for m in all_matches),
-        "avg_goals_per_match": round(sum(m["s1"] + m["s2"] for m in all_matches) / len(all_matches), 2),
-        "generation_date": "2026-10-24"
+    {
+        "season": "Season 2",
+        "year": "2016",
+        "league_champion": "mafuta",
+        "cup_winner": "mafuta",
+        "runner_up": "ectoPower",
     },
-    "championship_chronology": [
-        {"season": "Season 1", "year": "2015", "league_champion": "mafuta", "cup_winner": "mafuta", "format": "Mednafen NES 1x1"},
-        {"season": "Season 2", "year": "2016", "league_champion": "mafuta", "cup_winner": "mafuta", "runner_up": "ectoPower"},
-        {"season": "Season 3", "year": "2016", "league_champion": "mafuta", "cup_winner": "mafuta", "runner_up": "ectoPower", "third_place": "Ric25"},
-        {"season": "Season 4", "year": "2017", "league_champion": "Transistor", "cup_winner": "mafuta", "runner_up": "mafuta", "third_place": "ectoPower"},
-        {"season": "Season 5", "year": "2017", "league_champion": "ectoPower", "cup_winner": "RVD (МГБ)", "cup_finalist": "PacnyTHuK"},
-        {"season": "Season 6", "year": "2018", "league_champion": "ectoPower", "cup_winner": "ectoPower", "cup_finalist": "Transistor (5:4)"},
-        {"season": "Season 7", "year": "2022", "league_champion": "ectoPower", "cup_winner": "RVD (МГБ)", "runner_up": "mafuta", "third_place": "Romix"},
-        {"season": "Season 8", "year": "2024", "league_champion": "Kunio / ectoPower", "cup_winner": "PacnyTHuK", "cup_finalist": "ectoPower (5:3)"},
-        {"season": "Season 9", "year": "2025", "league_champion": "Kunio", "cup_winner": "ectoPower", "cup_finalist": "Rock (5:0)", "third_place": "Romix"}
-    ],
-    "leaderboard": leaderboard,
-    "head_to_head_matrix": h2h_matrix,
-    "dominators_ranking": sorted(leaderboard, key=lambda x: x["dominator_score"], reverse=True)[:10]
-}
+    {
+        "season": "Season 3",
+        "year": "2016",
+        "league_champion": "mafuta",
+        "cup_winner": "mafuta",
+        "runner_up": "ectoPower",
+        "third_place": "Ric25",
+    },
+    {
+        "season": "Season 4",
+        "year": "2017",
+        "league_champion": "Transistor",
+        "cup_winner": "mafuta",
+        "runner_up": "mafuta",
+        "third_place": "ectoPower",
+    },
+    {
+        "season": "Season 5",
+        "year": "2017",
+        "league_champion": "ectoPower",
+        "cup_winner": "RVD (МГБ)",
+        "cup_finalist": "PacnyTHuK",
+    },
+    {
+        "season": "Season 6",
+        "year": "2018",
+        "league_champion": "ectoPower",
+        "cup_winner": "ectoPower",
+        "cup_finalist": "Transistor (5:4)",
+    },
+    {
+        "season": "Season 7",
+        "year": "2022",
+        "league_champion": "ectoPower",
+        "cup_winner": "RVD (МГБ)",
+        "runner_up": "mafuta",
+        "third_place": "Romix",
+    },
+    {
+        "season": "Season 8",
+        "year": "2024",
+        "league_champion": "Kunio / ectoPower",
+        "cup_winner": "PacnyTHuK",
+        "cup_finalist": "ectoPower (5:3)",
+    },
+    {
+        "season": "Season 9",
+        "year": "2025",
+        "league_champion": "Kunio",
+        "cup_winner": "ectoPower",
+        "cup_finalist": "Rock (5:0)",
+        "third_place": "Romix",
+    },
+]
 
-if __name__ == '__main__':
-    json_path = "c:\\Users\\Aeros\\Desktop\\Мастер-таблица\\nekketsu_master_table.json"
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(out_json, f, ensure_ascii=False, indent=2)
-    print(f"Master JSON saved at: {json_path}")
 
-# Generate Markdown Dashboard file
-md_content = """# 🏆 Мастер-таблица и аналитический дашборд: Kunio-kun no Nekketsu Soccer League (Goal 3)
-**Сообщество:** [NEKKETSU SPORTS TOURNAMENTS](https://vk.ru/nekketsu) | **Платформа:** Famicom / Dendy (Mednafen Netplay, Tournament Hacks)
-**Период охвата:** Сезоны 1–9 (2015–2025/2026) | **База матчей:** 414 официальных встреч
+def build_master_table_payload(matches, leaderboard, h2h_matrix):
+    """The nekketsu_master_table.json document."""
+    total_goals = sum(match["s1"] + match["s2"] for match in matches)
+    return {
+        "game": GAME_TITLE,
+        "community": {"name": COMMUNITY_NAME, "url": COMMUNITY_URL, "group_id": GROUP_ID},
+        "database_metrics": {
+            "total_matches_analyzed": len(matches),
+            "total_players_tracked": len(leaderboard),
+            "total_goals_recorded": total_goals,
+            "avg_goals_per_match": round(total_goals / len(matches), 2),
+            "generation_date": GENERATION_DATE,
+        },
+        "championship_chronology": CHAMPIONSHIP_CHRONOLOGY,
+        "leaderboard": leaderboard,
+        "head_to_head_matrix": h2h_matrix,
+        "dominators_ranking": sorted(leaderboard, key=lambda row: row["dominator_score"], reverse=True)[
+            :TOP_DOMINATORS_LIMIT
+        ],
+    }
 
----
 
-## 📌 Раздел 1. Блок инсайтов: «Главное»
+# Hand-written snapshot of one dashboard run: the numbers below are NOT derived from the data above.
 
-> [!IMPORTANT]
-> ### Ключевые аналитические инсайты киберспортивной сцены Goal 3:
-> 1. **Абсолютный Доминатор — ectoPower (Dominator Score: 938.8):**
->    - Самый титулованный и доминирующий игрок в истории дисциплины (4 чемпионских титула Высшей лиги, 2 Кубка лиг, 9 выходов в финал).
->    - Лидер по абсолютному числу побед (**40 побед**) и лучшей разнице мячей (**+86**, 215 забито против 129 пропущенных).
->    - В 9-м сезоне оформил один из самых доминантных финалов в истории плей-офф, разгромив финалиста Rock со счётом **5:0**.
-> 2. **Главная историческая дуэль и смена эпох (mafuta vs ectoPower):**
->    - Первые 4 сезона ознаменовались эпохой абсолютной гегемонии **mafuta** (3 чемпионства подряд и 4 Кубка Лиг). Начиная с 5-го сезона инициативу перехватил **ectoPower**, создавший вторую великую династию.
-> 3. **«Клатч-машина» и гроза фаворитов — PacnyTHuK (Elo 1648.1):**
->    - Текущий лидер рейтинга Elo. PacnyTHuK обладает выдающимся коэффициентом побед в ключевых сериях (**70.4% побед**). В грандиозном финале 8-го сезона именно он остановил победное шествие ectoPower в драматичной серии из 8 матчей (**5:3**).
-> 4. **«Железная стена» лиги — Kunio (Elo 1600.4, Чемпион 8 и 9 сезонов):**
->    - Обладатель самого строгого оборонительного стиля в истории турнира (всего **1.76 пропущенных гола за матч** — абсолютно лучший показатель среди игроков с 30+ матчами). Именно за счёт железобетонной дисциплины Kunio завоевал золото регулярного чемпионата Высшей лиги 9-го сезона (28 очков).
-> 5. **Кубковый киллер — RVD / МГБ (2 Кубка Лиг):**
->    - Уникальный феномен сообщества: уступая фаворитам в затяжных круговых таблицах, RVD трансформируется в неудержимого кубкового хищника на вылет (обладатель Кубка 5-го и 7-го сезонов, где выбивал mafuta и ectoPower).
-> 6. **Тёмные лошадки и феномены дивизионов:**
->    - **Sokol (Elo 1643.5, 81.5% побед):** Невероятный винрейт (22 победы в 27 матчах), совершивший стремительный взлёт из Дворовой лиги в элиту.
->    - **Hanter (Elo 1607.7, 85.7% побед):** Абсолютный триумфатор Дворовой лиги 9-го сезона с гроссмейстерским показателем побед.
->    - **Буц (Elo 1607.7, +43 GD):** Бескомпромиссный атакующий стиль с 79.2% побед.
 
----
+def group(number):
+    """``938`` to ``9 38`` — the digit spacing used throughout the dashboard."""
+    return f"{number:,}".replace(",", " ")
 
-## 📊 Раздел 2. Мастер-таблица: Глобальный Elo-рейтинг и игровая статистика
 
-*Рейтинг рассчитан по международной математической модели Elo (FIDE/Esports standard) с учетом коэффициента важности матчей (K=32 для плей-офф, K=24 для регулярки) и весов овертаймов/буллитов.*
+def dashboard_insights(board, chronology):
+    """The opening bullets, each derived from the pool instead of typed by hand."""
+    dominator = max(board, key=lambda r: r["dominator_score"])
+    elo_leader = board[0]
+    defensive = min(
+        (r for r in board if r["matches"] >= MIN_MATCHES_FOR_DEFENSIVE),
+        key=lambda r: r["gapg"],
+    )
+    cup_killer = max(board, key=lambda r: (r["cup_titles"], r["total_titles"]))
 
-| № | Игрок | Статус / Тир | Матчи (GP) | В (W) | П (L) | Винрейт | Забито (GF) | Пропущено (GA) | Разница (GD) | GPG | Сухие матчи | Elo | Пик Elo | Dominator Score |
-|:---|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | **PacnyTHuK** | Tier S (Clutch Giant) | 27 | 19 | 8 | 70.4% | 76 | 46 | +30 | 2.81 | 5 | **1648.1** | 1656.4 | 545.9 |
-| 2 | **Sokol** | Tier A+ (Phenom) | 27 | 22 | 5 | 81.5% | 73 | 37 | +36 | 2.70 | 6 | **1643.5** | 1699.8 | 557.4 |
-| 3 | **Hanter** | Tier A (Div. Conqueror) | 14 | 12 | 2 | 85.7% | 34 | 16 | +18 | 2.43 | 5 | **1607.7** | 1629.9 | 504.6 |
-| 4 | **Буц** | Tier A (Heavyweight) | 24 | 19 | 5 | 79.2% | 85 | 42 | +43 | 3.54 | 4 | **1607.7** | 1636.6 | 473.1 |
-| 5 | **ectoPower** | Tier S+ (The GOAT) | 59 | 40 | 19 | 67.8% | 215 | 129 | +86 | 3.64 | 9 | **1602.8** | 1718.3 | **938.8** |
-| 6 | **Kunio** | Tier S (Iron Wall) | 37 | 23 | 14 | 62.2% | 87 | 65 | +22 | 2.35 | 5 | **1600.4** | 1660.4 | 540.3 |
-| 7 | **Yuliy_Cezar** | Tier A (Rising Force) | 30 | 21 | 9 | 70.0% | 77 | 54 | +23 | 2.57 | 6 | **1589.6** | 1612.4 | 443.0 |
-| 8 | **Romix** | Tier A (Iron Contender) | 30 | 19 | 11 | 63.3% | 86 | 67 | +19 | 2.87 | 4 | **1575.0** | 1631.5 | 358.9 |
-| 9 | **Transistor** | Tier A+ (Champion) | 13 | 7 | 6 | 53.8% | 46 | 43 | +3 | 3.54 | 1 | **1557.8** | 1582.3 | 382.0 |
-| 10 | **Cyneprepou4uk** | Tier B+ (Contender) | 17 | 10 | 7 | 58.8% | 58 | 59 | -1 | 3.41 | 1 | **1537.6** | 1554.2 | 277.2 |
-| 11 | **Ryumaru** | Tier B+ (Contender) | 15 | 9 | 6 | 60.0% | 23 | 20 | +3 | 1.53 | 4 | **1527.4** | 1548.9 | 258.8 |
-| 12 | **Сахарок** | Tier B (Player) | 12 | 7 | 5 | 58.3% | 29 | 25 | +4 | 2.42 | 2 | **1524.0** | 1538.1 | 247.4 |
-| 13 | **mafuta** | Tier S+ (Dynasty King) | 12 | 6 | 6 | 50.0% | 44 | 45 | -1 | 3.67 | 1 | **1519.2** | 1580.4 | 664.2 |
-| 14 | **Kubik** | Tier B (Core Veteran) | 28 | 15 | 13 | 53.6% | 76 | 65 | +11 | 2.71 | 1 | **1511.4** | 1545.1 | 229.5 |
-| 15 | **ruby** | Tier B (Player) | 13 | 6 | 7 | 46.2% | 25 | 22 | +3 | 1.92 | 2 | **1509.1** | 1528.0 | 188.3 |
-| 16 | **Dune** | Tier B (Division Veteran) | 27 | 13 | 14 | 48.1% | 61 | 68 | -7 | 2.26 | 0 | **1501.1** | 1530.8 | 173.2 |
-| 17 | **K-R** | Tier B (Tactician) | 10 | 5 | 5 | 50.0% | 23 | 18 | +5 | 2.30 | 0 | **1498.2** | 1515.6 | 178.6 |
-| 18 | **Rock** | Tier A (Finalist) | 18 | 7 | 11 | 38.9% | 34 | 54 | -20 | 1.89 | 1 | **1489.2** | 1525.0 | 140.2 |
-| 19 | **Ric25** | Tier A- (Mainstay) | 24 | 10 | 14 | 41.7% | 54 | 57 | -3 | 2.25 | 3 | **1482.0** | 1531.0 | 128.8 |
-| 20 | **Aeris** | Tier B+ (Veteran) | 32 | 12 | 20 | 37.5% | 78 | 88 | -10 | 2.44 | 1 | **1480.3** | 1514.8 | 108.6 |
-| 21 | **frzz** | Tier B (Mid-Tier) | 26 | 12 | 14 | 46.2% | 54 | 56 | -2 | 2.08 | 1 | **1475.5** | 1512.2 | 137.9 |
-| 22 | **RASH** | Tier B (Player) | 16 | 7 | 9 | 43.8% | 40 | 46 | -6 | 2.50 | 1 | **1475.5** | 1500.0 | 123.6 |
-| 23 | **E_not** | Tier B (Player) | 20 | 8 | 12 | 40.0% | 44 | 52 | -8 | 2.20 | 2 | **1469.4** | 1500.0 | 97.4 |
-| 24 | **yoxter** | Tier B (Veteran) | 32 | 11 | 21 | 34.4% | 50 | 73 | -23 | 1.56 | 4 | **1467.8** | 1500.0 | 70.6 |
-| 25 | **Taeda** | Tier B (Player) | 27 | 9 | 18 | 33.3% | 37 | 51 | -14 | 1.37 | 3 | **1463.5** | 1500.0 | 70.2 |
-| 26 | **Jamlight** | Tier B+ (Div. Champ) | 30 | 13 | 17 | 43.3% | 74 | 88 | -14 | 2.47 | 3 | **1460.3** | 1506.0 | 124.9 |
-| 27 | **RVD (МГБ)** | Tier S (Playoff Slayer) | 26 | 10 | 16 | 38.5% | 88 | 102 | -14 | 3.38 | 0 | **1455.5** | 1540.0 | 240.2 |
-| 28 | **Веселый Роджер** | Tier C (Amateur) | 12 | 4 | 8 | 33.3% | 15 | 27 | -12 | 1.25 | 2 | **1453.6** | 1500.0 | 56.4 |
-| 29 | **leonudomlya** | Tier B+ (Veteran) | 30 | 9 | 21 | 30.0% | 49 | 89 | -40 | 1.63 | 1 | **1423.6** | 1500.0 | 13.9 |
-| 30 | **Memori** | Tier B (Organizer) | 29 | 5 | 24 | 17.2% | 42 | 96 | -54 | 1.45 | 1 | **1380.5** | 1500.0 | -132.8 |
-| 31 | **Кирпич57** | Tier C (Hardcore Fan) | 28 | 4 | 24 | 14.3% | 48 | 104 | -56 | 1.71 | 0 | **1320.4** | 1500.0 | -236.4 |
+    streak_player, streak_length = None, 0
+    current_player, run = None, 0
+    for season in chronology:
+        champion = season.get("league_champion")
+        run = run + 1 if champion == current_player else 1
+        current_player = champion
+        if run > streak_length:
+            streak_length, streak_player = run, champion
+    dynasty = f"{streak_player} ({streak_length} чемпионских титула подряд)" if streak_player else "—"
 
----
+    playoff_games = elo_leader["playoff_wins"] + elo_leader["playoff_losses"]
+    clutch_rate = round(100 * elo_leader["playoff_wins"] / playoff_games, 1) if playoff_games else 0.0
+    return [
+        f"1. **Абсолютный Доминатор — {dominator['player']} (Dominator Score: {dominator['dominator_score']}):** "
+        f"{dominator['premier_titles']} чемпионских титулов Высшей лиги, {dominator['cup_titles']} Кубка лиг, "
+        f"{dominator['major_finals']} выходов в финал; {dominator['wins']} побед и разница мячей "
+        f"{dominator['goal_diff']:+d} ({dominator['goals_for']} забито против {dominator['goals_against']} пропущенных).",
+        f"2. **Долнейшая чемпионская серия:** {dynasty}.",
+        f"3. **Лидер рейтинга — {elo_leader['player']} (Elo {elo_leader['elo']}):** "
+        f"винрейт {elo_leader['win_rate']}%, в плей-офф {elo_leader['playoff_wins']}-"
+        f"{elo_leader['playoff_losses']} ({clutch_rate}% побед).",
+        f"4. **«Железная стена» — {defensive['player']}:** {defensive['gapg']} пропущенных за матч "
+        f"при {defensive['matches']} сыгранных матчах (минимум {MIN_MATCHES_FOR_DEFENSIVE}).",
+        f"5. **Кубковый специалист — {cup_killer['player']}:** {cup_killer['cup_titles']} Кубков лиги.",
+    ]
 
-## 🥊 Раздел 3. Матрица личных встреч (Head-to-Head Top-Tier)
 
-*Таблица показывает баланс побед и поражений (счёт по голам) между ключевыми фигурами сцены:*
+def render_dashboard(payload):
+    """Markdown dashboard generated from the same payload as the master table."""
+    board = payload["leaderboard"]
+    metrics = payload["database_metrics"]
+    out = [
+        f"# 🏆 Мастер-таблица и аналитический дашборд: {payload['game']}",
+        "",
+        f"> Сообщество [{{community}}]({payload['community']['url']}) • "
+        f"{metrics['total_matches_analyzed']} матчей • {metrics['total_players_tracked']} игроков • "
+        f"{group(metrics['total_goals_recorded'])} голов • средняя результативность "
+        f"{metrics['avg_goals_per_match']}".replace("{community}", payload["community"]["name"]),
+        "",
+        "## 📌 Раздел 1. Блок инсайтов: «Главное»",
+        "",
+        "> [!IMPORTANT]",
+        "> ### Ключевые аналитические инсайты киберспортивной сцены Goal 3:",
+        *[f"> {line}" for line in dashboard_insights(board, payload["championship_chronology"])],
+        "",
+        "## 📊 Раздел 2. Мастер-таблица: Глобальный Elo-рейтинг и игровая статистика",
+        "",
+        f"*Модель FIDE/Esports: K={ELO_K_PLAYOFF} для плей-офф и матчей новичков, "
+        f"K={ELO_K_REGULAR} для регулярки, веса овертаймов и буллитов — "
+        f"{OVERTIME_WIN_SCORE}/{DRAW_SCORE}.*",
+        "",
+        "| № | Игрок | Статус / Тир | Матчи | В | П | Винрейт | Забито | Пропущено | Разница | GPG | "
+        "Сухие | Elo | Пик Elo | Dominator |",
+        "|:---|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|",
+        *[
+            f"| {i} | **{r['player']}** | {r['tier']} | {r['matches']} | {r['wins']} | {r['losses']} | "
+            f"{r['win_rate']}% | {r['goals_for']} | {r['goals_against']} | {r['goal_diff']:+d} | {r['gpg']} | "
+            f"{r['clean_sheets']} | **{r['elo']}** | {r['peak_elo']} | {r['dominator_score']} |"
+            for i, r in enumerate(board, 1)
+        ],
+        "",
+        "## 🥊 Раздел 3. Матрица личных встреч (Head-to-Head Top-Tier)",
+        "",
+    ]
+    rivals = list(payload["head_to_head_matrix"])
+    out.append("| Игрок | " + " | ".join(rivals) + " |")
+    out.append("|:---|" + ":---:|" * len(rivals))
+    for player in rivals:
+        cells = [payload["head_to_head_matrix"][player].get(other, "—") for other in rivals]
+        out.append(f"| **{player}** | " + " | ".join(cells) + " |")
 
-| Игрок | ectoPower | PacnyTHuK | Kunio | Romix | mafuta | Sokol | Буц | Yuliy_Cezar | Rock | Ric25 |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **ectoPower** | — | **4 - 5** (18:22) | **2 - 1** (6:3) | **6 - 3** (33:23) | **1 - 1** (5:5) | — | — | — | **7 - 0** (36:11) | **3 - 0** (11:5) |
-| **PacnyTHuK** | **5 - 4** (22:18) | — | **4 - 2** (15:10) | — | — | — | **1 - 0** (4:1) | — | — | — |
-| **Kunio** | **1 - 2** (3:6) | **2 - 4** (10:15) | — | — | — | **4 - 1** (14:6) | — | — | **3 - 2** (9:8) | **4 - 0** (9:3) |
-| **Romix** | **3 - 6** (23:33) | — | — | — | — | — | — | — | **2 - 1** (12:8) | — |
-| **mafuta** | **1 - 1** (5:5) | — | — | — | — | — | — | — | — | — |
-| **Sokol** | — | — | **1 - 4** (6:14) | — | — | — | — | — | — | **3 - 0** (11:5) |
-| **Буц** | — | **0 - 1** (1:4) | — | — | — | — | — | — | — | — |
-| **Yuliy_Cezar** | — | — | — | — | — | — | — | — | — | — |
-| **Rock** | **0 - 7** (11:36) | — | **2 - 3** (8:9) | **1 - 2** (8:12) | — | — | — | — | — | **2 - 2** (6:7) |
-| **Ric25** | **0 - 3** (5:11) | — | **0 - 4** (3:9) | — | — | **0 - 3** (5:11) | — | — | **2 - 2** (7:6) | — |
+    out += ["", "## 🏛️ Раздел 4. Зал Славы и Хроника Чемпионов", ""]
+    for season in payload["championship_chronology"]:
+        facts = " • ".join(
+            f"{label}: {value}"
+            for label, value in (
+                ("Чемпион лиги", season.get("league_champion")),
+                ("Обладатель Кубка", season.get("cup_winner")),
+                ("Финалист", season.get("runner_up")),
+                ("Третье место", season.get("third_place")),
+            )
+            if value
+        )
+        out.append(f"- **{season['season']}** ({season['year']}, {season.get('format', '—')}) — {facts}")
+    legends = [r for r in board if r["hall_of_fame"]]
+    out += ["", f"**Зал Славы ({len(legends)})** — " + ", ".join(r["player"] for r in legends), ""]
 
----
+    out += ["## 🎖️ Раздел 5. Иерархия доминаторов", "", "```mermaid", "graph TD"]
+    tiers = {}
+    for row in payload["dominators_ranking"]:
+        tiers.setdefault(row["tier"], []).append(row)
+    for tier, rows in tiers.items():
+        out.append(f'    subgraph "{tier}"')
+        for row in rows:
+            safe = row["player"].replace("_", "")
+            out.append(
+                f'        {safe}["{row["player"]}<br/>Dominator: {row["dominator_score"]} | '
+                f'{row["total_titles"]} титулов | {row["goal_diff"]:+d} GD"]'
+            )
+        out.append("    end")
+    out += ["```", ""]
+    return "\n".join(out)
 
-## 🏛️ Раздел 4. Зал Славы и Хроника Чемпионов (Seasons 1–9)
 
-| Сезон | Год | Чемпион Высшей лиги | Обладатель Кубка лиг | Финалист Кубка / Вице-чемпион | Бронзовый призёр |
-|:---:|:---:|:---|:---|:---|:---|
-| **Сезон 1** | 2015 | **mafuta** | **mafuta** | — | — |
-| **Сезон 2** | 2016 | **mafuta** | **mafuta** | ectoPower | — |
-| **Сезон 3** | 2016 | **mafuta** | **mafuta** | ectoPower | Ric25 |
-| **Сезон 4** | 2017 | **Transistor** | **mafuta** | Transistor | ectoPower |
-| **Сезон 5** | 2017 | **ectoPower** | **RVD (МГБ)** | PacnyTHuK (5:2) | mafuta / izzzotope |
-| **Сезон 6** | 2018 | **ectoPower** | **ectoPower** | Transistor (5:4 в 9 играх) | Rock / Memori |
-| **Сезон 7** | 2022 | **ectoPower** | **RVD (МГБ)** | mafuta / ectoPower | Romix |
-| **Сезон 8** | 2024 | **Kunio** / **ectoPower** | **PacnyTHuK** | ectoPower (5:3 в 8 играх) | Romix / Kunio |
-| **Сезон 9** | 2025 | **Kunio** | **ectoPower** | Rock (5:0 в финале) | Romix |
+def main(output_dir=Path(".")):
+    """Write the analytics snapshot and the generated Markdown dashboard."""
+    output_dir = Path(output_dir)
+    ratings = build_player_ratings(all_matches)
+    leaderboard = build_leaderboard(ratings)
+    payload = build_master_table_payload(all_matches, leaderboard, build_head_to_head_matrix(ratings))
 
----
+    analytics_path = output_dir / ANALYTICS_TABLE_PATH
+    dashboard_path = output_dir / DASHBOARD_PATH
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-## 🎖️ Раздел 5. Иерархия доминаторов и архетипы игроков
+    with open(analytics_path, "w", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+    print(f"Analytics snapshot saved at: {analytics_path}")
 
-```mermaid
-graph TD
-    subgraph "S+ TIER: LEGENDS & DYNASTY"
-        ecto["👑 ectoPower<br/>Dominator: 938.8 | 6 Титулов | +86 GD"]
-        mafuta["👑 mafuta<br/>Dominator: 664.2 | 7 Титулов | Основатель Доминации"]
-    end
+    with open(dashboard_path, "w", encoding="utf-8") as handle:
+        handle.write(render_dashboard(payload))
+    print(f"Master Markdown Dashboard saved at: {dashboard_path}")
 
-    subgraph "S TIER: APEX CONTENDERS"
-        pac["🎯 PacnyTHuK<br/>Elo: 1648.1 | Кубок S8 | Clutch Master"]
-        kunio["🛡️ Kunio<br/>Elo: 1600.4 | Чемпион S8, S9 | Iron Wall"]
-        rvd["⚔️ RVD (МГБ)<br/>2x Кубок Лиг | Playoff Slayer"]
-    end
 
-    subgraph "A+ / A TIER: HEAVYWEIGHTS"
-        sokol["⚡ Sokol<br/>Elo: 1643.5 | 81.5% WR"]
-        buts["💥 Буц<br/>Elo: 1607.7 | 79.2% WR"]
-        hanter["🚩 Hanter<br/>Elo: 1607.7 | 85.7% WR"]
-        romix["🏛️ Romix<br/>Elo: 1575.0 | Regular Top-3"]
-        cezar["⚔️ Yuliy_Cezar<br/>Elo: 1589.6 | 70% WR"]
-        trans["⚙️ Transistor<br/>Чемпион S4 | Финалист S6"]
-        rock["🎸 Rock<br/>Финалист S9"]
-    end
+verify_vk_connection()
+all_matches = fetch_all_matches()
 
-    ecto --> pac
-    ecto --> kunio
-    mafuta --> trans
-    kunio --> romix
-    pac --> buts
-```
-"""
-
-if __name__ == '__main__':
-    md_path = "c:\\Users\\Aeros\\Desktop\\Мастер-таблица\\nekketsu_dashboard.md"
-    with open(md_path, "w", encoding="utf-8") as f:
-        f.write(md_content)
-    print(f"Master Markdown Dashboard saved at: {md_path}")
+if __name__ == "__main__":
+    if len(sys.argv) > 2 and sys.argv[1] == "--out-dir":
+        main(sys.argv[2])
+    else:
+        main()

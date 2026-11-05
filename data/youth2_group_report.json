@@ -1,0 +1,507 @@
+{
+ "unknown_lines": [],
+ "calendar_unpaired": [],
+ "reposts": [
+  {
+   "division": "Кометы",
+   "tour": "Тур 6",
+   "pair": [
+    "SaikoDelph & Jgunishka",
+    "Daria_P & Memori"
+   ],
+   "comment_id": 22439,
+   "kept_comment": 22439,
+   "second_comment": 22440,
+   "second_legs": [
+    "2:0",
+    "3:3 (4:3 PK)",
+    "2:2 (4:3 PK aka неестественно долгая серия пенальти)",
+    "2:2 (4:3 PK)"
+   ],
+   "agrees": true
+  }
+ ],
+ "wrong_leg_count": [],
+ "void_meetings": [
+  {
+   "division": "Метеоры",
+   "tour": "Тур 6",
+   "pair": [
+    "sokol & PacnyTHuK",
+    "Den B. & Romix"
+   ],
+   "comment_id": 22505,
+   "legs": [
+    "6:3",
+    "9:2",
+    "6:5",
+    "12:2"
+   ]
+  },
+  {
+   "division": "Метеоры",
+   "tour": "Тур 5",
+   "pair": [
+    "Den B. & Romix",
+    "Metallist Balalaykin & Cyneprepou4uk"
+   ],
+   "comment_id": 22534,
+   "legs": [
+    "1:3",
+    "3:3 (3-4)",
+    "2:3",
+    "1:3"
+   ]
+  }
+ ],
+ "deduced": [
+  {
+   "division": "Кометы",
+   "tour": "Тур 6",
+   "pair": [
+    "lenin1st & ectoPower",
+    "Thorogood & Ric25"
+   ],
+   "legs_won": [
+    2,
+    2
+   ]
+  },
+  {
+   "division": "Кометы",
+   "tour": "Тур 1",
+   "pair": [
+    "Dynamik & Dune",
+    "Daria_P & Memori"
+   ],
+   "legs_won": [
+    0,
+    4
+   ]
+  },
+  {
+   "division": "Кометы",
+   "tour": "Тур 5",
+   "pair": [
+    "Dynamik & Dune",
+    "Thorogood & Ric25"
+   ],
+   "legs_won": [
+    0,
+    4
+   ]
+  },
+  {
+   "division": "Кометы",
+   "tour": "Тур 6",
+   "pair": [
+    "Bender & mafuta",
+    "Dynamik & Dune"
+   ],
+   "legs_won": [
+    4,
+    0
+   ]
+  }
+ ],
+ "ambiguous": [],
+ "teams": [
+  {
+   "team": "lenin1st & ectoPower",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 17,
+    "pk_wins": 1,
+    "pk_losses": 0,
+    "losses": 6
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 15,
+    "pk_wins": 1,
+    "pk_losses": 0,
+    "losses": 4
+   },
+   "пробел_комментариев": {
+    "meetings": [
+     6,
+     5
+    ],
+    "legs": [
+     24,
+     20
+    ],
+    "wins": [
+     17,
+     15
+    ],
+    "losses": [
+     6,
+     4
+    ]
+   }
+  },
+  {
+   "team": "Daria_P & Memori",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 11,
+    "pk_wins": 2,
+    "pk_losses": 4,
+    "losses": 7
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 7,
+    "pk_wins": 2,
+    "pk_losses": 4,
+    "losses": 7
+   },
+   "пробел_комментариев": {
+    "meetings": [
+     6,
+     5
+    ],
+    "legs": [
+     24,
+     20
+    ],
+    "wins": [
+     11,
+     7
+    ]
+   }
+  },
+  {
+   "team": "SaikoDelph & Jgunishka",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 8,
+    "pk_wins": 3,
+    "pk_losses": 2,
+    "losses": 11
+   },
+   "по_комментариям": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 8,
+    "pk_wins": 3,
+    "pk_losses": 2,
+    "losses": 11
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "Thorogood & Ric25",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 9,
+    "pk_wins": 2,
+    "pk_losses": 0,
+    "losses": 13
+   },
+   "по_комментариям": {
+    "meetings": 4,
+    "legs": 16,
+    "wins": 3,
+    "pk_wins": 2,
+    "pk_losses": 0,
+    "losses": 11
+   },
+   "пробел_комментариев": {
+    "meetings": [
+     6,
+     4
+    ],
+    "legs": [
+     24,
+     16
+    ],
+    "wins": [
+     9,
+     3
+    ],
+    "losses": [
+     13,
+     11
+    ]
+   }
+  },
+  {
+   "team": "Bender & mafuta",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 15,
+    "pk_wins": 1,
+    "pk_losses": 2,
+    "losses": 6
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 11,
+    "pk_wins": 1,
+    "pk_losses": 2,
+    "losses": 6
+   },
+   "пробел_комментариев": {
+    "meetings": [
+     6,
+     5
+    ],
+    "legs": [
+     24,
+     20
+    ],
+    "wins": [
+     15,
+     11
+    ]
+   }
+  },
+  {
+   "team": "Dynamik & Dune",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 6,
+    "pk_wins": 0,
+    "pk_losses": 0,
+    "losses": 18
+   },
+   "по_комментариям": {
+    "meetings": 3,
+    "legs": 12,
+    "wins": 6,
+    "pk_wins": 0,
+    "pk_losses": 0,
+    "losses": 6
+   },
+   "пробел_комментариев": {
+    "meetings": [
+     6,
+     3
+    ],
+    "legs": [
+     24,
+     12
+    ],
+    "losses": [
+     18,
+     6
+    ]
+   }
+  },
+  {
+   "team": "Aoshi & Aeris",
+   "division": "Кометы",
+   "по_таблице": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 8,
+    "pk_wins": 1,
+    "pk_losses": 2,
+    "losses": 13
+   },
+   "по_комментариям": {
+    "meetings": 6,
+    "legs": 24,
+    "wins": 8,
+    "pk_wins": 1,
+    "pk_losses": 2,
+    "losses": 13
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "Islambolt Pornce & Kunio",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 9,
+    "pk_wins": 1,
+    "pk_losses": 0,
+    "losses": 10
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 9,
+    "pk_wins": 1,
+    "pk_losses": 0,
+    "losses": 10
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "Den B. & Romix",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 0,
+    "legs": 0,
+    "wins": 0,
+    "pk_wins": 0,
+    "pk_losses": 0,
+    "losses": 0
+   },
+   "по_комментариям": {
+    "meetings": 0,
+    "legs": 0,
+    "wins": 0,
+    "pk_wins": 0,
+    "pk_losses": 0,
+    "losses": 0
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "sokol & PacnyTHuK",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 19,
+    "pk_wins": 1,
+    "pk_losses": 0,
+    "losses": 0
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 19,
+    "pk_wins": 1,
+    "pk_losses": 0,
+    "losses": 0
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "Palka Palych & XakoFEAR",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 6,
+    "pk_wins": 0,
+    "pk_losses": 1,
+    "losses": 13
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 6,
+    "pk_wins": 0,
+    "pk_losses": 1,
+    "losses": 13
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "Metallist Balalaykin & Cyneprepou4uk",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 4,
+    "pk_wins": 0,
+    "pk_losses": 1,
+    "losses": 15
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 4,
+    "pk_wins": 0,
+    "pk_losses": 1,
+    "losses": 15
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "E_not & Tymoschuk",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 12,
+    "pk_wins": 2,
+    "pk_losses": 0,
+    "losses": 6
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 12,
+    "pk_wins": 2,
+    "pk_losses": 0,
+    "losses": 6
+   },
+   "пробел_комментариев": {}
+  },
+  {
+   "team": "Кубик & Juliy_Cezar",
+   "division": "Метеоры",
+   "по_таблице": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 6,
+    "pk_wins": 0,
+    "pk_losses": 2,
+    "losses": 12
+   },
+   "по_комментариям": {
+    "meetings": 5,
+    "legs": 20,
+    "wins": 6,
+    "pk_wins": 0,
+    "pk_losses": 2,
+    "losses": 12
+   },
+   "пробел_комментариев": {}
+  }
+ ],
+ "unreconciled": [],
+ "substitutions": [
+  {
+   "division": "Метеоры",
+   "tour": "Тур 7",
+   "pair": [
+    "sokol & PacnyTHuK",
+    "E_not & Tymoschuk"
+   ],
+   "comment_id": 22423,
+   "запасные": [
+    "Буц"
+   ],
+   "ноги": [
+    "5:4",
+    "9:1",
+    "5:2",
+    "7:0"
+   ]
+  }
+ ],
+ "totals": {
+  "фикстур в календаре": 42,
+  "встреч с опубликованными ногами": 32,
+  "встреч выведено из сводки": 4,
+  "встреч без определённого счёта": 0,
+  "не зачтено источником": 2,
+  "строк ног в базу": 134,
+  "сходимость со сводкой": "полная"
+ }
+}

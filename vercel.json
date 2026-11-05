@@ -1,4 +1,19 @@
 {
   "buildCommand": "python build_all.py",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "functions": {
+    "api/handler.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{tests/**,archive/**,scratch/**,debug_*.html,**/__pycache__/**}"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(?<handle>.*)",
+      "dest": "/api/handler"
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
 }
