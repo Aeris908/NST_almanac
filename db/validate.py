@@ -106,6 +106,12 @@ CHECKS = [
         left join match_sides s0 on s0.match_id = m.id and s0.side_index = 0
         left join match_sides s1 on s1.match_id = m.id and s1.side_index = 1
         where s0.id is null or s1.id is null"""),
+    # Рамка показывает игры документа целиком, но турнирные атрибуты (сезон, этап) берёт у
+    # контейнера строки. Два контейнера у одного документа = один чемпионат в двух сезонах.
+    ("игры одного документа разложены по разным турнирам", """
+        select doc_id from matches
+        where doc_id is not null and tournament_id is not null
+        group by doc_id having count(distinct tournament_id) > 1"""),
 ]
 
 # Витрина теряет вкладку молча, если соответствующий срез документов пуст: ни одного документа

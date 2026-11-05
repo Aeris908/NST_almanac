@@ -246,8 +246,13 @@ def load(db_path=DB_PATH):
         con.execute(f"delete from match_sides where match_id in ({placeholders})", doomed)
         con.execute(f"delete from matches where id in ({placeholders})", doomed)
 
-    docs = {re.sub(r"\s+", " ", (row["title"] or "")).strip(): row["id"] for row in con.execute(
-        "select id, json_extract(payload, '$.title') as title from tournament_docs")}
+    # Сезон строки берётся из документа: у носителя командных календарей его нет вовсе, и
+    # `ensure_tournament` на пустом месте заводил второй контейнер того же чемпионата с сезоном
+    # «—» — после этого игры темы и игры календаря лежали бы в разных турнирах.
+    docs = {re.sub(r"\s+", " ", (row["title"] or "")).strip(): (row["id"], row["season"])
+            for row in con.execute(
+                "select id, json_extract(payload, '$.title') as title,"
+                " json_extract(payload, '$.season_year') as season from tournament_docs")}
     from db.import_stores import Importer
 
     imp = Importer(con)
@@ -255,10 +260,11 @@ def load(db_path=DB_PATH):
     renumbered = set()
     queued = []
     for game in games:
-        doc_id = docs.get(game["tournament"])
-        if doc_id is None:
+        found = docs.get(game["tournament"])
+        if found is None:
             skipped += 1
             continue
+        doc_id, doc_season = found
         s1, s2 = game["score"]
         links = [("video", url) for url in game.get("links") or []]
         special = game.get("kind") == "special"
@@ -270,7 +276,8 @@ def load(db_path=DB_PATH):
         counted = game.get("counted", True)
         tp += 1 if game.get("tp") else 0
         status = "technical" if game.get("tp") else (None if counted else "void")
-        match_id = imp.add(tournament=game["tournament"], season=game.get("season", "—"),
+        season = game.get("season") or doc_season or "—"
+        match_id = imp.add(tournament=game["tournament"], season=season,
                            kind=game.get("kind", "team"), stage=game.get("stage") or game["tour"],
                            names_a=game["team_a"], names_b=game["team_b"],
                            s1=s1, s2=s2, source=SOURCE, source_ref=game["source_ref"],

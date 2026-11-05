@@ -4,16 +4,16 @@
   "обсуждений в выгрузке всего (все дисциплины клуба)": 375,
   "футбольных обсуждений в сверке": 34,
   "комментариев": 4612,
-  "единиц базы (турниры и документы)": 61,
+  "единиц базы (турниры и документы)": 58,
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
   "строк базы в сопоставленных единицах": 3350,
-  "строк источника, совпавших с базой": 1203
+  "строк источника, совпавших с базой": 1212
  },
  "counts": {
-  "missing_in_db": 112,
-  "score_diff": 132,
-  "wiki_missing_in_db": 20,
+  "missing_in_db": 104,
+  "score_diff": 131,
+  "wiki_missing_in_db": 8,
   "wiki_score_diff": 9,
   "matched_elsewhere": 9,
   "unmatched_topic": 9,
@@ -87,7 +87,6 @@
    "title": "Предварительная регистрация команд для участия в IV Командном Чемпионате по Kunio-kun no Nekketsu Soccer League. (Goal 3)",
    "signature": "командный №4 goal3",
    "units": [
-    "IV Командный Чемпионат по Goal 3",
     "IV Командный Чемпионат по Goal 3",
     "IV Командный Чемпионат по Goal 3"
    ]
@@ -371,166 +370,11 @@
    "pid": "53638617",
    "title": "VI Командный турнир по Soccer League. Календарь средней лиги",
    "rows": 12,
-   "missing": 12
+   "matched": 12
   }
  ],
  "items": {
   "missing_in_db": [
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22438",
-    "comment_day": "2020-03-28",
-    "line": "2 тур: Sokol & PacnyTHuK vs Кубик & Juliy_Cezar 5-1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "PacnyTHuK",
-      "Sokol"
-     ],
-     [
-      "Kubik",
-      "Yuliy_Cezar"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=40#post22438",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 142
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22517",
-    "comment_day": "2020-04-07",
-    "line": "Кубик & Juliy_Cezar vs E_not & Tymoschuk 2:4, 1:8, 2:2 (РК 4:5), 0:2",
-    "leg": "1/4",
-    "source_pair": [
-     [
-      "Kubik",
-      "Yuliy_Cezar"
-     ],
-     [
-      "Bubnov",
-      "E_not"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22517",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 142
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22517",
-    "comment_day": "2020-04-07",
-    "line": "Кубик & Juliy_Cezar vs E_not & Tymoschuk 2:4, 1:8, 2:2 (РК 4:5), 0:2",
-    "leg": "2/4",
-    "source_pair": [
-     [
-      "Kubik",
-      "Yuliy_Cezar"
-     ],
-     [
-      "Bubnov",
-      "E_not"
-     ]
-    ],
-    "scores": [
-     1,
-     8
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22517",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 142
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22517",
-    "comment_day": "2020-04-07",
-    "line": "Кубик & Juliy_Cezar vs E_not & Tymoschuk 2:4, 1:8, 2:2 (РК 4:5), 0:2",
-    "leg": "3/4",
-    "source_pair": [
-     [
-      "Kubik",
-      "Yuliy_Cezar"
-     ],
-     [
-      "Bubnov",
-      "E_not"
-     ]
-    ],
-    "scores": [
-     2,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22517",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 142
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22517",
-    "comment_day": "2020-04-07",
-    "line": "Кубик & Juliy_Cezar vs E_not & Tymoschuk 2:4, 1:8, 2:2 (РК 4:5), 0:2",
-    "leg": "4/4",
-    "source_pair": [
-     [
-      "Kubik",
-      "Yuliy_Cezar"
-     ],
-     [
-      "Bubnov",
-      "E_not"
-     ]
-    ],
-    "scores": [
-     0,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22517",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "2-й Молодёжный Чемпионат по Goal 3"
-     ],
-     "rows": 142
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
    {
     "topic": "52002075",
     "title": "8-й сольный чемпионат Soccer League (Goal3)",
@@ -598,37 +442,6 @@
    {
     "topic": "33672355",
     "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "5992",
-    "comment_day": "2016-07-31",
-    "line": "Высшая Лига, 4й Тур: PacnyTHuk & Jgunishka Vs Transistor & Tymoschuk 5:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jgunishka",
-      "PacnyTHuK"
-     ],
-     [
-      "Bubnov",
-      "Transistor"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=160#post5992",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "IV Командный Чемпионат по Goal 3"
-     ],
-     "rows": 75
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
     "comment_id": "6242",
     "comment_day": "2016-08-29",
     "line": "RVD - Ric25 vs Esteban - Dopi - 1:5",
@@ -654,37 +467,6 @@
      "rows": 75
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "6391",
-    "comment_day": "2016-08-31",
-    "line": "Transistor & Tymoschuk vs Kunio & Memori - 3:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov",
-      "Transistor"
-     ],
-     [
-      "Kunio",
-      "Memori"
-     ]
-    ],
-    "scores": [
-     3,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=200#post6391",
-    "shape": "2×2",
-    "tournament": {
-     "units": [
-      "IV Командный Чемпионат по Goal 3"
-     ],
-     "rows": 75
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет — форма 2×2: похоже на командный турнир, а не на сезон"
    },
    {
     "topic": "33045983",
@@ -3626,36 +3408,6 @@
      "rows": 90
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5068",
-    "comment_day": "2016-05-17",
-    "line": "Tymoschuk vs Alpharushin - 7:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "Alpharushin"
-     ]
-    ],
-    "scores": [
-     7,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5068",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "3-й Сольный Турнир по пенальти",
-      "3-й Сольный Турнир по пенальти"
-     ],
-     "rows": 96
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
    }
   ],
   "score_diff": [
@@ -3680,7 +3432,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 318275,
+     "id": 12257,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -3714,7 +3466,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 318275,
+     "id": 12257,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -3748,7 +3500,7 @@
     ],
     "url": "https://vk.com/topic-66162180_36630593?offset=0#post14336",
     "base": {
-     "id": 317630,
+     "id": 11612,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3782,7 +3534,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=0#post17541",
     "base": {
-     "id": 317660,
+     "id": 11642,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3816,7 +3568,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=80#post18193",
     "base": {
-     "id": 316732,
+     "id": 10714,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -3850,7 +3602,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=0#post26785",
     "base": {
-     "id": 317690,
+     "id": 11672,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -3884,7 +3636,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=80#post26919",
     "base": {
-     "id": 317695,
+     "id": 11677,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -3918,7 +3670,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 315470,
+     "id": 9452,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -3949,7 +3701,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 316476,
+     "id": 10458,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -3980,7 +3732,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 316476,
+     "id": 10458,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -4011,7 +3763,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 317638,
+     "id": 11620,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -4042,7 +3794,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 317638,
+     "id": 11620,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -4073,7 +3825,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 316608,
+     "id": 10590,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -4104,7 +3856,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 316608,
+     "id": 10590,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -4271,7 +4023,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 315470,
+     "id": 9452,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4438,7 +4190,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=0#post3525",
     "base": {
-     "id": 316752,
+     "id": 10734,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4469,7 +4221,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33045983?offset=0#post3525",
     "base": {
-     "id": 316752,
+     "id": 10734,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4500,7 +4252,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 316784,
+     "id": 10766,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -4531,7 +4283,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 316784,
+     "id": 10766,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -4562,7 +4314,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 316362,
+     "id": 10344,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -4593,7 +4345,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 316362,
+     "id": 10344,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -4627,7 +4379,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33103100?offset=0#post3563",
     "base": {
-     "id": 315470,
+     "id": 9452,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -4661,7 +4413,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=0#post6339",
     "base": {
-     "id": 315782,
+     "id": 9764,
      "tour": "5 Тур",
      "scores": [
       4,
@@ -4695,7 +4447,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 317610,
+     "id": 11592,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -4729,7 +4481,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 317610,
+     "id": 11592,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -4763,7 +4515,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=0#post9794",
     "base": {
-     "id": 317619,
+     "id": 11601,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -4797,7 +4549,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 317620,
+     "id": 11602,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -4831,7 +4583,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 317742,
+     "id": 11724,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -4865,7 +4617,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 317742,
+     "id": 11724,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -4899,7 +4651,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 317746,
+     "id": 11728,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -4933,7 +4685,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 317746,
+     "id": 11728,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -4967,7 +4719,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 317807,
+     "id": 11789,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -5001,7 +4753,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 317819,
+     "id": 11801,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -5035,7 +4787,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
     "base": {
-     "id": 316212,
+     "id": 10194,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -5066,7 +4818,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
     "base": {
-     "id": 316212,
+     "id": 10194,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -5097,7 +4849,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=40#post2450",
     "base": {
-     "id": 315335,
+     "id": 9317,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -5131,7 +4883,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=60#post2520",
     "base": {
-     "id": 315346,
+     "id": 9328,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5165,7 +4917,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=60#post2530",
     "base": {
-     "id": 315334,
+     "id": 9316,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5199,7 +4951,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2537",
     "base": {
-     "id": 315375,
+     "id": 9357,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -5233,7 +4985,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2552",
     "base": {
-     "id": 315351,
+     "id": 9333,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -5267,7 +5019,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2557",
     "base": {
-     "id": 315367,
+     "id": 9349,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -5301,7 +5053,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=80#post2567",
     "base": {
-     "id": 315339,
+     "id": 9321,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -5335,7 +5087,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
     "base": {
-     "id": 316780,
+     "id": 10762,
      "tour": "7 Тур",
      "scores": [
       5,
@@ -5366,7 +5118,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2599",
     "base": {
-     "id": 315368,
+     "id": 9350,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -5400,7 +5152,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 315377,
+     "id": 9359,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -5434,7 +5186,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 315377,
+     "id": 9359,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -5468,7 +5220,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2650",
     "base": {
-     "id": 315336,
+     "id": 9318,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -5502,7 +5254,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2652",
     "base": {
-     "id": 315364,
+     "id": 9346,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5536,7 +5288,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2656",
     "base": {
-     "id": 316834,
+     "id": 10816,
      "tour": "11 Тур",
      "scores": [
       1,
@@ -5567,7 +5319,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
     "base": {
-     "id": 315448,
+     "id": 9430,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -5598,7 +5350,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
     "base": {
-     "id": 315448,
+     "id": 9430,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -5629,7 +5381,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2666",
     "base": {
-     "id": 315414,
+     "id": 9396,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -5663,7 +5415,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2668",
     "base": {
-     "id": 315341,
+     "id": 9323,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -5697,7 +5449,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
     "base": {
-     "id": 315474,
+     "id": 9456,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -5728,7 +5480,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
     "base": {
-     "id": 315474,
+     "id": 9456,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -5759,7 +5511,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2677",
     "base": {
-     "id": 315852,
+     "id": 9834,
      "tour": "1 Тур",
      "scores": [
       6,
@@ -5790,7 +5542,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=160#post2680",
     "base": {
-     "id": 315369,
+     "id": 9351,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -5824,7 +5576,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2692",
     "base": {
-     "id": 315486,
+     "id": 9468,
      "tour": "6 Тур",
      "scores": [
       3,
@@ -5855,7 +5607,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2692",
     "base": {
-     "id": 315486,
+     "id": 9468,
      "tour": "6 Тур",
      "scores": [
       3,
@@ -5886,7 +5638,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
     "base": {
-     "id": 316792,
+     "id": 10774,
      "tour": "8 Тур",
      "scores": [
       4,
@@ -5917,7 +5669,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2698",
     "base": {
-     "id": 315350,
+     "id": 9332,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -5951,7 +5703,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2721",
     "base": {
-     "id": 315345,
+     "id": 9327,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -5985,7 +5737,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2731",
     "base": {
-     "id": 315337,
+     "id": 9319,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6019,7 +5771,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2732",
     "base": {
-     "id": 315378,
+     "id": 9360,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6053,7 +5805,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 315342,
+     "id": 9324,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -6087,7 +5839,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
     "base": {
-     "id": 315460,
+     "id": 9442,
      "tour": "4 Тур",
      "scores": [
       3,
@@ -6118,7 +5870,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
     "base": {
-     "id": 315460,
+     "id": 9442,
      "tour": "4 Тур",
      "scores": [
       3,
@@ -6149,7 +5901,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
     "base": {
-     "id": 316212,
+     "id": 10194,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -6180,7 +5932,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
     "base": {
-     "id": 316212,
+     "id": 10194,
      "tour": "9 Тур",
      "scores": [
       0,
@@ -6211,7 +5963,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
     "base": {
-     "id": 315346,
+     "id": 9328,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6245,7 +5997,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
     "base": {
-     "id": 315346,
+     "id": 9328,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6279,7 +6031,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2798",
     "base": {
-     "id": 315335,
+     "id": 9317,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6313,7 +6065,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
     "base": {
-     "id": 315368,
+     "id": 9350,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6347,7 +6099,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
     "base": {
-     "id": 315368,
+     "id": 9350,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6381,7 +6133,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
     "base": {
-     "id": 315334,
+     "id": 9316,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6415,7 +6167,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
     "base": {
-     "id": 315334,
+     "id": 9316,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6449,7 +6201,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
     "base": {
-     "id": 315360,
+     "id": 9342,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6483,7 +6235,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
     "base": {
-     "id": 315360,
+     "id": 9342,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6517,7 +6269,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
     "base": {
-     "id": 315351,
+     "id": 9333,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6551,7 +6303,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
     "base": {
-     "id": 315351,
+     "id": 9333,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6585,7 +6337,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2847",
     "base": {
-     "id": 315367,
+     "id": 9349,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -6619,7 +6371,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
     "base": {
-     "id": 315377,
+     "id": 9359,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -6653,7 +6405,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
     "base": {
-     "id": 315377,
+     "id": 9359,
      "tour": "1 Круг",
      "scores": [
       9,
@@ -6687,7 +6439,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
     "base": {
-     "id": 315375,
+     "id": 9357,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6721,7 +6473,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
     "base": {
-     "id": 315375,
+     "id": 9357,
      "tour": "1 Круг",
      "scores": [
       1,
@@ -6755,7 +6507,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
     "base": {
-     "id": 315339,
+     "id": 9321,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6789,7 +6541,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
     "base": {
-     "id": 315339,
+     "id": 9321,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -6823,7 +6575,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
     "base": {
-     "id": 315341,
+     "id": 9323,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6857,7 +6609,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
     "base": {
-     "id": 315341,
+     "id": 9323,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6891,7 +6643,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
     "base": {
-     "id": 315474,
+     "id": 9456,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -6922,7 +6674,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
     "base": {
-     "id": 315474,
+     "id": 9456,
      "tour": "5 Тур",
      "scores": [
       1,
@@ -6953,7 +6705,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
     "base": {
-     "id": 315396,
+     "id": 9378,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -6987,7 +6739,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
     "base": {
-     "id": 315396,
+     "id": 9378,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7021,7 +6773,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
     "base": {
-     "id": 315582,
+     "id": 9564,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -7052,7 +6804,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
     "base": {
-     "id": 315582,
+     "id": 9564,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -7083,7 +6835,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
     "base": {
-     "id": 315347,
+     "id": 9329,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7117,7 +6869,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
     "base": {
-     "id": 315347,
+     "id": 9329,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7151,7 +6903,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
     "base": {
-     "id": 315348,
+     "id": 9330,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -7185,7 +6937,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
     "base": {
-     "id": 315348,
+     "id": 9330,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -7219,7 +6971,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
     "base": {
-     "id": 315448,
+     "id": 9430,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -7250,7 +7002,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3018",
     "base": {
-     "id": 315336,
+     "id": 9318,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7284,7 +7036,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3019",
     "base": {
-     "id": 315340,
+     "id": 9322,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7318,7 +7070,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3023",
     "base": {
-     "id": 315414,
+     "id": 9396,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7352,7 +7104,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3039",
     "base": {
-     "id": 315350,
+     "id": 9332,
      "tour": "1 Круг",
      "scores": [
       6,
@@ -7386,7 +7138,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
     "base": {
-     "id": 315496,
+     "id": 9478,
      "tour": "7 Тур",
      "scores": [
       4,
@@ -7417,7 +7169,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
     "base": {
-     "id": 315496,
+     "id": 9478,
      "tour": "7 Тур",
      "scores": [
       4,
@@ -7448,7 +7200,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3070",
     "base": {
-     "id": 315337,
+     "id": 9319,
      "tour": "1 Круг",
      "scores": [
       5,
@@ -7482,7 +7234,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3109",
     "base": {
-     "id": 315395,
+     "id": 9377,
      "tour": "1 Круг",
      "scores": [
       0,
@@ -7516,7 +7268,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
     "base": {
-     "id": 315345,
+     "id": 9327,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7550,7 +7302,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
     "base": {
-     "id": 315345,
+     "id": 9327,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7584,7 +7336,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3130",
     "base": {
-     "id": 315582,
+     "id": 9564,
      "tour": "2 Тур",
      "scores": [
       3,
@@ -7615,7 +7367,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3158",
     "base": {
-     "id": 315405,
+     "id": 9387,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7649,7 +7401,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
     "base": {
-     "id": 315378,
+     "id": 9360,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7683,7 +7435,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
     "base": {
-     "id": 315378,
+     "id": 9360,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7717,7 +7469,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
     "base": {
-     "id": 315338,
+     "id": 9320,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7751,7 +7503,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
     "base": {
-     "id": 315338,
+     "id": 9320,
      "tour": "1 Круг",
      "scores": [
       3,
@@ -7785,7 +7537,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3192",
     "base": {
-     "id": 315349,
+     "id": 9331,
      "tour": "1 Круг",
      "scores": [
       4,
@@ -7819,7 +7571,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
     "base": {
-     "id": 315342,
+     "id": 9324,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7853,7 +7605,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
     "base": {
-     "id": 315342,
+     "id": 9324,
      "tour": "1 Круг",
      "scores": [
       8,
@@ -7887,7 +7639,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
     "base": {
-     "id": 316184,
+     "id": 10166,
      "tour": "6 Тур",
      "scores": [
       5,
@@ -7918,7 +7670,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4870",
     "base": {
-     "id": 318225,
+     "id": 12207,
      "tour": "Группа B",
      "scores": [
       5,
@@ -7952,7 +7704,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4871",
     "base": {
-     "id": 318226,
+     "id": 12208,
      "tour": "Группа B",
      "scores": [
       5,
@@ -7986,7 +7738,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4876",
     "base": {
-     "id": 318228,
+     "id": 12210,
      "tour": "Группа B",
      "scores": [
       5,
@@ -7998,37 +7750,6 @@
      "b": "tubustd"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5270",
-    "comment_day": "2016-05-31",
-    "line": "huba-buba vs ectopower 0-7",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Huba Buba"
-     ],
-     [
-      "ectoPower"
-     ]
-    ],
-    "scores": [
-     0,
-     7
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5270",
-    "base": {
-     "id": 317727,
-     "tour": "1/4 финала",
-     "scores": [
-      4,
-      1
-     ],
-     "unit": "Season 2 Кубок лиг"
-    },
-    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
    }
   ],
   "wiki_missing_in_db": [
@@ -8199,282 +7920,6 @@
     "note": "2:3",
     "url": "https://vk.com/page-66162180_52913186",
     "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "1",
-    "line": "Кубик & Snipe (Золотые пятки) vs Kamaz & Jamlight 1:5 видео",
-    "source_pair": [
-     [
-      "Kubik",
-      "Snipe"
-     ],
-     [
-      "Jamlight",
-      "Kamaz"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "note": "1:5",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "1",
-    "line": "Роджер & Ryumaru (Футбольная бомба) vs leon-udomlya & RASH (Жабий ХАОС) 0:5 в1/в2",
-    "source_pair": [
-     [
-      "Ryumaru",
-      "Веселый Роджер"
-     ],
-     [
-      "RASH",
-      "leonudomlya"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "note": "0:5",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "2",
-    "line": "leon-udomlya & RASH (Жабий ХАОС) vs Aeris & Yuliy Cezar (Бухинаторы) 5:3 видео",
-    "source_pair": [
-     [
-      "RASH",
-      "leonudomlya"
-     ],
-     [
-      "Aeris",
-      "Yuliy_Cezar"
-     ]
-    ],
-    "scores": [
-     5,
-     3
-    ],
-    "note": "5:3",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "2",
-    "line": "Kamaz & Jamlight vs Роджер & Ryumaru (Футбольная бомба) 5:0 видео",
-    "source_pair": [
-     [
-      "Jamlight",
-      "Kamaz"
-     ],
-     [
-      "Ryumaru",
-      "Веселый Роджер"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "note": "5:0",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "3",
-    "line": "Dynamik & Таёда (Пивной ОЙ!) vs leon-udomlya & RASH (Жабий ХАОС) 2:5 видео",
-    "source_pair": [
-     [
-      "Dynamik",
-      "Taeda"
-     ],
-     [
-      "RASH",
-      "leonudomlya"
-     ]
-    ],
-    "scores": [
-     2,
-     5
-    ],
-    "note": "2:5",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "3",
-    "line": "Aeris & Yuliy Cezar (Бухинаторы) vs Kamaz & Jamlight 5:2",
-    "source_pair": [
-     [
-      "Aeris",
-      "Yuliy_Cezar"
-     ],
-     [
-      "Jamlight",
-      "Kamaz"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "note": "5:2",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "3",
-    "line": "Кубик & Snipe (Золотые пятки) vs Роджер & Ryumaru (Футбольная бомба) 5:1 видео",
-    "source_pair": [
-     [
-      "Kubik",
-      "Snipe"
-     ],
-     [
-      "Ryumaru",
-      "Веселый Роджер"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "note": "5:1",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "4",
-    "line": "Роджер & Ryumaru (Футбольная бомба) vs Aeris & Yuliy Cezar (Бухинаторы) 0:5 видео",
-    "source_pair": [
-     [
-      "Ryumaru",
-      "Веселый Роджер"
-     ],
-     [
-      "Aeris",
-      "Yuliy_Cezar"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "note": "0:5",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "4",
-    "line": "Kamaz & Jamlight vs Dynamik & Таёда (Пивной ОЙ!) 5:0 видео",
-    "source_pair": [
-     [
-      "Jamlight",
-      "Kamaz"
-     ],
-     [
-      "Dynamik",
-      "Taeda"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "note": "5:0",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "4",
-    "line": "leon-udomlya & RASH (Жабий ХАОС) vs Кубик & Snipe (Золотые пятки) 5:3 видео",
-    "source_pair": [
-     [
-      "RASH",
-      "leonudomlya"
-     ],
-     [
-      "Kubik",
-      "Snipe"
-     ]
-    ],
-    "scores": [
-     5,
-     3
-    ],
-    "note": "5:3",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "5",
-    "line": "Dynamik & Таёда (Пивной ОЙ!) vs Роджер & Ryumaru (Футбольная бомба) 5:1 видео",
-    "source_pair": [
-     [
-      "Dynamik",
-      "Taeda"
-     ],
-     [
-      "Ryumaru",
-      "Веселый Роджер"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "note": "5:1",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
-   },
-   {
-    "page": "53638617",
-    "title": "VI Командный турнир по Soccer League. Календарь средней лиги | VK",
-    "tour": "5",
-    "line": "leon-udomlya & RASH (Жабий ХАОС) vs Kamaz & Jamlight 5:1 видео",
-    "source_pair": [
-     [
-      "RASH",
-      "leonudomlya"
-     ],
-     [
-      "Jamlight",
-      "Kamaz"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "note": "5:1",
-    "url": "https://vk.com/page-66162180_53638617",
-    "hint": "такой пары нет в базе ни с каким счётом"
    }
   ],
   "wiki_score_diff": [
@@ -8498,7 +7943,7 @@
     "note": "7:2",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317662,
+     "id": 11644,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -8528,7 +7973,7 @@
     "note": "6:4",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317663,
+     "id": 11645,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -8558,7 +8003,7 @@
     "note": "2:4",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317666,
+     "id": 11648,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -8588,7 +8033,7 @@
     "note": "4:0",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317669,
+     "id": 11651,
      "tour": "Плей-офф / Кубок",
      "scores": [
       5,
@@ -8618,7 +8063,7 @@
     "note": "3:3 (4:5 PK)",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317669,
+     "id": 11651,
      "tour": "Плей-офф / Кубок",
      "scores": [
       5,
@@ -8648,7 +8093,7 @@
     "note": "1:3",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317671,
+     "id": 11653,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -8678,7 +8123,7 @@
     "note": "4:3",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317670,
+     "id": 11652,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -8708,7 +8153,7 @@
     "note": "7:5 (PK)",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317681,
+     "id": 11663,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -8738,7 +8183,7 @@
     "note": "3:1",
     "url": "https://vk.com/page-66162180_52913186",
     "base": {
-     "id": 317679,
+     "id": 11661,
      "tour": "Плей-офф / Кубок",
      "scores": [
       2,
@@ -8771,7 +8216,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 317593,
+     "id": 11575,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8797,7 +8242,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 317593,
+     "id": 11575,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8823,7 +8268,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
     "base": {
-     "id": 316780,
+     "id": 10762,
      "unit": "Season 6 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8875,7 +8320,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
     "base": {
-     "id": 316792,
+     "id": 10774,
      "unit": "Season 6 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8901,7 +8346,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=220#post2793",
     "base": {
-     "id": 315486,
+     "id": 9468,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8927,7 +8372,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
     "base": {
-     "id": 318194,
+     "id": 12176,
      "unit": "3-й Сольный Турнир по пенальти"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8953,7 +8398,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
     "base": {
-     "id": 316185,
+     "id": 10167,
      "unit": "Season 4 Средняя лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8979,7 +8424,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 315836,
+     "id": 9818,
      "unit": "Season 3 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -11941,7 +11386,7 @@
    {
     "topic": "33395877",
     "title": "Предварительная регистрация команд для участия в IV Командном Чемпионате по Kunio-kun no Nekketsu Soccer League. (Goal 3)",
-    "tournament": "IV Командный Чемпионат по Goal 3, IV Командный Чемпионат по Goal 3, IV Командный Чемпионат по Goal 3",
+    "tournament": "IV Командный Чемпионат по Goal 3, IV Командный Чемпионат по Goal 3",
     "rows": 75,
     "comments": 30,
     "hint": "ни одна строка турнира не узнана в комментариях — вероятно, источник другой (вики-таблица)"
