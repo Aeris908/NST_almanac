@@ -96,5 +96,82 @@
    "note": "основное время 1:1, буллиты 3:6 (тема 54769667, комментарий 32854)",
    "reason": "Та же форма записи: «1:1, 3:6 пен.» — серия при равном основном времени."
   }
+ ],
+ "tiebreak_penalties": [
+  {
+   "uuid": "2td3z",
+   "match": "Yuliy_Cezar 5:3 yoxter",
+   "reason": "тема 54769667, комментарий 32791"
+  },
+  {
+   "uuid": "37bcc805-9d2c-4a3a-9dd8-22b10d66655a",
+   "match": "PacnyTHuK 7:3 Memori",
+   "reason": "тема 52002075, комментарий 31304"
+  },
+  {
+   "uuid": "5aa83acb-6eb2-4438-87ad-ebb53fb346e1",
+   "match": "Memori 5:4 leonudomlya",
+   "reason": "тема 52002075, комментарий 31171"
+  },
+  {
+   "uuid": "5kk92",
+   "match": "Aeris 2:4 Ric25",
+   "reason": "тема 54769667, комментарий 32785"
+  },
+  {
+   "uuid": "61bb3a57-1402-4389-8c62-93e91abe483e",
+   "match": "Memori 7:9 Romix",
+   "reason": "тема 52002075, комментарий 31297"
+  },
+  {
+   "uuid": "7toju",
+   "match": "ruby 4:5 Hanter",
+   "reason": "тема 54769667, комментарий 32783"
+  },
+  {
+   "uuid": "a1bd1",
+   "match": "Rock 6:5 Aeris",
+   "reason": "тема 54769667, комментарий 32852"
+  },
+  {
+   "uuid": "ad44606a-d61a-4e8e-b853-a0d71cbefc6c",
+   "match": "Сахарок 3:4 blanco",
+   "reason": "тема 52002075, комментарий 31375"
+  },
+  {
+   "uuid": "ca385724-6b9f-434d-8505-a399e1a39c0f",
+   "match": "Cyneprepou4uk 7:6 PacnyTHuK",
+   "reason": "тема 52002075, комментарий 31188"
+  },
+  {
+   "uuid": "darj3",
+   "match": "ruby 6:2 mikr84",
+   "reason": "тема 54769667, комментарий 32936"
+  },
+  {
+   "uuid": "e4864484-fded-4443-8d4e-a2ad9d705f7b",
+   "match": "BigPlay 4:2 daz",
+   "reason": "тема 52002075, комментарий 31261"
+  },
+  {
+   "uuid": "f18b85a9-bc59-403e-8ebc-7fe5c08cdb53",
+   "match": "PacnyTHuK 8:7 Cyneprepou4uk",
+   "reason": "тема 52002075, комментарий 31188"
+  },
+  {
+   "uuid": "igbfg",
+   "match": "leonudomlya 3:6 Aeris",
+   "reason": "тема 54769667, комментарий 32854"
+  },
+  {
+   "uuid": "jfrx5",
+   "match": "Rock 5:6 Romix",
+   "reason": "тема 54769667, комментарий 32850"
+  },
+  {
+   "uuid": "o2coq",
+   "match": "Ric25 8:9 Memori",
+   "reason": "тема 54769667, комментарий 32920"
+  }
  ]
 }

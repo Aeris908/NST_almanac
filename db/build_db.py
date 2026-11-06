@@ -190,19 +190,27 @@ def import_pool(con, pool):
     added = skipped = refreshed = 0
     for index, row in enumerate(pool):
         found = con.execute(
-            "select id, note, manual from matches where source = ? and source_ref = ?",
+            "select id, note, phase, manual from matches where source = ? and source_ref = ?",
             (row["source"], row["source_ref"])).fetchone()
         if found:
             skipped += 1
             # Строка пула вставляется один раз: иначе правка человека из редактора пропала бы
             # при каждой сборке. Значит изменение в data/sportcup_decisions.json само не
-            # доходит — пометку счёта приносим явно, но только туда, где редактор не был.
-            match_id, stored_note, manual = found
-            wanted = row.get("note") or ""
-            if not manual and (stored_note or "") != wanted:
-                con.execute("update matches set note = ?, updated_at = datetime('now') where id = ?",
-                            (wanted, match_id))
-                refreshed += 1
+            # доходит — пометку счёта и фазу доигровки приносим явно, но только туда, где
+            # редактор не был.
+            match_id, stored_note, stored_phase, manual = found
+            if not manual:
+                wanted = row.get("note") or ""
+                changes = {}
+                if (stored_note or "") != wanted:
+                    changes["note"] = wanted
+                if stored_phase != phase_of(row):
+                    changes["phase"] = phase_of(row)
+                if changes:
+                    columns = ", ".join(f"{name} = ?" for name in changes)
+                    con.execute(f"update matches set {columns}, updated_at = datetime('now') where id = ?",
+                                (*changes.values(), match_id))
+                    refreshed += 1
             continue
         tournament_id = ensure_tournament(con, row["tournament"], row["season"], tournaments)
         stage_id = ensure_stage(con, tournament_id, row.get("stage", bfa.REGULAR_STAGE), stages)

@@ -58,7 +58,15 @@ def test_phase_problem_mirrors_the_validator(s1, s2, outcome_a, outcome_b, phase
 
 
 def test_set_phase_refuses_a_row_whose_outcomes_lie(con, find):
-    match_id = find(SCOREFUL, what="матч с числами")
+    """Строка берётся с числами и НЕ в фазе буллитов: правка фазы, равной текущей, ничего не
+    сверяет — она ничего не меняет. Такие строки появились в базе сами собой, когда часть
+    доигровок Сезонов 8-9 перестала быть овертаймом."""
+    match_id = find("""select m.id from matches m
+        join match_sides a on a.match_id = m.id and a.side_index = 0
+        join match_sides b on b.match_id = m.id and b.side_index = 1
+        where m.hidden_by is null and a.score is not null and b.score is not null
+          and a.score > b.score and m.phase <> 'penalties' limit 1""",
+                    what="матч с числами не в фазе буллитов")
     con.execute("update match_sides set outcome = 'none' where match_id = ? and side_index = 1",
                 (match_id,))
     con.commit()

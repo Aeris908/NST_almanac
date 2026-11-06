@@ -300,6 +300,9 @@ class SportcupDecisions:
     played_as_normal: frozenset = frozenset()
     notes: dict = None
     score_notes: dict = None
+    # Игры с флагом доигровки, которые тема прямо назвала серией: `overtimeWin` у источника
+    # значит «была доигровка», а не «был овертайм», и без этой правки серия жила бы овертаймом.
+    tiebreaks: frozenset = frozenset()
 
     def __post_init__(self):
         if self.notes is None:
@@ -309,7 +312,8 @@ class SportcupDecisions:
 
 
 def load_sportcup_decisions():
-    """Read which unfinished fixtures are dropped and which rows get a custom note."""
+    """Read which unfinished fixtures are dropped, which rows get a custom note, and which
+    overtime-flagged games the topic says were decided by a shootout."""
     if not DECISIONS_PATH.exists():
         print(f"Warning: {DECISIONS_PATH} not found, every FINAL row stays in the pool.")
         return SportcupDecisions()
@@ -321,6 +325,7 @@ def load_sportcup_decisions():
         # Сыгранная игра, у которой источник записал серию буллитов вместо основного времени:
         # счёт остаётся как есть, а правда о нём ложится в пометку, чтобы её правил человек.
         score_notes={item["uuid"]: item["note"] for item in raw.get("score_note", [])},
+        tiebreaks=frozenset(item["uuid"] for item in raw.get("tiebreak_penalties", [])),
     )
 
 
@@ -372,8 +377,8 @@ def fetch_sportcup_matches(configs):
                     "p2": p2,
                     "s1": int(s1),
                     "s2": int(s2),
-                    "ot": game.get("overtimeWin", False),
-                    "pk": game.get("afterGameWin", False),
+                    "ot": game.get("overtimeWin", False) and uuid not in decisions.tiebreaks,
+                    "pk": game.get("afterGameWin", False) or uuid in decisions.tiebreaks,
                     "is_playoff": False,
                     "is_technical": is_technical,
                     "is_forfeit": is_technical,
