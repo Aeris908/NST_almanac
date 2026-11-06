@@ -299,14 +299,17 @@ class SportcupDecisions:
     voided: frozenset = frozenset()
     played_as_normal: frozenset = frozenset()
     notes: dict = None
+    score_notes: dict = None
 
     def __post_init__(self):
         if self.notes is None:
             object.__setattr__(self, "notes", {})
+        if self.score_notes is None:
+            object.__setattr__(self, "score_notes", {})
 
 
 def load_sportcup_decisions():
-    """Read which unfinished fixtures are dropped and which technical rows get a custom note."""
+    """Read which unfinished fixtures are dropped and which rows get a custom note."""
     if not DECISIONS_PATH.exists():
         print(f"Warning: {DECISIONS_PATH} not found, every FINAL row stays in the pool.")
         return SportcupDecisions()
@@ -315,6 +318,9 @@ def load_sportcup_decisions():
         voided=frozenset(item["uuid"] for item in raw.get("void", [])),
         played_as_normal=frozenset(item["uuid"] for item in raw.get("played_as_normal", [])),
         notes={item["uuid"]: item["note"] for item in raw.get("technical_note_override", [])},
+        # Сыгранная игра, у которой источник записал серию буллитов вместо основного времени:
+        # счёт остаётся как есть, а правда о нём ложится в пометку, чтобы её правил человек.
+        score_notes={item["uuid"]: item["note"] for item in raw.get("score_note", [])},
     )
 
 
@@ -372,7 +378,8 @@ def fetch_sportcup_matches(configs):
                     "is_technical": is_technical,
                     "is_forfeit": is_technical,
                     "technical_loser": loser if is_technical else None,
-                    "note": decisions.notes.get(uuid, TECHNICAL_DEFEAT_NOTE) if is_technical else "",
+                    "note": (decisions.notes.get(uuid, TECHNICAL_DEFEAT_NOTE) if is_technical
+                             else decisions.score_notes.get(uuid, "")),
                     "source": "sportcup_api",
                     "source_ref": uuid,
                 }

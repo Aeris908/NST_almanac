@@ -179,11 +179,22 @@ def side_outcomes(row):
 
 def import_pool(con, pool):
     players, tournaments, stages = {}, {}, {}
-    added = skipped = 0
+    added = skipped = refreshed = 0
     for index, row in enumerate(pool):
-        if con.execute("select 1 from matches where source = ? and source_ref = ?",
-                       (row["source"], row["source_ref"])).fetchone():
+        found = con.execute(
+            "select id, note, manual from matches where source = ? and source_ref = ?",
+            (row["source"], row["source_ref"])).fetchone()
+        if found:
             skipped += 1
+            # Строка пула вставляется один раз: иначе правка человека из редактора пропала бы
+            # при каждой сборке. Значит изменение в data/sportcup_decisions.json само не
+            # доходит — пометку счёта приносим явно, но только туда, где редактор не был.
+            match_id, stored_note, manual = found
+            wanted = row.get("note") or ""
+            if not manual and (stored_note or "") != wanted:
+                con.execute("update matches set note = ?, updated_at = datetime('now') where id = ?",
+                            (wanted, match_id))
+                refreshed += 1
             continue
         tournament_id = ensure_tournament(con, row["tournament"], row["season"], tournaments)
         stage_id = ensure_stage(con, tournament_id, row.get("stage", bfa.REGULAR_STAGE), stages)
@@ -206,7 +217,7 @@ def import_pool(con, pool):
             side_id = con.execute("select last_insert_rowid()").fetchone()[0]
             con.execute("insert into side_players(side_id, player_id) values (?, ?)", (side_id, player_id))
         added += 1
-    return added, skipped
+    return added, skipped, refreshed
 
 
 def import_aliases(con):
@@ -233,14 +244,14 @@ def main():
     con.execute("insert or ignore into disciplines(id, slug, name) values (1, 'soccer', 'Футбол Goal 3')")
 
     pool = bfa.all_matches
-    added, skipped = import_pool(con, pool)
+    added, skipped, refreshed = import_pool(con, pool)
     aliases = import_aliases(con)
     con.commit()
 
     stored = con.execute("select count(*) from matches").fetchone()[0]
     people = con.execute("select count(*) from players").fetchone()[0]
-    print(f"{DB_PATH}: добавлено {added}, уже было {skipped}, всего матчей {stored} | "
-          f"игроков {people}, алиасов {aliases}")
+    print(f"{DB_PATH}: добавлено {added}, уже было {skipped} (пометку счёта обновлено "
+          f"{refreshed}), всего матчей {stored} | игроков {people}, алиасов {aliases}")
 
 
 if __name__ == "__main__":

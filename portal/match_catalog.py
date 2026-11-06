@@ -98,7 +98,7 @@ def from_sportcup_api(base_matches):
             "source": "sportcup_api",
             "is_technical": is_tech,
             "is_forfeit": is_tech,
-            "note": m.get("note", "") if is_tech else "",
+            "note": m.get("note", ""),
         }
         if is_tech:
             row["technical_loser"] = clean_alias(m.get("technical_loser"))

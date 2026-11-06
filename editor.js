@@ -379,7 +379,7 @@
         `правка пойдёт по всей связке: #${row.id} + #${row.linked.join(", #")}`
         + " — это одна игра, просто в базе она из двух строк (страница + рейтинг)"));
     }
-    box.appendChild(line("счёт источника", `"${row.note || "—"}"`));
+    box.appendChild(line("счёт источника", `"${safe(row.note || "—")}"`));
     (row.sides || []).forEach((side) => box.appendChild(line(
       `[${side.side_index}] ${side.players || side.label}`,
       `${side.score ?? "—"} · ${OUTCOME_WORDS[side.outcome] || side.outcome}`)));
