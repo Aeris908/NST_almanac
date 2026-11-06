@@ -105,6 +105,52 @@
   }
  ],
  "ambiguous": [],
+ "withdrawn": [
+  {
+   "division": "Метеоры",
+   "tour": "Тур 2",
+   "pair": [
+    "Den B. & Romix",
+    "Islambolt Pornce & Kunio"
+   ],
+   "снялась": [
+    "Den B. & Romix"
+   ]
+  },
+  {
+   "division": "Метеоры",
+   "tour": "Тур 4",
+   "pair": [
+    "Den B. & Romix",
+    "Palka Palych & XakoFEAR"
+   ],
+   "снялась": [
+    "Den B. & Romix"
+   ]
+  },
+  {
+   "division": "Метеоры",
+   "tour": "Тур 1",
+   "pair": [
+    "E_not & Tymoschuk",
+    "Den B. & Romix"
+   ],
+   "снялась": [
+    "Den B. & Romix"
+   ]
+  },
+  {
+   "division": "Метеоры",
+   "tour": "Тур 3",
+   "pair": [
+    "Кубик & Juliy_Cezar",
+    "Den B. & Romix"
+   ],
+   "снялась": [
+    "Den B. & Romix"
+   ]
+  }
+ ],
  "teams": [
   {
    "team": "lenin1st & ectoPower",
@@ -501,7 +547,8 @@
   "встреч выведено из сводки": 4,
   "встреч без определённого счёта": 0,
   "не зачтено источником": 2,
-  "строк ног в базу": 134,
+  "не сыграно (команда снялась)": 4,
+  "строк ног в базу": 138,
   "сходимость со сводкой": "полная"
  }
 }

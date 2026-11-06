@@ -9,10 +9,10 @@
 * тема 41270759 — счёта отдельных ног. Только здесь видно, сколько забили.
 
 Комментариев на все встречи не хватает, и это видно до импорта: четыре встречи «Кометов»
-никто не выложил, а две (с Den B. & Romix) выложены, но в сводке у этой пары нули —
-источник их не зачислил. Поэтому `group_stage` возвращает вместе с ногами и `report`:
-что подтверждено комментарием, что выведено из сводки и что осталось неопределённым.
-Встречу, у которой нет опубликованных счётов, в базу кладёт одна строка без счёта:
+никто не выложил, а Den B. & Romix снялись — в сводке у пары нули, две выложенные встречи
+источник не зачислил и четыре не выложил никто. Поэтому `group_stage` возвращает вместе с ногами
+и `report`: что подтверждено комментарием, что выведено из сводки, что осталось неопределённым
+и чего не было вовсе. Встречу без опубликованных счётов в базу кладёт одна строка без счёта:
 рисовать четыре ноги с выдуманными голами — значит врать там, где источник промолчал.
 
 Порядок сторон в строке — как в комментарии: «0:6» относится к той паре, которую автор
@@ -427,6 +427,12 @@ def group_stage(sheet_dir, comments):
                  if pair not in published
                  and all(left.get(key, {}).get("meetings", 0) > 0 for key in pair)]
     resolved, ambiguous = deduce(uncovered, residual)
+    # Выложенная, но не зачтённая встреча в `published` не попадает — она живёт как «ТП обоим»
+    # с ногами в подписи. Считать её несыгранной значило бы дать одной встрече две строки.
+    posted = set(published) | {tuple(sorted(meeting["orientation"])) for meeting in meetings.values()}
+    withdrawn = [fixture for pair, fixture in sorted(fixtures.items())
+                 if pair not in posted
+                 and any(key in budget and budget[key]["meetings"] == 0 for key in pair)]
 
     games, report = [], {
         "unknown_lines": unknown,
@@ -436,6 +442,7 @@ def group_stage(sheet_dir, comments):
         "void_meetings": [],
         "deduced": [],
         "ambiguous": [],
+        "withdrawn": [],
         "teams": [],
         "unreconciled": [],
         "substitutions": [],
@@ -481,6 +488,14 @@ def group_stage(sheet_dir, comments):
             "pair": names(fixture["orientation"], pairs),
             "residual": {key: residual[key] for key in fixture["pair"]},
         })
+    for fixture in withdrawn:
+        walked = [names((key,), pairs)[0] for key in fixture["pair"]
+                  if key in budget and budget[key]["meetings"] == 0]
+        games.append(withdrawn_row(fixture, pairs, walked))
+        report["withdrawn"].append({
+            "division": fixture["division"], "tour": fixture["tour"],
+            "pair": names(fixture["orientation"], pairs), "снялась": walked,
+        })
 
     after = {index: dict(tally[index]) for index in tally}
     for fixture in resolved:
@@ -514,6 +529,7 @@ def group_stage(sheet_dir, comments):
         "встреч выведено из сводки": len(resolved),
         "встреч без определённого счёта": len(ambiguous),
         "не зачтено источником": len(report["void_meetings"]),
+        "не сыграно (команда снялась)": len(report["withdrawn"]),
         "строк ног в базу": len(games),
         "сходимость со сводкой": "полная" if not report["unreconciled"] else "не сходится",
     }
@@ -636,4 +652,36 @@ def deduced_row(fixture, pairs):
                       f"{wins_a}:{wins_b} по ногам известно из сводки, голов нет",
             "ссылки": [SHEET_URL, TOPIC_URL],
         },
+    }
+
+
+def withdrawn_row(fixture, pairs, walked):
+    """Встреча, которой не было: команда снялась, и сводка даёт ей ноль встреч.
+
+    Ног никто не выкладывал, соперник не получил ни победы, ни очков — зачтённой встречи нет ни
+    у кого. Строка всё равно нужна: календарь источника полон, и дыра в нём читается как «игра
+    потерялась», а не как «игру не сыграли». Голов не рисуем, обеим сторонам технический результат,
+    в очередь редактуры не отправляем: сводка уже ответила, решать человеку нечего.
+    """
+    key_a, key_b = fixture["orientation"]
+    return {
+        "tournament": TOURNAMENT,
+        "division": fixture["division"],
+        "tour": fixture["tour"],
+        "team_a": pairs[key_a]["names"],
+        "team_b": pairs[key_b]["names"],
+        "label_a": " & ".join(pairs[key_a]["names"]),
+        "label_b": " & ".join(pairs[key_b]["names"]),
+        "score": [None, None],
+        "series": None,
+        "outcome": ["none", "none"],
+        "phase": "regular",
+        "tp": True,
+        "score_text": f"ТП обоим: встреча не сыграна — команда {' / '.join(walked)} снялась, "
+                      f"сводка даёт ей 0 встреч",
+        "counted": False,
+        "source_ref": f"topic-{TOPIC_ID}#calendar#{key_a}-{key_b}",
+        "source_line": f"{fixture['raw_a']} vs {fixture['raw_b']} ({fixture['division']}, {fixture['tour']})",
+        "links": [],
+        "comment_url": SHEET_URL,
     }
