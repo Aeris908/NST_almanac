@@ -8,11 +8,11 @@
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
   "строк базы в сопоставленных единицах": 3586,
-  "строк источника, совпавших с базой": 1419
+  "строк источника, совпавших с базой": 1421
  },
  "counts": {
   "missing_in_db": 8,
-  "score_diff": 25,
+  "score_diff": 23,
   "wiki_missing_in_db": 0,
   "wiki_score_diff": 0,
   "matched_elsewhere": 0,
@@ -619,74 +619,6 @@
   ],
   "score_diff": [
    {
-    "topic": "34920573",
-    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
-    "comment_id": "9742",
-    "comment_day": "2017-03-13",
-    "line": "Буц - Christian - 1:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Буц"
-     ],
-     [
-      "Christian"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
-    "base": {
-     "id": 102306,
-     "tour": "Winners 1/8",
-     "scores": [
-      4,
-      10
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Буц",
-     "b": "Christian"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "34920573",
-    "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
-    "comment_id": "9742",
-    "comment_day": "2017-03-13",
-    "line": "Буц - Christian - 3:5 (Ответка на слабо)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Буц"
-     ],
-     [
-      "Christian"
-     ]
-    ],
-    "scores": [
-     3,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
-    "base": {
-     "id": 102306,
-     "tour": "Winners 1/8",
-     "scores": [
-      4,
-      10
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Буц",
-     "b": "Christian"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
     "topic": "52002075",
     "title": "8-й сольный чемпионат Soccer League (Goal3)",
     "comment_id": "31175",
@@ -707,7 +639,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 100519,
+     "id": 106933,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -738,7 +670,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 100519,
+     "id": 106933,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -769,7 +701,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 101681,
+     "id": 108095,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -800,7 +732,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 101681,
+     "id": 108095,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -831,7 +763,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 100651,
+     "id": 107065,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -862,7 +794,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 100651,
+     "id": 107065,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -1029,7 +961,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 100827,
+     "id": 107241,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1060,7 +992,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 100827,
+     "id": 107241,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1091,7 +1023,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 100405,
+     "id": 106819,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1122,7 +1054,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 100405,
+     "id": 106819,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1156,7 +1088,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 101664,
+     "id": 108078,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -1190,7 +1122,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 101773,
+     "id": 108187,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1224,7 +1156,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 101773,
+     "id": 108187,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1258,7 +1190,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 101777,
+     "id": 108191,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1292,7 +1224,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 101777,
+     "id": 108191,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1326,7 +1258,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 101838,
+     "id": 108252,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -1360,7 +1292,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 101850,
+     "id": 108264,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -1394,7 +1326,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 99151,
+     "id": 105565,
      "tour": "Тур 3",
      "scores": [
       3,
@@ -1428,7 +1360,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 99209,
+     "id": 105623,
      "tour": "Тур 9",
      "scores": [
       8,

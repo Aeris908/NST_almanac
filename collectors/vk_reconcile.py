@@ -575,7 +575,13 @@ def main():
         for cid, comment in sorted(topic["comments"].items(), key=lambda kv: int(kv[1].get("date", 0))):
             text = comment.get("text") or ""
             day = date.fromtimestamp(comment["date"]).isoformat() if comment.get("date") else None
-            for item in parse_comment(text):
+            found = parse_comment(text)
+            # Ноги одной пары в одном комментарии: по ним сверка проверяет встречу, хранящуюся
+            # суммой. Строки отчёта при этом разные — «1:5» и «3:5 (Ответка на слабо)».
+            siblings = defaultdict(list)
+            for item in found:
+                siblings[tuple(item["raw"])].append(item["scores"])
+            for item in found:
                 sides, unresolved = resolve_sides(item["raw"], nicknames, lowered)
                 if unresolved:
                     # Один и тот же нераспознанный ник в строке с четырьмя ногами — это одна
@@ -598,6 +604,12 @@ def main():
                 for extra in item.get("aggregate") or []:
                     accepted.add(score_key(extra))
                 scored = [c for c in candidates if score_key(c["scores"]) in accepted]
+                if not scored and len(siblings[tuple(item["raw"])]) > 1:
+                    # Сольные турниры по пенальти хранят пару ног одной строкой-суммой:
+                    # «Буц - Christian - 1:5» и «- 3:5» из комментария 9742 — это «4:10» в базе.
+                    total = tuple(sum(score[i] for score in siblings[tuple(item["raw"])])
+                                  for i in (0, 1))
+                    scored = [c for c in candidates if score_key(c["scores"]) == score_key(total)]
                 signature_key = (pair, score_key(item["scores"]))
                 if signature_key in asserted:
                     asserted[signature_key] += 1
