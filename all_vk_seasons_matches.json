@@ -3226,6 +3226,17 @@
     "season": "Season 4",
     "tournament": "Чемпионат NST (Season 4)",
     "stage": "Регулярный чемпионат",
+    "p1": "ВОР95",
+    "p2": "Валера",
+    "s1": 3,
+    "s2": 10,
+    "ot": false,
+    "pk": false
+  },
+  {
+    "season": "Season 4",
+    "tournament": "Чемпионат NST (Season 4)",
+    "stage": "Регулярный чемпионат",
     "p1": "Pushistik",
     "p2": "Romix",
     "s1": 5,
