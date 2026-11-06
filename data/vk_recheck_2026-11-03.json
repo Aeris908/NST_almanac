@@ -8,11 +8,12 @@
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
   "строк базы в сопоставленных единицах": 3586,
-  "строк источника, совпавших с базой": 1421
+  "строк источника, совпавших с базой": 1421,
+  "строк темы, снятых как самоотменённые": 4
  },
  "counts": {
   "missing_in_db": 8,
-  "score_diff": 23,
+  "score_diff": 18,
   "wiki_missing_in_db": 0,
   "wiki_score_diff": 0,
   "matched_elsewhere": 0,
@@ -639,7 +640,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 106933,
+     "id": 116554,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -670,7 +671,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 106933,
+     "id": 116554,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -701,7 +702,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 108095,
+     "id": 117716,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -732,7 +733,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 108095,
+     "id": 117716,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -763,7 +764,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 107065,
+     "id": 116686,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -794,7 +795,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 107065,
+     "id": 116686,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -803,142 +804,6 @@
      "unit": "Season 6 Высшая лига"
     },
     "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "52002075",
-    "title": "8-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "31240",
-    "comment_day": "2024-06-10",
-    "line": "Ric25 vs leonudomlya 1 -4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "leonudomlya"
-     ]
-    ],
-    "scores": [
-     1,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_52002075?offset=60#post31240",
-    "base": {
-     "id": 130,
-     "tour": null,
-     "scores": [
-      0,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "leonudomlya"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "54769667",
-    "title": "9-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "32854",
-    "comment_day": "2025-09-10",
-    "line": "leonudomlya - Aeris 1:1, 3:6 пен.",
-    "leg": "1/2",
-    "source_pair": [
-     [
-      "leonudomlya"
-     ],
-     [
-      "Aeris"
-     ]
-    ],
-    "scores": [
-     1,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_54769667?offset=60#post32854",
-    "base": {
-     "id": 270,
-     "tour": null,
-     "scores": [
-      3,
-      6
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "leonudomlya",
-     "b": "Aeris"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "54769667",
-    "title": "9-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "32957",
-    "comment_day": "2025-09-25",
-    "line": "Jamlight vs Taeda 3-1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Jamlight"
-     ],
-     [
-      "Taeda"
-     ]
-    ],
-    "scores": [
-     3,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_54769667?offset=80#post32957",
-    "base": {
-     "id": 351,
-     "tour": null,
-     "scores": [
-      2,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Jamlight",
-     "b": "Taeda"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "54769667",
-    "title": "9-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "32977",
-    "comment_day": "2025-09-30",
-    "line": "Yuliy_Cezar vs Ryumaru 3 - 0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Yuliy_Cezar"
-     ],
-     [
-      "Ryumaru"
-     ]
-    ],
-    "scores": [
-     3,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_54769667?offset=100#post32977",
-    "base": {
-     "id": 354,
-     "tour": null,
-     "scores": [
-      2,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Yuliy_Cezar",
-     "b": "Ryumaru"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
    },
    {
     "topic": "49948732",
@@ -961,7 +826,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 107241,
+     "id": 116862,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -992,7 +857,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 107241,
+     "id": 116862,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1023,7 +888,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 106819,
+     "id": 116440,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1054,7 +919,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 106819,
+     "id": 116440,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1088,7 +953,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 108078,
+     "id": 117699,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -1122,7 +987,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 108187,
+     "id": 117808,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1156,7 +1021,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 108187,
+     "id": 117808,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1190,7 +1055,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 108191,
+     "id": 117812,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1224,7 +1089,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 108191,
+     "id": 117812,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1258,7 +1123,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 108252,
+     "id": 117873,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -1292,7 +1157,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 108264,
+     "id": 117885,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -1302,40 +1167,6 @@
      "manual": 0,
      "a": "Геймклуб",
      "b": "Мегадрайв"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2601",
-    "comment_day": "2015-12-04",
-    "line": "Romario - yoxter 3-6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Romario"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     3,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
-    "base": {
-     "id": 105565,
-     "tour": "Тур 3",
-     "scores": [
-      3,
-      9
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Romario",
-     "b": "yoxter"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -1360,7 +1191,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 105623,
+     "id": 115244,
      "tour": "Тур 9",
      "scores": [
       8,
@@ -3088,6 +2919,156 @@
     "rows": 75,
     "comments": 30,
     "hint": "ни одна строка турнира не узнана в комментариях — вероятно, источник другой (вики-таблица)"
+   }
+  ]
+ },
+ "resolved": {
+  "superseded": [
+   {
+    "topic": "52002075",
+    "title": "8-й сольный чемпионат Soccer League (Goal3)",
+    "comment_id": "31240",
+    "comment_day": "2024-06-10",
+    "line": "Ric25 vs leonudomlya 1 -4",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Ric25"
+     ],
+     [
+      "leonudomlya"
+     ]
+    ],
+    "scores": [
+     1,
+     4
+    ],
+    "url": "https://vk.com/topic-66162180_52002075?offset=60#post31240",
+    "base": {
+     "id": 130,
+     "scores": [
+      0,
+      2
+     ],
+     "tour": null
+    },
+    "after_comment": "31249",
+    "hint": "тема позже записала ту же пару другим счётом и назвала это переигровкой: ранняя строка отменена, сверка её не считает"
+   },
+   {
+    "topic": "54769667",
+    "title": "9-й сольный чемпионат Soccer League (Goal3)",
+    "comment_id": "32957",
+    "comment_day": "2025-09-25",
+    "line": "Jamlight vs Taeda 3-1",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Jamlight"
+     ],
+     [
+      "Taeda"
+     ]
+    ],
+    "scores": [
+     3,
+     1
+    ],
+    "url": "https://vk.com/topic-66162180_54769667?offset=80#post32957",
+    "base": {
+     "id": 351,
+     "scores": [
+      2,
+      0
+     ],
+     "tour": null
+    },
+    "after_comment": "32965",
+    "hint": "тема позже записала ту же пару другим счётом и назвала это переигровкой: ранняя строка отменена, сверка её не считает"
+   },
+   {
+    "topic": "32593813",
+    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
+    "comment_id": "2601",
+    "comment_day": "2015-12-04",
+    "line": "Romario - yoxter 3-6",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Romario"
+     ],
+     [
+      "yoxter"
+     ]
+    ],
+    "scores": [
+     3,
+     6
+    ],
+    "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
+    "base": {
+     "id": 115186,
+     "scores": [
+      3,
+      9
+     ],
+     "tour": "Тур 3"
+    },
+    "after_comment": "2651",
+    "hint": "тема позже записала ту же пару другим счётом и назвала это переигровкой: ранняя строка отменена, сверка её не считает"
+   }
+  ],
+  "series_total": [
+   {
+    "topic": "54769667",
+    "title": "9-й сольный чемпионат Soccer League (Goal3)",
+    "comment_id": "32977",
+    "comment_day": "2025-09-30",
+    "line": "Yuliy_Cezar vs Ryumaru 3 - 0",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "Yuliy_Cezar"
+     ],
+     [
+      "Ryumaru"
+     ]
+    ],
+    "scores": [
+     3,
+     0
+    ],
+    "url": "https://vk.com/topic-66162180_54769667?offset=100#post32977",
+    "base": {
+     "legs": 6,
+     "scores": [
+      [
+       2,
+       0
+      ],
+      [
+       5,
+       2
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       5,
+       2
+      ],
+      [
+       2,
+       1
+      ]
+     ]
+    },
+    "hint": "это итог серии ног, а не четвёртая игра: ноги в базе есть"
    }
   ]
  }

@@ -156,6 +156,10 @@ def fold(text):
 SCORE_TOKEN = re.compile(r"(\d{1,2})\s*[:\-–]\s*(\d{1,2})")
 EXAMPLE_MARK = re.compile(r"ПРИМЕР\s+(ВЫКЛАДЫВАНИЯ|ОФОРМЛЕНИЯ)", re.IGNORECASE)
 SERIES_MARK = re.compile(r"(пк|рк|пен|буллит|pk|rk|shootout|серия)", re.IGNORECASE)
+# Переигровка живёт в обсуждении рядом с отменённой записью: между ними только разбор спора.
+# Окно в сорок комментариев не даёт правилу уехать в другой тур и стереть настоящее расхождение.
+REPLAY_WINDOW = 40
+REPLAY_MARK = re.compile(r"(переигр|переиграл|в\s+итоге[^?]{0,2}\?|исправ|уточн)", re.IGNORECASE)
 
 
 def without_examples(text):
@@ -190,7 +194,9 @@ def legs_of(tail):
 
     Вне скобок нога от ноги отделяется запятой: «3:0, 8:5пен» — это вторая нога, выигранная по
     пенальти (так объясняет сам регламент темы). Если же между счёт-парами стоит слово серии и
-    нет запятой — «6-6 PK 5:4», — второй счёт доигрывает первую ногу.
+    нет запятой — «6-6 PK 5:4», — второй счёт доигрывает первую ногу. Третий случай запятой —
+    «1:1, 3:6 пен.»: здесь первая пара это ничья основного времени, а вторая — счёт той же игры
+    после доигровки, именно так её записал Sportcup (`overtimeWin` при 3:6). Нога тогда одна.
 
     Возвращает ноги и список засчитываемых записей каждой из них: вики-календари Сезонов 2-7
     пишут ту же встречу итогом с доигровкой («4:4» как «8:4»), поэтому сверка принимает и его.
@@ -217,11 +223,20 @@ def legs_of(tail):
         previous_end = hit.end()
         if legs and depth:
             extras[-1] = [score]                # доигровка предыдущей ноги
-        elif legs and SERIES_MARK.search(gap) and not re.search(r"[,;]", gap):
+            continue
+        if legs and SERIES_MARK.search(gap) and not re.search(r"[,;]", gap):
             extras[-1] = [score]                # «6-6 PK 5:4» — серия первой ноги
-        else:
-            legs.append(score)
-            extras.append(None)
+            continue
+        if (legs and extras[-1] is None and legs[-1][0] == legs[-1][1]
+                and SERIES_MARK.search(tail[hit.end():])):
+            # «1:1, 3:6 пен.»: ничья в основном времени и решающая серия — одна игра, а не две
+            # ноги. Sportcup и вики-календарь хранят её итогом серии, поэтому нога становится
+            # второй счёт, а ничья остаётся принятым вариантом записи.
+            extras[-1] = [legs[-1]]
+            legs[-1] = score
+            continue
+        legs.append(score)
+        extras.append(None)
     return legs, extras
 
 
@@ -523,6 +538,28 @@ def resolve_sides(raw_pair, nicknames, lowered):
     return sides, unresolved
 
 
+def series_total(sides, scores, candidates):
+    """Счёт темы — итог серии ног, а не четвёртая игра: «3 - 0» над списком трёх выигранных игр.
+
+    Основание: сумма ног совпала с числом строк пары в этом турнире, и победитель каждой из них
+    даёт ровно эти цифры. Тогда строка-итог расхождением не является (тема 54769667, коммент
+    32977: «Yuliy_Cezar vs Ryumaru 3 - 0», а под ним три игры по ногам).
+    """
+    legs = [row for row in candidates if not row["duplicate_of"] and not row["hidden_by"]]
+    if not legs or len(legs) != sum(scores):
+        return False
+    left = tuple(sorted(sides[0]))
+    wins = [0, 0]
+    for row in legs:
+        s1, s2 = row["scores"]
+        if s1 is None or s2 is None or s1 == s2:
+            return False
+        winner_is_first_side = s1 > s2
+        same_order = tuple(sorted(row["sides"][0])) == left
+        wins[0 if winner_is_first_side == same_order else 1] += 1
+    return wins == list(scores)
+
+
 def main():
     if not DUMP.exists() or not (DUMP / "comments").exists():
         sys.exit(f"нет выгрузки комментариев в {DUMP} — сначала collectors/vk_recheck.py comments")
@@ -547,6 +584,9 @@ def main():
                                            "scores": row["scores"], "tour": row["tour"]})
 
     issues = defaultdict(list)
+    # Снятые с расхождений строки: тема противоречит сама себе раньше, чем база источнику.
+    # Наружу отдельным списком, чтобы читатель видел, что именно сверка посчитала отменённым.
+    resolved = defaultdict(list)
     matched_lines = 0
     for tid, info in sorted(pairs.items(), key=lambda kv: kv[1]["title"]):
         topic = live[tid]
@@ -572,6 +612,10 @@ def main():
         seen_rows = set()
         asserted = Counter()
         unnamed = set()
+        texts_by_pos = {int(c.get("pos") or 0): c.get("text") or "" for c in topic["comments"].values()}
+        # Строки темы собираем в списки до выводов: чтобы понять, не отменила ли более поздняя
+        # запись той же пары более раннюю, нужно видеть обсуждение целиком.
+        claims = []
         for cid, comment in sorted(topic["comments"].items(), key=lambda kv: int(kv[1].get("date", 0))):
             text = comment.get("text") or ""
             day = date.fromtimestamp(comment["date"]).isoformat() if comment.get("date") else None
@@ -615,62 +659,108 @@ def main():
                     asserted[signature_key] += 1
                     continue
                 asserted[signature_key] = 1
-                if scored:
-                    matched_lines += 1
-                    seen_rows.update(c["id"] for c in scored)
-                    continue
-                base_entry = {
-                    "topic": tid, "title": topic["title"], "comment_id": cid,
-                    "comment_day": day, "line": item["line"], "leg": item["leg"],
-                    "source_pair": [list(s) for s in sides], "scores": list(item["scores"]),
-                    "url": post_url(tid, cid, comment.get("pos")),
-                }
-                if candidates:
-                    c = candidates[0]
-                    seen_rows.add(c["id"])
-                    issues["score_diff"].append({
-                        **base_entry,
-                        "base": {"id": c["id"], "tour": c["tour"], "scores": list(c["scores"]),
-                                 "status": c["status"], "manual": c["manual"], "a": c["a"], "b": c["b"]},
-                        "hint": "та же пара в этом турнире, но счёт другой",
+                claims.append({"cid": cid, "comment": comment, "day": day, "item": item,
+                               "sides": sides, "pair": pair, "candidates": candidates,
+                               "scored": scored, "text": text,
+                               "pos": int(comment.get("pos") or 0)})
+
+        matched_by_pair = defaultdict(list)
+        for claim in claims:
+            if claim["scored"]:
+                matched_by_pair[claim["pair"]].append(
+                    (claim["pos"], claim["cid"], claim["sides"]))
+
+        for claim in claims:
+            item, candidates, sides = claim["item"], claim["candidates"], claim["sides"]
+            if claim["scored"]:
+                matched_lines += 1
+                seen_rows.update(c["id"] for c in claim["scored"])
+                continue
+            base_entry = {
+                "topic": tid, "title": topic["title"], "comment_id": claim["cid"],
+                "comment_day": claim["day"], "line": item["line"], "leg": item["leg"],
+                "source_pair": [list(s) for s in sides], "scores": list(item["scores"]),
+                "url": post_url(tid, claim["cid"], claim["comment"].get("pos")),
+            }
+            # Видео ищется до того, как строка уйдёт в снятые: переигровка отменяет счёт,
+            # но ссылку на запись отмены не касается — она в базе всё равно должна быть.
+            videos = VIDEO_IN_TEXT.findall(claim["text"])
+            for c in candidates[:1]:
+                if not videos:
+                    break
+                have = {h.split("//")[-1].rstrip(".,") for h in c["urls"].split()}
+                fresh = [v.split("//")[-1].rstrip(".,") for v in videos
+                         if v.split("//")[-1].rstrip(".,") not in have]
+                if fresh:
+                    issues["video_link"].append({
+                        "topic": tid, "title": topic["title"], "comment_id": claim["cid"],
+                        "base": {"id": c["id"], "a": c["a"], "b": c["b"]},
+                        "missing": fresh[:3], "hint": "в комментарии есть видео, в базе его нет",
                     })
-                elif global_scores.get(signature_key):
-                    hits = global_scores[signature_key]
-                    issues["matched_elsewhere"].append({
-                        **base_entry,
-                        "base": {"id": hits[0]["id"], "unit": hits[0]["unit"]},
-                        "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль",
-                    })
-                elif global_pairs.get(pair):
-                    other = global_pairs[pair][0]
-                    issues["score_diff"].append({
-                        **base_entry,
-                        "base": {"id": other["id"], "tour": other["tour"], "scores": list(other["scores"]),
-                                 "unit": other["unit"]},
-                        "hint": "такая пара в базе есть, но в другом турнире и с другим счётом",
-                    })
-                else:
-                    issues["missing_in_db"].append({
-                        **base_entry,
-                        "shape": f"{len(sides[0])}×{len(sides[1])}",
-                        "tournament": {"units": [units[k]["name"] for k in info["units"]], "rows": len(rows)},
-                        "hint": ("ни в этом турнире, ни где-либо в базе такой пары нет"
-                                 + (" — форма 2×2: похоже на командный турнир, а не на сезон"
-                                    if max(len(sides[0]), len(sides[1])) > 1 else "")),
-                    })
-                videos = VIDEO_IN_TEXT.findall(text)
-                for c in candidates[:1]:
-                    if not videos:
-                        break
-                    have = {h.split("//")[-1].rstrip(".,") for h in c["urls"].split()}
-                    fresh = [v.split("//")[-1].rstrip(".,") for v in videos
-                             if v.split("//")[-1].rstrip(".,") not in have]
-                    if fresh:
-                        issues["video_link"].append({
-                            "topic": tid, "title": topic["title"], "comment_id": cid,
-                            "base": {"id": c["id"], "a": c["a"], "b": c["b"]},
-                            "missing": fresh[:3], "hint": "в комментарии есть видео, в базе его нет",
-                        })
+            later = [(later_pos, later_cid) for later_pos, later_cid, later_sides
+                     in matched_by_pair[claim["pair"]]
+                     if later_sides == sides and claim["pos"] < later_pos <= claim["pos"] + REPLAY_WINDOW
+                     and REPLAY_MARK.search(" ".join(texts_by_pos.get(n, "")
+                                                      for n in range(claim["pos"], later_pos + 1)))]
+            if candidates and later:
+                # Тема отменила собственную запись: сразу следом те же стороны в том же порядке
+                # названы другим счётом, база согласна с поздним, а между ними слово переигровки.
+                # Так выглядит Сезон 8 (комменты 31240 и 31249 «ПЕРЕИГРОВКА!!!») и Сезон 9
+                # (32957 «3-1», 32959 «нужно переиграть», 32965 «2-0 Первый матч»).
+                _pos, after_cid = later[0]
+                resolved["superseded"].append({
+                    **base_entry,
+                    "base": {"id": candidates[0]["id"], "scores": list(candidates[0]["scores"]),
+                             "tour": candidates[0]["tour"]},
+                    "after_comment": after_cid,
+                    "hint": "тема позже записала ту же пару другим счётом и назвала это "
+                            "переигровкой: ранняя строка отменена, сверка её не считает",
+                })
+                seen_rows.update(c["id"] for c in candidates)
+                continue
+            if candidates and series_total(sides, item["scores"], candidates):
+                resolved["series_total"].append({
+                    **base_entry,
+                    "base": {"legs": len(candidates),
+                             "scores": [list(c["scores"]) for c in candidates]},
+                    "hint": "это итог серии ног, а не четвёртая игра: ноги в базе есть",
+                })
+                seen_rows.update(c["id"] for c in candidates)
+                continue
+            signature_key = (claim["pair"], score_key(item["scores"]))
+            if candidates:
+                c = candidates[0]
+                seen_rows.add(c["id"])
+                issues["score_diff"].append({
+                    **base_entry,
+                    "base": {"id": c["id"], "tour": c["tour"], "scores": list(c["scores"]),
+                             "status": c["status"], "manual": c["manual"], "a": c["a"], "b": c["b"]},
+                    "hint": "та же пара в этом турнире, но счёт другой",
+                })
+            elif global_scores.get(signature_key):
+                hits = global_scores[signature_key]
+                issues["matched_elsewhere"].append({
+                    **base_entry,
+                    "base": {"id": hits[0]["id"], "unit": hits[0]["unit"]},
+                    "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль",
+                })
+            elif global_pairs.get(claim["pair"]):
+                other = global_pairs[claim["pair"]][0]
+                issues["score_diff"].append({
+                    **base_entry,
+                    "base": {"id": other["id"], "tour": other["tour"], "scores": list(other["scores"]),
+                             "unit": other["unit"]},
+                    "hint": "такая пара в базе есть, но в другом турнире и с другим счётом",
+                })
+            else:
+                issues["missing_in_db"].append({
+                    **base_entry,
+                    "shape": f"{len(sides[0])}×{len(sides[1])}",
+                    "tournament": {"units": [units[k]["name"] for k in info["units"]], "rows": len(rows)},
+                    "hint": ("ни в этом турнире, ни где-либо в базе такой пары нет"
+                             + (" — форма 2×2: похоже на командный турнир, а не на сезон"
+                                if max(len(sides[0]), len(sides[1])) > 1 else "")),
+                })
         if not seen_rows:
             issues["no_lines_recognised"].append({
                 "topic": tid, "title": topic["title"],
@@ -754,7 +844,9 @@ def main():
              "вики-страниц не про футбол": skipped_pages,
              "строк базы в сопоставленных единицах": len({r["id"] for v in pairs.values()
                                                           for k in v["units"] for r in units[k]["rows"]}),
-             "строк источника, совпавших с базой": matched_lines}
+             "строк источника, совпавших с базой": matched_lines,
+             "строк темы, снятых как самоотменённые": sum(len(resolved[k])
+                                                          for k in ("superseded", "series_total"))}
     JSON_OUT.write_text(json.dumps({
         "generated": TODAY,
         "stats": stats,
@@ -763,6 +855,7 @@ def main():
                          "units": [units[k]["name"] for k in v["units"]]} for tid, v in pairs.items()},
         "wiki": wiki_inventory,
         "items": {k: issues[k] for k in order},
+        "resolved": {k: resolved[k] for k in ("superseded", "series_total")},
     }, ensure_ascii=False, indent=1), encoding="utf-8")
 
     # Опись по обсуждениям: что за турнир, сколько строк в базе, сколько ног нашли в
@@ -823,6 +916,18 @@ def main():
     for key in order:
         lines.append(f"| {titles[key]} | {counts[key]} |")
     lines += ["", *[f"- {k}: {v}" for k, v in stats.items()], ""]
+    taken_off = sum(len(resolved[k]) for k in ("superseded", "series_total"))
+    if taken_off:
+        lines.append(f"## Снято с расхождений ({taken_off})")
+        lines.append("")
+        for key, label in (("superseded", "отменено более поздней записью темы"),
+                           ("series_total", "итог серии ног, а не игра")):
+            for item in resolved[key]:
+                lines.append(f"- {label}: **{item['title']}** · "
+                             f"[комментарий {item['comment_id']}]({item['url']}) · "
+                             f"`{item['line']}` → счёт {item['scores']}, база "
+                             f"{item['base'].get('scores')}")
+        lines.append("")
     for key in order:
         items = issues[key]
         if not items:
