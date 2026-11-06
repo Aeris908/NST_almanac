@@ -8,11 +8,11 @@
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
   "строк базы в сопоставленных единицах": 3579,
-  "строк источника, совпавших с базой": 1417
+  "строк источника, совпавших с базой": 1416
  },
  "counts": {
   "missing_in_db": 8,
-  "score_diff": 30,
+  "score_diff": 27,
   "wiki_missing_in_db": 0,
   "wiki_score_diff": 0,
   "matched_elsewhere": 1,
@@ -638,7 +638,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 67049,
+     "id": 73449,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -672,7 +672,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 67049,
+     "id": 73449,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -682,74 +682,6 @@
      "manual": 0,
      "a": "Буц",
      "b": "Christian"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "39660451",
-    "title": "6-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "18193",
-    "comment_day": "2019-01-16",
-    "line": "Cyneprepou4uk vs Wenderfit 6-0, 4-4 (8-4)",
-    "leg": "2/2",
-    "source_pair": [
-     [
-      "Cyneprepou4uk"
-     ],
-     [
-      "Wenderfit"
-     ]
-    ],
-    "scores": [
-     4,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_39660451?offset=80#post18193",
-    "base": {
-     "id": 65519,
-     "tour": "3 Тур",
-     "scores": [
-      6,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Cyneprepou4uk",
-     "b": "Wenderfit"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "39660451",
-    "title": "6-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "18316",
-    "comment_day": "2019-01-25",
-    "line": "Palka Palych vs AJ_Maker 5:4 (3:3 - основное время, 2:1 - буллиты)",
-    "leg": "2/2",
-    "source_pair": [
-     [
-      "Palka Palych"
-     ],
-     [
-      "AJ_Maker"
-     ]
-    ],
-    "scores": [
-     2,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_39660451?offset=140#post18316",
-    "base": {
-     "id": 66448,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      5,
-      4
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Palka Palych",
-     "b": "AJ_Maker"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -774,7 +706,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=80#post26919",
     "base": {
-     "id": 66469,
+     "id": 72869,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -808,7 +740,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 65263,
+     "id": 71663,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -839,7 +771,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 65263,
+     "id": 71663,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -870,7 +802,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 66421,
+     "id": 72821,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -901,7 +833,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 66421,
+     "id": 72821,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -932,7 +864,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 65395,
+     "id": 71795,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -963,7 +895,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 65395,
+     "id": 71795,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -1004,40 +936,6 @@
      "manual": 0,
      "a": "Ric25",
      "b": "leonudomlya"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "54769667",
-    "title": "9-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "32791",
-    "comment_day": "2025-08-31",
-    "line": "Yuliy_Cezar vs yoxter 1:1 (ПК 5:3)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Yuliy_Cezar"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     1,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_54769667?offset=40#post32791",
-    "base": {
-     "id": 219,
-     "tour": null,
-     "scores": [
-      2,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Yuliy_Cezar"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -1149,7 +1047,7 @@
     "comment_id": "30492",
     "comment_day": "2023-11-16",
     "line": "Rustin Cohle vs Jamlight 0-2 (Rustin Cohle vs Jamlight 2-12",
-    "leg": "1/2",
+    "leg": "1/1",
     "source_pair": [
      [
       "Rustin Cohle"
@@ -1164,7 +1062,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 65571,
+     "id": 71971,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1180,7 +1078,7 @@
     "comment_id": "30492",
     "comment_day": "2023-11-16",
     "line": "Rustin Cohle vs Jamlight 0-2 (Rustin Cohle vs Jamlight 2-12",
-    "leg": "2/2",
+    "leg": "1/1",
     "source_pair": [
      [
       "Rustin Cohle"
@@ -1195,7 +1093,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 65571,
+     "id": 71971,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1226,7 +1124,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 65149,
+     "id": 71549,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1257,7 +1155,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 65149,
+     "id": 71549,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1291,7 +1189,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 66404,
+     "id": 72804,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -1325,7 +1223,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 66516,
+     "id": 72916,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1359,7 +1257,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 66516,
+     "id": 72916,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1393,7 +1291,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 66520,
+     "id": 72920,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1427,7 +1325,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 66520,
+     "id": 72920,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1461,7 +1359,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 66581,
+     "id": 72981,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -1495,7 +1393,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 66593,
+     "id": 72993,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -1529,7 +1427,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 63901,
+     "id": 70301,
      "tour": "Тур 3",
      "scores": [
       3,
@@ -1563,7 +1461,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 63959,
+     "id": 70359,
      "tour": "Тур 9",
      "scores": [
       8,
@@ -1597,7 +1495,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 64059,
+     "id": 70459,
      "tour": "Тур 2",
      "scores": [
       3,
@@ -1635,7 +1533,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 64623,
+     "id": 71023,
      "unit": "Season 3 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"

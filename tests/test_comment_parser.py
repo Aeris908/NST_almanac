@@ -38,21 +38,36 @@ def test_short_tour_header_does_not_end_the_example_block():
     assert scores(post) == []
 
 
+def legs(tail):
+    return legs_of(tail)[0]
+
+
 def test_single_score_in_brackets_belongs_to_the_previous_leg():
     """Одна счёт-пара в скобках — доигровка предыдущей ноги: золотой гол или пенальти."""
-    assert legs_of("5-5 (1-0)") == [(5, 5)]
-    assert legs_of("1-1(4-3 пен)") == [(1, 1)]
-    assert legs_of("6-0, 4-4 (8-4)") == [(6, 0), (4, 4)]
-    assert legs_of("9:8(PK)") == [(9, 8)]
+    assert legs("5-5 (1-0)") == [(5, 5)]
+    assert legs("1-1(4-3 пен)") == [(1, 1)]
+    assert legs("6-0, 4-4 (8-4)") == [(6, 0), (4, 4)]
+    assert legs("9:8(PK)") == [(9, 8)]
+
+
+def test_the_bracket_score_is_kept_as_the_tie_aggregate():
+    """Доигровка не выбрасывается: вики-календари Сезонов 2-7 пишут ногу её итогом («8:4»)."""
+    assert legs_of("6-0, 4-4 (8-4)") == ([(6, 0), (4, 4)], [None, [(8, 4)]])
+    assert legs_of("6 - 6 PK 5:4") == ([(6, 6)], [[(5, 4)]])
+
+
+def test_main_score_and_shootout_in_brackets_with_aggregate_outside():
+    """«5:4 (3:3 - основное время, 2:1 - буллиты)»: нога — 3:3, а 5:4 и 2:1 тоже её запись."""
+    assert legs_of("5:4 (3:3 - основное время, 2:1 - буллиты)") == ([(3, 3)], [[(2, 1), (5, 4)]])
 
 
 def test_several_scores_in_brackets_are_the_legs_and_the_rest_is_the_tie():
     """Перечень ног в скобках важнее счёта снаружи: снаружи — итог встречи по ногам."""
-    assert legs_of("3:5 (3:1, 4:2, 1:3, 0:2)") == [(3, 1), (4, 2), (1, 3), (0, 2)]
-    assert legs_of("2:0 (5:0, 5:0)") == [(5, 0), (5, 0)]
+    assert legs("3:5 (3:1, 4:2, 1:3, 0:2)") == [(3, 1), (4, 2), (1, 3), (0, 2)]
+    assert legs("2:0 (5:0, 5:0)") == [(5, 0), (5, 0)]
 
 
 def test_series_word_without_comma_is_not_a_second_leg():
     """Без запятой «PK 5:4» объясняет предыдущую ногу; с запятой — это уже вторая нога."""
-    assert legs_of("6 - 6 PK 5:4") == [(6, 6)]
-    assert legs_of("3:0, 8:5пен.") == [(3, 0), (8, 5)]
+    assert legs("6 - 6 PK 5:4") == [(6, 6)]
+    assert legs("3:0, 8:5пен.") == [(3, 0), (8, 5)]

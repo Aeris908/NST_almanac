@@ -181,30 +181,48 @@ def without_examples(text):
 
 
 def legs_of(tail):
-    """Ноги встречи в хвосте строки.
+    """Ноги встречи и чем каждая доиграна: (ноги, доигровки), по элементу на ногу.
 
     Скобка значит разное в зависимости от наполнения: одна счёт-пара в скобках — это то, чем
-    доиграли уже названную ногу (золотой гол, как требует регламент: «5-5 (1-0)», или серия
-    пенальти: «1-1 (4-3 пен)»), а несколько — сам перечень ног, перед которым стоит итог встречи
+    доиграли уже названную ногу (золотой гол по регламенту: «5-5 (1-0)», серия пенальти:
+    «1-1 (4-3 пен)»), а несколько — сам перечень ног, перед которым стоит итог встречи
     («ectoPower vs PacnyTHuK - 3:5 (3:1, 4:2, 1:3, 0:2)»). Итог отдельной игрой не бывает.
 
     Вне скобок нога от ноги отделяется запятой: «3:0, 8:5пен» — это вторая нога, выигранная по
     пенальти (так объясняет сам регламент темы). Если же между счёт-парами стоит слово серии и
-    нет запятой — «6-6 PK 5:4» — второй счёт это серия первой ноги, а не игра.
+    нет запятой — «6-6 PK 5:4», — второй счёт доигрывает первую ногу.
+
+    Возвращает ноги и список засчитываемых записей каждой из них: вики-календари Сезонов 2-7
+    пишут ту же встречу итогом с доигровкой («4:4» как «8:4»), поэтому сверка принимает и его.
     """
-    groups = [SCORE_TOKEN.findall(inner) for inner in re.findall(r"\(([^()]*)\)", tail)]
-    listed = [(int(a), int(b)) for group in groups if len(group) > 1 for a, b in group]
+    groups = [(m.start(), m.end(), m.group(1), SCORE_TOKEN.findall(m.group(1)))
+              for m in re.finditer(r"\(([^()]*)\)", tail)]
+    for start, _, inner, inner_scores in groups:
+        if len(inner_scores) > 1 and SERIES_MARK.search(inner):
+            # «5:4 (3:3 - основное время, 2:1 - буллиты)»: в скобках не две ноги, а счёт игры и
+            # доигровка, а снаружи — итог с пенальти. Именно так эту же встречу записал
+            # вики-календарь, поэтому итог тоже считается совпадением.
+            main = (int(inner_scores[0][0]), int(inner_scores[0][1]))
+            alts = [(int(a), int(b)) for a, b in inner_scores[1:]]
+            alts += [(int(a), int(b)) for a, b in SCORE_TOKEN.findall(tail[:start])]
+            return [main], [alts]
+    listed = [(int(a), int(b)) for _, _, _, inner in groups if len(inner) > 1 for a, b in inner]
     if listed:
-        return listed
-    outside = re.sub(r"\([^)]*\)", " ", tail)
-    legs, previous_end = [], None
-    for hit in SCORE_TOKEN.finditer(outside):
-        gap = outside[previous_end:hit.start()] if previous_end is not None else ""
+        return listed, [None] * len(listed)
+    legs, extras, previous_end = [], [], None
+    for hit in SCORE_TOKEN.finditer(tail):
+        score = (int(hit.group(1)), int(hit.group(2)))
+        depth = tail[:hit.start()].count("(") - tail[:hit.start()].count(")")
+        gap = tail[previous_end:hit.start()] if previous_end is not None else ""
         previous_end = hit.end()
-        if SERIES_MARK.search(gap) and not re.search(r"[,;]", gap):
-            continue
-        legs.append((int(hit.group(1)), int(hit.group(2))))
-    return legs
+        if legs and depth:
+            extras[-1] = [score]                # доигровка предыдущей ноги
+        elif legs and SERIES_MARK.search(gap) and not re.search(r"[,;]", gap):
+            extras[-1] = [score]                # «6-6 PK 5:4» — серия первой ноги
+        else:
+            legs.append(score)
+            extras.append(None)
+    return legs, extras
 
 
 def parse_comment(text):
@@ -226,17 +244,19 @@ def parse_comment(text):
                 tokens = [t.strip().lower() for side in (left, right) for t in re.split(r"[&/]", side)]
                 if any(t in BANNED for t in tokens) or not all(tokens):
                     continue
-                legs = legs_of(chunk[hit.end(2):])
-                legs = [(a, b) for a, b in legs if a <= 30 and b <= 30 and (a, b) != (0, 0)]
-                if not legs:
+                legs, extras = legs_of(chunk[hit.end(2):])
+                kept = [(score, extra) for score, extra in zip(legs, extras)
+                        if score[0] <= 30 and score[1] <= 30 and score != (0, 0)]
+                if not kept:
                     continue
                 note = (chunk + " " + (hit.group(5) or "")).lower()
-                for index, (s1, s2) in enumerate(legs[:6], 1):
+                for index, ((s1, s2), extra) in enumerate(kept[:6], 1):
                     found.append({
                         "line": chunk[:140],
                         "raw": (left, right),
                         "scores": (s1, s2),
-                        "leg": f"{index}/{len(legs)}",
+                        "aggregate": extra,
+                        "leg": f"{index}/{len(kept)}",
                         "note": note,
                         "ot": "ot" in note or "овертайм" in note,
                         "pk": any(k in note for k in ("pk", "рк", "пк", "пен", "буллит")),
@@ -572,8 +592,12 @@ def main():
                     continue
                 pair = tuple(sorted([tuple(sorted(fold(name) for name in side)) for side in sides]))
                 candidates = by_pair.get(pair, [])
-                scored = [c for c in candidates
-                          if score_key(c["scores"]) == score_key(item["scores"])]
+                accepted = {score_key(item["scores"])}
+                # Сезоны 2-7 в вики-календарях записаны итогом с доигровкой: нога «4:4» живёт в
+                # базе как «8:4», потому что четыре пенальти сверху — часть того же счёта.
+                for extra in item.get("aggregate") or []:
+                    accepted.add(score_key(extra))
+                scored = [c for c in candidates if score_key(c["scores"]) in accepted]
                 signature_key = (pair, score_key(item["scores"]))
                 if signature_key in asserted:
                     asserted[signature_key] += 1
