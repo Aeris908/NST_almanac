@@ -7,12 +7,12 @@
   "единиц базы (турниры и документы)": 59,
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
-  "строк базы в сопоставленных единицах": 3442,
-  "строк источника, совпавших с базой": 1303
+  "строк базы в сопоставленных единицах": 3585,
+  "строк источника, совпавших с базой": 1403
  },
  "counts": {
   "missing_in_db": 7,
-  "score_diff": 147,
+  "score_diff": 47,
   "wiki_missing_in_db": 0,
   "wiki_score_diff": 0,
   "matched_elsewhere": 3,
@@ -21,7 +21,7 @@
   "empty_unit": 4,
   "unknown_name": 203,
   "nick_twins": 0,
-  "video_link": 5,
+  "video_link": 2,
   "no_lines_recognised": 5
  },
  "topics": {
@@ -606,7 +606,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 57437,
+     "id": 60643,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -640,7 +640,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34920573?offset=20#post9742",
     "base": {
-     "id": 57437,
+     "id": 60643,
      "tour": "Winners 1/8",
      "scores": [
       4,
@@ -674,7 +674,7 @@
     ],
     "url": "https://vk.com/topic-66162180_36630593?offset=0#post14336",
     "base": {
-     "id": 56799,
+     "id": 60005,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -708,7 +708,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=0#post17541",
     "base": {
-     "id": 56829,
+     "id": 60035,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -742,7 +742,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39660451?offset=80#post18193",
     "base": {
-     "id": 55901,
+     "id": 59107,
      "tour": "3 Тур",
      "scores": [
       6,
@@ -776,7 +776,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=0#post26785",
     "base": {
-     "id": 56852,
+     "id": 60058,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -810,7 +810,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=80#post26919",
     "base": {
-     "id": 56857,
+     "id": 60063,
      "tour": "Плей-офф / Кубок",
      "scores": [
       1,
@@ -844,7 +844,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 54639,
+     "id": 57845,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -875,7 +875,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 55645,
+     "id": 58851,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -906,7 +906,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 55645,
+     "id": 58851,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -937,7 +937,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 56807,
+     "id": 60013,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -968,7 +968,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 56807,
+     "id": 60013,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -999,7 +999,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 55777,
+     "id": 58983,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -1030,7 +1030,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 55777,
+     "id": 58983,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -1197,7 +1197,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 54639,
+     "id": 57845,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -1364,7 +1364,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 55953,
+     "id": 59159,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1395,7 +1395,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30492",
     "base": {
-     "id": 55953,
+     "id": 59159,
      "tour": "7 Тур",
      "scores": [
       1,
@@ -1426,7 +1426,7 @@
     ],
     "url": "https://vk.com/topic-66162180_49948732?offset=160#post30525",
     "base": {
-     "id": 55531,
+     "id": 58737,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1457,7 +1457,7 @@
     ],
     "url": "https://vk.com/topic-66162180_50374687?offset=20#post31610",
     "base": {
-     "id": 55531,
+     "id": 58737,
      "tour": "11 Тур",
      "scores": [
       6,
@@ -1491,7 +1491,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33103100?offset=0#post3563",
     "base": {
-     "id": 54639,
+     "id": 57845,
      "tour": "4 Тур",
      "scores": [
       1,
@@ -1525,7 +1525,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=0#post6339",
     "base": {
-     "id": 54951,
+     "id": 58157,
      "tour": "5 Тур",
      "scores": [
       4,
@@ -1559,7 +1559,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 56779,
+     "id": 59985,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -1593,7 +1593,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33967365?offset=220#post7380",
     "base": {
-     "id": 56779,
+     "id": 59985,
      "tour": "Плей-офф / Кубок",
      "scores": [
       6,
@@ -1627,7 +1627,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=0#post9794",
     "base": {
-     "id": 56788,
+     "id": 59994,
      "tour": "Плей-офф / Кубок",
      "scores": [
       3,
@@ -1661,7 +1661,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
     "base": {
-     "id": 56789,
+     "id": 59995,
      "tour": "Плей-офф / Кубок",
      "scores": [
       0,
@@ -1695,7 +1695,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 56904,
+     "id": 60110,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1729,7 +1729,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 56904,
+     "id": 60110,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -1763,7 +1763,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 56908,
+     "id": 60114,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1797,7 +1797,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 56908,
+     "id": 60114,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -1831,7 +1831,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 56969,
+     "id": 60175,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -1865,7 +1865,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 56981,
+     "id": 60187,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -1899,8 +1899,8 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=0#post2292",
     "base": {
-     "id": 54498,
-     "tour": "1 Круг",
+     "id": 57637,
+     "tour": "Тур 1",
      "scores": [
       3,
       2
@@ -1933,8 +1933,8 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=0#post2292",
     "base": {
-     "id": 54498,
-     "tour": "1 Круг",
+     "id": 57637,
+     "tour": "Тур 1",
      "scores": [
       3,
       2
@@ -1943,550 +1943,6 @@
      "manual": 0,
      "a": "BOР95",
      "b": "Bubnov"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2447",
-    "comment_day": "2015-11-24",
-    "line": "Кирпич57 vs Сenturion 4:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Centurion"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=40#post2447",
-    "base": {
-     "id": 54511,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Centurion",
-     "b": "Кирпич57"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2450",
-    "comment_day": "2015-11-24",
-    "line": "Memori vs WiSe - 6:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "WiSe"
-     ]
-    ],
-    "scores": [
-     6,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=40#post2450",
-    "base": {
-     "id": 54405,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "WiSe"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2509",
-    "comment_day": "2015-11-26",
-    "line": "DanLavis vs Misfits: 1:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     1,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=60#post2509",
-    "base": {
-     "id": 54521,
-     "tour": "1 Круг",
-     "scores": [
-      0,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2520",
-    "comment_day": "2015-11-27",
-    "line": "Ric25 - yoxter 7:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     7,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=60#post2520",
-    "base": {
-     "id": 54416,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "yoxter"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2525",
-    "comment_day": "2015-11-27",
-    "line": "Misfits - BZK 1-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Misfits"
-     ],
-     [
-      "Cyneprepou4uk"
-     ]
-    ],
-    "scores": [
-     1,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=60#post2525",
-    "base": {
-     "id": 54524,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Cyneprepou4uk",
-     "b": "Misfits"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2529",
-    "comment_day": "2015-11-28",
-    "line": "Centurion vs DanLavis - 4:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=60#post2529",
-    "base": {
-     "id": 54527,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Centurion"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2530",
-    "comment_day": "2015-11-28",
-    "line": "Ric25 vs Memori - 0:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     0,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=60#post2530",
-    "base": {
-     "id": 54404,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Ric25"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2537",
-    "comment_day": "2015-11-30",
-    "line": "Eg_or3 - Yoxter - 4:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Eg_or3"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=80#post2537",
-    "base": {
-     "id": 54445,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Eg_or3"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2552",
-    "comment_day": "2015-12-01",
-    "line": "Gilmour - Ric25 3-6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Gilmour"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     3,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=80#post2552",
-    "base": {
-     "id": 54421,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2557",
-    "comment_day": "2015-12-02",
-    "line": "Rustin Cohle - wenderfit 2-4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Wenderfit"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=80#post2557",
-    "base": {
-     "id": 54437,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Wenderfit",
-     "b": "Rustin Cohle"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2562",
-    "comment_day": "2015-12-02",
-    "line": "DanLavis vs Кирпич: 4:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Кирпич57"
-     ]
-    ],
-    "scores": [
-     4,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=80#post2562",
-    "base": {
-     "id": 54533,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Кирпич57",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2567",
-    "comment_day": "2015-12-02",
-    "line": "Memori vs Eg_or3 - 9:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "Eg_or3"
-     ]
-    ],
-    "scores": [
-     9,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=80#post2567",
-    "base": {
-     "id": 54409,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Eg_or3"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2568",
-    "comment_day": "2015-12-02",
-    "line": "Tymoschuk - Misfits 9:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     9,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=80#post2568",
-    "base": {
-     "id": 54517,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "Bubnov"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2590",
-    "comment_day": "2015-12-03",
-    "line": "Psycho vs BOP95 - 1:8",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "psycho"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     1,
-     8
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=100#post2590",
-    "base": {
-     "id": 54501,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2598",
-    "comment_day": "2015-12-04",
-    "line": "Kirpich vs BZK - 2: 5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Cyneprepou4uk"
-     ]
-    ],
-    "scores": [
-     2,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=100#post2598",
-    "base": {
-     "id": 54525,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Cyneprepou4uk",
-     "b": "Кирпич57"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2599",
-    "comment_day": "2015-12-04",
-    "line": "wenderfit - Romario 8-0 (слот 3)",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Wenderfit"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     8,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=120#post2599",
-    "base": {
-     "id": 54438,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Wenderfit",
-     "b": "Romario"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -2511,832 +1967,16 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 54447,
-     "tour": "1 Круг",
-     "scores": [
-      9,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2601",
-    "comment_day": "2015-12-04",
-    "line": "yoxter - Romario 8-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "yoxter"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     8,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
-    "base": {
-     "id": 54447,
-     "tour": "1 Круг",
-     "scores": [
-      9,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2635",
-    "comment_day": "2015-12-06",
-    "line": "DanLavis - Psycho 4-2.",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     4,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=120#post2635",
-    "base": {
-     "id": 54515,
-     "tour": "1 Круг",
+     "id": 57489,
+     "tour": "Тур 3",
      "scores": [
       3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "psycho",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2639",
-    "comment_day": "2015-12-06",
-    "line": "BOP95 vs Misfits - 5:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=140#post2639",
-    "base": {
-     "id": 54518,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      6
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2642",
-    "comment_day": "2015-12-07",
-    "line": "Kubik vs Centurion - 0:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Centurion"
-     ]
-    ],
-    "scores": [
-     0,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=140#post2642",
-    "base": {
-     "id": 54512,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Centurion",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2659",
-    "comment_day": "2015-12-09",
-    "line": "BZK - psycho 7-0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Cyneprepou4uk"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     7,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=140#post2659",
-    "base": {
-     "id": 54514,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "psycho",
-     "b": "Cyneprepou4uk"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2661",
-    "comment_day": "2015-12-09",
-    "line": "Centurion vs BOP95 0:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     0,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=140#post2661",
-    "base": {
-     "id": 54500,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Centurion"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2663",
-    "comment_day": "2015-12-09",
-    "line": "BZK - DanLavis 7-3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Cyneprepou4uk"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     7,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=140#post2663",
-    "base": {
-     "id": 54528,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Cyneprepou4uk"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2666",
-    "comment_day": "2015-12-10",
-    "line": "Gilmour - Romario 6-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Gilmour"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     6,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2666",
-    "base": {
-     "id": 54484,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      2
+      9
      ],
      "status": "played",
      "manual": 0,
      "a": "Romario",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2667",
-    "comment_day": "2015-12-10",
-    "line": "BOP95 vs Kubik - 6:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     6,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2667",
-    "base": {
-     "id": 54534,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2668",
-    "comment_day": "2015-12-10",
-    "line": "Romario vs Memori - 1:7",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Romario"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     1,
-     7
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2668",
-    "base": {
-     "id": 54411,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2672",
-    "comment_day": "2015-12-11",
-    "line": "Dr1n vs BOP95 - 4:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     4,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2672",
-    "base": {
-     "id": 54499,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2673",
-    "comment_day": "2015-12-11",
-    "line": "----— Psycho - KubIk 3-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "psycho"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     3,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2673",
-    "base": {
-     "id": 54535,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      7
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2677",
-    "comment_day": "2015-12-11",
-    "line": "Kirpich - Kubik 2 - 1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     2,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2677",
-    "base": {
-     "id": 54538,
-     "tour": "1 Круг",
-     "scores": [
-      0,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "Кирпич57"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2681",
-    "comment_day": "2015-12-12",
-    "line": "DanLavis - Tymoschuk: 0 : 4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Bubnov"
-     ]
-    ],
-    "scores": [
-     0,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2681",
-    "base": {
-     "id": 54496,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2682",
-    "comment_day": "2015-12-12",
-    "line": "Dr1N - Tymoschuk 1:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "Bubnov"
-     ]
-    ],
-    "scores": [
-     1,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=160#post2682",
-    "base": {
-     "id": 54494,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2696",
-    "comment_day": "2015-12-13",
-    "line": "Tymoschuk vs BZK 4-4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "Cyneprepou4uk"
-     ]
-    ],
-    "scores": [
-     4,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=180#post2696",
-    "base": {
-     "id": 54522,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      4
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Cyneprepou4uk",
-     "b": "Bubnov"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2697",
-    "comment_day": "2015-12-13",
-    "line": "Psycho vs Dr1n 1-3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "psycho"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     1,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=180#post2697",
-    "base": {
-     "id": 54503,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2698",
-    "comment_day": "2015-12-13",
-    "line": "Ric25 - Romario 5:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=180#post2698",
-    "base": {
-     "id": 54420,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2718",
-    "comment_day": "2015-12-15",
-    "line": "Сenturion vs Misfits 4:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     4,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2718",
-    "base": {
-     "id": 54519,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "Centurion"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2721",
-    "comment_day": "2015-12-16",
-    "line": "Ric25 vs Wenderfit 5:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Ric25"
-     ],
-     [
-      "Wenderfit"
-     ]
-    ],
-    "scores": [
-     5,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2721",
-    "base": {
-     "id": 54415,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Wenderfit"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2724",
-    "comment_day": "2015-12-16",
-    "line": "BZK vs Kubik 3-3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Cyneprepou4uk"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     3,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2724",
-    "base": {
-     "id": 54537,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "Cyneprepou4uk"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2731",
-    "comment_day": "2015-12-17",
-    "line": "Memori vs Yoxter - 3:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     3,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2731",
-    "base": {
-     "id": 54407,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
      "b": "yoxter"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2732",
-    "comment_day": "2015-12-17",
-    "line": "yoxter vs Gilmour 2:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "yoxter"
-     ],
-     [
-      "Gilmour"
-     ]
-    ],
-    "scores": [
-     2,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2732",
-    "base": {
-     "id": 54448,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2748",
-    "comment_day": "2015-12-19",
-    "line": "Tymoschuk - psycho 4:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     4,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2748",
-    "base": {
-     "id": 54513,
-     "tour": "1 Круг",
-     "scores": [
-      0,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "psycho",
-     "b": "Bubnov"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -3361,8 +2001,8 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 54412,
-     "tour": "1 Круг",
+     "id": 57547,
+     "tour": "Тур 9",
      "scores": [
       8,
       0
@@ -3371,2046 +2011,6 @@
      "manual": 0,
      "a": "Memori",
      "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2751",
-    "comment_day": "2015-12-19",
-    "line": "Кирпич57 vs Dr1N - 1 : 2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     1,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2751",
-    "base": {
-     "id": 54506,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "Кирпич57"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2758",
-    "comment_day": "2015-12-20",
-    "line": "Кирпич57 - Misfits 2 - 3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     2,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=200#post2758",
-    "base": {
-     "id": 54532,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Кирпич57",
-     "b": "Misfits"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2763",
-    "comment_day": "2015-12-20",
-    "line": "Kubik - Dr1N 2 : 3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     2,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2763",
-    "base": {
-     "id": 54507,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2764",
-    "comment_day": "2015-12-20",
-    "line": "BOР95 - BZK 7-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Cyneprepou4uk"
-     ]
-    ],
-    "scores": [
-     7,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2764",
-    "base": {
-     "id": 54523,
-     "tour": "1 Круг",
-     "scores": [
-      7,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Cyneprepou4uk",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2773",
-    "comment_day": "2015-12-21",
-    "line": "Кирпич57 vs Centurion - 1:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Centurion"
-     ]
-    ],
-    "scores": [
-     1,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2773",
-    "base": {
-     "id": 54511,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Centurion",
-     "b": "Кирпич57"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2774",
-    "comment_day": "2015-12-22",
-    "line": "Вор95 vs Кирпич57 - 7:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Кирпич57"
-     ]
-    ],
-    "scores": [
-     7,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2774",
-    "base": {
-     "id": 54531,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Кирпич57",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2775",
-    "comment_day": "2015-12-22",
-    "line": "Kubik vs Misfits - 3:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     3,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2775",
-    "base": {
-     "id": 54536,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "Misfits"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2776",
-    "comment_day": "2015-12-22",
-    "line": "Kubik vs Tymoschuk - 0:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Bubnov"
-     ]
-    ],
-    "scores": [
-     0,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2776",
-    "base": {
-     "id": 54497,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2777",
-    "comment_day": "2015-12-22",
-    "line": "DanLavis vs BOP95 - 2:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     2,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2777",
-    "base": {
-     "id": 54502,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2790",
-    "comment_day": "2015-12-23",
-    "line": "Kubik - Psycho 4-6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     4,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2790",
-    "base": {
-     "id": 54535,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      7
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2791",
-    "comment_day": "2015-12-23",
-    "line": "Dr1N vs DanLavis 4 : 1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     4,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2791",
-    "base": {
-     "id": 54526,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2793",
-    "comment_day": "2015-12-23",
-    "line": "BZK vs Dr1N 3-4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Cyneprepou4uk"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     3,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=220#post2793",
-    "base": {
-     "id": 54505,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "Cyneprepou4uk"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2794",
-    "comment_day": "2015-12-23",
-    "line": "yoxter - Ric25 1:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "yoxter"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     1,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=240#post2794",
-    "base": {
-     "id": 54416,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "yoxter"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2811",
-    "comment_day": "2015-12-25",
-    "line": "Wenderfit vs Romario 5-3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Wenderfit"
-     ],
-     [
-      "Romario"
-     ]
-    ],
-    "scores": [
-     5,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=240#post2811",
-    "base": {
-     "id": 54438,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Wenderfit",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2816",
-    "comment_day": "2015-12-25",
-    "line": "Misfits - BZK 3-2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Misfits"
-     ],
-     [
-      "Cyneprepou4uk"
-     ]
-    ],
-    "scores": [
-     3,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=240#post2816",
-    "base": {
-     "id": 54524,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Cyneprepou4uk",
-     "b": "Misfits"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2824",
-    "comment_day": "2015-12-26",
-    "line": "Memori vs Ric25 - 4:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     4,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=240#post2824",
-    "base": {
-     "id": 54404,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Ric25"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2828",
-    "comment_day": "2015-12-26",
-    "line": "Centurion vs DanLavis - 3:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     3,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=240#post2828",
-    "base": {
-     "id": 54527,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Centurion"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2829",
-    "comment_day": "2015-12-27",
-    "line": "WiSe - Gilmour 2-1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "WiSe"
-     ],
-     [
-      "Gilmour"
-     ]
-    ],
-    "scores": [
-     2,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=240#post2829",
-    "base": {
-     "id": 54430,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "WiSe",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2830",
-    "comment_day": "2015-12-27",
-    "line": "Gilmour - Ric25 2:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Gilmour"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2830",
-    "base": {
-     "id": 54421,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2837",
-    "comment_day": "2015-12-27",
-    "line": "Tymoschuk - Misfits 11:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     11,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2837",
-    "base": {
-     "id": 54517,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "Bubnov"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2847",
-    "comment_day": "2015-12-27",
-    "line": "Rustin Cohle - wenderfit 1:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Wenderfit"
-     ]
-    ],
-    "scores": [
-     1,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2847",
-    "base": {
-     "id": 54437,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Wenderfit",
-     "b": "Rustin Cohle"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2849",
-    "comment_day": "2015-12-27",
-    "line": "Kubik vs Dr1N - 0:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     0,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2849",
-    "base": {
-     "id": 54507,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2861",
-    "comment_day": "2015-12-29",
-    "line": "Romario vs yoxter 0:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Romario"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     0,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2861",
-    "base": {
-     "id": 54447,
-     "tour": "1 Круг",
-     "scores": [
-      9,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2863",
-    "comment_day": "2015-12-29",
-    "line": "ВОР95 vs Kubik 6:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     6,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2863",
-    "base": {
-     "id": 54534,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2866",
-    "comment_day": "2015-12-29",
-    "line": "Tymoschuk vs BOP95 - 4:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     4,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=260#post2866",
-    "base": {
-     "id": 54498,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Bubnov"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2874",
-    "comment_day": "2015-12-31",
-    "line": "Eg_or3 vs yoxter 2-6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Eg_or3"
-     ],
-     [
-      "yoxter"
-     ]
-    ],
-    "scores": [
-     2,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=280#post2874",
-    "base": {
-     "id": 54445,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Eg_or3"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2876",
-    "comment_day": "2015-12-31",
-    "line": "Memori vs Eg_or3 - 4:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "Eg_or3"
-     ]
-    ],
-    "scores": [
-     4,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=280#post2876",
-    "base": {
-     "id": 54409,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Eg_or3"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2917",
-    "comment_day": "2016-01-08",
-    "line": "Misfits vs Kubik 7:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Misfits"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     7,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=280#post2917",
-    "base": {
-     "id": 54536,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kubik",
-     "b": "Misfits"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2925",
-    "comment_day": "2016-01-09",
-    "line": "Centurion vs Tymoschuk 4:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "Bubnov"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=280#post2925",
-    "base": {
-     "id": 54495,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Centurion"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2964",
-    "comment_day": "2016-01-10",
-    "line": "psycho vs BOP95 - 0:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "psycho"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     0,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2964",
-    "base": {
-     "id": 54501,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2965",
-    "comment_day": "2016-01-10",
-    "line": "Romario vs Memori - 2:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Romario"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     2,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2965",
-    "base": {
-     "id": 54411,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Romario"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2977",
-    "comment_day": "2016-01-10",
-    "line": "Dr1N vs ВОР95 5 : 5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     5,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2977",
-    "base": {
-     "id": 54499,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2980",
-    "comment_day": "2016-01-11",
-    "line": "Misfits vs BOP95 - 1:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Misfits"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     1,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2980",
-    "base": {
-     "id": 54518,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      6
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2982",
-    "comment_day": "2016-01-11",
-    "line": "Eg_or3 vs Gilmour 7-3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Eg_or3"
-     ],
-     [
-      "Gilmour"
-     ]
-    ],
-    "scores": [
-     7,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2982",
-    "base": {
-     "id": 54466,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Eg_or3",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2992",
-    "comment_day": "2016-01-11",
-    "line": "Kubik vs DanLavis 3:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Kubik"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     3,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2992",
-    "base": {
-     "id": 54529,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2998",
-    "comment_day": "2016-01-12",
-    "line": "E_not - Ric25 2:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "E_not"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     2,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post2998",
-    "base": {
-     "id": 54417,
-     "tour": "1 Круг",
-     "scores": [
-      8,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "E_not"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3001",
-    "comment_day": "2016-01-13",
-    "line": "Dr1N vs psycho 3 : 3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     3,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3001",
-    "base": {
-     "id": 54503,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3007",
-    "comment_day": "2016-01-14",
-    "line": "Eg_or3 - Ric25 4:7",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Eg_or3"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     4,
-     7
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3007",
-    "base": {
-     "id": 54418,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Eg_or3"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3010",
-    "comment_day": "2016-01-14",
-    "line": "Сenturion vs BOP95 - 1:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3010",
-    "base": {
-     "id": 54500,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Centurion"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3018",
-    "comment_day": "2016-01-15",
-    "line": "Memori vs Wenderfit - 5:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "Wenderfit"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3018",
-    "base": {
-     "id": 54406,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Wenderfit"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3019",
-    "comment_day": "2016-01-15",
-    "line": "Rustin Cohle vs Memori - 0:6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Memori"
-     ]
-    ],
-    "scores": [
-     0,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=300#post3019",
-    "base": {
-     "id": 54410,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Rustin Cohle"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3030",
-    "comment_day": "2016-01-16",
-    "line": "Dr1N - Tymoschuk 0:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "Bubnov"
-     ]
-    ],
-    "scores": [
-     0,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=320#post3030",
-    "base": {
-     "id": 54494,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3048",
-    "comment_day": "2016-01-18",
-    "line": "Сenturion vs Dr1N 1:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     1,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=320#post3048",
-    "base": {
-     "id": 54508,
-     "tour": "1 Круг",
-     "scores": [
-      2,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Centurion",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3113",
-    "comment_day": "2016-01-20",
-    "line": "DanLavis vs Misfits: 2:6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     2,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3113",
-    "base": {
-     "id": 54521,
-     "tour": "1 Круг",
-     "scores": [
-      0,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Misfits",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3114",
-    "comment_day": "2016-01-20",
-    "line": "DanLavis vs psycho: 2:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     2,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3114",
-    "base": {
-     "id": 54515,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "psycho",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3126",
-    "comment_day": "2016-01-20",
-    "line": "wenderfit - Ric25 2:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Wenderfit"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     2,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3126",
-    "base": {
-     "id": 54415,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Wenderfit"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3130",
-    "comment_day": "2016-01-20",
-    "line": "DanLavis vs Kubik 3:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     3,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3130",
-    "base": {
-     "id": 54529,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3158",
-    "comment_day": "2016-01-21",
-    "line": "Rustin Cohle vs Gilmour 4 - 0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Gilmour"
-     ]
-    ],
-    "scores": [
-     4,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3158",
-    "base": {
-     "id": 54475,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Rustin Cohle",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3166",
-    "comment_day": "2016-01-21",
-    "line": "yoxter vs Gilmour 4 - 1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "yoxter"
-     ],
-     [
-      "Gilmour"
-     ]
-    ],
-    "scores": [
-     4,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3166",
-    "base": {
-     "id": 54448,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "yoxter",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3181",
-    "comment_day": "2016-01-22",
-    "line": "Memori vs E_not - 5:2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "E_not"
-     ]
-    ],
-    "scores": [
-     5,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3181",
-    "base": {
-     "id": 54408,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "E_not"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3185",
-    "comment_day": "2016-01-23",
-    "line": "Tymoschuk vs Kubik 7:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "Kubik"
-     ]
-    ],
-    "scores": [
-     7,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=340#post3185",
-    "base": {
-     "id": 54497,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Kubik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3192",
-    "comment_day": "2016-01-23",
-    "line": "Rustin Cohle - Ric25 1:3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Rustin Cohle"
-     ],
-     [
-      "Ric25"
-     ]
-    ],
-    "scores": [
-     1,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3192",
-    "base": {
-     "id": 54419,
-     "tour": "1 Круг",
-     "scores": [
-      4,
-      2
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Ric25",
-     "b": "Rustin Cohle"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3203",
-    "comment_day": "2016-01-23",
-    "line": "Memori vs Gilmour - 5:1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Memori"
-     ],
-     [
-      "Gilmour"
-     ]
-    ],
-    "scores": [
-     5,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3203",
-    "base": {
-     "id": 54412,
-     "tour": "1 Круг",
-     "scores": [
-      8,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Memori",
-     "b": "Gilmour"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3220",
-    "comment_day": "2016-01-24",
-    "line": "Сenturion vs psycho - 8:0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Centurion"
-     ],
-     [
-      "psycho"
-     ]
-    ],
-    "scores": [
-     8,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3220",
-    "base": {
-     "id": 54509,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Centurion",
-     "b": "psycho"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3222",
-    "comment_day": "2016-01-24",
-    "line": "DanLavis - Dr1N 0 - 2",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dan_Lavis"
-     ],
-     [
-      "Dr1N"
-     ]
-    ],
-    "scores": [
-     0,
-     2
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3222",
-    "base": {
-     "id": 54526,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dan_Lavis",
-     "b": "Dr1N"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3224",
-    "comment_day": "2016-01-24",
-    "line": "Кирпич57 vs BOP95 - 0:4",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "BOР95"
-     ]
-    ],
-    "scores": [
-     0,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3224",
-    "base": {
-     "id": 54531,
-     "tour": "1 Круг",
-     "scores": [
-      1,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Кирпич57",
-     "b": "BOР95"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3225",
-    "comment_day": "2016-01-24",
-    "line": "Tymoschuk vs DanLavis: 5 : 0",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Bubnov"
-     ],
-     [
-      "Dan_Lavis"
-     ]
-    ],
-    "scores": [
-     5,
-     0
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3225",
-    "base": {
-     "id": 54496,
-     "tour": "1 Круг",
-     "scores": [
-      6,
-      1
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Bubnov",
-     "b": "Dan_Lavis"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3228",
-    "comment_day": "2016-01-25",
-    "line": "17 тур. Psycho vs Tymoschuk 2-6",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "psycho"
-     ],
-     [
-      "Bubnov"
-     ]
-    ],
-    "scores": [
-     2,
-     6
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=360#post3228",
-    "base": {
-     "id": 54513,
-     "tour": "1 Круг",
-     "scores": [
-      0,
-      5
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "psycho",
-     "b": "Bubnov"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3275",
-    "comment_day": "2016-01-27",
-    "line": "Dr1n vs Кирпич57 8 - 1",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Dr1N"
-     ],
-     [
-      "Кирпич57"
-     ]
-    ],
-    "scores": [
-     8,
-     1
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=400#post3275",
-    "base": {
-     "id": 54506,
-     "tour": "1 Круг",
-     "scores": [
-      3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Dr1N",
-     "b": "Кирпич57"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3276",
-    "comment_day": "2016-01-27",
-    "line": "Кирпич57 vs Misfits 0 - 3",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "Кирпич57"
-     ],
-     [
-      "Misfits"
-     ]
-    ],
-    "scores": [
-     0,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_32593813?offset=400#post3276",
-    "base": {
-     "id": 54532,
-     "tour": "1 Круг",
-     "scores": [
-      5,
-      3
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Кирпич57",
-     "b": "Misfits"
     },
     "hint": "та же пара в этом турнире, но счёт другой"
    },
@@ -5435,8 +2035,8 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 54494,
-     "tour": "1 Круг",
+     "id": 57647,
+     "tour": "Тур 2",
      "scores": [
       3,
       3
@@ -5469,7 +2069,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4870",
     "base": {
-     "id": 57387,
+     "id": 60593,
      "tour": "Группа B",
      "scores": [
       5,
@@ -5503,7 +2103,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4871",
     "base": {
-     "id": 57388,
+     "id": 60594,
      "tour": "Группа B",
      "scores": [
       5,
@@ -5537,7 +2137,7 @@
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=60#post4876",
     "base": {
-     "id": 57390,
+     "id": 60596,
      "tour": "Группа B",
      "scores": [
       5,
@@ -5575,7 +2175,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=0#post31124",
     "base": {
-     "id": 56762,
+     "id": 59968,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -5601,7 +2201,7 @@
     ],
     "url": "https://vk.com/topic-66162180_54769667?offset=0#post32746",
     "base": {
-     "id": 56762,
+     "id": 59968,
      "unit": "Season 2 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -5627,7 +2227,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=400#post3359",
     "base": {
-     "id": 55005,
+     "id": 58211,
      "unit": "Season 3 Высшая лига"
     },
     "hint": "игра в базе есть, но в другом документе — сверьте, что это не дубль"
@@ -8027,51 +4627,6 @@
     },
     "missing": [
      "vk.com/video-66162180_456250051"
-    ],
-    "hint": "в комментарии есть видео, в базе его нет"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "2977",
-    "base": {
-     "id": 54499,
-     "a": "BOР95",
-     "b": "Dr1N"
-    },
-    "missing": [
-     "vk.com/video-56143855_171648746",
-     "vk.com/video-56143855_171648760"
-    ],
-    "hint": "в комментарии есть видео, в базе его нет"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3001",
-    "base": {
-     "id": 54503,
-     "a": "Dr1N",
-     "b": "psycho"
-    },
-    "missing": [
-     "vk.com/video-56143855_171653555",
-     "vk.com/video-56143855_171653553"
-    ],
-    "hint": "в комментарии есть видео, в базе его нет"
-   },
-   {
-    "topic": "32593813",
-    "title": "Регулярный сольный чемпионат по Kunio Kun no Nekketsu Soccer League. 1 сезон",
-    "comment_id": "3222",
-    "base": {
-     "id": 54526,
-     "a": "Dan_Lavis",
-     "b": "Dr1N"
-    },
-    "missing": [
-     "vk.com/video-56143855_171677781",
-     "vk.com/video-56143855_171677782"
     ],
     "hint": "в комментарии есть видео, в базе его нет"
    }
