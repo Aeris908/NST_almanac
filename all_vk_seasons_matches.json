@@ -9023,17 +9023,6 @@
     "season": "Season 7",
     "tournament": "Чемпионат NST (Season 7)",
     "stage": "Регулярный чемпионат",
-    "p1": "JohnnyBravo",
-    "p2": "Romol",
-    "s1": 1,
-    "s2": 2,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 7",
-    "tournament": "Чемпионат NST (Season 7)",
-    "stage": "Регулярный чемпионат",
     "p1": "Cezar",
     "p2": "Jamlight",
     "s1": 5,
@@ -9392,28 +9381,6 @@
     "s2": 0,
     "ot": false,
     "pk": false
-  },
-  {
-    "season": "Season 7",
-    "tournament": "Чемпионат NST (Season 7)",
-    "stage": "Регулярный чемпионат",
-    "p1": "JohnnyBravo",
-    "p2": "daz",
-    "s1": 0,
-    "s2": 1,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 7",
-    "tournament": "Чемпионат NST (Season 7)",
-    "stage": "Регулярный чемпионат",
-    "p1": "daz",
-    "p2": "JohnnyBravo",
-    "s1": 0,
-    "s2": 0,
-    "ot": false,
-    "pk": true
   },
   {
     "season": "Season 7",

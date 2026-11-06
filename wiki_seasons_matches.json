@@ -23424,5 +23424,57 @@
     "tech": false,
     "source": "wiki_page_53570376",
     "raw": "wanchous vs Таёда: 3:0"
+  },
+  {
+    "season": "Сезон 7",
+    "league": "Дворовая лига",
+    "tour": "1 Тур",
+    "p1": "JohnnyBravo",
+    "p2": "daz",
+    "s1": 0,
+    "s2": 1,
+    "ot": false,
+    "tech": false,
+    "source": "vk_topic_49054760",
+    "raw": "JohnnyBravo vs daz 0:1"
+  },
+  {
+    "season": "Сезон 7",
+    "league": "Дворовая лига",
+    "tour": "1 Тур",
+    "p1": "daz",
+    "p2": "JohnnyBravo",
+    "s1": 1,
+    "s2": 0,
+    "ot": true,
+    "tech": false,
+    "source": "vk_topic_49054760",
+    "raw": "daz vs JohnnyBravo 0:0 (PK 1:0)"
+  },
+  {
+    "season": "Сезон 7",
+    "league": "Дворовая лига",
+    "tour": "3 Тур",
+    "p1": "JohnnyBravo",
+    "p2": "Romol",
+    "s1": 1,
+    "s2": 2,
+    "ot": false,
+    "tech": false,
+    "source": "vk_topic_49054760",
+    "raw": "JohnnyBravo vs Romol 1:2"
+  },
+  {
+    "season": "Сезон 7",
+    "league": "Дворовая лига",
+    "tour": "3 Тур",
+    "p1": "JohnnyBravo",
+    "p2": "Romol",
+    "s1": 1,
+    "s2": 3,
+    "ot": false,
+    "tech": false,
+    "source": "vk_topic_49054760",
+    "raw": "JohnnyBravo vs Romol 1:3"
   }
 ]
