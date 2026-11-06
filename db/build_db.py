@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import build_final_analytics as bfa  # noqa: E402
 from db.fields import phase_of  # noqa: E402
 from portal.name_tables import ALIAS_MAP  # noqa: E402
+from portal.names import clean_alias
 from db import store  # noqa: E402
 
 DB_PATH = store.DB_PATH
@@ -121,6 +122,13 @@ def open_db(path, rebuild=False):
 
 
 def ensure_player(con, nick, cache, kind="player"):
+    """Карточка по каноническому нику.
+
+    Справочник складывает написания одного человека в одно («CentZloy», «СentZloy», «Farmazon» —
+    это id85380069), поэтому записать ник как его дали нельзя: одно написание с кириллической «С»
+    заводит второго игрока с той же биографией, и истории разъезжаются.
+    """
+    nick = clean_alias(nick)
     if nick in cache:
         return cache[nick]
     existing = con.execute("select id from players where nick = ?", (nick,)).fetchone()
@@ -221,17 +229,54 @@ def import_pool(con, pool):
 
 
 def import_aliases(con):
-    """Из справочника нормализации: чем источники называют тех же игроков."""
+    """Из справочника нормализации: чем источники называют тех же игроков.
+
+    Срез — проекция справочника, а не накопление: направление правки меняется, и база обязана это
+    увидеть. Поэтому строку `'name_tables'` доводим до текущего каноника, а `'editor'` не трогаем
+    — её поставило слияние карточек, где выбирал человек.
+    """
     nicks = dict(con.execute("select nick, id from players"))
-    inserted = 0
+    inserted = moved = 0
     for alias, canonical in sorted(ALIAS_MAP.items()):
         player_id = nicks.get(canonical)
         if player_id is None:
             continue
-        con.execute("insert or ignore into player_aliases(alias, player_id, source) VALUES (?, ?, 'name_tables')",
-                    (alias, player_id))
-        inserted += 1
-    return inserted
+        found = con.execute(
+            "select id, player_id, source from player_aliases where alias = ?", (alias,)
+        ).fetchone()
+        if found is None:
+            con.execute(
+                "insert into player_aliases(alias, player_id, source) values (?, ?, 'name_tables')",
+                (alias, player_id),
+            )
+            inserted += 1
+        elif found[2] == "name_tables" and found[1] != player_id:
+            con.execute("update player_aliases set player_id = ? where id = ?", (player_id, found[0]))
+            moved += 1
+    return inserted, moved
+
+
+def fold_duplicate_cards(con):
+    """Осколок прежней ошибки: карточка, чьё написание справочник складывает в другую.
+
+    Пока `ensure_player` писал ник как его дали, «СentZloy» с кириллической «С» завёл второго
+    Centurion. Справочник и создание карточки починены, но база не обязана хранить пустой двойник:
+    он роняет проверку «алиас не переименовывает уже заведённого игрока» на каждой сборке. Игру на
+    такой карточке не трогаем — за ней может стоять решение человека, тогда правку делает слияние
+    из интерфейса, а не сборка.
+    """
+    cards = con.execute("select id, nick from players").fetchall()
+    known = {nick: player_id for player_id, nick in cards}
+    folded = []
+    for player_id, nick in cards:
+        canonical = clean_alias(nick)
+        if canonical == nick or canonical not in known:
+            continue
+        if con.execute("select 1 from side_players where player_id = ?", (player_id,)).fetchone():
+            continue
+        con.execute("delete from players where id = ?", (player_id,))
+        folded.append(f"{nick} → {canonical}")
+    return folded
 
 
 def main():
@@ -245,13 +290,14 @@ def main():
 
     pool = bfa.all_matches
     added, skipped, refreshed = import_pool(con, pool)
-    aliases = import_aliases(con)
+    aliases, moved = import_aliases(con)
     con.commit()
 
     stored = con.execute("select count(*) from matches").fetchone()[0]
     people = con.execute("select count(*) from players").fetchone()[0]
     print(f"{DB_PATH}: добавлено {added}, уже было {skipped} (пометку счёта обновлено "
-          f"{refreshed}), всего матчей {stored} | игроков {people}, алиасов {aliases}")
+          f"{refreshed}), всего матчей {stored} | игроков {people}, алиасов {aliases}, "
+          f"направление поправлено {moved}")
 
 
 if __name__ == "__main__":

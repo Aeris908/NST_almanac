@@ -12,6 +12,7 @@ import sqlite3
 
 from db import import_live
 from portal.live_sources import divisions
+from portal.names import clean_alias
 
 DOCS_ONE_TOURNAMENT = """
 select doc_id from matches
@@ -33,6 +34,24 @@ def test_every_document_keeps_its_games_in_one_tournament(con):
     """Один документ — один турнир-контейнер: рамка читает сезон и этап именно у него."""
     split = [row[0] for row in con.execute(DOCS_ONE_TOURNAMENT)]
     assert not split, f"документы с двумя контейнерами: {split}"
+
+
+def test_alias_slice_follows_the_reference_table(con):
+    """Срез алиасов — проекция справочника: изменилось направление, меняется и строка базы.
+
+    `import_aliases` вставлял запись и больше к ней не возвращался, поэтому правка написания в
+    `portal/name_tables.py` жила в базе по-старому: «валера» продолжал числиться за Centurion,
+    когда справочник уже ведёт его к Буцу. Молчаливая ложь в срезе хуже пустого места — её читает
+    и сверка, и поиск панели.
+    """
+    stale = []
+    for alias, nick in con.execute(
+        "select a.alias, p.nick from player_aliases a join players p on p.id = a.player_id"
+        " where a.source = 'name_tables'"
+    ):
+        if clean_alias(alias) != nick:
+            stale.append((alias, nick, clean_alias(alias)))
+    assert not stale, f"срез алиасов отстал от справочника: {stale[:6]}"
 
 
 def test_live_calendar_rows_sit_in_the_season_of_their_document(con):

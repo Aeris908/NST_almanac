@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from db.build_db import ensure_player, ensure_stage, ensure_tournament, slugify  # noqa: E402
+from db.build_db import ensure_player, ensure_stage, ensure_tournament, fold_duplicate_cards, slugify  # noqa: E402
 from db.docs import store_docs  # noqa: E402
 from db.fields import outcomes_for, phase_of  # noqa: E402
 from portal import dataset  # noqa: E402
@@ -626,6 +626,14 @@ def main(argv=None):
     import_special(imp, carriers["special"], doc_ids, carriers["vk_sources"])
     import_team(imp, carriers["team"], doc_ids)
     con.commit()
+
+    # Осколок прежнего написания: карточка, которую справочник теперь складывает в другую. После
+    # перекладки строк она пуста, и убирать её должен не человек операцией слияния — иначе
+    # проверка «алиас не переименовывает уже заведённого игрока» падает на каждой сборке.
+    folded = fold_duplicate_cards(con)
+    con.commit()
+    if folded:
+        print("карточки убраны как дубликаты написаний: " + ", ".join(folded))
 
     stored = con.execute("select count(*) from matches").fetchone()[0]
     distinct = con.execute("select count(*) from matches where duplicate_of is null").fetchone()[0]

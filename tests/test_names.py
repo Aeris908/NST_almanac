@@ -25,3 +25,27 @@ def test_lookalike_players_stay_apart():
     assert clean_alias("Palka Palych") == "Palka Palych"
     assert clean_alias("PacnyTHuK") == "PacnyTHuK"
     assert clean_alias("распутник") == "PacnyTHuK"
+
+
+def test_homoglyph_spelling_of_one_id_reaches_the_same_card():
+    """Кириллическая «С» не имеет права рождать второго человека.
+
+    У id85380069 в темах четыре написания: «Centurion», «CentZloy», «Farmazon» и «СentZloy» с
+    кириллической «С» — 93 упоминания против 655 латинских. Пока справочник знал только
+    латинское, последние строки доходили до базы отдельной карточкой, и история игрока
+    делилась пополам.
+    """
+    for spelling in ("CentZloy", "centzloy", "СentZloy", "Сentzloy", "Сenturion"):
+        assert clean_alias(spelling) == "Centurion", spelling
+
+
+def test_valera_is_buts_and_not_centurion():
+    """«Валера» — id203194115: тот же профиль, что «LiptOn» и «Буц» ([id203194115|Валера], тема 31898219).
+
+    В справочнике это написание вело в Centurion (id85380069), и разбор пенальти обходил его
+    локальной таблицей. Оставлять ловушку нельзя: встреча «ВОР95 vs Валера» из Сезона 4
+    при первом же занесении записалась бы чужому человеку.
+    """
+    for spelling in ("Валера", "валера", "Valera"):
+        assert clean_alias(spelling) == "Буц", spelling
+    assert clean_alias("LiptOn") == "Буц"
