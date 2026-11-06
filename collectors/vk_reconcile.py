@@ -411,6 +411,28 @@ def season_by_topic():
     return map_
 
 
+def season_owner(nick_season):
+    """Номерный сезон лиги → обсуждение, которому он принадлежит по архивной карте."""
+    owner = {}
+    for tid, sig in nick_season.items():
+        if sig[0] == "сезон" and sig[1]:
+            owner.setdefault((sig[0], sig[1]), str(tid))
+    return owner
+
+
+def namesake_season(sig, tid, owner):
+    """Тема претендует на номер сезона, который занят другим обсуждением → id владелицы.
+
+    Так сверка отличает чемпионат от перевыпуска рома: «Soccer (сезон 3)» открыта в 2023-м,
+    когда сезон №3 давно сыгран, а его обсуждение лежит в архивной карте. Граница по годам не
+    нужна — право на номер даёт сама карта, и правило не трогает ни одну настоящую тему сезона.
+    """
+    if sig[0] != "сезон" or not sig[1]:
+        return ""
+    holder = owner.get((sig[0], sig[1]))
+    return "" if not holder or holder == str(tid) else holder
+
+
 def tournament_signature(t):
     """Подпись турнира базы: `kind` и `season` надёжнее названия — «Season 4 Высшая лига»
     по тексту названия вообще не читается по-русски, а это девять сезонов лиги."""
@@ -454,11 +476,23 @@ def match_tournaments(live, units, con):
         for tid in re.findall(rf"topic-{GROUP_ID}_(\d+)", row["url"]):
             linked.setdefault(tid, set()).add(row["url"])
     nick_season = season_by_topic()
+    owner = season_owner(nick_season)
     pairs = {}
     for tid, topic in live.items():
         sig = nick_season.get(tid) or signature(topic["title"])
-        pairs[tid] = {"title": topic["title"], "sig": sig, "units": unit_targets(sig, units),
-                      "links_in_db": len(linked.get(tid, ()))}
+        info = {"title": topic["title"], "sig": sig,
+                "links_in_db": len(linked.get(tid, ()))}
+        holder = "" if tid in nick_season else namesake_season(sig, tid, owner)
+        if holder:
+            # Номер занят настоящей темой сезона: строки этого обсуждения не имеют права
+            # сверяться с лигой. Метка «перевыпуск» не совпадает ни с одной единицей базы
+            # (в отличие от «сольный» — тот подсказал бы чужой сольный турнир), поэтому тема
+            # попадает в раздел «обсуждение не нашло своего турнира», а не в расхождения счёта.
+            info["sig"] = ("перевыпуск", "", sig[2])
+            info["hint"] = (f"номер сезона принадлежит обсуждению {holder} — это перевыпуск "
+                            f"рома, а не чемпионат")
+        info["units"] = unit_targets(info["sig"], units)
+        pairs[tid] = info
     return pairs
 
 
@@ -602,7 +636,7 @@ def main():
             issues["unmatched_topic"].append({
                 "topic": tid, "title": topic["title"], "comments": len(topic["comments"]),
                 "signature": describe(info["sig"]),
-                "hint": "ни один турнир базы не совпал с обсуждением по формату и номеру",
+                "hint": info.get("hint") or "ни один турнир базы не совпал с обсуждением по формату и номеру",
             })
             continue
         by_pair = defaultdict(list)

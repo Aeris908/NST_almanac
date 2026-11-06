@@ -11,7 +11,46 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from collectors.vk_reconcile import REPLAY_MARK, series_total  # noqa: E402
+from collectors.vk_reconcile import (  # noqa: E402
+    REPLAY_MARK,
+    namesake_season,
+    season_owner,
+    series_total,
+)
+
+# Архивная карта обсуждений: у каждого номерного сезона лиги уже есть своё обсуждение.
+LEAGUE_MAP = {
+    "32593813": ("сезон", "1", "goal3"),
+    "33967365": ("сезон", "3", "goal3"),
+    "34973011": ("сезон", "4", "goal3"),
+    "51265748": ("сольный", "1", "goal3"),
+}
+
+
+def test_a_season_number_owned_by_another_topic_is_not_the_championship():
+    """«Soccer (сезон 3)» 2023 года — перевыпуск рома Soccer (JU) на сетке challonge.
+
+    Чемпионат 2016-го живёт в теме 33967365, и сверка не вправе отдавать строки первой темы
+    второй: тогда ноги чужого соревнования каждый год ложатся в раздел «счёт расходится» против
+    лиги, где этих игроков нет.
+    """
+    owner = season_owner(LEAGUE_MAP)
+    assert namesake_season(("сезон", "3", "goal3"), "49948732", owner) == "33967365"
+    assert namesake_season(("сезон", "4", "goal3"), "50374687", owner) == "34973011"
+
+
+def test_the_owning_topic_is_never_a_namesake():
+    """Правило ловит только претендента: владелица номера сверяется с собой, как и раньше."""
+    assert not namesake_season(("сезон", "3", "goal3"), "33967365", season_owner(LEAGUE_MAP))
+
+
+def test_the_rule_touches_nothing_but_numbered_league_seasons():
+    """Формат без номера, кубок, сольник и незанятый сезон под правило не попадают."""
+    owner = season_owner(LEAGUE_MAP)
+    assert not namesake_season(("сезон", "", "goal3"), "49948732", owner)
+    assert not namesake_season(("кубок", "4", "goal3"), "1", owner)
+    assert not namesake_season(("сольный", "1", "goal3"), "9", owner)
+    assert not namesake_season(("сезон", "7", "goal3"), "1", owner)
 
 
 def pair(left, right):
