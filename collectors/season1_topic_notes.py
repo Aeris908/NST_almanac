@@ -67,7 +67,7 @@ def main():
             for (pair, scores), value in sorted(found.items())]
     # По строке на ногу: носитель читают глазами, а json.dumps с отступом разложил бы каждую
     # четвёрку чисел на шесть строк.
-    body = "\n".join(" " + json.dumps(row, ensure_ascii=False) for row in rows)
+    body = ",\n".join(" " + json.dumps(row, ensure_ascii=False) for row in rows)
     OUT.write_text("[\n" + body + "\n]\n", encoding="utf-8")
     with_tour = sum(1 for r in rows if r["tours"])
     print(f"ног с отчётом темы: {len(rows)}, из них с номером тура {with_tour} → {OUT.name}")

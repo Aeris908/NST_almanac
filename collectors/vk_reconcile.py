@@ -154,6 +154,57 @@ def fold(text):
 
 
 SCORE_TOKEN = re.compile(r"(\d{1,2})\s*[:\-–]\s*(\d{1,2})")
+EXAMPLE_MARK = re.compile(r"ПРИМЕР\s+(ВЫКЛАДЫВАНИЯ|ОФОРМЛЕНИЯ)", re.IGNORECASE)
+SERIES_MARK = re.compile(r"(пк|рк|пен|буллит|pk|rk|shootout|серия)", re.IGNORECASE)
+
+
+def without_examples(text):
+    """Вырезать блок «ПРИМЕР ВЫКЛАДЫВАНИЯ РЕЗУЛЬТАТОВ», который печатается в шапке каждой темы.
+
+    Это образец оформления, а не протокол: в темах Сезонов 2–7 он повторяется слово в слово
+    («ВЛ 1-й тур. Memori vs Centurion - 3:0, 8:5пен.»), и однажды из него выросла выдуманная игра
+    в каждом сезоне. Блок заканчивается первой строкой без счёта и без короткого заголовка тура.
+    """
+    kept, skipping = [], False
+    for line in text.split("\n"):
+        if EXAMPLE_MARK.search(line):
+            skipping = True
+            continue
+        if skipping:
+            stripped = line.strip()
+            looks_like_fixture = SCORE_TOKEN.search(stripped) or len(stripped) <= 20
+            if looks_like_fixture and stripped:
+                continue
+            skipping = False
+        kept.append(line)
+    return "\n".join(kept)
+
+
+def legs_of(tail):
+    """Ноги встречи в хвосте строки.
+
+    Скобка значит разное в зависимости от наполнения: одна счёт-пара в скобках — это то, чем
+    доиграли уже названную ногу (золотой гол, как требует регламент: «5-5 (1-0)», или серия
+    пенальти: «1-1 (4-3 пен)»), а несколько — сам перечень ног, перед которым стоит итог встречи
+    («ectoPower vs PacnyTHuK - 3:5 (3:1, 4:2, 1:3, 0:2)»). Итог отдельной игрой не бывает.
+
+    Вне скобок нога от ноги отделяется запятой: «3:0, 8:5пен» — это вторая нога, выигранная по
+    пенальти (так объясняет сам регламент темы). Если же между счёт-парами стоит слово серии и
+    нет запятой — «6-6 PK 5:4» — второй счёт это серия первой ноги, а не игра.
+    """
+    groups = [SCORE_TOKEN.findall(inner) for inner in re.findall(r"\(([^()]*)\)", tail)]
+    listed = [(int(a), int(b)) for group in groups if len(group) > 1 for a, b in group]
+    if listed:
+        return listed
+    outside = re.sub(r"\([^)]*\)", " ", tail)
+    legs, previous_end = [], None
+    for hit in SCORE_TOKEN.finditer(outside):
+        gap = outside[previous_end:hit.start()] if previous_end is not None else ""
+        previous_end = hit.end()
+        if SERIES_MARK.search(gap) and not re.search(r"[,;]", gap):
+            continue
+        legs.append((int(hit.group(1)), int(hit.group(2))))
+    return legs
 
 
 def parse_comment(text):
@@ -161,11 +212,11 @@ def parse_comment(text):
 
     Встреча 2×2 и молодёжного турнира пишется серией в одну строку:
     `2 тур: SaikoDelph & Jgunishka VS Aoshi & Aeris 5-2; 3-4; 0-5; 2-2 (PK 3-2)` — это четыре
-    ноги одной встречи, а не один матч. Берём все счёт-пары после стороны (то, что в скобках,
-    — послематчевые, их отдельного счёта не заводим), и помечаем порядковый номер ноги.
+    ноги одной встречи, а не один матч. Берём счёт-пары после стороны, но не всякие: что именно
+    считать ногой, объясняет `legs_of`, а шаблон из шапки темы отрезает `without_examples`.
     """
     found = []
-    for chunk in re.split(r"[\n;]", text):
+    for chunk in re.split(r"[\n;]", without_examples(text)):
         chunk = chunk.strip()
         if not chunk:
             continue
@@ -175,8 +226,7 @@ def parse_comment(text):
                 tokens = [t.strip().lower() for side in (left, right) for t in re.split(r"[&/]", side)]
                 if any(t in BANNED for t in tokens) or not all(tokens):
                     continue
-                tail = re.sub(r"\([^)]*\)", " ", chunk[hit.end(2):])
-                legs = [(int(a), int(b)) for a, b in SCORE_TOKEN.findall(tail)]
+                legs = legs_of(chunk[hit.end(2):])
                 legs = [(a, b) for a, b in legs if a <= 30 and b <= 30 and (a, b) != (0, 0)]
                 if not legs:
                     continue
@@ -501,18 +551,24 @@ def main():
                 by_pair[pair].append(row)
         seen_rows = set()
         asserted = Counter()
+        unnamed = set()
         for cid, comment in sorted(topic["comments"].items(), key=lambda kv: int(kv[1].get("date", 0))):
             text = comment.get("text") or ""
             day = date.fromtimestamp(comment["date"]).isoformat() if comment.get("date") else None
             for item in parse_comment(text):
                 sides, unresolved = resolve_sides(item["raw"], nicknames, lowered)
                 if unresolved:
-                    issues["unknown_name"].append({
-                        "topic": tid, "title": topic["title"], "comment_id": cid,
-                        "line": item["line"], "unresolved": unresolved,
-                        "url": post_url(tid, cid, comment.get("pos")),
-                        "hint": "написания нет в players — это алиас, а не новый игрок",
-                    })
+                    # Один и тот же нераспознанный ник в строке с четырьмя ногами — это одна
+                    # находка, а не четыре: счёт идёт по парам, иначе раздел раздувается.
+                    key = (cid, tuple(item["raw"]))
+                    if key not in unnamed:
+                        unnamed.add(key)
+                        issues["unknown_name"].append({
+                            "topic": tid, "title": topic["title"], "comment_id": cid,
+                            "line": item["line"], "unresolved": unresolved,
+                            "url": post_url(tid, cid, comment.get("pos")),
+                            "hint": "написания нет в players — это алиас, а не новый игрок",
+                        })
                     continue
                 pair = tuple(sorted([tuple(sorted(fold(name) for name in side)) for side in sides]))
                 candidates = by_pair.get(pair, [])

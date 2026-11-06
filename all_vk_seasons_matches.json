@@ -2,17 +2,6 @@
   {
     "season": "Season 2",
     "tournament": "Чемпионат NST (Season 2)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 2",
-    "tournament": "Чемпионат NST (Season 2)",
     "stage": "Регулярный чемпионат",
     "p1": "Kirpich57",
     "p2": "Damian",
@@ -1415,17 +1404,6 @@
     "p2": "Kunio",
     "s1": 5,
     "s2": 2,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 3",
-    "tournament": "Чемпионат NST (Season 3)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
     "ot": false,
     "pk": false
   },
@@ -3087,17 +3065,6 @@
     "p2": "BOP95",
     "s1": 4,
     "s2": 2,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 4",
-    "tournament": "Чемпионат NST (Season 4)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
     "ot": false,
     "pk": false
   },
@@ -5436,17 +5403,6 @@
   {
     "season": "Season 5",
     "tournament": "Чемпионат NST (Season 5)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 5",
-    "tournament": "Чемпионат NST (Season 5)",
     "stage": "Средняя лига",
     "p1": "Romix",
     "p2": "XakoFEAR",
@@ -6734,17 +6690,6 @@
   {
     "season": "Season 6",
     "tournament": "Чемпионат NST (Season 6)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 6",
-    "tournament": "Чемпионат NST (Season 6)",
     "stage": "Регулярный чемпионат",
     "p1": "ectoPower",
     "p2": "Transistor",
@@ -6761,17 +6706,6 @@
     "p2": "ectoPower",
     "s1": 5,
     "s2": 4,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 6",
-    "tournament": "Чемпионат NST (Season 6)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
     "ot": false,
     "pk": false
   },
@@ -8697,17 +8631,6 @@
     "p2": "Transistor",
     "s1": 5,
     "s2": 4,
-    "ot": false,
-    "pk": false
-  },
-  {
-    "season": "Season 7",
-    "tournament": "Чемпионат NST (Season 7)",
-    "stage": "Высшая лига",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
     "ot": false,
     "pk": false
   },

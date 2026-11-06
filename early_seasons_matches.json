@@ -193,18 +193,6 @@
   },
   {
     "season": "Season 3",
-    "tournament": "Season 3 Чемпионат",
-    "stage": "Регулярка/Плей-офф",
-    "p1": "Memori",
-    "p2": "Centurion",
-    "s1": 3,
-    "s2": 0,
-    "ot": false,
-    "pk": false,
-    "is_playoff": false
-  },
-  {
-    "season": "Season 3",
     "tournament": "Season 3 Плей-офф",
     "stage": "1/4 финала",
     "p1": "mafuta",
