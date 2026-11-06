@@ -7,20 +7,20 @@
   "единиц базы (турниры и документы)": 60,
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
-  "строк базы в сопоставленных единицах": 3583,
-  "строк источника, совпавших с базой": 1422,
+  "строк базы в сопоставленных единицах": 3584,
+  "строк источника, совпавших с базой": 1483,
   "строк темы, снятых как самоотменённые": 4
  },
  "counts": {
-  "missing_in_db": 3,
-  "score_diff": 14,
+  "missing_in_db": 2,
+  "score_diff": 15,
   "wiki_missing_in_db": 0,
   "wiki_score_diff": 0,
   "matched_elsewhere": 0,
   "unmatched_topic": 10,
   "empty_tournament": 3,
   "empty_unit": 4,
-  "unknown_name": 120,
+  "unknown_name": 75,
   "nick_twins": 0,
   "video_link": 1,
   "no_lines_recognised": 4
@@ -292,8 +292,7 @@
    "pid": "52396753",
    "title": "Средняя Soccer League. Сезон 5 | VK",
    "rows": 72,
-   "matched": 56,
-   "unknown": 16
+   "matched": 72
   },
   {
    "pid": "52396755",
@@ -323,8 +322,7 @@
    "pid": "53570373",
    "title": "Высшая Soccer League. Сезон 7 | VK",
    "rows": 56,
-   "matched": 42,
-   "unknown": 14
+   "matched": 56
   },
   {
    "pid": "53570375",
@@ -342,8 +340,7 @@
    "pid": "53638616",
    "title": "VI Командный турнир по Soccer League. Календарь высшей лиги ",
    "rows": 12,
-   "matched": 6,
-   "unknown": 6
+   "matched": 12
   },
   {
    "pid": "53638617",
@@ -417,38 +414,77 @@
      "rows": 440
     },
     "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "6242",
-    "comment_day": "2016-08-29",
-    "line": "RVD - Ric25 vs Esteban - Dopi - 1:5",
-    "leg": "1/1",
-    "source_pair": [
-     [
-      "esteban"
-     ],
-     [
-      "Dopi"
-     ]
-    ],
-    "scores": [
-     1,
-     5
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=200#post6242",
-    "shape": "1×1",
-    "tournament": {
-     "units": [
-      "IV Командный Чемпионат по Goal 3"
-     ],
-     "rows": 75
-    },
-    "hint": "ни в этом турнире, ни где-либо в базе такой пары нет"
    }
   ],
   "score_diff": [
+   {
+    "topic": "36630593",
+    "title": "5-й сольный чемпионат Soccer League (Goal3)",
+    "comment_id": "14980",
+    "comment_day": "2018-03-03",
+    "line": "ectoPower vs RVD - 4-3",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "ectoPower"
+     ],
+     [
+      "RVD (МГБ)"
+     ]
+    ],
+    "scores": [
+     4,
+     3
+    ],
+    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14980",
+    "base": {
+     "id": 383,
+     "tour": null,
+     "scores": [
+      4,
+      2
+     ],
+     "status": "played",
+     "manual": 0,
+     "a": "RVD (МГБ)",
+     "b": "ectoPower"
+    },
+    "hint": "та же пара в этом турнире, но счёт другой"
+   },
+   {
+    "topic": "36630593",
+    "title": "5-й сольный чемпионат Soccer League (Goal3)",
+    "comment_id": "14980",
+    "comment_day": "2018-03-03",
+    "line": "RVD vs ectoPower - 4-4 (3-1)",
+    "leg": "1/1",
+    "source_pair": [
+     [
+      "RVD (МГБ)"
+     ],
+     [
+      "ectoPower"
+     ]
+    ],
+    "scores": [
+     4,
+     4
+    ],
+    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14980",
+    "base": {
+     "id": 383,
+     "tour": null,
+     "scores": [
+      4,
+      2
+     ],
+     "status": "played",
+     "manual": 0,
+     "a": "RVD (МГБ)",
+     "b": "ectoPower"
+    },
+    "hint": "та же пара в этом турнире, но счёт другой"
+   },
    {
     "topic": "52002075",
     "title": "8-й сольный чемпионат Soccer League (Goal3)",
@@ -470,7 +506,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 151833,
+     "id": 174262,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -501,7 +537,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 151833,
+     "id": 174262,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -532,7 +568,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 153096,
+     "id": 175526,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -563,7 +599,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 153096,
+     "id": 175526,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -594,7 +630,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 151965,
+     "id": 174394,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -625,7 +661,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 151965,
+     "id": 174394,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -634,40 +670,6 @@
      "unit": "Season 6 Высшая лига"
     },
     "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "34973011",
-    "title": "Soccer League. 4-й сезон",
-    "comment_id": "10109",
-    "comment_day": "2017-03-30",
-    "line": "ВОР95 vs Валера - 0:6, 3:10",
-    "leg": "2/2",
-    "source_pair": [
-     [
-      "BOР95"
-     ],
-     [
-      "Буц"
-     ]
-    ],
-    "scores": [
-     3,
-     10
-    ],
-    "url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
-    "base": {
-     "id": 152978,
-     "tour": "Плей-офф / Кубок",
-     "scores": [
-      0,
-      6
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "BOР95",
-     "b": "Буц"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
    },
    {
     "topic": "34973011",
@@ -690,7 +692,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 153080,
+     "id": 175510,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -724,7 +726,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
     "base": {
-     "id": 153080,
+     "id": 175510,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -758,7 +760,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 153084,
+     "id": 175514,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -792,7 +794,7 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 153084,
+     "id": 175514,
      "tour": "1/8 финала",
      "scores": [
       3,
@@ -826,7 +828,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 153145,
+     "id": 175575,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -860,7 +862,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 153157,
+     "id": 175587,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -894,7 +896,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 150523,
+     "id": 172952,
      "tour": "Тур 9",
      "scores": [
       8,
@@ -1086,17 +1088,6 @@
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
-    "topic": "41270759",
-    "title": "2-й Молодёжный Чемпионат по Goal 3",
-    "comment_id": "22578",
-    "line": "Palka Palych & XakoFEAR vs sokol & PacnyTHuK  0:4, 3:4, 1:8, 2:2 (РК 3:5)",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_41270759?offset=60#post22578",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
     "topic": "34920573",
     "title": "4-й сольный турнир по пенальти. (Goal 3|Март 2017) [FDE]",
     "comment_id": "9734",
@@ -1134,28 +1125,6 @@
    {
     "topic": "36630593",
     "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14448",
-    "line": "СЛ 1-й тур. Romix vs XakoFEAR - 3-5, 4-6",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=20#post14448",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14450",
-    "line": "СЛ 2-й тур. XakoFEAR - Centurion - 6-4, 6-2",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=20#post14450",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
     "comment_id": "14455",
     "line": "Вышка. 1 тур. Пушистик vs мафута 2:4, 4:5",
     "unresolved": [
@@ -1167,111 +1136,12 @@
    {
     "topic": "36630593",
     "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14581",
-    "line": "XakoFEAR - Aeris 9-2",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=40#post14581",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14581",
-    "line": "Aeris - XakoFEAR 3-5",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=40#post14581",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14583",
-    "line": "Rustin Cohle - XakoFEAR - 0-1",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=40#post14583",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14584",
-    "line": "XakoFEAR vs Wenderfit - 6-5",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=40#post14584",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14584",
-    "line": "Wenderfit vs XakoFEAR - 2-6",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=40#post14584",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14652",
-    "line": "XakoFEAR - TEXAS - 4:4 (4-3 ПК)",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=60#post14652",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14652",
-    "line": "TEXAS - XakoFEAR - 1-6",
-    "unresolved": [
-     "XakoFEAR"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=60#post14652",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
     "comment_id": "14657",
     "line": "5-й сольный. Вышка. 4 тур. изотоп vs мафута 3:3(4:5PK), 2:1",
     "unresolved": [
      "мафута"
     ],
     "url": "https://vk.com/topic-66162180_36630593?offset=60#post14657",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14793",
-    "line": "Flash - RVD - 1-4",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=80#post14793",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14793",
-    "line": "RVD - Flash - 7-5",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=80#post14793",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -1338,105 +1208,6 @@
      "Кунио"
     ],
     "url": "https://vk.com/topic-66162180_36630593?offset=120#post14908",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14978",
-    "line": "RVD vs Chocopie - 4-3",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14978",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14978",
-    "line": "Chocopie vs RVD - 2-9",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14978",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14979",
-    "line": "Kunio vs RVD 2-5",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14979",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14979",
-    "line": "RVD vs Kunio 6-2",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14979",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14980",
-    "line": "ectoPower vs RVD - 5-8",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14980",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "14980",
-    "line": "RVD vs ectoPower - 5-4",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post14980",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "15006",
-    "line": "mafuta vs RVD - 2-5",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post15006",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "15006",
-    "line": "RVD vs mafuta - 8-5",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post15006",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "36630593",
-    "title": "5-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "15038",
-    "line": "Goal 3 1x1. Кубок лиг. Финал. RVD vs РаспуТНик 5:2",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_36630593?offset=140#post15038",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -1563,28 +1334,6 @@
    {
     "topic": "49054760",
     "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26867",
-    "line": "МГБ vs Memori - 2:1",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=40#post26867",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26867",
-    "line": "Memori vs МГБ - 6:5 (OT)",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=40#post26867",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
     "comment_id": "26880",
     "line": "Раш - Анубис 2-1, 5-3 (ПК)",
     "unresolved": [
@@ -1604,50 +1353,6 @@
      "Анубис"
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=60#post26894",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26898",
-    "line": "ectoPower - МГБ - 2 -2 (7-6 ПК)",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=60#post26898",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26898",
-    "line": "МГБ - ectoPower - 4 - 4 (9-10 ПК)",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=60#post26898",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26904",
-    "line": "Бубнов - МГБ - 3 - 4",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=60#post26904",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26904",
-    "line": "МГБ - Бубнов - 4 - 0",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=60#post26904",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -1710,56 +1415,12 @@
    {
     "topic": "49054760",
     "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26955",
-    "line": "Редин VS МГБ - 3:4, 6:7 ПК",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=100#post26955",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26963",
-    "line": "Tour 6. mafuta vs МГБ 3:1, 10:2",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=100#post26963",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
     "comment_id": "26964",
     "line": "Ромол - Анубис 3-0, 4-0",
     "unresolved": [
      "Анубис"
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=100#post26964",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26970",
-    "line": "Kunio - МГБ - 4:5, 4:5 ПК",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=100#post26970",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "26975",
-    "line": "Cyneprepou4uk vs МГБ 6-4, 2-5",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=120#post26975",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -1804,17 +1465,6 @@
      "Енот"
     ],
     "url": "https://vk.com/topic-66162180_49054760?offset=180#post27090",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49054760",
-    "title": "7-й сольный чемпионат Soccer League (Goal3)",
-    "comment_id": "27176",
-    "line": "МГБ vs Romix - 4:1",
-    "unresolved": [
-     "МГБ"
-    ],
-    "url": "https://vk.com/topic-66162180_49054760?offset=200#post27176",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -1942,28 +1592,6 @@
    {
     "topic": "33672355",
     "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "6048",
-    "line": "RVD & Ric25 - Armfly & Alpharushin - 5:0",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=180#post6048",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "6049",
-    "line": "Kunio & Memori - RVD & Ric25- 5:3",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_33672355?offset=180#post6049",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33672355",
-    "title": "IV Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
     "comment_id": "6812",
     "line": "Чет ага не написали( котобус vs кирпичи 5:2",
     "unresolved": [
@@ -1983,72 +1611,6 @@
      "кирпичи"
     ],
     "url": "https://vk.com/topic-66162180_33672355?offset=220#post6812",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33103100",
-    "title": "Soccer League. 2-й сезон",
-    "comment_id": "3914",
-    "line": "Wenderfit - FieryKelsen 1:4",
-    "unresolved": [
-     "FieryKelsen"
-    ],
-    "url": "https://vk.com/topic-66162180_33103100?offset=120#post3914",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33103100",
-    "title": "Soccer League. 2-й сезон",
-    "comment_id": "3914",
-    "line": "FieryKelsen - Wenderfit 8:2",
-    "unresolved": [
-     "FieryKelsen"
-    ],
-    "url": "https://vk.com/topic-66162180_33103100?offset=120#post3914",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33103100",
-    "title": "Soccer League. 2-й сезон",
-    "comment_id": "3950",
-    "line": "mafuta - FieryKelsen - 5:3",
-    "unresolved": [
-     "FieryKelsen"
-    ],
-    "url": "https://vk.com/topic-66162180_33103100?offset=160#post3950",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33103100",
-    "title": "Soccer League. 2-й сезон",
-    "comment_id": "3950",
-    "line": "FieryKelsen - mafuta - 6:8 PK",
-    "unresolved": [
-     "FieryKelsen"
-    ],
-    "url": "https://vk.com/topic-66162180_33103100?offset=160#post3950",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33103100",
-    "title": "Soccer League. 2-й сезон",
-    "comment_id": "3993",
-    "line": "Ric25 - FieryRVD 2:3",
-    "unresolved": [
-     "FieryRVD"
-    ],
-    "url": "https://vk.com/topic-66162180_33103100?offset=180#post3993",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33103100",
-    "title": "Soccer League. 2-й сезон",
-    "comment_id": "3993",
-    "line": "FieryRVD - Ric25 7:4",
-    "unresolved": [
-     "FieryRVD"
-    ],
-    "url": "https://vk.com/topic-66162180_33103100?offset=180#post3993",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -2138,39 +1700,6 @@
      "хачапури"
     ],
     "url": "https://vk.com/topic-66162180_49868493?offset=40#post29886",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49868493",
-    "title": "VI Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "29897",
-    "line": "Alpharushin & Cyneprepou4uk - Exyxea & PacnyTHuk - 1:5",
-    "unresolved": [
-     "Exyxea"
-    ],
-    "url": "https://vk.com/topic-66162180_49868493?offset=40#post29897",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49868493",
-    "title": "VI Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "29930",
-    "line": "ectopower & Davitel vs Exyxea & 1путин - 0:5",
-    "unresolved": [
-     "Exyxea"
-    ],
-    "url": "https://vk.com/topic-66162180_49868493?offset=60#post29930",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "49868493",
-    "title": "VI Командный Чемпионат по Kunio-kun no Nekketsu Soccer League",
-    "comment_id": "29981",
-    "line": "Высшая лига. Полуфинал. Exyxea & 1путин vs ectopower & Davitel - 6:2",
-    "unresolved": [
-     "Exyxea"
-    ],
-    "url": "https://vk.com/topic-66162180_49868493?offset=80#post29981",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -2302,17 +1831,6 @@
    {
     "topic": "33437511",
     "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5040",
-    "line": "FieryKelsen - Ric25 7-3",
-    "unresolved": [
-     "FieryKelsen"
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5040",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
     "comment_id": "5137",
     "line": "Лузеры, 1/4. Транзистор vs Кубик 7:0",
     "unresolved": [
@@ -2331,17 +1849,6 @@
      "мафута"
     ],
     "url": "https://vk.com/topic-66162180_33437511?offset=100#post5138",
-    "hint": "написания нет в players — это алиас, а не новый игрок"
-   },
-   {
-    "topic": "33437511",
-    "title": "Третий сольный турнир по пенальти. Апрель-Май 2016.",
-    "comment_id": "5143",
-    "line": "1/4 RVD vs PacnyTHuk 1:7",
-    "unresolved": [
-     "RVD"
-    ],
-    "url": "https://vk.com/topic-66162180_33437511?offset=100#post5143",
     "hint": "написания нет в players — это алиас, а не новый игрок"
    },
    {
@@ -2504,7 +2011,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 150465,
+     "id": 172894,
      "scores": [
       3,
       9

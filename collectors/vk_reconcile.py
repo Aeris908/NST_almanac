@@ -47,7 +47,20 @@ JSON_OUT = ROOT / "data" / f"vk_recheck_{TODAY}.json"
 # Сторона умеет быть парой: командник 2×2 и молодёжный чемпионат пишут «lenin1st & ectoPower»,
 # иначе эти турниры вообще не разбирались бы и тоннули в «нет в базе».
 SIDE = r"[A-Za-zА-Яа-я0-9_]{3,18}(?:\s*[&/]\s*[A-Za-zА-Яа-я0-9_]{3,18})?"
+# Командный Чемпионат пишет состав через дефис с пробелами («RVD - Ric25 vs Esteban - Dopi»),
+# а молодёжный — через «&». Без отдельного шаблона такая строка разобралась бы как «Esteban
+# vs Dopi» — последние два имени, — и встречи негде было бы искать.
+NAME = r"[A-Za-zА-Яа-я0-9_]{3,18}"
+TEAM_SIDE = rf"{NAME}\s+[-–]\s+{NAME}"
+# Разделитель сторон: «&», «/», а также дефис, только если он отбит пробелами (ник «Huba-Buba»
+# или «leon-udomlya» склейкой не считается).
+SIDE_SPLIT = re.compile(r"\s*(?:&|/)\s*|\s+[-–]\s+")
 MATCH_REGEXES = [
+    re.compile(
+        rf"({TEAM_SIDE})\s+(?:vs|против)\s+({TEAM_SIDE})\s*[:\-–]\s*(\d+)\s*[:\-–]\s*(\d+)"
+        r"(?:\s*\(([^)]{0,40})\))?",
+        re.IGNORECASE,
+    ),
     re.compile(
         rf"({SIDE})\s+(?:vs|против|-)\s+({SIDE})\s*[:\-–]\s*(\d+)\s*[:\-–]\s*(\d+)"
         r"(?:\s*\(([^)]{0,40})\))?",
@@ -136,10 +149,14 @@ def player_of(name, nicknames, lowered):
     игрок давал бы две разные пары, и настоящие игры попадали бы в «нет в базе».
     """
     canonical = clean_alias(name) or name
-    canonical = canonical.strip().strip("*.,_()[]")
-    if canonical in nicknames:
-        return canonical
-    folded = fold(canonical)
+    bare = canonical.strip()
+    # Скобки и звёздочки снимаем только как остаток разметки комментария: «RVD (МГБ)» — настоящее
+    # имя из базы, и срезанный правый край превращал его в имя, которого нет ни в `players`, ни в
+    # складке, а префиксная ветка ниже после этого тоже не срабатывала.
+    for candidate in (bare, bare.strip("*.,_()[]")):
+        if candidate in nicknames:
+            return candidate
+    folded = fold(bare.strip("*.,_()[]"))
     hit = lowered.get(folded)
     if hit:
         return hit
@@ -253,12 +270,19 @@ def parse_comment(text):
         chunk = chunk.strip()
         if not chunk:
             continue
+        taken = []
         for rx in MATCH_REGEXES:
             for hit in rx.finditer(chunk):
-                left, right = hit.group(1), hit.group(2)
-                tokens = [t.strip().lower() for side in (left, right) for t in re.split(r"[&/]", side)]
-                if any(t in BANNED for t in tokens) or not all(tokens):
+                # Шаблоны стоят от частного к общему: командная строка, уже взятая первым, не
+                # должна при этом породить ещё и одиночную пару из последних двух имён.
+                if any(start < hit.end() and hit.start() < stop for start, stop in taken):
                     continue
+                left, right = hit.group(1), hit.group(2)
+                tokens = [t.strip().lower() for side in (left, right)
+                          for t in SIDE_SPLIT.split(side) if t.strip()]
+                if not tokens or any(t in BANNED for t in tokens):
+                    continue
+                taken.append((hit.start(), hit.end()))
                 legs, extras = legs_of(chunk[hit.end(2):])
                 kept = [(score, extra) for score, extra in zip(legs, extras)
                         if score[0] <= 30 and score[1] <= 30 and score != (0, 0)]
@@ -562,7 +586,7 @@ def resolve_sides(raw_pair, nicknames, lowered):
     sides, unresolved = [], []
     for raw in raw_pair:
         members = []
-        for token in re.split(r"[&/]", raw or ""):
+        for token in SIDE_SPLIT.split(raw or ""):
             token = token.strip()
             if not token:
                 continue

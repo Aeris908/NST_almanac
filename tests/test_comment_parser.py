@@ -73,6 +73,26 @@ def test_series_word_without_comma_is_not_a_second_leg():
     assert legs("3:0, 8:5пен.") == [(3, 0), (8, 5)]
 
 
+def test_dash_joined_team_sides_are_one_encounter_of_two_by_two():
+    """«RVD - Ric25 vs Esteban - Dopi - 1:5» — это 2×2, а не «Esteban vs Dopi».
+
+    В IV Командном Чемпионате состав пишут через дефис с пробелами, тогда как молодёжный
+    чемпионат склеивает партнёров знаком «&». Без этого разбор брал последние два имени и
+    встречу негде было искать: пара «esteban — Dopi» в базе отсутствовала по построению
+    (тема 33672355, комментарий 6242).
+    """
+    items = parse_comment("RVD - Ric25 vs Esteban - Dopi - 1:5")
+    assert len(items) == 1, items
+    assert items[0]["raw"] == ("RVD - Ric25", "Esteban - Dopi")
+    assert items[0]["scores"] == (1, 5)
+
+
+def test_dash_joined_sides_survive_a_country_line_unchanged():
+    """Страна против страны остаётся одиночной парой: дефис между сторонами — не склейка состава."""
+    items = parse_comment("Гвинея - Тайланд - 0:10")
+    assert [item["raw"] for item in items] == [("Гвинея", "Тайланд")]
+
+
 def test_draw_then_shootout_is_one_game_not_two_legs():
     """«1:1, 3:6 пен.» — одна игра: ничья основного времени и решающая серия.
 

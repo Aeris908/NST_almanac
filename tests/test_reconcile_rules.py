@@ -13,7 +13,9 @@ sys.path.insert(0, str(ROOT))
 
 from collectors.vk_reconcile import (  # noqa: E402
     REPLAY_MARK,
+    fold,
     namesake_season,
+    player_of,
     season_owner,
     series_total,
 )
@@ -121,3 +123,19 @@ def test_twin_rows_of_one_game_are_not_counted_twice():
             row("Yuliy_Cezar", "Ryumaru", 2, 1),
             row("Yuliy_Cezar", "Ryumaru", 2, 0, dup=1), row("Yuliy_Cezar", "Ryumaru", 5, 2, dup=1)]
     assert series_total(pair(("Yuliy_Cezar",), ("Ryumaru",)), (3, 0), legs)
+
+
+def test_a_canonical_nick_with_a_parenthesis_survives_the_markup_strip():
+    """Скобки срезаются как остаток разметки, а «RVD (МГБ)» — настоящее имя из базы.
+
+    Срез правого края превращал каноник в «RVD (МГБ», которого нет ни в `players`, ни в складке,
+    и префиксная ветка тоже не спасала. Из-за этого любое упоминание RVD в темах считалось
+    неизвестным именем: 26 из 121 записи отчёта — это он, включая состав стороны 2×2
+    «RVD - Ric25 vs Esteban - Dopi - 1:5» (тема 33672355, комментарий 6242).
+    """
+    nicks = ["RVD (МГБ)", "esteban", "Ric25", "Dopi", "BOР95"]
+    lowered = {fold(nick): nick for nick in nicks}
+    assert player_of("RVD", nicks, lowered) == "RVD (МГБ)"
+    assert player_of("RVD (МГБ)", nicks, lowered) == "RVD (МГБ)"
+    assert player_of("*RVD*", nicks, lowered) == "RVD (МГБ)"
+    assert player_of("Esteban", nicks, lowered) == "esteban"
