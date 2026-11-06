@@ -140,8 +140,10 @@ def provisional_profile(name, league, stats, years_inactive, decay, last_season)
         "clean_sheet_pct": 0.0,
         "failed_to_score": 0,
         "failed_to_score_pct": 0.0,
-        "premier_titles": 3 if name == "mafuta" else (1 if name == "Transistor" else 0),
-        "cup_titles": 4 if name == "mafuta" else (2 if name == "RVD (МГБ)" else 0),
+        # Числа взяты из подиумов сезонов (см. portal/master_tables.TITLES): у mafuta два титула
+        # и три Кубка лиги — Сезона 1 он не выигрывал, победитель той сетки источниками не назван.
+        "premier_titles": 2 if name == "mafuta" else (1 if name == "Transistor" else 0),
+        "cup_titles": 3 if name == "mafuta" else (2 if name == "RVD (МГБ)" else 0),
         "minor_titles": 0,
         "major_finals": 1 if name in MAJOR_FINALISTS else 0,
         "dominator_score": 100.0,

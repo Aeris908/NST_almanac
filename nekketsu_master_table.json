@@ -498,11 +498,11 @@
       "clean_sheet_pct": 8.3,
       "failed_to_score": 0,
       "failed_to_score_pct": 0.0,
-      "premier_titles": 3,
-      "cup_titles": 4,
+      "premier_titles": 2,
+      "cup_titles": 3,
       "minor_titles": 0,
       "major_finals": 8,
-      "dominator_score": 726.6
+      "dominator_score": 635.6
     },
     {
       "player": "Ryumaru",
@@ -1813,11 +1813,11 @@
         "clean_sheet_pct": 8.3,
         "failed_to_score": 0,
         "failed_to_score_pct": 0.0,
-        "premier_titles": 3,
-        "cup_titles": 4,
+        "premier_titles": 2,
+        "cup_titles": 3,
         "minor_titles": 0,
         "major_finals": 8,
-        "dominator_score": 726.6
+        "dominator_score": 635.6
       },
       {
         "player": "Rock",

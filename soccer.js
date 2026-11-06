@@ -2301,7 +2301,7 @@
 
                 <div style="font-size: 10px; color: var(--nes-gold); font-weight: 800; text-transform: uppercase;">1 МЕСТО &bull; ЧЕМПИОН</div>
 
-                <div style="font-family: var(--font-title); font-size: 14px; color: #fff; margin-top: 2px; cursor: pointer;" onclick="openPlayerModal('${s.champion}')">${s.champion}</div>
+                <div style="font-family: var(--font-title); font-size: 14px; color: #fff; margin-top: 2px; ${s.champion ? 'cursor: pointer;' : ''}" ${s.champion ? `onclick="openPlayerModal('${s.champion}')"` : 'title="Источник не называет победителя"'}>${s.champion || '— не назван'}</div>
 
               </div>
 
@@ -2315,7 +2315,7 @@
 
                 <div style="font-size: 10px; color: #cbd5e1; font-weight: 800; text-transform: uppercase;">2 МЕСТО &bull; СЕРЕБРО</div>
 
-                <div style="font-family: var(--font-title); font-size: 14px; color: #fff; margin-top: 2px; cursor: pointer;" onclick="openPlayerModal('${s.runner_up}')">${s.runner_up}</div>
+                <div style="font-family: var(--font-title); font-size: 14px; color: #fff; margin-top: 2px; ${s.runner_up ? 'cursor: pointer;' : ''}" ${s.runner_up ? `onclick="openPlayerModal('${s.runner_up}')"` : ''}>${s.runner_up || '— не назван'}</div>
 
               </div>
 
@@ -2329,7 +2329,7 @@
 
                 <div style="font-size: 10px; color: #d97706; font-weight: 800; text-transform: uppercase;">3 МЕСТО &bull; БРОНЗА</div>
 
-                <div style="font-family: var(--font-title); font-size: 14px; color: #fff; margin-top: 2px; cursor: pointer;" onclick="openPlayerModal('${s.third_place}')">${s.third_place || '—'}</div>
+                <div style="font-family: var(--font-title); font-size: 14px; color: #fff; margin-top: 2px; ${s.third_place ? 'cursor: pointer;' : ''}" ${s.third_place ? `onclick="openPlayerModal('${s.third_place}')"` : ''}>${s.third_place || '— не назван'}</div>
 
               </div>
 

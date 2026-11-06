@@ -44,7 +44,10 @@ TITLES = {
     "PacnyTHuK": {"premier": 0, "cup": 1, "minor": 0, "finals": 3, "status": "Активен (S8)", "archetype": "Grand Clutch Master (Клатч-машина)", "playstyle": "Тактический контрудар"},
     "Kunio": {"premier": 2, "cup": 0, "minor": 0, "finals": 4, "status": "АКТИВЕН", "archetype": "The Iron Wall (Катеначчо)", "playstyle": "Глухая позиционная оборона"},
     "Romix": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "status": "АКТИВЕН", "archetype": "Master of Steel (Академик)", "playstyle": "Сбалансированный прессинг"},
-    "mafuta": {"premier": 3, "cup": 4, "minor": 0, "finals": 8, "status": "Инактив (3.5 г.)", "archetype": "Dynasty King (Император)", "playstyle": "Классический контроль поля"},
+    # mafuta: два титула и три Кубка лиги — по подиумам Сезонов 2-7. Первый чемпионат не
+    # называет победителя (сетка Сезона 1 оборвана на полуфиналах), поэтому «3 + 4» здесь
+    # держались на выдуманном Сезоне 1.
+    "mafuta": {"premier": 2, "cup": 3, "minor": 0, "finals": 8, "status": "Инактив (3.5 г.)", "archetype": "Dynasty King (Император)", "playstyle": "Классический контроль поля"},
     "Transistor": {"premier": 1, "cup": 0, "minor": 0, "finals": 3, "status": "Инактив (7.5 л.)", "archetype": "Fallen Titan (Экс-чемпион S4)", "playstyle": "Агрессивный сольный дриблинг"},
     "Rock": {"premier": 0, "cup": 0, "minor": 0, "finals": 1, "status": "АКТИВЕН", "archetype": "Chaos Fighter (Финалист S9)", "playstyle": "Вертикальный силовой футбол"},
     "Cyneprepou4uk": {"premier": 0, "cup": 0, "minor": 0, "finals": 0, "status": "Активен (S8)", "archetype": "Heavy Striker (Боец Вышки)", "playstyle": "Открытые перестрелки"},
