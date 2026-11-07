@@ -7,13 +7,13 @@
   "единиц базы (турниры и документы)": 60,
   "вики-страниц вычитано": 42,
   "вики-страниц не про футбол": 28,
-  "строк базы в сопоставленных единицах": 3584,
-  "строк источника, совпавших с базой": 1483,
+  "строк базы в сопоставленных единицах": 3587,
+  "строк источника, совпавших с базой": 1486,
   "строк темы, снятых как самоотменённые": 4
  },
  "counts": {
   "missing_in_db": 2,
-  "score_diff": 15,
+  "score_diff": 12,
   "wiki_missing_in_db": 0,
   "wiki_score_diff": 0,
   "matched_elsewhere": 0,
@@ -506,7 +506,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 174262,
+     "id": 187082,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -537,7 +537,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=20#post31175",
     "base": {
-     "id": 174262,
+     "id": 187082,
      "tour": "6 Тур",
      "scores": [
       2,
@@ -568,7 +568,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 175526,
+     "id": 188243,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -599,7 +599,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=40#post31180",
     "base": {
-     "id": 175526,
+     "id": 188243,
      "tour": "1/16 финала",
      "scores": [
       3,
@@ -630,7 +630,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 174394,
+     "id": 187214,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -661,7 +661,7 @@
     ],
     "url": "https://vk.com/topic-66162180_52002075?offset=60#post31232",
     "base": {
-     "id": 174394,
+     "id": 187214,
      "tour": "3 Тур",
      "scores": [
       7,
@@ -670,74 +670,6 @@
      "unit": "Season 6 Высшая лига"
     },
     "hint": "такая пара в базе есть, но в другом турнире и с другим счётом"
-   },
-   {
-    "topic": "34973011",
-    "title": "Soccer League. 4-й сезон",
-    "comment_id": "10926",
-    "comment_day": "2017-05-06",
-    "line": "FC Pushistik - 3aBuCTb 1:2, 2:7, 3:4",
-    "leg": "2/3",
-    "source_pair": [
-     [
-      "FC Pushistik"
-     ],
-     [
-      "3aBuCTb"
-     ]
-    ],
-    "scores": [
-     2,
-     7
-    ],
-    "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
-    "base": {
-     "id": 175510,
-     "tour": "1/16 финала",
-     "scores": [
-      3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "3aBuCTb",
-     "b": "FC Pushistik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "34973011",
-    "title": "Soccer League. 4-й сезон",
-    "comment_id": "10926",
-    "comment_day": "2017-05-06",
-    "line": "FC Pushistik - 3aBuCTb 1:2, 2:7, 3:4",
-    "leg": "3/3",
-    "source_pair": [
-     [
-      "FC Pushistik"
-     ],
-     [
-      "3aBuCTb"
-     ]
-    ],
-    "scores": [
-     3,
-     4
-    ],
-    "url": "https://vk.com/topic-66162180_34973011?offset=240#post10926",
-    "base": {
-     "id": 175510,
-     "tour": "1/16 финала",
-     "scores": [
-      3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "3aBuCTb",
-     "b": "FC Pushistik"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
    },
    {
     "topic": "34973011",
@@ -760,45 +692,11 @@
     ],
     "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
     "base": {
-     "id": 175514,
+     "id": 188233,
      "tour": "1/8 финала",
      "scores": [
-      3,
-      0
-     ],
-     "status": "played",
-     "manual": 0,
-     "a": "Kipriot",
-     "b": "3aBuCTb"
-    },
-    "hint": "та же пара в этом турнире, но счёт другой"
-   },
-   {
-    "topic": "34973011",
-    "title": "Soccer League. 4-й сезон",
-    "comment_id": "11084",
-    "comment_day": "2017-05-17",
-    "line": "Kipriot - 3aBuCTb 6:3, PK-3:2, 4:3",
-    "leg": "3/3",
-    "source_pair": [
-     [
-      "Kipriot"
-     ],
-     [
-      "3aBuCTb"
-     ]
-    ],
-    "scores": [
-     4,
-     3
-    ],
-    "url": "https://vk.com/topic-66162180_34973011?offset=260#post11084",
-    "base": {
-     "id": 175514,
-     "tour": "1/8 финала",
-     "scores": [
-      3,
-      0
+      6,
+      3
      ],
      "status": "played",
      "manual": 0,
@@ -828,7 +726,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19379",
     "base": {
-     "id": 175575,
+     "id": 188398,
      "tour": "Баттл #1 (Круг 1)",
      "scores": [
       4,
@@ -862,7 +760,7 @@
     ],
     "url": "https://vk.com/topic-66162180_39731903?offset=60#post19563",
     "base": {
-     "id": 175587,
+     "id": 188410,
      "tour": "Баттл #16 (Круг 1)",
      "scores": [
       8,
@@ -896,7 +794,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=200#post2750",
     "base": {
-     "id": 172952,
+     "id": 185772,
      "tour": "Тур 9",
      "scores": [
       8,
@@ -2011,7 +1909,7 @@
     ],
     "url": "https://vk.com/topic-66162180_32593813?offset=120#post2601",
     "base": {
-     "id": 172894,
+     "id": 185714,
      "scores": [
       3,
       9
