@@ -44,6 +44,28 @@ def score_in_text(text, s1, s2):
                           str(text)))
 
 
+SERIES_IN_BRACKETS = re.compile(r"[(\[]\s*(\d{1,2})\s*[:\-–]\s*(\d{1,2})[^)\]]*[)\]]")
+
+
+def shootout_of(text, s1, s2):
+    """Серия буллитов ноги, названная в скобках после ничейного счёта: «4-4 (3-1)», «1:1 (4:3 PK)».
+
+    Носитель приходит с `pk: false` даже там, где комментарий серию называет, — нога теряла
+    исход и выглядела ничьей. Скобки смотрим только при равном счёте: после неравного там стоит
+    пояснение или счёт другой ноги, а не доигровка. Та же конвенция, что в разборе ячейки счёта
+    (`portal.player_records.parse_score_cell`): серия решает ничью, но не подменяет счёт.
+    """
+    if s1 != s2 or not text:
+        return None
+    for line in str(text).splitlines():
+        if not score_in_text(line, s1, s2):
+            continue
+        found = SERIES_IN_BRACKETS.search(line)
+        if found:
+            return int(found.group(1)), int(found.group(2))
+    return None
+
+
 def stage_of(line):
     """Кубковая стадия, названная в строке, — или ничего."""
     stage = next((name for mark, name in CUP_STAGE_MARKS if mark in line), None)

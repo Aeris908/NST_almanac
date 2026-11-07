@@ -456,18 +456,16 @@ HISTORIC_CUPS_DATA = {
       }
     ]
   },
+  # Сетка выверена по листу «Кубок 6» (data/gsheet_season6/1344056972.csv), который назвал
+  # владелец: 16 участников, посев 9–16 входит в 1/16, 5–8 в 1/8, 1–4 в 1/4. Прежний список
+  # перепутал половины: Tymoschuk играл 1/4 с mafuta, а не с Transistor; Huba Buba — с
+  # Transistor, а не в 1/8; полуфиналы были mafuta—ectoPower и Transistor—Memori. Centurion
+  # в кубке не участвовал, а встречи Cyneprepou4uk—Dune и Huba Buba—Cyneprepou4uk пропали.
+  # Совпадение с листом сторожит tests/test_season6_cup.py.
   "Season 6": {
     "champion": "ectoPower",
     "runner_up": "Transistor",
     "matches": [
-      {
-        "tour": "1/16 финала",
-        "p1": "Memori",
-        "p2": "E_not",
-        "s1": 3,
-        "s2": 0,
-        "league": "Кубок лиг"
-      },
       {
         "tour": "1/16 финала",
         "p1": "Tymoschuk",
@@ -485,43 +483,59 @@ HISTORIC_CUPS_DATA = {
         "league": "Кубок лиг"
       },
       {
-        "tour": "1/8 финала",
-        "p1": "Tymoschuk",
-        "p2": "LiptOn",
+        "tour": "1/16 финала",
+        "p1": "Cyneprepou4uk",
+        "p2": "Dune",
         "s1": 3,
-        "s2": 2,
+        "s2": 0,
         "league": "Кубок лиг"
       },
       {
-        "tour": "1/8 финала",
+        "tour": "1/16 финала",
         "p1": "Memori",
-        "p2": "FC Pushistik",
-        "s1": 3,
-        "s2": 2,
-        "league": "Кубок лиг"
-      },
-      {
-        "tour": "1/8 финала",
-        "p1": "Rock",
-        "p2": "Ric25",
+        "p2": "E_not",
         "s1": 3,
         "s2": 0,
         "league": "Кубок лиг"
       },
       {
         "tour": "1/8 финала",
-        "p1": "Transistor",
-        "p2": "Huba Buba",
+        "p1": "LiptOn",
+        "p2": "Tymoschuk",
+        "s1": 2,
+        "s2": 3,
+        "league": "Кубок лиг"
+      },
+      {
+        "tour": "1/8 финала",
+        "p1": "Ric25",
+        "p2": "Rock",
+        "s1": 0,
+        "s2": 3,
+        "league": "Кубок лиг"
+      },
+      {
+        "tour": "1/8 финала",
+        "p1": "Huba Buba",
+        "p2": "Cyneprepou4uk",
         "s1": 3,
         "s2": 0,
+        "league": "Кубок лиг"
+      },
+      {
+        "tour": "1/8 финала",
+        "p1": "FC Pushistik",
+        "p2": "Memori",
+        "s1": 2,
+        "s2": 3,
         "league": "Кубок лиг"
       },
       {
         "tour": "1/4 финала",
-        "p1": "Memori",
-        "p2": "Romix",
+        "p1": "mafuta",
+        "p2": "Tymoschuk",
         "s1": 4,
-        "s2": 0,
+        "s2": 1,
         "league": "Кубок лиг"
       },
       {
@@ -535,33 +549,33 @@ HISTORIC_CUPS_DATA = {
       {
         "tour": "1/4 финала",
         "p1": "Transistor",
-        "p2": "Tymoschuk",
-        "s1": 4,
-        "s2": 1,
-        "league": "Кубок лиг"
-      },
-      {
-        "tour": "1/4 финала",
-        "p1": "mafuta",
-        "p2": "Centurion",
+        "p2": "Huba Buba",
         "s1": 4,
         "s2": 0,
         "league": "Кубок лиг"
       },
       {
-        "tour": "1/2 финала",
-        "p1": "ectoPower",
+        "tour": "1/4 финала",
+        "p1": "Romix",
         "p2": "Memori",
-        "s1": 4,
-        "s2": 1,
+        "s1": 0,
+        "s2": 4,
+        "league": "Кубок лиг"
+      },
+      {
+        "tour": "1/2 финала",
+        "p1": "mafuta",
+        "p2": "ectoPower",
+        "s1": 2,
+        "s2": 4,
         "league": "Кубок лиг"
       },
       {
         "tour": "1/2 финала",
         "p1": "Transistor",
-        "p2": "mafuta",
+        "p2": "Memori",
         "s1": 4,
-        "s2": 2,
+        "s2": 1,
         "league": "Кубок лиг"
       },
       {

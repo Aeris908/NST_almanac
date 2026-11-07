@@ -1,4 +1,23 @@
-"""Master profile for every player: career totals, Elo, badges and avatar."""
+"""Карточка каждого игрока: итоги карьеры, рейтинг движка, значки и аватар.
+
+Рейтинг здесь не считается. Единственный движок — portal/elo.py, его числа кладёт
+portal/master_table.py в power_rankings мастер-таблицы. Для игрока из пула все пять
+рейтинговых полей (active_elo, peak_elo, decay_penalty, years_inactive, last_season)
+берутся дословно из записи движка — без калибровки, без пола 1050, без округлений и без
+справочной подмены пика.
+
+Правило для игроков вне пула (есть только каталожные партии): нет рейтинговых партий —
+нет рейтинга. active_elo и peak_elo равны None, decay_penalty = 0.0, признак rated = False.
+Обоснование: докстринг portal/elo.py прямо говорит, что старт из вывески лиги
+(1600/1350/1050) убран, потому что рейтинг зарабатывается партиями, а не классификацией;
+возвращать выдуманное число из вывески для этих игроков значило бы оставить ту самую
+вторую модель. Исключение — легенды Зала славы вне пула: у них сохраняется курируемый
+peak_elo из HOF_PEAK_ELO как архивная почётная величина, но active_elo тоже None.
+
+CURRENT_YEAR, SEASON_YEAR_MAP и last_activity обслуживают только биографию карточек
+вне пула (years_inactive и last_season — это биография, не рейтинг); рейтинговый год
+отсчёта и таблица сезонов живут в portal/master_tables.py и читаются движком.
+"""
 
 import re
 
@@ -13,6 +32,8 @@ from portal.roster_tables import (
     HOF_REASONS,
 )
 
+# Только для биографии карточек вне пула (см. докстринг модуля): рейтинговый год отсчёта
+# и таблица сезонов берутся движком из portal/master_tables.py, а не отсюда.
 CURRENT_YEAR = 2024.5
 SEASON_YEAR_MAP = {
     1: 2015.5,
@@ -25,7 +46,6 @@ SEASON_YEAR_MAP = {
     8: 2023.0,
     9: 2024.5,
 }
-DIVISION_BASE_ELO = {"Высшая": 1400.0, "Средняя": 1300.0, "Дворовая": 1200.0}
 MAJOR_FINALISTS = ("WiSe", "Huba Buba", "izzzotope", "Transistor", "mafuta")
 HOF_FALLBACK_REASON = "Легендарный ветеран Высшей лиги NST."
 AVATAR_FALLBACK = "https://api.dicebear.com/7.x/bottts/svg?seed={name}&backgroundColor=183c5c"
@@ -34,7 +54,7 @@ YEAR_IN_TEXT = re.compile(r"20\d\d")
 
 
 def league_players(player_matches, master_profiles):
-    """Everyone who ever played: the core roster, the legends and any scored nickname."""
+    """Все, кто когда-либо играл: ядро ростера, легенды и любой ник с сыгранными партиями."""
     names = set(CORE_ACTIVE_COMMUNITY + HALL_OF_FAME_LEGENDS + list(master_profiles))
     for nickname, history in player_matches.items():
         if nickname in CLUB_TEAMS_FILTER or not history:
@@ -71,7 +91,7 @@ def career_stats(matches, addon):
 
 
 def last_activity(matches, is_active):
-    """Season label and mid-year date of the player's last non-technical match."""
+    """Метка сезона и середина года последней нетехнической партии — биография карточки."""
     last_year = 0.0
     label = "Season 9" if is_active else "Архив"
     for m in matches:
@@ -93,16 +113,8 @@ def last_activity(matches, is_active):
     return last_year, label
 
 
-def decay_penalty(years_inactive, is_active):
-    if is_active or years_inactive <= 0.5:
-        return 0.0
-    if years_inactive <= 1.5:
-        return 25.0
-    return round(25.0 + (years_inactive - 1.5) * 35.0, 1)
-
-
 def playstyle_league(matches, is_hall_of_famer):
-    """Best guess at the highest division a player without an archived profile reached."""
+    """Высший дивизион, которого достиг игрок без архивного профиля, — классификация, не рейтинг."""
     leagues = {m.get("league", "") for m in matches}
     if is_hall_of_famer or any("высш" in league.lower() for league in leagues):
         return "Высшая"
@@ -111,7 +123,12 @@ def playstyle_league(matches, is_hall_of_famer):
     return "Дворовая"
 
 
-def provisional_profile(name, league, stats, years_inactive, decay, last_season):
+def provisional_profile(name, league, stats, years_inactive, last_season):
+    """Карточка игрока вне пула: биография и итоги есть, рейтинга нет (rated = False).
+
+    Рейтинговые поля намеренно пусты: active_elo/peak_elo = None, decay_penalty = 0.0.
+    Почётный архивный пик легенды подставляется вызывающим из HOF_PEAK_ELO, не здесь.
+    """
     total = stats["total"]
     return {
         "player": name,
@@ -119,9 +136,10 @@ def provisional_profile(name, league, stats, years_inactive, decay, last_season)
         "status": "Инактив (Ветеран)",
         "archetype": "Ветеран сцены",
         "playstyle": "Классический NES стиль",
-        "active_elo": 1200.0,
-        "peak_elo": 1200.0,
-        "decay_penalty": decay,
+        "active_elo": None,
+        "peak_elo": None,
+        "decay_penalty": 0.0,
+        "rated": False,
         "years_inactive": years_inactive,
         "last_season": last_season,
         "gpg": round(stats["goals_for"] / total, 2) if total > 0 else 0.0,
@@ -151,10 +169,10 @@ def provisional_profile(name, league, stats, years_inactive, decay, last_season)
 
 
 def apply_status_badges(p, name, is_active, is_hall_of_famer):
+    """Значки статуса и Зала славы. Пик не подменяет: рейтинговый путь берёт число движка."""
     if is_hall_of_famer:
         p["is_hall_of_fame"] = True
         p["hof_reason"] = HOF_REASONS.get(name, HOF_FALLBACK_REASON)
-        p["peak_elo"] = HOF_PEAK_ELO.get(name, p["peak_elo"])
         p["status_badge"] = "Зал славы (Легенда)"
         p["status"] = "Зал славы"
         p["league"] = "Высшая"
@@ -165,6 +183,7 @@ def apply_status_badges(p, name, is_active, is_hall_of_famer):
 
 
 def apply_career_stats(p, stats, addon, matches):
+    """Итоги карьеры и история партий поверх карточки (рейтинг не трогает)."""
     p["matches"] = stats["total"]
     p["wins"] = stats["wins"]
     p["losses"] = stats["losses"]
@@ -185,6 +204,7 @@ def apply_career_stats(p, stats, addon, matches):
 
 
 def apply_quotes_and_avatar(p, name, quotes_by_player, avatars):
+    """Цитата и аватар карточки: справочник, иначе выгрузка, иначе заглушка."""
     p["quote"] = CANONICAL_PLAYER_QUOTES.get(name) or (quotes_by_player.get(name) or [None])[0]
     p["all_quotes"] = quotes_by_player.get(name, [])
     if name in avatars:
@@ -202,6 +222,7 @@ def apply_quotes_and_avatar(p, name, quotes_by_player, avatars):
 def build(
     data, player_matches: dict, player_stats_addon: dict, player_quotes_dict: dict
 ) -> list:
+    """Карточки игроков: рейтинг движка для пула, биография без рейтинга для остальных."""
     master_profiles = {p["player"]: p for p in data.master_db["power_rankings"]}
     profiles = []
     for name in sorted(league_players(player_matches, master_profiles)):
@@ -212,34 +233,19 @@ def build(
         if stats["total"] == 0 and not is_active and not is_hall_of_famer:
             continue
 
-        last_year, last_season = last_activity(matches, is_active)
-        years_inactive = max(0.0, round(CURRENT_YEAR - last_year, 1)) if not is_active else 0.0
-        decay = decay_penalty(years_inactive, is_active)
-
         if name in master_profiles:
+            # Пул: все пять рейтинговых полей — дословно из движка, второй модели нет.
             p = dict(master_profiles[name])
-            league = p.get("league", "Средняя")
-            raw_peak = p.get("peak_elo", 1400.0)
-            raw_active = p.get("active_elo", 1400.0)
+            p["rated"] = True
         else:
+            # Вне пула: рейтинговых партий нет — нет и рейтинга, остаётся биография.
             league = playstyle_league(matches, is_hall_of_famer)
-            raw_peak = DIVISION_BASE_ELO[league] + (stats["win_rate"] - 50.0) * 3.0
-            raw_active = raw_peak
-            p = provisional_profile(name, league, stats, years_inactive, decay, last_season)
-
-        confidence = min(1.0, stats["total"] / 20.0) if stats["total"] > 0 else 0.0
-        calibrated_skill = 1200.0 + (raw_peak - 1200.0) * confidence
-        peak_elo = HOF_PEAK_ELO.get(name, max(round(calibrated_skill, 1), round(raw_peak, 1)))
-        if is_active:
-            active_elo = round(max(1050.0, raw_active), 1)
-            decay = 0.0
-        else:
-            active_elo = round(max(1050.0, calibrated_skill - decay), 1)
-        p["active_elo"] = active_elo
-        p["peak_elo"] = peak_elo
-        p["decay_penalty"] = decay
-        p["years_inactive"] = years_inactive
-        p["last_season"] = last_season
+            last_year, last_season = last_activity(matches, is_active)
+            years_inactive = max(0.0, round(CURRENT_YEAR - last_year, 1)) if not is_active else 0.0
+            p = provisional_profile(name, league, stats, years_inactive, last_season)
+            if is_hall_of_famer:
+                # Архивная почётная величина легенды, не рейтинг.
+                p["peak_elo"] = HOF_PEAK_ELO.get(name)
 
         apply_status_badges(p, name, is_active, is_hall_of_famer)
         apply_career_stats(p, stats, player_stats_addon[name], matches)
@@ -248,5 +254,9 @@ def build(
         profiles.append(p)
 
     profiles.sort(key=profile_sort_order)
-    profiles.sort(key=lambda p: (1 if p["is_active"] else 0, p["active_elo"]), reverse=True)
+    # Сначала рейтингованные по убыванию active_elo, затем без рейтинга: None с числом
+    # не сравнивается, поэтому отсутствующий рейтинг вынесен в отдельный младший ключ.
+    profiles.sort(key=lambda p: (p["active_elo"] is not None,
+                                 p["active_elo"] if p["active_elo"] is not None else 0.0),
+                  reverse=True)
     return profiles

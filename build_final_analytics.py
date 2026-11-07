@@ -303,21 +303,37 @@ class SportcupDecisions:
     # Игры с флагом доигровки, которые тема прямо назвала серией: `overtimeWin` у источника
     # значит «была доигровка», а не «был овертайм», и без этой правки серия жила бы овертаймом.
     tiebreaks: frozenset = frozenset()
+    # Переприписывание стороны: uuid -> {номер стороны (1 или 2): участник из источника}.
+    # Снапшот мог записать партию за замену, а тема называет настоящего участника (#80).
+    participants: dict = None
 
     def __post_init__(self):
         if self.notes is None:
             object.__setattr__(self, "notes", {})
         if self.score_notes is None:
             object.__setattr__(self, "score_notes", {})
+        if self.participants is None:
+            object.__setattr__(self, "participants", {})
 
 
 def load_sportcup_decisions():
-    """Read which unfinished fixtures are dropped, which rows get a custom note, and which
-    overtime-flagged games the topic says were decided by a shootout."""
+    """Читает решения редактора: какие несыгранные встречи сняты с зачёта, какие строки несут
+    свою пометку, какие доигровки тема назвала сериями и какие стороны переприписаны настоящему
+    участнику вместо переименованного слота замены."""
     if not DECISIONS_PATH.exists():
         print(f"Warning: {DECISIONS_PATH} not found, every FINAL row stays in the pool.")
         return SportcupDecisions()
     raw = json.loads(DECISIONS_PATH.read_text(encoding="utf-8"))
+    # Переприписывание точечное: у партии замена стоит то первой, то второй стороной, поэтому
+    # номер стороны обязателен — иначе правка молча легла бы на соперника.
+    participants = {}
+    for item in raw.get("participant_override", []):
+        side = item.get("side")
+        if side not in (1, 2) or not item.get("uuid") or not item.get("player"):
+            raise ValueError(
+                f"participant_override: запись {item!r} обязана нести uuid, player и side; "
+                f"сторона — 1 или 2 (получено {side!r}).")
+        participants.setdefault(item["uuid"], {})[side] = item["player"]
     return SportcupDecisions(
         voided=frozenset(item["uuid"] for item in raw.get("void", [])),
         played_as_normal=frozenset(item["uuid"] for item in raw.get("played_as_normal", [])),
@@ -326,6 +342,7 @@ def load_sportcup_decisions():
         # счёт остаётся как есть, а правда о нём ложится в пометку, чтобы её правил человек.
         score_notes={item["uuid"]: item["note"] for item in raw.get("score_note", [])},
         tiebreaks=frozenset(item["uuid"] for item in raw.get("tiebreak_penalties", [])),
+        participants=participants,
     )
 
 
@@ -359,6 +376,15 @@ def fetch_sportcup_matches(configs):
                 continue
             p1 = norm(game["member1"]["title"])
             p2 = norm(game["member2"]["title"])
+            # Переприписывание стороны по решению редактора (#80): снапшот записал партию
+            # за переименованный слот замены, а тема называет настоящего участника. Имя
+            # решения сворачивается тем же norm, что и имя снапшота, поэтому алиасы
+            # отрабатывают как обычно; вторая сторона остаётся нетронутой.
+            for side, player in decisions.participants.get(uuid, {}).items():
+                if side == 1:
+                    p1 = norm(player)
+                else:
+                    p2 = norm(player)
             s1 = game["scoreMember1"]
             s2 = game["scoreMember2"]
             if s1 is None or s2 is None:
@@ -504,17 +530,22 @@ HISTORICAL_MATCHES = [
     ("mafuta", "LiptOn", 4, 1, False, False, "Season 5", "1/4 финала"),
     ("PacnyTHuK", "FC Pushistik", 4, 0, False, False, "Season 5", "1/4 финала"),
     ("izzzotope", "Romix", 4, 1, False, False, "Season 5", "1/4 финала"),
-    # Season 6 Epic Series
-    ("ectoPower", "Transistor", 3, 3, False, True, "Season 6", "Финал Кубка"),
+    # Финал Кубка Сезона 6 — серия до пяти побед из девяти ног: комментарий 19008 темы 39660451
+    # перечисляет все ноги, лист «Кубок 6» (data/gsheet_season6/) даёт тот же итог 5:4. Ноги 1 и 3
+    # кончились вничью в основное время (3:3 и 5:5), решали буллиты 6:5 и 7:6 — обе выиграл
+    # ectoPower. Счётом строки живёт серия буллитов, как во всём архиве: с ничьёй в счёте движок
+    # засчитал бы ничью независимо от признака буллитов, и серия вышла бы 3:4 вместо 5:4.
+    ("ectoPower", "Transistor", 6, 5, False, True, "Season 6", "Финал Кубка"),
     ("Transistor", "ectoPower", 4, 1, False, False, "Season 6", "Финал Кубка"),
-    ("ectoPower", "Transistor", 5, 5, False, True, "Season 6", "Финал Кубка"),
+    ("ectoPower", "Transistor", 7, 6, False, True, "Season 6", "Финал Кубка"),
     ("Transistor", "ectoPower", 5, 4, False, False, "Season 6", "Финал Кубка"),
     ("Transistor", "ectoPower", 5, 4, False, False, "Season 6", "Финал Кубка"),
     ("ectoPower", "Transistor", 5, 3, False, False, "Season 6", "Финал Кубка"),
     ("Transistor", "ectoPower", 4, 2, False, False, "Season 6", "Финал Кубка"),
     ("ectoPower", "Transistor", 7, 4, False, False, "Season 6", "Финал Кубка"),
     ("ectoPower", "Transistor", 8, 1, False, False, "Season 6", "Финал Кубка"),
-    ("ectoPower", "Rock", 4, 0, False, False, "Season 6", "1/2 финала"),
+    # По листу это четвертьфинал: полуфинал ectoPower играл с mafuta (2:4), а не с Rock.
+    ("ectoPower", "Rock", 4, 0, False, False, "Season 6", "1/4 финала"),
     ("Transistor", "Memori", 4, 1, False, False, "Season 6", "1/2 финала"),
     # Season 7 Key Playoff
     ("RVD (МГБ)", "ectoPower", 4, 2, False, False, "Season 7", "Финал Кубка"),

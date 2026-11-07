@@ -141,15 +141,18 @@ def main():
     if args.write:
         decisions = json.loads(DECISIONS.read_text(encoding="utf-8"))
         proven = sorted(uuid for uuid, row in verdict.items() if row["verdict"] == "penalties")
-        decisions["tiebreak_penalties"] = [
-            {"uuid": uuid, "match": verdict[uuid]["match"],
-             "reason": f"тема {TOPIC_BY_SEASON[verdict[uuid]['season']]}, "
-                       f"комментарий {verdict[uuid]['comment']}"}
-            for uuid in proven
-        ]
+        # Список сливается, а не перезаписывается: классификатор ищет строку темы по никам
+        # снапшота, и переприписанную сторону (#80: снапшот пишет E_not, тема — CentZloy) он
+        # не доказывает. Перезапись забирала бы серию, внесённую человеком по комментарию.
+        merged = {row["uuid"]: row for row in decisions.get("tiebreak_penalties", [])}
+        for uuid in proven:
+            merged[uuid] = {"uuid": uuid, "match": verdict[uuid]["match"],
+                            "reason": f"тема {TOPIC_BY_SEASON[verdict[uuid]['season']]}, "
+                                      f"комментарий {verdict[uuid]['comment']}"}
+        decisions["tiebreak_penalties"] = [merged[uuid] for uuid in sorted(merged)]
         DECISIONS.write_text(json.dumps(decisions, ensure_ascii=False, indent=1) + "\n",
                              encoding="utf-8")
-        print(f"\nзаписано серий: {len(proven)} → {DECISIONS.name}")
+        print(f"\nзаписано серий: {len(merged)} (доказано прогоном: {len(proven)}) → {DECISIONS.name}")
 
 
 if __name__ == "__main__":

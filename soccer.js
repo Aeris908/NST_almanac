@@ -9,6 +9,12 @@
 
     }
 
+    // Рейтинга может не быть: игрок без рейтинговых партий не получает выдуманного числа
+    // (active_elo/peak_elo приходят как null). Вместо падения на .toFixed печатаем прочерк.
+    function formatElo(value) {
+      return (value === null || value === undefined) ? '—' : value.toFixed(1);
+    }
+
 
 
     let currentDivisionFilter = 'active';
@@ -159,6 +165,11 @@
       list.sort((a, b) => {
         let v1 = a[currentSortColumn];
         let v2 = b[currentSortColumn];
+        // Рейтинга может не быть (null): такие строки всегда в конце, и в прямом, и в
+        // обратном порядке — иначе null сравнивался бы как ноль и лез вперёд.
+        const n1 = (v1 === null || v1 === undefined);
+        const n2 = (v2 === null || v2 === undefined);
+        if (n1 || n2) return n1 === n2 ? 0 : (n1 ? 1 : -1);
         if (typeof v1 === 'string') return sortAsc ? v1.localeCompare(v2) : v2.localeCompare(v1);
         return sortAsc ? (v1 - v2) : (v2 - v1);
       });
@@ -204,10 +215,10 @@
               </div>
             </td>
             <td>
-              <div style="font-family: var(--font-mono); font-weight: 800; font-size: 16px; color: #fff;">${p.active_elo.toFixed(1)}</div>
+              <div style="font-family: var(--font-mono); font-weight: 800; font-size: 16px; color: #fff;">${formatElo(p.active_elo)}</div>
               ${p.decay_penalty > 0 ? `<div style="font-size: 11px; color: var(--nes-red); font-weight: 700;">-${p.decay_penalty} за простой</div>` : ''}
             </td>
-            <td><span style="font-family: var(--font-mono); font-weight: 800; color: var(--nes-gold); font-size: 15px;">${p.peak_elo.toFixed(1)}</span></td>
+            <td><span style="font-family: var(--font-mono); font-weight: 800; color: var(--nes-gold); font-size: 15px;">${formatElo(p.peak_elo)}</span></td>
             <td style="font-family: var(--font-mono); font-weight: 700; font-size: 14px;">${p.matches}</td>
             <td>
               <span style="font-family: var(--font-mono); font-weight: 800; color: var(--nes-green); font-size: 14px;">${p.wins}</span>
@@ -305,7 +316,7 @@
             <div class="card-stat-strip">
               <div>
                 <div class="lbl">РЕЙТИНГ</div>
-                <div class="v" style="color: var(--nes-gold);">${p.active_elo.toFixed(1)}</div>
+                <div class="v" style="color: var(--nes-gold);">${formatElo(p.active_elo)}</div>
               </div>
               <div>
                 <div class="lbl">% ПОБЕД</div>
@@ -522,15 +533,15 @@
         <div class="metric-tiles">
           <div class="metric-tile">
             <div class="l">Текущий рейтинг</div>
-            <div class="num" style="color: var(--nes-gold);">${p.active_elo.toFixed(1)}</div>
+            <div class="num" style="color: var(--nes-gold);">${formatElo(p.active_elo)}</div>
           </div>
           <div class="metric-tile">
             <div class="l">Рекорд рейтинга</div>
-            <div class="num">${p.peak_elo.toFixed(1)}</div>
+            <div class="num">${formatElo(p.peak_elo)}</div>
           </div>
           <div class="metric-tile">
             <div class="l">Штраф за простой</div>
-            <div class="num" style="color: ${p.decay_penalty > 0 ? 'var(--nes-red)' : 'var(--nes-green)'};">-${p.decay_penalty} очков</div>
+            <div class="num" style="color: ${p.decay_penalty > 0 ? 'var(--nes-red)' : 'var(--nes-green)'};">${p.decay_penalty > 0 ? `-${p.decay_penalty} очков` : '—'}</div>
           </div>
           <div class="metric-tile">
             <div class="l">Всего матчей</div>
@@ -3445,7 +3456,7 @@
 
                 <div class="fighter-meta">
 
-                  ${prof1 ? `Рейтинг: <strong style="color: #ffffff;">${prof1.active_elo.toFixed(1)}</strong>` : 'Участник турниров'}
+                  ${prof1 ? `Рейтинг: <strong style="color: #ffffff;">${formatElo(prof1.active_elo)}</strong>` : 'Участник турниров'}
 
                 </div>
 
@@ -3517,7 +3528,7 @@
 
                 <div class="fighter-meta">
 
-                  ${prof2 ? `Рейтинг: <strong style="color: #ffffff;">${prof2.active_elo.toFixed(1)}</strong>` : 'Участник турниров'}
+                  ${prof2 ? `Рейтинг: <strong style="color: #ffffff;">${formatElo(prof2.active_elo)}</strong>` : 'Участник турниров'}
 
                 </div>
 

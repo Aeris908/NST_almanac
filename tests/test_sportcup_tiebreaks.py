@@ -69,8 +69,26 @@ def test_proven_series_are_flagged_games_of_the_snapshot():
     assert not (proven - flagged), f"серии там, где снапшот flags не ставил: {sorted(proven - flagged)}"
 
 
-def test_the_pool_stores_a_proven_series_as_penalties(con):
-    """База обязана донести то, что сказала тема: фаза `penalties`, а не `overtime`."""
+def test_the_pool_stores_a_proven_series_as_penalties(con, monkeypatch):
+    """База обязана донести то, что сказала тема: фаза `penalties`, а не `overtime`.
+
+    Правка решений до уже занесённой игры доходит шагом сборки (`db/build_db.py: import_pool`
+    доносит `note` и `phase`, где `manual = 0`), а живая база могла ещё не пересобраться.
+    Поэтому проверка прогоняет тот же шаг на своей копии офлайн и сверяет фазы после него —
+    она не зависит от того, сделал ли владелец общую сборку.
+    """
+    import importlib
+    import sys
+
+    with monkeypatch.context() as patch:
+        # Без подмены секрета импорт сборщика ушёл бы в сеть за проверкой соединения с ВК.
+        patch.setattr("portal.env_file.secret", lambda name, path=None: "")
+        patch.delitem(sys.modules, "build_final_analytics", raising=False)
+        patch.delitem(sys.modules, "db.build_db", raising=False)
+        bfa = importlib.import_module("build_final_analytics")
+        builder = importlib.import_module("db.build_db")
+        builder.import_pool(con, bfa.all_matches)
+        con.commit()
     proven = {row["uuid"] for row in json.loads(DECISIONS.read_text(encoding="utf-8")).get("tiebreak_penalties", [])}
     wrong = []
     for uuid in sorted(proven):
@@ -81,3 +99,33 @@ def test_the_pool_stores_a_proven_series_as_penalties(con):
         elif row["phase"] != "penalties":
             wrong.append((uuid, row["phase"]))
     assert not wrong, f"доказанные серии легли не как пенальти: {wrong[:5]}"
+
+def test_write_keeps_editorial_series_the_classifier_cannot_reprove(tmp_path, monkeypatch):
+    """Повторный `--write` не стирает решение редактора.
+
+    Классификатор ищет строку темы по никам снапшота. Когда сторона переприписана настоящему
+    участнику (#80: снапшот пишет E_not, тема — CentZloy), доказательство он не находит, и
+    прежняя перезапись списка молча забирала бы серию, внесённую человеком.
+    """
+    import sys
+
+    from collectors import sportcup_tiebreaks as collector
+
+    decisions = tmp_path / "sportcup_decisions.json"
+    handmade = {"uuid": "c7b829f1-3209-4c8e-907e-0cf2829f2f67",
+                "match": "CentZloy 4:3 Jamlight (Средняя лига, тур 2, буллиты)",
+                "reason": "комментарий 31180 темы 52002075: 1-1 (4-3 пен)"}
+    decisions.write_text(json.dumps({"tiebreak_penalties": [handmade], "void": []},
+                                    ensure_ascii=False), encoding="utf-8")
+    verdict = {"u1": {"verdict": "penalties", "season": "Season 9", "match": "A 5:3 B",
+                      "comment": 32791, "line": "A vs B 1:1 (ПК 5:3)"}}
+    with monkeypatch.context() as patch:
+        patch.setattr(collector, "DECISIONS", decisions)
+        patch.setattr(collector, "collect", lambda: verdict)
+        patch.setattr(sys, "argv", ["sportcup_tiebreaks.py", "--write"])
+        collector.main()
+    saved = json.loads(decisions.read_text(encoding="utf-8"))
+    uuids = {row["uuid"] for row in saved["tiebreak_penalties"]}
+    assert handmade["uuid"] in uuids, "решение редактора стёрто повторным прогоном"
+    assert "u1" in uuids
+    assert saved["void"] == [], "прочие ключи решения не должны меняться"

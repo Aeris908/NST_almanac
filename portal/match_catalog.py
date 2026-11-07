@@ -1,6 +1,6 @@
 """Merge the four archived match sources into one verified league calendar."""
 
-from portal.comment_origin import origin_of
+from portal.comment_origin import origin_of, shootout_of
 from portal.names import clean_alias, league_and_round, norm_season
 from portal.vk_sources import enrich_vk_source
 
@@ -134,9 +134,16 @@ def append_vk_playoff_comments(vk_matches, combined_matches, sources_lookup):
             continue
         s1 = int(m.get("s1", 0))
         s2 = int(m.get("s2", 0))
-        encounters = [x for x in combined_matches if x["season"] == s and {x["p1"], x["p2"]} == {p1, p2}]
-        already_known = any((x["s1"], x["s2"]) in {(s1, s2), (s2, s1)} for x in encounters)
-        if already_known or len(encounters) >= 4:
+        # Повтор сторожит счёт, а не число встреч: кубковая серия играется до трёх, четырёх и
+        # пяти побед — это до девяти ног. Прежняя обрезка «не больше четырёх встреч на пару»
+        # теряла последние ноги серии (#86: в 1/4 Кубка Сезона 5 у RVD (МГБ) — ectoPower
+        # пропали 4:3 и 4:4), а сводка 4:2 лежала рядом и делала потерю невидимой.
+        already_known = any(
+            x["season"] == s and {x["p1"], x["p2"]} == {p1, p2}
+            and (x["s1"], x["s2"]) in {(s1, s2), (s2, s1)}
+            for x in combined_matches
+        )
+        if already_known:
             continue
         enrich_vk_source(m, sources_lookup)
         origin = origin_of(m.get("stage"), m.get("vk_text"), s1, s2)
@@ -154,7 +161,7 @@ def append_vk_playoff_comments(vk_matches, combined_matches, sources_lookup):
             "s1": s1,
             "s2": s2,
             "ot": m.get("ot", False),
-            "pk": m.get("pk", False),
+            "pk": bool(m.get("pk") or shootout_of(m.get("vk_text"), s1, s2)),
             "source": "vk_comments_playoff",
         }
         # Архивный указатель строку не нашёл, но носитель помнит её собственную ссылку на

@@ -8,6 +8,7 @@
 import re
 
 from portal.cup_tables import HISTORIC_CUPS_DATA
+from portal.names import clean_alias
 from portal.roster_tables import SEASON_ROSTERS
 from portal.vk_sources import enrich_vk_source
 
@@ -20,15 +21,26 @@ def is_cup_row(match):
     return any(marker in field.lower() for field in fields for marker in CUP_ROW_MARKERS)
 
 
-def without_mislabelled_cup_rows(combined_matches):
-    """Drop Season 2-7 rows tagged as playoff/cup; the verified cup rows replace them.
+def meeting_key(match):
+    """Встреча без ориентации сторон: справочник и носитель пишут их вразнобой."""
+    return (match.get("season"),
+            tuple(sorted([clean_alias(match["p1"]) or match["p1"],
+                          clean_alias(match["p2"]) or match["p2"]])))
 
-    Снимает только строки носителей: проверенные игры куба приходят из базы своим списком
-    (`db/catalog.py: cup_rows_from_db`) и под фильтр не попадают — у строки носителя есть
-    `source`, у кубковой его нет.
+
+def without_mislabelled_cup_rows(combined_matches):
+    """Снимает ноги кубковой встречи, у которой есть проверенная сводка; без сводки — оставляет.
+
+    Сводка приходит из справочника `portal/cup_tables.py` (`db/catalog.py: cup_rows_from_db`),
+    и ключа `source` у неё нет — этим она и отличается от строки носителя. Раньше фильтр снимал
+    всякую подписанную плей-оффом строку носителя Seasons 2–7, не проверяя, есть ли чем её
+    заменить: 14 партий, ошибочно подписанных «Плей-офф / Кубок», пропадали со страницы молча,
+    потому что сводки у них не было. Теперь снятие доказано сводкой той же встречи.
     """
+    summaries = {meeting_key(m) for m in combined_matches if not m.get("source")}
     return [m for m in combined_matches
-            if not (m.get("source") and m.get("season") in HISTORIC_CUPS_DATA and is_cup_row(m))]
+            if not (m.get("source") and m.get("season") in HISTORIC_CUPS_DATA and is_cup_row(m)
+                    and meeting_key(m) in summaries)]
 
 
 def attach_matches_and_podiums(seasons_list, combined_matches):

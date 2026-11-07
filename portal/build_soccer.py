@@ -12,7 +12,7 @@ from portal.league_analytics import build as build_analytics
 from portal.player_profiles import build as build_profiles
 from portal.player_records import build as build_records
 from portal.quotes import player_quotes_by_author
-from portal.season_pages import build as build_seasons
+from portal.season_pages import build as build_seasons, without_mislabelled_cup_rows
 from portal.site_payload import build as build_payload, headline_tokens
 from portal.templates import render
 
@@ -39,10 +39,18 @@ def compose_payload(db_path=DB_PATH):
     Игры Кубка лиг добавляются к каталогу здесь, а не внутри `season_pages`: так они попадают и в
     историю игрока, и в таблицы сезона из одного места, и порядок в списке сезона не меняется —
     кубок всегда шёл после строк носителя.
+
+    Пакет А (решение владельца 2026-11-08): встреча в истории игрока — одна строка со счётом
+    серии. Ноги серии снимаются тем же фильтром, что и в таблицах сезона, и притом ДО сборки
+    историй: раньше фильтр шёл только в `season_pages`, поэтому таблицы считали одну встречу,
+    а карточка показывала её четырьмя строками (сводка 3:0 плюс ноги 2:1, 7:2, 4:3). Ноги
+    остаются в базе и в сетке турнира; рейтинг считает пул, его этот список не касается.
     """
     data = dataset.load(db_path)
     data = replace(data, master_db=master_table.build_payload(data.base_matches))
-    combined_matches = catalog_from_db(db_path) + cup_rows_from_db(db_path)
+    combined_matches = without_mislabelled_cup_rows(
+        catalog_from_db(db_path) + cup_rows_from_db(db_path)
+    )
     player_matches, player_stats_addon = build_records(data, combined_matches)
     profiles = build_profiles(
         data, player_matches, player_stats_addon, player_quotes_by_author(data.quotes)

@@ -146,7 +146,14 @@ def match_sort_key(m):
 
 
 def profile_sort_order(p):
-    return (0 if p["is_active"] else (1 if p["is_hall_of_fame"] else 2), -p["active_elo"], -p["matches"])
+    """Порядок карточек: активные, затем легенды, затем прочие; внутри — по рейтингу и матчам.
+
+    Рейтинга может не быть (None у игрока без рейтинговых партий): такие карточки идут
+    после рейтингованных, а сравнение с числом не падает.
+    """
+    elo = p.get("active_elo")
+    return (0 if p["is_active"] else (1 if p["is_hall_of_fame"] else 2),
+            elo is None, -(elo if elo is not None else 0.0), -p["matches"])
 
 
 def norm_medalist_name(raw):
