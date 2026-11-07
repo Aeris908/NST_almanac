@@ -255,15 +255,29 @@ def call_vk(method, params):
 
 
 def verify_vk_connection():
-    """Probe the VK group the comment archives live in and log its public name."""
+    """Проверка соединения говорит правду: отказ ВК не выглядит как успех.
+
+    `call_vk` отдаёт полезную нагрузку как есть, и при отказе это `{"error": {...}}`.
+    Прежняя проверка брала имя группы, а на пустом ответе подставляла заглушку и печатала
+    «Connected» — сборка отчитывалась о соединении, которого не было (токен привязан к IP,
+    код 5). Сам код и причину печатаем, токен — никогда.
+    """
     if not VK_API_TOKEN:
         print(f"VK API token not set, skipping the group check (ID: {GROUP_ID})")
         return
     print("Verifying VK API connection...")
     group_info = call_vk(VK_GROUP_GET_METHOD, {"group_id": VK_GROUP_SLUG})
-    groups = (group_info.get("response") or {}).get("groups") or [{}]
-    group_name = groups[0].get("name", VK_GROUP_NAME_FALLBACK)
-    print(f"Connected to VK Group: {group_name} (ID: {GROUP_ID})")
+    error = group_info.get("error") or {}
+    if error:
+        print(f"ВК ответил отказом: код {error.get('error_code')} — {error.get('error_msg')}. "
+              f"Соединение не подтверждено (ID: {GROUP_ID}); выгрузка пойдёт из снапшотов.")
+        return
+    groups = (group_info.get("response") or {}).get("groups") or []
+    if not groups or not groups[0].get("name"):
+        print(f"ВК не назвал группу «{VK_GROUP_NAME_FALLBACK}» — соединение не подтверждено "
+              f"(ID: {GROUP_ID}).")
+        return
+    print(f"Connected to VK Group: {groups[0]['name']} (ID: {GROUP_ID})")
 
 
 def load_sportcup_snapshot():
