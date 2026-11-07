@@ -11,6 +11,18 @@ BRACKETED_SUFFIX = re.compile(r"[\(\[]\s*[A-Za-z0-9_]{1,4}\s*[\)\]]\s*$")
 TEAM_SUFFIX = re.compile(r"\s*\([^)]*\)")
 CUP_STAGE_MARKERS = ("финал", "1/16", "1/8", "1/4", "1/2")
 LEAGUE_MARKERS = (("Дворов", "Дворовая лига"), ("Средн", "Средняя лига"), ("Высш", "Высшая лига"))
+# Кириллические близнецы латинских букв: именно они рождают в архиве «BOР95» рядом с «BOP95» и
+# «СentZloy» рядом с «CentZloy» — двух разных написаний одного игрока.
+HOMOGLYPHS = str.maketrans({
+    "а": "a", "е": "e", "о": "o", "р": "p", "с": "c", "у": "y", "х": "x", "і": "i", "ѕ": "s",
+    "в": "b", "к": "k", "н": "h", "т": "t", "м": "m", "ј": "j", "ԁ": "d",
+})
+
+
+def homoglyph_fold(text):
+    """Нижний регистр плюс замена кириллических гомоглифов латинскими: одна буква — одна форма."""
+    return str(text).lower().translate(HOMOGLYPHS)
+
 MEDALIST_CANONICAL = {
     "ectopower": "ectoPower",
     "экто": "ectoPower",
@@ -32,6 +44,22 @@ MEDALIST_CANONICAL = {
 }
 
 
+DECORATION = "*.,_:-– "
+BRACKET_PAIRS = {"(": ")", "[": "]", "{": "}"}
+
+
+def strip_decoration(text):
+    """Украшение написания из комментария: «*Name*», «(Name)», «Name:» — но не «RVD (МГБ)».
+
+    Крайние скобки снимаем только парой. Одиночный `strip("()")` отрезал правую скобку у ника
+    «RVD (МГБ)», и такое написание не находило ни источника в архиве, ни строки в базе.
+    """
+    stripped = text.strip().strip(DECORATION)
+    while len(stripped) > 1 and BRACKET_PAIRS.get(stripped[0]) == stripped[-1]:
+        stripped = stripped[1:-1].strip().strip(DECORATION)
+    return stripped
+
+
 def clean_tok_name(s):
     """VK nickname to canonical form: strips mention markup, team tags and decoration."""
     if not s:
@@ -39,8 +67,8 @@ def clean_tok_name(s):
     s = PLAYER_ID_LINK.sub(r"\1", str(s))
     s = BRACKETED_TAG.sub("", s)
     s = BRACKETED_SUFFIX.sub("", s)
-    s = s.strip().strip("*.,_()[]-–:").lower()
-    return PLAYER_CLEAN_MAP.get(s, s)
+    cleaned = strip_decoration(s).lower()
+    return PLAYER_CLEAN_MAP.get(cleaned, cleaned)
 
 
 def clean_alias(name):

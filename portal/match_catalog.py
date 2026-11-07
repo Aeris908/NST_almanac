@@ -1,7 +1,15 @@
 """Merge the four archived match sources into one verified league calendar."""
 
+from portal.comment_origin import origin_of
 from portal.names import clean_alias, league_and_round, norm_season
 from portal.vk_sources import enrich_vk_source
+
+# Куда попадает строка-комментарий, о которой источник ничего не говорит: то же самое, что было
+# до распознавания. Меняет её только человек в редакторе — по ссылке на комментарий.
+UNPROVEN_LEAGUE = "Высшая лига"
+UNPROVEN_TOUR = "Плей-офф / Кубок"
+# Что носитель умеет говорить о строке сам, когда архивный указатель её не знает.
+CARRIER_PROVENANCE = ("source_ref", "vk_url", "vk_text")
 
 
 def from_early_archive(early_matches):
@@ -106,12 +114,18 @@ def from_sportcup_api(base_matches):
     return rows
 
 
-def append_vk_playoff_comments(vk_matches, combined_matches):
+def append_vk_playoff_comments(vk_matches, combined_matches, sources_lookup):
     """Playoff and cup rows recovered from VK comment threads.
 
     Rows are appended straight into ``combined_matches`` because every new row has
     to be deduplicated against the rows accepted before it.
+
+    Лигу и тур строка берёт у источника (`portal.comment_origin`), а не из подставки: общий
+    ярлык «Высшая лига / Плей-офф / Кубок» и ставил игру в чужой контейнер, и снимал её со
+    страницы сезона фильтром псевдо-кубковых строк. Возвращает строки, для которых
+    доказательства нет — они остаются как были и уходят в отчёт сборки.
     """
+    unproven = []
     for m in vk_matches:
         s = norm_season(m.get("season", ""))
         p1 = clean_alias(m.get("p1"))
@@ -124,21 +138,33 @@ def append_vk_playoff_comments(vk_matches, combined_matches):
         already_known = any((x["s1"], x["s2"]) in {(s1, s2), (s2, s1)} for x in encounters)
         if already_known or len(encounters) >= 4:
             continue
-        combined_matches.append(
-            {
-                "season": s,
-                "league": m.get("league", "Высшая лига"),
-                "tour": m.get("tour", "Плей-офф / Кубок"),
-                "stage": m.get("stage", "Плей-офф / Кубок"),
-                "p1": p1,
-                "p2": p2,
-                "s1": s1,
-                "s2": s2,
-                "ot": m.get("ot", False),
-                "pk": m.get("pk", False),
-                "source": "vk_comments_playoff",
-            }
-        )
+        enrich_vk_source(m, sources_lookup)
+        origin = origin_of(m.get("stage"), m.get("vk_text"), s1, s2)
+        tour = origin[1] if origin else UNPROVEN_TOUR
+        if not origin:
+            unproven.append({"season": s, "p1": p1, "p2": p2, "s1": s1, "s2": s2,
+                             "stage": m.get("stage"), "vk_url": m.get("vk_url")})
+        row = {
+            "season": s,
+            "league": origin[0] if origin else UNPROVEN_LEAGUE,
+            "tour": tour,
+            "stage": tour,
+            "p1": p1,
+            "p2": p2,
+            "s1": s1,
+            "s2": s2,
+            "ot": m.get("ot", False),
+            "pk": m.get("pk", False),
+            "source": "vk_comments_playoff",
+        }
+        # Архивный указатель строку не нашёл, но носитель помнит её собственную ссылку на
+        # комментарий (`collectors/vk_row_sources.py`): без неё в карточке проверки сверять
+        # нечего, а счёт такой строки человек правит вслепую.
+        for field in CARRIER_PROVENANCE:
+            if m.get(field):
+                row[field] = m[field]
+        combined_matches.append(row)
+    return unproven
 
 
 def build(data) -> list:
@@ -147,8 +173,14 @@ def build(data) -> list:
         *from_wiki_calendars(data.wiki_matches),
         *from_sportcup_api(data.base_matches),
     ]
-    append_vk_playoff_comments(data.vk_matches, combined_matches)
+    unproven = append_vk_playoff_comments(data.vk_matches, combined_matches, data.vk_sources_lookup)
     print(f"Total verified combined matches: {len(combined_matches)}")
+    if unproven:
+        print(f"Комментарных строк без доказательства лиги и тура: {len(unproven)}")
+        for row in unproven:
+            link = f" {row['vk_url']}" if row.get("vk_url") else " источника нет"
+            print(f"  {row['season']} {row['p1']} {row['s1']}:{row['s2']} {row['p2']}"
+                  f" (пометка носителя: {row['stage']}){link}")
     for match in combined_matches:
         enrich_vk_source(match, data.vk_sources_lookup)
     return combined_matches

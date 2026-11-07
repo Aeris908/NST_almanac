@@ -34,7 +34,7 @@ sys.path.insert(0, str(ROOT))
 
 from collectors.vk_recheck import FOREIGN, SOCCER, dump_dir, select_topics  # noqa: E402
 from portal.name_tables import TOPIC_MAP_BY_NAME  # noqa: E402
-from portal.names import clean_alias  # noqa: E402
+from portal.names import clean_alias, homoglyph_fold  # noqa: E402
 
 GROUP_ID = 66162180
 # Отчёт привязан к дате выгрузки, а не к сегодняшнему числу: обход живёт дольше суток.
@@ -101,11 +101,6 @@ def post_url(topic, cid, pos):
     строки. Без offset ссылка прыгает на первую страницу, и человек не видит, о чём речь.
     """
     return f"https://vk.com/topic-{GROUP_ID}_{topic}?offset={(int(pos or 0) // 20) * 20}#post{cid}"
-# Кириллические близнецы латинских букв: именно они рождают в архиве «BOР95» и «СentZloy».
-HOMO = str.maketrans({
-    "а": "a", "е": "e", "о": "o", "р": "p", "с": "c", "у": "y", "х": "x", "і": "i", "ѕ": "s",
-    "в": "b", "к": "k", "н": "h", "т": "t", "м": "m", "ј": "j", "ԁ": "d",
-})
 
 
 def signature(title):
@@ -156,18 +151,13 @@ def player_of(name, nicknames, lowered):
     for candidate in (bare, bare.strip("*.,_()[]")):
         if candidate in nicknames:
             return candidate
-    folded = fold(bare.strip("*.,_()[]"))
+    folded = homoglyph_fold(bare.strip("*.,_()[]"))
     hit = lowered.get(folded)
     if hit:
         return hit
     # «RVD» в комментариях — это «RVD (МГБ)» из базы: префикс с уточнением в скобках
-    prefixed = [nick for nick in nicknames if fold(nick).startswith(folded + " (")]
+    prefixed = [nick for nick in nicknames if homoglyph_fold(nick).startswith(folded + " (")]
     return prefixed[0] if len(prefixed) == 1 else None
-
-
-def fold(text):
-    """Нижний регистр плюс замена кириллических гомоглифов латинскими."""
-    return str(text).lower().translate(HOMO)
 
 
 SCORE_TOKEN = re.compile(r"(\d{1,2})\s*[:\-–]\s*(\d{1,2})")
@@ -402,7 +392,7 @@ def pair_keys(row):
     for sides in (row["sides"], row.get("labeled") or ()):
         if not all(sides):
             continue
-        key = tuple(sorted([tuple(sorted(fold(name) for name in side)) for side in sides]))
+        key = tuple(sorted([tuple(sorted(homoglyph_fold(name) for name in side)) for side in sides]))
         if key not in keys:
             keys.append(key)
     return keys
@@ -624,7 +614,7 @@ def main():
     con = sqlite3.connect(ROOT / "data" / "nst.db")
     con.row_factory = sqlite3.Row
     nicknames = {r[0] for r in con.execute("select nick from players")}
-    lowered = {fold(r[0]): r[0] for r in con.execute("select nick from players")}
+    lowered = {homoglyph_fold(r[0]): r[0] for r in con.execute("select nick from players")}
     live, all_topics = load_live()
     units = load_base(con)
     pairs = match_tournaments(live, units, con)
@@ -698,7 +688,7 @@ def main():
                             "hint": "написания нет в players — это алиас, а не новый игрок",
                         })
                     continue
-                pair = tuple(sorted([tuple(sorted(fold(name) for name in side)) for side in sides]))
+                pair = tuple(sorted([tuple(sorted(homoglyph_fold(name) for name in side)) for side in sides]))
                 candidates = by_pair.get(pair, [])
                 accepted = {score_key(item["scores"])}
                 # Сезоны 2-7 в вики-календарях записаны итогом с доигровкой: нога «4:4» живёт в
@@ -845,7 +835,7 @@ def main():
             if unresolved:
                 counts["unknown"] += 1
                 continue
-            pair = tuple(sorted([tuple(sorted(fold(name) for name in side)) for side in sides]))
+            pair = tuple(sorted([tuple(sorted(homoglyph_fold(name) for name in side)) for side in sides]))
             key = (pair, score_key(row["scores"]))
             if key in global_scores:
                 counts["matched"] += 1
@@ -884,7 +874,7 @@ def main():
     # Два написания одного игрока внутри самой базы: гомоглифы, регистр, «ss»/«ssss».
     variants_by_fold = defaultdict(list)
     for nick in sorted(nicknames):
-        variants_by_fold[fold(nick)].append(nick)
+        variants_by_fold[homoglyph_fold(nick)].append(nick)
     for folded, variants in sorted(variants_by_fold.items()):
         if len(variants) > 1:
             issues["nick_twins"].append({"folded": folded, "variants": variants,

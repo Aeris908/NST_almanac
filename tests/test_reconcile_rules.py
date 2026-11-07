@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT))
 
 from collectors.vk_reconcile import (  # noqa: E402
     REPLAY_MARK,
-    fold,
+    homoglyph_fold,
     namesake_season,
     player_of,
     season_owner,
@@ -134,7 +134,7 @@ def test_a_canonical_nick_with_a_parenthesis_survives_the_markup_strip():
     «RVD - Ric25 vs Esteban - Dopi - 1:5» (тема 33672355, комментарий 6242).
     """
     nicks = ["RVD (МГБ)", "esteban", "Ric25", "Dopi", "BOР95"]
-    lowered = {fold(nick): nick for nick in nicks}
+    lowered = {homoglyph_fold(nick): nick for nick in nicks}
     assert player_of("RVD", nicks, lowered) == "RVD (МГБ)"
     assert player_of("RVD (МГБ)", nicks, lowered) == "RVD (МГБ)"
     assert player_of("*RVD*", nicks, lowered) == "RVD (МГБ)"

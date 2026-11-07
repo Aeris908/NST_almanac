@@ -29,8 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from collectors.vk_reconcile import fold
-from portal.names import clean_alias
+from portal.names import clean_alias, homoglyph_fold
 
 SNAPSHOT = ROOT / "data" / "sportcup_games.json"
 DECISIONS = ROOT / "data" / "sportcup_decisions.json"
@@ -66,12 +65,12 @@ def score_forms(s1, s2):
 
 def classify(game, lines):
     """Куча и доказательство: строка темы, где обе стороны и счёт игры."""
-    pair = {fold(clean_alias(game["member1"]["title"])),
-            fold(clean_alias(game["member2"]["title"]))}
+    pair = {homoglyph_fold(clean_alias(game["member1"]["title"])),
+            homoglyph_fold(clean_alias(game["member2"]["title"]))}
     s1, s2 = game["scoreMember1"], game["scoreMember2"]
     hits = []
     for text, cid in lines:
-        folded = fold(text)
+        folded = homoglyph_fold(text)
         if not all(nick in folded for nick in pair):
             continue
         if not any(form in text for form in score_forms(s1, s2)):

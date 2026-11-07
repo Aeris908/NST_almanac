@@ -6,7 +6,7 @@
 против друга в одной встрече, и склейка ставит одного игрока в обе стороны.
 """
 
-from portal.names import clean_alias
+from portal.names import clean_alias, clean_tok_name
 
 
 def test_unclosed_parenthesis_returns_instead_of_recurising():
@@ -49,3 +49,15 @@ def test_valera_is_buts_and_not_centurion():
     for spelling in ("Валера", "валера", "Valera"):
         assert clean_alias(spelling) == "Буц", spelling
     assert clean_alias("LiptOn") == "Буц"
+
+
+def test_bracket_of_a_nick_survives_the_decoration_strip():
+    """Скобка ника — часть ника, а не разметка: «RVD (МГБ)» терял правый край.
+
+    `clean_tok_name` срезал её одиночным `strip("()")`, и написание «(МГБ)» распадалось в
+    «(мгб»: архивный указатель с таким ключом ничего не находил, и игры этого игрока
+    оставались без ссылки и без текста источника (Сезоны 2–7, 23 строки).
+    """
+    assert clean_tok_name("RVD (МГБ)") == "rvd (мгб)"
+    assert clean_tok_name("*RVD (МГБ)*") == "rvd (мгб)"
+    assert clean_tok_name("(Ric25)") == "ric25"

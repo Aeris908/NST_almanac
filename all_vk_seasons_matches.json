@@ -1130,7 +1130,10 @@
     "s1": 1,
     "s2": 3,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-33103100#4335#1-3#1/1",
+    "vk_url": "https://vk.com/topic-66162180_33103100?offset=300#post4335",
+    "vk_text": "Dopi - Rustin Chole 5-1 \nRustin Chole - Dopi 1-3"
   },
   {
     "season": "Season 2",
@@ -3220,7 +3223,10 @@
     "s1": 0,
     "s2": 6,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-34973011#10109#0-6#1/2",
+    "vk_url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
+    "vk_text": "ВОР95 vs Валера - 0:6, 3:10"
   },
   {
     "season": "Season 4",
@@ -3231,7 +3237,10 @@
     "s1": 3,
     "s2": 10,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-34973011#10109#3-10#2/2",
+    "vk_url": "https://vk.com/topic-66162180_34973011?offset=40#post10109",
+    "vk_text": "ВОР95 vs Валера - 0:6, 3:10"
   },
   {
     "season": "Season 4",
@@ -5695,7 +5704,10 @@
     "s1": 3,
     "s2": 3,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-36630593#14588#3-3#1/1",
+    "vk_url": "https://vk.com/topic-66162180_36630593?offset=40#post14588",
+    "vk_text": "Высшая лига - 3 тур\nKunio vs Rik25 - 2:3\nRik25 vs Kunio - 3:3 (7:5)"
   },
   {
     "season": "Season 5",
@@ -6619,7 +6631,10 @@
     "s1": 3,
     "s2": 0,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-36630593#15002#3-0#1/1",
+    "vk_url": "https://vk.com/topic-66162180_36630593?offset=140#post15002",
+    "vk_text": "1/8\nLipt0n vs Texas: 3-0"
   },
   {
     "season": "Season 5",
@@ -6630,7 +6645,10 @@
     "s1": 4,
     "s2": 1,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-36630593#15003#4-1#1/1",
+    "vk_url": "https://vk.com/topic-66162180_36630593?offset=140#post15003",
+    "vk_text": "Кубок лиг. 1/4 финала\nmafuta vs LiptOn - 4-1"
   },
   {
     "season": "Season 5",
@@ -7356,7 +7374,10 @@
     "s1": 2,
     "s2": 0,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-39660451#18305#2-0#1/1",
+    "vk_url": "https://vk.com/topic-66162180_39660451?offset=120#post18305",
+    "vk_text": "ВЛ. 4 тур.\nectoPower vs Ric25: 2-0\n5-1\n5-5 (7-6 пенальти)"
   },
   {
     "season": "Season 6",
@@ -7422,7 +7443,10 @@
     "s1": 5,
     "s2": 4,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-39660451#18316#5-4",
+    "vk_url": "https://vk.com/topic-66162180_39660451?offset=140#post18316",
+    "vk_text": "Дворовая. 5й тур.\nAJ_Maker vs Palka Palych 0:4\nPalka Palych vs AJ_Maker 5:4 (3:3 - основное время, 2:1 - буллиты)"
   },
   {
     "season": "Season 6",
@@ -7763,7 +7787,10 @@
     "s1": 1,
     "s2": 1,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-39660451#18446#1-1#1/1",
+    "vk_url": "https://vk.com/topic-66162180_39660451?offset=160#post18446",
+    "vk_text": "ВЛ. 7 тур\nectoPower vs Lipt0n: 1-1\n7-4\n6-8"
   },
   {
     "season": "Season 6",
@@ -8577,7 +8604,10 @@
     "s1": 2,
     "s2": 3,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-39660451#18823#2-3#1/1",
+    "vk_url": "https://vk.com/topic-66162180_39660451?offset=260#post18823",
+    "vk_text": "Кубок лиг 1/8 LiptOn - Tymoschuk 2:3"
   },
   {
     "season": "Season 6",
@@ -8940,7 +8970,10 @@
     "s1": 0,
     "s2": 0,
     "ot": false,
-    "pk": false
+    "pk": false,
+    "source_ref": "topic-49054760#26908#0-0",
+    "vk_url": "https://vk.com/topic-66162180_49054760?offset=60#post26908",
+    "vk_text": "3й тур\nДворовая Лига\nVasya1995 - ruby 0:0 (1:5 PEN)\nruby - Vasya1995 2:0"
   },
   {
     "season": "Season 7",
@@ -9270,7 +9303,10 @@
     "s1": 1,
     "s2": 1,
     "ot": false,
-    "pk": true
+    "pk": true,
+    "source_ref": "topic-49054760#26956#1-1#1/1",
+    "vk_url": "https://vk.com/topic-66162180_49054760?offset=100#post26956",
+    "vk_text": "Дворовая Лига. 5й тур\nruby - rodger 1:1 (4:3 PK)\nrodger - ruby 1:2"
   },
   {
     "season": "Season 7",

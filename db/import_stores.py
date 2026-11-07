@@ -480,7 +480,7 @@ def import_league(imp, rows):
             stage=row.get("stage") or row.get("tour") or "Регулярный сезон",
             names_a=names_a, names_b=names_b, s1=row.get("s1"), s2=row.get("s2"),
             phase=phase_of(row), playoff=is_playoff(row),
-            source=source, source_locator=locator,
+            source=source, source_ref=row.get("source_ref"), source_locator=locator,
             links=links, played_on=played_on, date_precision=precision,
             label_a=label_a, label_b=label_b, primary_url=row.get("vk_url"),
             league=row.get("league"), tour=row.get("tour"),
