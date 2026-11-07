@@ -1,6 +1,10 @@
-"""Add match tables to youth and club entries inside special_tournaments_data.json."""
+"""Таблицы игр молодёжного и клубного турниров в special_tournaments_data.json.
 
-import csv
+Запускать вручную не нужно: носитель уже содержит результат, а скрипт воспроизводит его не
+целиком (обогащение хроникой, `year` и `topic_id` дописывает collectors/enrich_all_tournaments.py).
+Оставлен как свидетельство того, откуда взялись строки молодёжного плей-офф.
+"""
+
 import json
 import sys
 
@@ -9,7 +13,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 with open("special_tournaments_data.json", "r", encoding="utf-8") as f:
     st_data = json.load(f)
 
-# 1. Enrich Youth 2
+# 1. Молодёжный II: плей-офф рамки становится списком игр документа.
 for t in st_data:
     if t["id"] == "youth_championship_2":
         t_matches = []
@@ -25,32 +29,19 @@ for t in st_data:
             )
         t["matches"] = t_matches
 
-    # 2. Enrich Club Offseason Goal 4
+    # 2. Клубный Goal 4: игр рамка больше не несёт — их приносит разбор листов источника.
+    # Прежний вариант читал special_tournaments/club_matches.csv и брал лигу из row[15],
+    # но в том CSV колонка 15 — «МБ» (итог серии), а «Лига» — колонка 16: все строки молча
+    # становились молодёжкой. Плюс обрезка club_m[:50] съедала Туры 5–10 и три игры с буллитами.
+    # Протокол целиком разбирает portal/club_sources.py, строки идут через db/import_live.py:
+    # рамка спецтурнира принимает только девять ключей и не умеет выразить ни ТП обоим, ни буллиты.
     if t["id"] == "club_offseason_goal4":
-        club_m = []
-        with open("special_tournaments/club_matches.csv", encoding="utf-8") as cf:
-            reader = csv.reader(cf)
-            next(reader, None)
-            for row in reader:
-                if len(row) > 6 and row[2] and row[5] and row[3] and row[4]:
-                    sc1 = row[3].strip()
-                    sc2 = row[4].strip()
-                    if sc1.isdigit() and sc2.isdigit() and (int(sc1) > 0 or int(sc2) > 0):
-                        lig = "Высшая (Премьер)" if row[15] == "в" else "Молодёжная лига"
-                        club_m.append(
-                            {
-                                "tour": f"Баттл #{row[0]} (Круг {row[1]})",
-                                "league": lig,
-                                "p1": row[2].strip(),
-                                "p2": row[5].strip(),
-                                "score": f"{sc1}:{sc2}",
-                            }
-                        )
-        t["matches"] = club_m[:50]  # Top 50 major club matches
+        t["matches"] = []
+        t["row_keys"] = ["tour", "league", "p1", "p2", "score"]
 
 with open("special_tournaments_data.json", "w", encoding="utf-8") as f:
     json.dump(st_data, f, ensure_ascii=False, indent=2)
 
-print("special_tournaments_data.json successfully enriched with matches for Youth 2 and Club Offseason!")
+print("special_tournaments_data.json: таблицы игр молодёжного и клубного турниров обновлены")
 for t in st_data:
-    print(f"  {t['title']}: {len(t.get('matches', []))} matches")
+    print(f"  {t['title']}: игр {len(t.get('matches', []))}")

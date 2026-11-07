@@ -111,10 +111,10 @@ special_tournaments.append({
 # ==========================================
 club_premier_table = [
     {"club": "Рединский отряд", "roster": "Tymoschuk (к), Romix, PacnyTHuK", "battles": 8, "w": 8, "games": 29, "gw": 22, "gwp": 2, "glp": 1, "gl": 4, "gf": 166, "ga": 103, "diff": "+63", "pts": 24},
-    {"club": "Пластиковый татарин", "roster": "Memori (к), BZK (Cyneprepou4uk), Alpharushin", "battles": 8, "w": 6, "games": 28, "gw": 20, "gwp": 0, "glp": 1, "gl": 7, "gf": 139, "ga": 97, "diff": "+42", "pts": 18},
+    {"club": "Пластиковый татарин", "roster": "Memori (к), BZK (Cyneprepou4uk), RVD (XakoFEAR)", "battles": 8, "w": 6, "games": 28, "gw": 20, "gwp": 0, "glp": 1, "gl": 7, "gf": 139, "ga": 97, "diff": "+42", "pts": 18},
     {"club": "Яжежал", "roster": "mafuta (к), izzzotope, Буц (Buts)", "battles": 8, "w": 3, "games": 26, "gw": 10, "gwp": 1, "glp": 0, "gl": 15, "gf": 55, "ga": 67, "diff": "-12", "pts": 9},
     {"club": "Геймклуб", "roster": "FC Pushistik (к), Kunio, ectoPower", "battles": 8, "w": 3, "games": 29, "gw": 12, "gwp": 1, "glp": 2, "gl": 14, "gf": 125, "ga": 139, "diff": "-14", "pts": 9},
-    {"club": "Мегадрайв", "roster": "Гостевой клуб", "battles": 8, "w": 0, "games": 24, "gw": 0, "gwp": 0, "glp": 0, "gl": 24, "gf": 26, "ga": 105, "diff": "-79", "pts": 0}
+    {"club": "Мегадрайв", "roster": "Lipetsk (к), CentZloy, Huba_Buba_5", "battles": 8, "w": 0, "games": 24, "gw": 0, "gwp": 0, "glp": 0, "gl": 24, "gf": 26, "ga": 105, "diff": "-79", "pts": 0}
 ]
 
 club_youth_table = [
@@ -122,7 +122,7 @@ club_youth_table = [
     {"club": "Яжежал (мол.)", "roster": "Dune, Wenderfit", "battles": 8, "w": 5, "games": 27, "gw": 16, "gwp": 1, "glp": 1, "gl": 9, "gf": 104, "ga": 77, "diff": "+27", "pts": 15},
     {"club": "Геймклуб (мол.)", "roster": "Jorko, Jamlight", "battles": 6, "w": 3, "games": 20, "gw": 9, "gwp": 1, "glp": 1, "gl": 9, "gf": 79, "ga": 80, "diff": "-1", "pts": 9},
     {"club": "Рединский отряд (мол.)", "roster": "Juliy_Cezar, Kot-from-ussr", "battles": 5, "w": 1, "games": 19, "gw": 7, "gwp": 0, "glp": 1, "gl": 11, "gf": 69, "ga": 79, "diff": "-10", "pts": 3},
-    {"club": "Мегадрайв (мол.)", "roster": "Гостевая молодёжка", "battles": 8, "w": 1, "games": 25, "gw": 3, "gwp": 0, "glp": 2, "gl": 20, "gf": 46, "ga": 107, "diff": "-61", "pts": 3}
+    {"club": "Мегадрайв (мол.)", "roster": "Greyson, legnahar", "battles": 8, "w": 1, "games": 25, "gw": 3, "gwp": 0, "glp": 2, "gl": 20, "gf": 46, "ga": 107, "diff": "-61", "pts": 3}
 ]
 
 special_tournaments.append({
@@ -138,7 +138,7 @@ special_tournaments.append({
     "description": "Уникальный межсезонный клубный чемпионат NST. Впервые клубы выставили два параллельных эшелона: основной состав (Премьер-Лига звезд) и молодёжные составы клубов. Сыграно более 100 матчей между клубами в сериях мини-баттлов до 3 побед.",
     "premier_league": club_premier_table,
     "youth_league": club_youth_table,
-    "key_players": ["Tymoschuk", "Romix", "PacnyTHuK", "Memori", "BZK", "Alpharushin", "mafuta", "Kunio", "ectoPower", "Dune", "Jamlight", "Kot-from-ussr", "Aeris", "Juliy_Cezar", "Буц"]
+    "key_players": ["Tymoschuk", "Romix", "PacnyTHuK", "Memori", "BZK", "RVD", "mafuta", "Kunio", "ectoPower", "Dune", "Jamlight", "Kot-from-ussr", "Aeris", "Juliy_Cezar", "Буц"]
 })
 
 # ==========================================

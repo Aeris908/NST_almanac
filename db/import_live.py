@@ -17,6 +17,9 @@
 Календари вики дают встречи командных чемпионатов, групповой тур 2-го Молодёжного разбирается
 из листов источника и отчётов в теме (`portal/youth_sources`) — те же строки носителя, только
 `kind`/`row_set` у них свои и часть строк без счёта: счёта ног источник не опубликовал.
+Клубный Goal 4 (`portal/club_sources`) целиком живёт здесь: его статическая рамка игр не несёт,
+потому что протокол требует и ТП обоим для несыгранных баттлов, и буллиты, а рамка спецтурнира
+принимает только девять ключей и ни того ни другого выразить не может.
 """
 
 import argparse
@@ -31,6 +34,7 @@ sys.path.insert(0, str(ROOT))
 
 from portal.live_sources import load_pages, team_meetings  # noqa: E402
 from portal.penalty_sources import penalty_games  # noqa: E402
+from portal.club_sources import GID_MATCHES, SHEET_DIR as CLUB_SHEET, TOURNAMENT as CLUB_TOURNAMENT, club_games  # noqa: E402
 from portal.youth_sources import TOPIC_ID, TOURNAMENT, group_stage  # noqa: E402
 from db import store  # noqa: E402
 
@@ -38,6 +42,7 @@ CARRIER = ROOT / "data" / "vk_live_matches.json"
 YOUTH_REPORT = ROOT / "data" / "youth2_group_report.json"
 YOUTH_SHEET = ROOT / "data" / "gsheet_youth"
 PENALTY_REPORT = ROOT / "data" / "penalty_report.json"
+CLUB_REPORT = ROOT / "data" / "club_goal4_report.json"
 DB_PATH = store.DB_PATH
 SOURCE = "vk_live"
 YOUTH_SEASON = "Молодёжные турниры"
@@ -115,6 +120,17 @@ def penalty_rows():
     return penalty_games(out)
 
 
+def club_rows():
+    """Клубный Goal 4: листы источника → строки носителя и отчёт о сходимости с таблицами.
+
+    Игр этого турнира статическая рамка не несёт: она принимает только девять ключей и не
+    умеет выразить ни ТП обоим, ни буллиты, а протоколу нужно и то и другое.
+    """
+    if not (CLUB_SHEET / f"{GID_MATCHES}.csv").exists():
+        return [], {}
+    return club_games(CLUB_SHEET)
+
+
 def extract():
     """Календари и тема молодёжки → носитель: встречи с турами, счётом, составом и ссылками."""
     out = dump_dir()
@@ -159,6 +175,11 @@ def extract():
                                   encoding="utf-8")
         for title, numbers in penalty_report["турниры"].items():
             stats[title] = " | ".join(f"{key}: {value}" for key, value in numbers.items())
+    club, club_report = club_rows()
+    games += club
+    if club_report:
+        CLUB_REPORT.write_text(json.dumps(club_report, ensure_ascii=False, indent=1), encoding="utf-8")
+        stats[CLUB_TOURNAMENT] = " | ".join(f"{key}: {value}" for key, value in club_report["totals"].items())
     CARRIER.write_text(json.dumps(games, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"встреч в носителе: {len(games)} → {CARRIER.name}")
     for key, value in stats.items():
