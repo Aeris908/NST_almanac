@@ -695,12 +695,14 @@ def main(argv=None):
     from db.close_early_mirrors import main as close_early_mirrors
     from db.close_shootout_wiki_dups import main as close_shootout_dups
     from db.close_sportcup_pairs import main as close_pairs
+    from db.demo_disciplines import ensure_demo_disciplines
     from db.lore_review_queue import populate_lore_review
     close_pairs()
     close_cup_pairs()
     close_early_mirrors()
     close_shootout_dups(args.db)
     populate_lore_review(con)
+    ensure_demo_disciplines(con)
     return 0
 
 

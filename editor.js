@@ -381,6 +381,9 @@
   function showMatch(row) {
     state.row = row;
     const box = el("div", "nst-edit-match");
+    if (row.discipline && row.discipline_slug !== "soccer") {
+      box.appendChild(line("дисциплина", `<b>${row.discipline}</b>`));
+    }
     box.appendChild(line("строка", `#${row.id} · ${row.tournament} · ${row.stage || ""}`));
     if (row.review) {
       const alertBox = el("div", "nst-edit-lore-box");

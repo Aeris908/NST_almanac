@@ -30,6 +30,7 @@ join side_players b on b.side_id = sb.id
 join players pa on pa.id = a.player_id
 join players pb on pb.id = b.player_id
 where m.row_set = 'catalog'
+  and t.discipline_id = 1
   -- второй показ той же игры на витрине (тот же документ источника, тот же тур, та же пара и
   -- счёт). Ставится при импорте в hidden_by и только внутри среза 'catalog': строки, чей двойник
   -- — матч рейтингового пула, остаются: пул сам на страницу не выводится.
@@ -56,7 +57,7 @@ from matches m
 join tournaments t on t.id = m.tournament_id
 join match_sides sa on sa.match_id = m.id and sa.side_index = 0
 join match_sides sb on sb.match_id = m.id and sb.side_index = 1
-where m.source = 'cup_tables' and m.hidden_by is null
+where m.source = 'cup_tables' and t.discipline_id = 1 and m.hidden_by is null
   -- см. `catalog_from_db`: снятый с зачёта матч не показывается нигде
   and m.status <> 'void'
 order by m.order_in_source

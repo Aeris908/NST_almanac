@@ -214,6 +214,7 @@ select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.not
        m.in_rating_pool, m.phase, m.is_playoff, m.played_on, m.date_precision,
        m.source, m.source_ref, m.source_locator, m.source_page, m.source_text, m.source_date_raw,
        t.season, t.name as tournament, st.name as stage, d.doc_key,
+       disc.name as discipline, disc.slug as discipline_slug,
        sa.label as label_a, sb.label as label_b, sa.score as score_a, sb.score as score_b,
        sa.outcome as outcome_a, sb.outcome as outcome_b,
        sa.id as side_a, sb.id as side_b,
@@ -232,6 +233,7 @@ select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.not
 LOCATE_FROM = """
 from matches m
 join tournaments t on t.id = m.tournament_id
+join disciplines disc on disc.id = t.discipline_id
 join stages st on st.id = m.stage_id
 join match_sides sa on sa.match_id = m.id and sa.side_index = 0
 join match_sides sb on sb.match_id = m.id and sb.side_index = 1
@@ -382,8 +384,10 @@ def _display(row):
     score = (f"{row['score_a']}:{row['score_b']}" if row["score_a"] is not None
              else (row["note"] or "—"))
     place = row["tour"] or row["stage"] or ""
-    return " • ".join(part for part in (row["season"], place, f"{row['label_a'] or row['players_a']} "
-                                        f"{score} {row['label_b'] or row['players_b']}") if part)
+    icon = {"basketball": "🏀 ", "hockey": "🏒 ", "dodgeball": "🏐 "}.get(row.get("discipline_slug"), "")
+    prefix = f"[{icon}{row['discipline']}] " if row.get("discipline_slug") and row["discipline_slug"] != "soccer" else ""
+    teams_str = f"{row['label_a'] or row['players_a']} {score} {row['label_b'] or row['players_b']}"
+    return prefix + " • ".join(part for part in (row["season"], place, teams_str) if part)
 
 
 def _like(text):
@@ -731,8 +735,10 @@ def containers(db_path=DB_PATH):
     docs = [dict(row) for row in con.execute(CONTAINERS_SQL)]
     seasons = [row[0] for row in con.execute(
         "select distinct season from tournaments order by season")]
+    disciplines = [dict(row) for row in con.execute(
+        "select id, slug, name from disciplines order by id")]
     con.close()
-    return {"docs": docs, "seasons": seasons}
+    return {"docs": docs, "seasons": seasons, "disciplines": disciplines}
 
 
 def doc_frame(doc_key, db_path=DB_PATH):
