@@ -222,12 +222,10 @@ select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.not
        (select json_group_array(json_object('kind', l.kind, 'url', l.url))
           from match_links l
          where l.match_id = m.id
-            or l.match_id = m.duplicate_of
-            or l.match_id in (select c.id from matches c where c.duplicate_of = m.id)) as links,
+            or (m.duplicate_of is not null and l.match_id = m.duplicate_of)) as links,
        (select i.payload from incoming i
           where (i.matched_match_id = m.id
-             or i.matched_match_id = m.duplicate_of
-             or i.matched_match_id in (select c.id from matches c where c.duplicate_of = m.id))
+             or (m.duplicate_of is not null and i.matched_match_id = m.duplicate_of))
             and i.verdict = 'conflict' limit 1) as review
 """
 
