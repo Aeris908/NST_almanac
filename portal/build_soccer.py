@@ -68,7 +68,15 @@ def main():
     html = render("soccer_page.html",
                   {**headline_tokens(payload["headline"]), "EDITOR_API": editor_api()})
     final_html = html.replace(DATA_PLACEHOLDER, json.dumps(payload, ensure_ascii=False))
-    OUTPUT_PATH.write_text(final_html, encoding="utf-8")
+    for attempt in range(5):
+        try:
+            OUTPUT_PATH.write_text(final_html, encoding="utf-8")
+            break
+        except OSError:
+            if attempt == 4:
+                raise
+            import time
+            time.sleep(0.5)
     print(f"Redesigned Portal successfully written to: {OUTPUT_PATH.resolve()}")
     print(f"Final File Size: {len(final_html) / 1024:.1f} KB")
 

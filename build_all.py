@@ -48,7 +48,16 @@ def copy_to_deploy():
     for name in (*PAGES, *ASSETS):
         source = ROOT / name
         if source.exists():
-            shutil.copy2(source, DEPLOY_DIR / name)
+            target = DEPLOY_DIR / name
+            for attempt in range(5):
+                try:
+                    shutil.copy2(source, target)
+                    break
+                except OSError:
+                    if attempt == 4:
+                        raise
+                    import time
+                    time.sleep(0.4)
     if (ROOT / "audio").exists():
         shutil.copytree(ROOT / "audio", DEPLOY_DIR / "audio", dirs_exist_ok=True)
 

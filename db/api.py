@@ -220,9 +220,15 @@ select m.id, m.row_set, m.status, m.manual, m.hidden_by, m.tour, m.league, m.not
        -- Редактор правит строку, не открывая базу: пусть карточка сразу показывает, откуда она
        -- взялась (ссылки источника) и что с ней не так (задача из очереди редактуры).
        (select json_group_array(json_object('kind', l.kind, 'url', l.url))
-          from match_links l where l.match_id = m.id) as links,
+          from match_links l
+         where l.match_id = m.id
+            or l.match_id = m.duplicate_of
+            or l.match_id in (select c.id from matches c where c.duplicate_of = m.id)) as links,
        (select i.payload from incoming i
-          where i.matched_match_id = m.id and i.verdict = 'conflict' limit 1) as review
+          where (i.matched_match_id = m.id
+             or i.matched_match_id = m.duplicate_of
+             or i.matched_match_id in (select c.id from matches c where c.duplicate_of = m.id))
+            and i.verdict = 'conflict' limit 1) as review
 """
 
 LOCATE_FROM = """
@@ -705,6 +711,7 @@ def queue(db_path=DB_PATH):
                       "task": payload.get("задача") or "", "links": payload.get("ссылки") or [],
                       "tour": payload.get("тур") or "", "sides": payload.get("стороны") or [],
                       "shown": payload.get("как_выглядит") or "",
+                      "algorithm_doubt": payload.get("алгоритм_сомнение") or "",
                       "row": _candidate(card) if card else None})
     con.close()
     return tasks

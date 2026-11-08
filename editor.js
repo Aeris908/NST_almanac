@@ -158,6 +158,7 @@
     bar.appendChild(field);
     bar.appendChild(login);
     bar.appendChild(el("span", "nst-edit-status", "подключение…"));
+    let queueButton = null;
     const buttons = el("div", "nst-edit-actions");
     for (const [label, action] of [["очередь", "queue"], ["найти", "search"],
                                    ["новая игра", "match"],
@@ -166,6 +167,7 @@
                                    ["обновить", "state"], ["скрыть", "hide"]]) {
       const button = el("button", null, label);
       button.type = "button";
+      if (action === "queue") queueButton = button;
       button.onclick = () => {
         if (action === "hide") return document.body.classList.remove("nst-edit-on");
         if (action === "queue") return showQueue();
@@ -194,6 +196,18 @@
         state.publish = [];  // сервер старее страницы: ручки нет — счётчика нет
       }
       paintPublishQueue();
+      const qBtn = bar.querySelector(".nst-edit-actions button");
+      if (qBtn) {
+        if (answer.queue > 0) {
+          qBtn.textContent = `очередь (${answer.queue}) ⚠️`;
+          qBtn.classList.add("nst-edit-btn-alert");
+          qBtn.title = `Есть задачи на проверку лороведом (${answer.queue})`;
+        } else {
+          qBtn.textContent = "очередь";
+          qBtn.classList.remove("nst-edit-btn-alert");
+          qBtn.title = "Очередь редактуры пуста";
+        }
+      }
       say(`ревизия ${answer.revision} · матчей ${answer.matches} · правок живых ${answer.corrections_live}`
         + ` · ручных строк ${answer.manual} · в очереди ${answer.queue}` + publishWord(state.publish));
     } catch (error) {
@@ -369,7 +383,39 @@
     const box = el("div", "nst-edit-match");
     box.appendChild(line("строка", `#${row.id} · ${row.tournament} · ${row.stage || ""}`));
     if (row.review) {
-      box.appendChild(el("p", "nst-edit-note", `<b>задача из очереди:</b> ${row.review["задача"]}`));
+      const alertBox = el("div", "nst-edit-lore-box");
+      alertBox.appendChild(el("div", "nst-edit-lore-header", "⚠️ ЗАДАЧА НА ПРОВЕРКУ ЛОРОВЕДУ (СОМНЕНИЕ АЛГОРИТМА)"));
+      if (row.review["алгоритм_сомнение"]) {
+        alertBox.appendChild(el("div", "nst-edit-lore-doubt",
+          `<b>Сомнение алгоритма:</b> ${row.review["алгоритм_сомнение"]}`));
+      }
+      alertBox.appendChild(el("div", "nst-edit-lore-task",
+        `<b>Что проверить:</b> ${row.review["задача"]}`));
+      if (row.review["как_выглядит"]) {
+        alertBox.appendChild(el("div", "nst-edit-lore-current",
+          `<b>В базе сейчас:</b> ${row.review["как_выглядит"]}`));
+      }
+      const revLinks = row.review["ссылки"] || [];
+      if (revLinks.length) {
+        const linksLine = el("div", "nst-edit-lore-links");
+        linksLine.appendChild(el("b", null, "Первоисточники: "));
+        revLinks.forEach((url, i) => {
+          let label = `ссылка ${i + 1}`;
+          if (url.includes("topic-") || url.includes("vk.com") || url.includes("vk.ru")) label = "пост/тема ВК";
+          if (url.includes("video")) label = "видеозапись";
+          if (url.includes("docs.google.com") || url.includes("spreadsheets")) label = "Google Таблица";
+          const a = document.createElement("a");
+          a.href = url;
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.className = "nst-edit-lore-link";
+          a.textContent = label;
+          linksLine.appendChild(a);
+          linksLine.appendChild(document.createTextNode(" "));
+        });
+        alertBox.appendChild(linksLine);
+      }
+      box.appendChild(alertBox);
     }
     const hrefs = (row.links || []).map((link) =>
       `<a href="${link.url}" target="_blank" rel="noopener">${LINK_WORDS[link.kind] || link.kind}</a>`).join(" · ");
@@ -1130,23 +1176,58 @@
     try {
       const answer = await call("/api/queue");
       const box = el("div", "nst-edit-queue");
-      if (!answer.tasks.length) box.appendChild(el("p", "nst-edit-note", "очередь пуста — всё разобрано"));
+      if (!answer.tasks.length) {
+        box.appendChild(el("p", "nst-edit-note", "очередь пуста — все задачи проверены"));
+        return openPanel("очередь лороведа: 0", box);
+      }
+      const intro = el("p", "nst-edit-note",
+        `Всего задач на проверку: <b>${answer.tasks.length}</b>. Алгоритм выявил ситуации, требующие решения лороведа.`);
+      box.appendChild(intro);
+
       for (const task of answer.tasks) {
-        const item = el("div", "nst-edit-task");
-        const where = [task.tour, (task.sides || []).join(" — "), task.shown].filter(Boolean).join(" · ");
-        item.appendChild(el("div", "nst-edit-line", `<b>${where}</b>`));
-        item.appendChild(el("div", "nst-edit-note", task.task));
-        const hrefs = (task.links || []).map((url, index) =>
-          `<a href="${url}" target="_blank" rel="noopener">ссылка ${index + 1}</a>`).join(" · ");
-        if (hrefs) item.appendChild(el("div", "nst-edit-line", hrefs));
-        const open = el("button", null, task.row ? "к строке" : "строки в базе нет");
+        const item = el("div", "nst-edit-task nst-edit-task-card");
+        const header = el("div", "nst-edit-task-header");
+        let badgeLabel = task.batch;
+        if (task.batch && task.batch.startsWith("lore_review")) badgeLabel = "⭐ Кубок лиг / Рейтинг";
+        else if (task.batch && task.batch.includes("41270759")) badgeLabel = "Командный / Молодёжка";
+        else if (task.batch && task.batch.includes("33437511")) badgeLabel = "Пенальти / Сетка";
+        header.appendChild(el("span", "nst-edit-task-badge", badgeLabel));
+        const where = [task.tour, (task.sides || []).join(" — ")].filter(Boolean).join(" · ");
+        if (where) header.appendChild(el("span", "nst-edit-task-where", where));
+        item.appendChild(header);
+
+        if (task.algorithm_doubt) {
+          item.appendChild(el("div", "nst-edit-lore-doubt",
+            `<b>⚠️ Сомнение алгоритма:</b> ${task.algorithm_doubt}`));
+        }
+        item.appendChild(el("div", "nst-edit-lore-task", `<b>Что проверить:</b> ${task.task}`));
+
+        if (task.shown) {
+          item.appendChild(el("div", "nst-edit-lore-current", `<b>В базе сейчас:</b> <i>${task.shown}</i>`));
+        }
+
+        const hrefs = (task.links || []).map((url, index) => {
+          let label = `ссылка ${index + 1}`;
+          if (url.includes("topic-") || url.includes("vk.com") || url.includes("vk.ru")) label = "пост/тема ВК";
+          if (url.includes("video")) label = "видеозапись";
+          if (url.includes("docs.google.com") || url.includes("spreadsheets")) label = "Google Таблица";
+          return `<a href="${url}" target="_blank" rel="noopener" class="nst-edit-lore-link">${label}</a>`;
+        }).join(" ");
+        if (hrefs) {
+          const linksDiv = el("div", "nst-edit-lore-links");
+          linksDiv.innerHTML = `<b>Первоисточники:</b> ${hrefs}`;
+          item.appendChild(linksDiv);
+        }
+
+        const open = el("button", null, task.row ? "🔍 перейти к редактированию строки" : "строки в базе нет");
         open.type = "button";
         if (task.row) open.onclick = () => showMatch(task.row);
         else open.disabled = true;
         item.appendChild(open);
+
         box.appendChild(item);
       }
-      return openPanel(`очередь редактуры: ${answer.tasks.length}`, box);
+      return openPanel(`очередь лороведа: ${answer.tasks.length}`, box);
     } catch (error) {
       return say(error.message, "error");
     }
