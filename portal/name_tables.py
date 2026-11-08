@@ -430,5 +430,7 @@ ALIAS_MAP = {
     # IV Командный: в календаре «esteban», в цитатнике то «Esteban». Один игрок, одно написание.
     "esteban": "esteban",
     "Esteban": "esteban",
+    "мафута": "mafuta",
+    "mafuta": "mafuta",
 }
 ALIAS_MAP_LOWER = {k.lower(): v for k, v in ALIAS_MAP.items()}
