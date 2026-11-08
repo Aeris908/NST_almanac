@@ -133,6 +133,10 @@ def catalog_from_db(db_path=DB_PATH):
             "pk": penalties,
             "source": raw_source(record["source"], record["source_locator"]),
         }
+        if record["s1"] == record["s2"] and record["outcome_a"] in ("win", "loss"):
+            # Счёт равный, а победитель есть: ногу решила серия. Исход сторон знает то, чего счёт
+            # не говорит, и без него история игрока показала бы ничью там, где матч выигран.
+            row["outcome"] = [record["outcome_a"], record["outcome_b"]]
         if record["source"] == SPORTCUP_SOURCE:
             # from_sportcup_api выдаёт эти три ключа всегда, а не только для технических строк:
             # убирать их у обычных матчей — значит менять payload страницы.

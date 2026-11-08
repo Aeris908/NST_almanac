@@ -25,6 +25,7 @@ from db.build_db import ensure_player, ensure_stage, ensure_tournament, fold_dup
 from db.docs import store_docs  # noqa: E402
 from db.fields import outcomes_for, phase_of  # noqa: E402
 from portal import dataset  # noqa: E402
+from portal.comment_origin import series_for_sides
 from portal.cup_tables import DEFAULT_CUP_YEAR, HISTORIC_CUPS_DATA  # noqa: E402
 from portal.match_catalog import build as build_catalog  # noqa: E402
 from portal.names import clean_alias  # noqa: E402
@@ -473,13 +474,23 @@ def import_league(imp, rows):
                  (("vk_post", "vk_url"), ("video", "video_url")) if row.get(key)]
         played_on, precision, raw_date = date_of(row)
         source, locator = split_source(row.get("source"))
+        # Нога, сыгранная вничью и решённая серией: счёт остаётся ничейным (голы-то равные), а
+        # исход сторонам даёт серия. Фаза обязана это сказать — валидатор принимает победу при
+        # равном счёте только вне regular-этапа, а читатель иначе показал бы ничью.
+        phase = phase_of(row)
+        outcomes = None
+        series = series_for_sides(row.get("vk_text"), row.get("s1"), row.get("s2"),
+                                  row.get("p1"), row.get("p2"))
+        if series:
+            phase = "overtime_penalties" if row.get("ot") else "penalties"
+            outcomes = ("win", "loss") if series[0] > series[1] else ("loss", "win")
         imp.add(
             tournament=f"{row['season']} {row.get('league') or 'лига'}",
             season=row["season"],
             kind="cup" if "Кубок" in str(row.get("league")) else "league",
             stage=row.get("stage") or row.get("tour") or "Регулярный сезон",
             names_a=names_a, names_b=names_b, s1=row.get("s1"), s2=row.get("s2"),
-            phase=phase_of(row), playoff=is_playoff(row),
+            phase=phase, playoff=is_playoff(row),
             source=source, source_ref=row.get("source_ref"), source_locator=locator,
             links=links, played_on=played_on, date_precision=precision,
             label_a=label_a, label_b=label_b, primary_url=row.get("vk_url"),
@@ -489,6 +500,7 @@ def import_league(imp, rows):
             technical=bool(row.get("is_technical")),
             technical_loser=row.get("technical_loser"),
             note=str(row.get("note") or ""),
+            outcomes=outcomes,
         )
 
 

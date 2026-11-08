@@ -7,6 +7,9 @@ from portal.names import clean_alias, match_sort_key
 from portal.vk_sources import enrich_vk_source
 
 VK_FIELDS = ("vk_url", "video_url", "vk_text", "vk_date", "vk_page")
+# Исход стороны, который база хранит отдельно от счёта: нога может кончиться вничью по голам
+# и всё равно иметь победителя — его решает серия буллитов (`db/import_stores.py: import_league`).
+RESULT_BY_OUTCOME = {"win": "ПОБЕДА", "loss": "ПОРАЖЕНИЕ", "draw": "НИЧЬЯ"}
 
 
 def parse_scores(raw_score):
@@ -105,10 +108,13 @@ def add_season_records(player_matches, addon, m):
     is_cup = "кубок" in league.lower()
     is_tech = m.get("is_technical", False) or m.get("is_forfeit", False)
     tech_loser = m.get("technical_loser") if is_tech else None
+    decided = m.get("outcome")
 
     if is_tech:
         p1_res = "ТП (ПОРАЖЕНИЕ)" if p1 == tech_loser else "ТП (ПОБЕДА)"
         p2_res = "ТП (ПОРАЖЕНИЕ)" if p2 == tech_loser else "ТП (ПОБЕДА)"
+    elif decided:
+        p1_res, p2_res = (RESULT_BY_OUTCOME[outcome] for outcome in decided)
     else:
         p1_res, p2_res = result_of(s1, s2), result_of(s2, s1)
 
@@ -150,6 +156,10 @@ def add_season_records(player_matches, addon, m):
         tally_winnable_match(addon, p1, p2, pk=pk, ot=ot)
     elif s2 > s1:
         tally_winnable_match(addon, p2, p1, pk=pk, ot=ot)
+    elif decided:
+        # Ничья по голам, решённая серией: в зачёт идёт победитель серии, а не ничья обеим.
+        winner, loser = (p1, p2) if decided[0] == "win" else (p2, p1)
+        tally_winnable_match(addon, winner, loser, pk=pk, ot=ot)
     else:
         addon[p1]["draws"] += 1
         addon[p2]["draws"] += 1

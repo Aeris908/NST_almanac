@@ -13,6 +13,9 @@
 
 import re
 
+from portal.name_tables import ALIAS_MAP
+from portal.names import clean_alias, homoglyph_fold
+
 # Разговорные названия дивизионов в комментариях: «вышка», «ВЛ», «Высшая Soccer League».
 LEAGUE_MARKS = (
     (re.compile(r"высш|вышк|(?<![a-zа-я])вл(?![a-zа-я])", re.IGNORECASE), "Высшая лига"),
@@ -44,25 +47,91 @@ def score_in_text(text, s1, s2):
                           str(text)))
 
 
-SERIES_IN_BRACKETS = re.compile(r"[(\[]\s*(\d{1,2})\s*[:\-–]\s*(\d{1,2})[^)\]]*[)\]]")
+# Пометка доигровки, которой источник подписывает серию: «(PK 6:7)», «(ПК 2-5)», «(пк: 9-7)»,
+# «6-6 PK 5:4», «2:2 7:6пен.». Словарь тот же, что у сверки комментариев (`collectors/vk_reconcile`).
+PENALTY_MARK = r"(?:пк|рк|пен|буллит|pk|rk|shootout)"
+SERIES_IN_BRACKETS = re.compile(
+    rf"[(\[]\s*(?:{PENALTY_MARK}\s*[:.\-]?\s*)?(\d{{1,2}})\s*[:\-–]\s*(\d{{1,2}})[^)\]]*[)\]]",
+    re.IGNORECASE)
+SERIES_AFTER_MARK = re.compile(
+    rf"{PENALTY_MARK}\s*[:.\-]?\s*(\d{{1,2}})\s*[:\-–]\s*(\d{{1,2}})", re.IGNORECASE)
+SERIES_BEFORE_MARK = re.compile(
+    rf"(\d{{1,2}})\s*[:\-–]\s*(\d{{1,2}})\s*{PENALTY_MARK}", re.IGNORECASE)
+SERIES_PATTERNS = (SERIES_IN_BRACKETS, SERIES_AFTER_MARK, SERIES_BEFORE_MARK)
 
 
 def shootout_of(text, s1, s2):
-    """Серия буллитов ноги, названная в скобках после ничейного счёта: «4-4 (3-1)», «1:1 (4:3 PK)».
+    """Серия буллитов ноги, названная рядом с ничейным счётом: «4-4 (3-1)», «1:1 (4:3 PK)».
 
     Носитель приходит с `pk: false` даже там, где комментарий серию называет, — нога теряла
     исход и выглядела ничьей. Скобки смотрим только при равном счёте: после неравного там стоит
     пояснение или счёт другой ноги, а не доигровка. Та же конвенция, что в разборе ячейки счёта
     (`portal.player_records.parse_score_cell`): серия решает ничью, но не подменяет счёт.
+
+    Порядок сторон здесь НЕ учитывается: функция говорит «серия названа», а чья она — решает
+    `series_for_sides`. Признак буллитов от порядка не зависит, исход — зависит.
     """
     if s1 != s2 or not text:
         return None
     for line in str(text).splitlines():
         if not score_in_text(line, s1, s2):
             continue
-        found = SERIES_IN_BRACKETS.search(line)
-        if found:
-            return int(found.group(1)), int(found.group(2))
+        for pattern in SERIES_PATTERNS:
+            found = pattern.search(line)
+            if not found:
+                continue
+            series = int(found.group(1)), int(found.group(2))
+            # Серия всегда с победителем. Равная пара — счёт самой ноги в скобках: ранний архив
+            # пишет «E_not - WiSe (3 - 3)», и прежде такая строка получала признак буллитов.
+            if series[0] != series[1]:
+                return series
+    return None
+
+
+def side_spots(line, p1, p2):
+    """Где в строке стоит каждая сторона — по любому написанию справочника; None — не узнана.
+
+    Границы обязательны: короткий алиас «вор» складывается в «bop» и без них находился бы внутри
+    «Дворовая лига» и внутри «BOP213», выдавая чужого игрока за сторону этой ноги.
+    """
+    folded = homoglyph_fold(line)
+    spots = []
+    for name in (p1, p2):
+        canonical = clean_alias(name) or name
+        variants = {canonical} | {alias for alias, nick in ALIAS_MAP.items() if nick == canonical}
+        hits = []
+        for variant in variants:
+            found = re.search(rf"(?<!\w){re.escape(homoglyph_fold(variant))}(?!\w)", folded)
+            if found:
+                hits.append(found.start())
+        if not hits:
+            return None
+        spots.append(min(hits))
+    return tuple(spots)
+
+
+def series_for_sides(text, s1, s2, p1, p2):
+    """Серия буллитов ноги в порядке сторон базы: ``(очки p1, очки p2)`` или None.
+
+    Комментарий пишет стороны вразнобой с базой («Mcfly- Dune 4-4 (5-6)» при первой стороне Dune),
+    поэтому серия переворачивается по тому, чьё имя стоит в строке раньше. Порядок берётся у самой
+    строки, а если она имён не несёт (Sportcup перечисляет ноги под шапкой «ectoPower vs Romix:») —
+    у последней строки выше, где названы обе стороны. Когда сторону не узнаёт ни строка, ни шапка,
+    серия не возвращается: угадывать победителя нельзя, нога остаётся ничьей и уходит в отчёт.
+    """
+    series = shootout_of(text, s1, s2)
+    if not series:
+        return None
+    frame = None
+    for line in str(text).splitlines():
+        spots = side_spots(line, p1, p2)
+        if spots:
+            frame = spots
+        if score_in_text(line, s1, s2) and shootout_of(line, s1, s2) == series:
+            order = spots or frame
+            if not order:
+                return None
+            return series if order[0] < order[1] else (series[1], series[0])
     return None
 
 

@@ -15,6 +15,18 @@
       return (value === null || value === undefined) ? '—' : value.toFixed(1);
     }
 
+    // Нога, сыгранная вничью по голам, может иметь победителя: его решает серия буллитов.
+    // База кладёт исход сторон в m.outcome, а счёт оставляет ничейным — голы-то равные.
+    // Таблицы сезона и дуэли обязаны считать ту же победу, что и история игрока.
+    function matchWinnerSide(m) {
+      const s1 = Number(m.s1 || 0), s2 = Number(m.s2 || 0);
+      if (s1 > s2) return 1;
+      if (s2 > s1) return 2;
+      const decided = m.outcome;
+      if (decided && decided[0] !== decided[1]) return decided[0] === 'win' ? 1 : 2;
+      return 0;
+    }
+
 
 
     let currentDivisionFilter = 'active';
@@ -1289,6 +1301,8 @@
 
               const p2Low = (m.p2 || '').toLowerCase();
 
+              const won = matchWinnerSide(m);
+
               if (p1Low === pLow) {
 
                 stat.matches += 1;
@@ -1297,9 +1311,9 @@
 
                 stat.goals_against += m.s2;
 
-                if (m.s1 > m.s2) stat.wins += 1;
+                if (won === 1) stat.wins += 1;
 
-                else if (m.s1 < m.s2) stat.losses += 1;
+                else if (won === 2) stat.losses += 1;
 
               } else if (p2Low === pLow) {
 
@@ -1309,9 +1323,9 @@
 
                 stat.goals_against += m.s1;
 
-                if (m.s2 > m.s1) stat.wins += 1;
+                if (won === 2) stat.wins += 1;
 
-                else if (m.s2 < m.s1) stat.losses += 1;
+                else if (won === 1) stat.losses += 1;
 
               }
 
@@ -3170,35 +3184,15 @@
 
 
 
-      const p1Wins = pairMatches.filter(m => {
-
-        const isP1Home = (m.p1 || '').toLowerCase() === p1Low;
-
-        const s1 = Number(m.s1 || 0);
-
-        const s2 = Number(m.s2 || 0);
-
-        return isP1Home ? s1 > s2 : s2 > s1;
-
-      }).length;
+      const p1Wins = pairMatches.filter(m => matchWinnerSide(m) === ((m.p1 || '').toLowerCase() === p1Low ? 1 : 2)).length;
 
 
 
-      const p2Wins = pairMatches.filter(m => {
-
-        const isP2Home = (m.p1 || '').toLowerCase() === p2Low;
-
-        const s1 = Number(m.s1 || 0);
-
-        const s2 = Number(m.s2 || 0);
-
-        return isP2Home ? s1 > s2 : s2 > s1;
-
-      }).length;
+      const p2Wins = pairMatches.filter(m => matchWinnerSide(m) === ((m.p1 || '').toLowerCase() === p2Low ? 1 : 2)).length;
 
 
 
-      const draws = pairMatches.filter(m => Number(m.s1 || 0) === Number(m.s2 || 0)).length;
+      const draws = pairMatches.filter(m => matchWinnerSide(m) === 0).length;
 
 
 
@@ -3644,35 +3638,15 @@
 
 
 
-        const p1Wins = pairMatches.filter(m => {
-
-          const isP1Home = (m.p1 || '').toLowerCase() === p1Low;
-
-          const s1 = Number(m.s1 || 0);
-
-          const s2 = Number(m.s2 || 0);
-
-          return isP1Home ? s1 > s2 : s2 > s1;
-
-        }).length;
+        const p1Wins = pairMatches.filter(m => matchWinnerSide(m) === ((m.p1 || '').toLowerCase() === p1Low ? 1 : 2)).length;
 
 
 
-        const p2Wins = pairMatches.filter(m => {
-
-          const isP2Home = (m.p1 || '').toLowerCase() === p2Low;
-
-          const s1 = Number(m.s1 || 0);
-
-          const s2 = Number(m.s2 || 0);
-
-          return isP2Home ? s1 > s2 : s2 > s1;
-
-        }).length;
+        const p2Wins = pairMatches.filter(m => matchWinnerSide(m) === ((m.p1 || '').toLowerCase() === p2Low ? 1 : 2)).length;
 
 
 
-        const draws = pairMatches.filter(m => Number(m.s1 || 0) === Number(m.s2 || 0)).length;
+        const draws = pairMatches.filter(m => matchWinnerSide(m) === 0).length;
 
         const p1Goals = pairMatches.reduce((acc, m) => acc + ((m.p1 || '').toLowerCase() === p1Low ? Number(m.s1 || 0) : Number(m.s2 || 0)), 0);
 
