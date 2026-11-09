@@ -1,0 +1,68 @@
+/* Каталог игроков — «выпускной альбом». Самодостаточный стиль, не связан с soccer.css. */
+:root {
+  --album-paper: #f4ecd8;
+  --album-paper-dark: #e7d9bd;
+  --album-ink: #2b2418;
+  --album-muted: #6b5d45;
+  --album-accent: #8a3324;
+  --album-gold: #b8860b;
+  --album-frame: #fffdf7;
+  --font-cover: 'Playfair Display', serif;
+  --font-hand: 'Marck Script', cursive;
+  --font-body: 'Rubik', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  color: var(--album-ink);
+  background: var(--album-paper);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(184,134,11,0.06), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0 1px, transparent 1px 28px);
+  line-height: 1.5;
+  padding-bottom: 52px; /* фиксированная аудио-дека */
+}
+/* Обложка */
+.album-cover { text-align: center; padding: 44px 20px 20px; }
+.album-kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; color: var(--album-muted); }
+.album-cover h1 { font-family: var(--font-cover); font-size: 44px; font-weight: 800; color: var(--album-accent); margin: 6px 0; }
+.album-sub { font-size: 15px; color: var(--album-muted); }
+.album-home { display: inline-block; margin-top: 12px; font-size: 13px; color: var(--album-gold); text-decoration: none; }
+.album-home:hover { text-decoration: underline; }
+/* Сетка альбома */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 26px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+.album-card {
+  background: var(--album-frame);
+  border: 1px solid var(--album-paper-dark);
+  border-radius: 4px;
+  padding: 16px 16px 18px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.12);
+  text-align: center;
+}
+.album-card:nth-child(odd) { transform: rotate(-0.6deg); }
+.album-card:nth-child(even) { transform: rotate(0.6deg); }
+.album-photo img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border: 6px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  background: var(--album-paper-dark);
+}
+.album-name { font-family: var(--font-hand); font-size: 30px; color: var(--album-accent); margin: 10px 0 4px; }
+.album-badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 3px; border: 1px solid var(--album-muted); color: var(--album-muted); }
+.album-badge.active { border-color: #2e7d32; color: #2e7d32; }
+.album-badge.hall { border-color: var(--album-gold); color: var(--album-gold); }
+.album-disc { font-size: 12px; color: var(--album-muted); margin-top: 8px; }
+.album-quote { font-style: italic; font-size: 13px; color: var(--album-muted); margin: 8px 0; }
+.album-stats { font-family: var(--font-mono); font-size: 12px; margin-top: 8px; }
+/* Подвал */
+.album-footer { text-align: center; padding: 20px; font-size: 12px; color: var(--album-muted); border-top: 1px solid var(--album-paper-dark); }
+.album-footer-links { margin-top: 6px; }
+.album-footer a { color: var(--album-accent); text-decoration: none; }
+.album-footer a:hover { text-decoration: underline; }
