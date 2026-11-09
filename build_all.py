@@ -26,13 +26,15 @@ BUILDERS = (
     ("Building soccer portal (soccer.html)", "build_nekketsu_portal_v2.py"),
     ("Building quotes almanac (quotes.html)", "build_quotes_page.py"),
     ("Building landing hub (index.html)", "build_landing_page.py"),
+    ("Building player catalog (players.html)", "build_players_page.py"),
 )
 # Шаги, которые пересоздают срез. Их немного, и они всегда идут первыми: пропуск означает
 # «читать базу такой, какая она есть», а не «собрать её заново из носителей».
 STORE_STEPS = ("db/build_db.py", "db/import_stores.py", "db/import_live.py")
 
-PAGES = ("index.html", "soccer.html", "quotes.html")
-ASSETS = ("audio-player.js", "audio-player.css", "soccer.css", "soccer.js", "editor.js", "editor.css")
+PAGES = ("index.html", "soccer.html", "quotes.html", "players.html")
+ASSETS = ("audio-player.js", "audio-player.css", "soccer.css", "soccer.js", "editor.js", "editor.css",
+          "players.js", "players.css")
 
 
 def build_pages(from_store=False):
