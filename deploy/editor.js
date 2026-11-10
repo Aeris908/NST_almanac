@@ -7,9 +7,12 @@
   const params = new URLSearchParams(location.search);
   if (!params.has("edit")) return;
 
+  const isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  const rawMeta = document.querySelector('meta[name="nst-editor-api"]')?.content || "";
+  const metaApi = (rawMeta === "." || (!isLocal && rawMeta.includes("127.0.0.1"))) ? "" : rawMeta;
   const API_BASE = params.get("api")
-    || document.querySelector('meta[name="nst-editor-api"]')?.content
-    || "http://127.0.0.1:8090";
+    || metaApi
+    || (isLocal ? "http://127.0.0.1:8090" : "");
 
   const state = { token: sessionStorage.getItem("nstEditorToken") || "", revision: null, row: null,
     publish: [] };
