@@ -60,6 +60,21 @@ CREATE TABLE series (
     order_index   INTEGER NOT NULL DEFAULT 0
 );
 
+-- Документ турнира: то, что ведёт человек текстом, — заголовок, описание, хроника, призовой
+-- фонд, итоговые таблицы (groups / divisions / playoff / ladder). Списки игр в payload остаются
+-- пустыми: сами игры живут в matches, а читатель (db/docs.py) навешивает их обратно.
+CREATE TABLE tournament_docs (
+    id          INTEGER PRIMARY KEY,
+    kind        TEXT NOT NULL CHECK (kind IN ('special', 'team')),
+    doc_key     TEXT NOT NULL UNIQUE,       -- 'blitz_10' | 'team_champ_6' — id носителя
+    title       TEXT NOT NULL,
+    payload     TEXT NOT NULL,              -- JSON-рамка: весь документ, но списки игр пустые
+    match_field TEXT NOT NULL,              -- ключ, которым документ показывает свои игры
+    match_keys  TEXT NOT NULL,              -- порядок ключей строки игры, как их дал носитель
+    manual      INTEGER NOT NULL DEFAULT 0, -- 1 = рамку правил редактор, импортёр её не перезапишет
+    order_index INTEGER NOT NULL DEFAULT 0
+);
+
 -- ────────────────────────────── матчи ──────────────────────────────
 
 CREATE TABLE matches (
@@ -169,22 +184,7 @@ CREATE TABLE incoming (
 -- сам: «already exists» и «duplicate column name» db/build_db.py считает нормой. Новый объект —
 -- сюда, отдельного списка миграций в проекте нет.
 
--- Документ турнира: то, что ведёт человек текстом, — заголовок, описание, хроника, призовой
--- фонд, итоговые таблицы (groups / divisions / playoff / ladder). Списки игр в payload остаются
--- пустыми: сами игры живут в matches, а читатель (db/docs.py) навешивает их обратно. Иначе одна
--- и та же игра существовала бы в базе дважды — уже по-разному в двух местах.
-create table if not exists tournament_docs (
-    id          INTEGER PRIMARY KEY,
-    kind        TEXT NOT NULL CHECK (kind IN ('special', 'team')),
-    doc_key     TEXT NOT NULL UNIQUE,       -- 'blitz_10' | 'team_champ_6' — id носителя
-    title       TEXT NOT NULL,
-    payload     TEXT NOT NULL,              -- JSON-рамка: весь документ, но списки игр пустые
-    match_field TEXT NOT NULL,              -- ключ, которым документ показывает свои игры
-    match_keys  TEXT NOT NULL,              -- порядок ключей строки игры, как их дал носитель
-    manual      INTEGER NOT NULL DEFAULT 0, -- 1 = рамку правил редактор, импортёр её не перезапишет
-    order_index INTEGER NOT NULL DEFAULT 0
-);
-alter table matches add column doc_id INTEGER REFERENCES tournament_docs(id);
+-- tournament_docs перенесён в основную схему перед matches для поддержки строгих FK в Postgres.
 
 -- Состав стороны, который вписал человек. Разбор источника ошибается именно здесь (не тот ник
 -- подставился, потерялся партнёр), а `side_players` — производный список: он перестраивается по
