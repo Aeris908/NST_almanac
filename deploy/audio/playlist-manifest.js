@@ -6,20 +6,20 @@ window.NEKKETSU_AUDIO_MANIFEST = {
     "folder": "audio/hub/",
     "tracks": [
       {
-        "title": "Kazuo Sawa - Ending Theme 2 ~Joke~ (Unused)",
-        "artist": "Kazuo Sawa",
-        "album": "River City Ransom",
-        "file": "audio/hub/Ending Theme 2 ~Joke~.mp3",
-        "filename": "Ending Theme 2 ~Joke~.mp3",
-        "is_placeholder": false
+        "title": "Nekketsu Koukou - Title Screen (Закиньте .mp3 в audio/hub/)",
+        "artist": "Technos Japan",
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/hub/track_1.mp3",
+        "filename": "track_1.mp3",
+        "is_placeholder": true
       },
       {
-        "title": "Kazuo Sawa - Hasebe ~Melody of Love~",
-        "artist": "Kazuo Sawa",
-        "album": "River City Ransom",
-        "file": "audio/hub/Hasebe ~Melody of Love~.mp3",
-        "filename": "Hasebe ~Melody of Love~.mp3",
-        "is_placeholder": false
+        "title": "River City Ransom - Main Street (Закиньте .mp3 в audio/hub/)",
+        "artist": "Technos Japan",
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/hub/track_2.mp3",
+        "filename": "track_2.mp3",
+        "is_placeholder": true
       }
     ]
   },
@@ -29,36 +29,28 @@ window.NEKKETSU_AUDIO_MANIFEST = {
     "folder": "audio/soccer/",
     "tracks": [
       {
-        "title": "Technos Japan - Game Mode Selection",
+        "title": "Goal 3 - Match Theme 1 (Закиньте .mp3 в audio/soccer/)",
         "artist": "Technos Japan",
-        "album": "Kunio-kun no Nekketsu Soccer",
-        "file": "audio/soccer/Game Mode Selection.mp3",
-        "filename": "Game Mode Selection.mp3",
-        "is_placeholder": false
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/soccer/track_1.mp3",
+        "filename": "track_1.mp3",
+        "is_placeholder": true
       },
       {
-        "title": "Technos Japan - Nekketsu Typhoon",
+        "title": "Goal 3 - Match Theme 2 (Закиньте .mp3 в audio/soccer/)",
         "artist": "Technos Japan",
-        "album": "Kunio-kun no Nekketsu Soccer",
-        "file": "audio/soccer/Nekketsu Typhoon.mp3",
-        "filename": "Nekketsu Typhoon.mp3",
-        "is_placeholder": false
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/soccer/track_2.mp3",
+        "filename": "track_2.mp3",
+        "is_placeholder": true
       },
       {
-        "title": "Technos Japan Cup Theme",
+        "title": "Goal 3 - Tournament Menu (Закиньте .mp3 в audio/soccer/)",
         "artist": "Technos Japan",
-        "album": "Kunio-kun no Nekketsu Soccer",
-        "file": "audio/soccer/Technos Japan Cup Theme.mp3",
-        "filename": "Technos Japan Cup Theme.mp3",
-        "is_placeholder": false
-      },
-      {
-        "title": "Technos Japan - Umba Bi Bombo",
-        "artist": "Technos Japan",
-        "album": "Kunio-kun no Nekketsu Soccer",
-        "file": "audio/soccer/Umba Bi Bombo.mp3",
-        "filename": "Umba Bi Bombo.mp3",
-        "is_placeholder": false
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/soccer/track_3.mp3",
+        "filename": "track_3.mp3",
+        "is_placeholder": true
       }
     ]
   },
@@ -68,12 +60,20 @@ window.NEKKETSU_AUDIO_MANIFEST = {
     "folder": "audio/quotes/",
     "tracks": [
       {
-        "title": "River City Ransom - Park / On the Riverbank ~Momentary Peace~",
-        "artist": "River City Ransom",
-        "album": "Nekketsu Kouha Kunio-kun Music Collection",
-        "file": "audio/quotes/Park - On the Riverbank ~Momentary Peace~.mp3",
-        "filename": "Park - On the Riverbank ~Momentary Peace~.mp3",
-        "is_placeholder": false
+        "title": "River City Ransom - Cozy Coffee Shop (Закиньте .mp3 в audio/quotes/)",
+        "artist": "Technos Japan",
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/quotes/track_1.mp3",
+        "filename": "track_1.mp3",
+        "is_placeholder": true
+      },
+      {
+        "title": "Kunio Downtown - Mellow Stroll (Закиньте .mp3 в audio/quotes/)",
+        "artist": "Technos Japan",
+        "album": "Nekketsu Soundtrack",
+        "file": "audio/quotes/track_2.mp3",
+        "filename": "track_2.mp3",
+        "is_placeholder": true
       }
     ]
   },
