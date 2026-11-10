@@ -151,7 +151,7 @@ def match_rows(con, doc_id, keys, exclude_live=False, exclude_manual=False):
 
 def docs_from_db(kind, db_path=DB_PATH, exclude_live=False, exclude_manual=False):
     """Документы турнира того же вида, что лежали в файле-носителе, — в порядке носителя."""
-    if not Path(db_path).exists():
+    if not store.is_pg(db_path) and not Path(db_path).exists():
         raise SystemExit(
             f"Нет базы {db_path}. Соберите её: python db/build_db.py && python db/import_stores.py"
         )
@@ -159,10 +159,10 @@ def docs_from_db(kind, db_path=DB_PATH, exclude_live=False, exclude_manual=False
     con.row_factory = sqlite3.Row
     docs = []
     for record in con.execute(DOCS_SQL, (kind,)):
-        doc = json.loads(record["payload"])
+        doc = store.parse_json(record["payload"], default={})
         field = record["match_field"]
         if field in doc:
-            doc[field] = match_rows(con, record["id"], json.loads(record["match_keys"]),
+            doc[field] = match_rows(con, record["id"], store.parse_json(record["match_keys"], default=[]),
                                     exclude_live, exclude_manual)
         docs.append(doc)
     con.close()

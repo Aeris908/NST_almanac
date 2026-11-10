@@ -81,7 +81,7 @@ def number(value):
 
 
 def connect(db_path):
-    if not Path(db_path).exists():
+    if not store.is_pg(db_path) and not Path(db_path).exists():
         raise SystemExit(
             f"Нет базы {db_path}. Соберите её: python db/build_db.py && python db/import_stores.py"
         )

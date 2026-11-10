@@ -65,7 +65,7 @@ class EditError(ValueError):
 
 
 def connect(db_path=DB_PATH):
-    if not Path(db_path).exists():
+    if not store.is_pg(db_path) and not Path(db_path).exists():
         raise EditError(f"Нет базы {db_path}. Сначала: python db/build_db.py && python db/import_stores.py")
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
@@ -383,7 +383,7 @@ def container_of(con, spec):
                           (spec["doc_key"],)).fetchone()
         if not doc:
             raise EditError(f"Турнира {spec['doc_key']!r} в базе нет — заведите его сначала")
-        frame = json.loads(doc["payload"])
+        frame = store.parse_json(doc["payload"], default={})
         if doc["kind"] == "special":
             season = frame.get("category") or "Спецтурниры"
         else:
@@ -1188,7 +1188,7 @@ def cmd_add_tournament(con, args):
 
 
 def cmd_set_doc(con, args):
-    frame = json.loads(args.frame) if args.frame else None
+    frame = store.parse_json(args.frame) if args.frame else None
     _print_changes(set_doc(con, args.doc_key, args.editor, args.title, frame))
     return 0
 

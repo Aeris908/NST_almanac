@@ -165,3 +165,54 @@ def test_store_connection_registers_the_folding_function():
         assert con.execute("select fold(null)").fetchone()[0] == ""
     finally:
         con.close()
+
+
+def test_translate_converts_last_insert_rowid_to_lastval():
+    """`last_insert_rowid()` SQLite переводится в `lastval()` Postgres."""
+    assert pg.translate("select last_insert_rowid()") == "select lastval()"
+
+
+def test_pg_row_supports_indexing_keys_and_unpacking():
+    """PgRow эмулирует sqlite3.Row: распаковка, доступ по номеру, имени и dict()."""
+    row = pg.PgRow((42, "ectoPower"), ("id", "player"))
+    # Распаковка значений
+    i, p = row
+    assert i == 42 and p == "ectoPower"
+    # Доступ по индексу
+    assert row[0] == 42 and row[1] == "ectoPower"
+    # Доступ по имени
+    assert row["id"] == 42 and row["player"] == "ectoPower"
+    # dict-представление
+    assert dict(row) == {"id": 42, "player": "ectoPower"}
+    # Наличие ключа
+    assert "player" in row and "unknown" not in row
+    assert row.get("id") == 42 and row.get("unknown", "def") == "def"
+
+
+def test_pg_store_identifies_postgres_urls():
+    """Распознавание строки подключения Postgres."""
+    assert store.is_pg("postgresql://user:pass@host/db")
+    assert store.is_pg("postgres://user:pass@host/db")
+    assert not store.is_pg("data/nst.db")
+    assert not store.is_pg(None)
+
+
+def test_live_neon_postgres_connection_and_revision():
+    """Если задан NST_POSTGRES_URL — боевая сверка с облачным Neon Postgres."""
+    from portal.env_file import secret
+    url = secret("NST_POSTGRES_URL")
+    if not url:
+        pytest.skip("NST_POSTGRES_URL не задан в .env")
+    con = store.connect(url)
+    try:
+        cur = con.execute("select count(*) from v_rating_pool")
+        rating_count = cur.fetchone()[0]
+        assert rating_count == 402, f"ожидалось 402 рейтинговых матча, получено {rating_count}"
+        cur = con.execute("select count(*) from v_singles_pool")
+        singles_count = cur.fetchone()[0]
+        assert singles_count == 2990, f"ожидалось 2990 одиночных матчей, получено {singles_count}"
+        # Ревизия Neon обязана совпадать с локальной SQLite ревизией
+        assert api.revision(url) == api.revision()
+    finally:
+        con.close()
+

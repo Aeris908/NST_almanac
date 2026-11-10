@@ -26,6 +26,7 @@ from db import api, serve  # noqa: E402
 from portal.env_file import secret  # noqa: E402
 
 DB_PATH_ENV = "NST_DB_PATH"
+POSTGRES_URL_ENV = "NST_POSTGRES_URL"
 HANDLE_PARAM = "nst_handle"
 # Пути, которыми маршрутизатор может заменить исходную ручку: корень и имя самой функции.
 OWN_PATHS = ("/api", "/api/", "/api/handler", "/api/handler.py")
@@ -53,17 +54,15 @@ _bound = [""]
 
 
 def bind_database(db_path=None):
-    """Откуда функция читает базу: `NST_DB_PATH`, иначе — тот же `data/nst.db`, что и локальный сервер.
-
-    Сюда встанет серверный Postgres (Neon): вместо пути — строка подключения и такой же слой
-    над `db/api.py`. Драйвера нет сознательно: боевой базы там ещё нет, а непроверенное
-    соединение в путь записи летописи вставлять нельзя.
-    """
-    resolved = str(secret(DB_PATH_ENV) or db_path or api.DB_PATH)
-    if _bound[0] != resolved:
-        serve.api = _BoundApi(Path(resolved))
-        _bound[0] = resolved
-    return Path(resolved)
+    """Откуда функция читает базу: `NST_DB_PATH` (явный), `NST_POSTGRES_URL` (Neon) или `data/nst.db`."""
+    from db import store
+    target = db_path or secret(DB_PATH_ENV) or secret(POSTGRES_URL_ENV) or api.DB_PATH
+    resolved = target if store.is_pg(target) else Path(target)
+    resolved_key = str(resolved)
+    if _bound[0] != resolved_key:
+        serve.api = _BoundApi(resolved)
+        _bound[0] = resolved_key
+    return resolved
 
 
 def _matched_handle(header):

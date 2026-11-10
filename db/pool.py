@@ -23,7 +23,7 @@ FIELDS = ("id", "season", "tournament", "stage", "p1", "p2", "s1", "s2", "ot", "
 
 def pool_from_db(db_path=DB_PATH):
     """Рейтинговый пул: ровно те строки, у которых в базе стоит флаг in_rating_pool."""
-    if not Path(db_path).exists():
+    if not store.is_pg(db_path) and not Path(db_path).exists():
         raise SystemExit(
             f"Нет базы {db_path}. Соберите её: python db/build_db.py (или просто python build_all.py)."
         )

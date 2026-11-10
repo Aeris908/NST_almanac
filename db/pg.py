@@ -53,6 +53,7 @@ def translate(statement):
                  r"(\1)::json ->> '\2'", sql, flags=re.IGNORECASE)
     sql = re.sub(r"\bjson_object\b", "json_build_object", sql, flags=re.IGNORECASE)
     sql = re.sub(r"\bjson_group_array\b", "json_agg", sql, flags=re.IGNORECASE)
+    sql = re.sub(r"\blast_insert_rowid\(\)", "lastval()", sql, flags=re.IGNORECASE)
     return re.sub(r"\bfold\(", "lower(", sql, flags=re.IGNORECASE)
 
 
@@ -97,3 +98,166 @@ def bind(statement, params):
     if missing:
         raise ValueError(f"параметры {missing} названы в запросе, но не переданы")
     return translate(sql), named
+
+
+class PgRow:
+    """Совместимая со sqlite3.Row строка: доступ и по имени, и по номеру, и распаковка значений."""
+
+    def __init__(self, values, column_names):
+        self._values = tuple(values)
+        self._names = tuple(column_names)
+        self._map = {name: i for i, name in enumerate(self._names)}
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            return self._values[key]
+        idx = self._map.get(key)
+        if idx is None:
+            for name, i in self._map.items():
+                if name.lower() == str(key).lower():
+                    return self._values[i]
+            raise KeyError(key)
+        return self._values[idx]
+
+    def __iter__(self):
+        return iter(self._values)
+
+    def __len__(self):
+        return len(self._values)
+
+    def keys(self):
+        return list(self._names)
+
+    def values(self):
+        return list(self._values)
+
+    def items(self):
+        return list(zip(self._names, self._values))
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def __contains__(self, key):
+        if key in self._map:
+            return True
+        return any(name.lower() == str(key).lower() for name in self._map)
+
+    def __repr__(self):
+        return f"<PgRow {dict(self.items())}>"
+
+
+class PgCursor:
+    """Обёртка курсора psycopg: автоматический перевод SQLite-запросов и обёртка строк в PgRow."""
+
+    def __init__(self, cursor):
+        self._cur = cursor
+
+    @property
+    def rowcount(self):
+        return self._cur.rowcount
+
+    @property
+    def description(self):
+        return self._cur.description
+
+    def execute(self, statement, params=None):
+        sql = statement.strip()
+        if re.match(r"^PRAGMA\b", sql, re.IGNORECASE):
+            return self
+        if not params:
+            translated = translate(sql)
+            self._cur.execute(translated)
+        else:
+            translated, named = bind(sql, params)
+            self._cur.execute(translated, named)
+        return self
+
+    def executemany(self, statement, seq_of_params):
+        for params in seq_of_params:
+            self.execute(statement, params)
+        return self
+
+    def _wrap(self, row):
+        if row is None:
+            return None
+        names = [d.name for d in self._cur.description] if self._cur.description else []
+        return PgRow(row, names)
+
+    def fetchone(self):
+        return self._wrap(self._cur.fetchone())
+
+    def fetchall(self):
+        names = [d.name for d in self._cur.description] if self._cur.description else []
+        return [PgRow(r, names) for r in self._cur.fetchall()]
+
+    def fetchmany(self, size=None):
+        names = [d.name for d in self._cur.description] if self._cur.description else []
+        return [PgRow(r, names) for r in self._cur.fetchmany(size)]
+
+    def __iter__(self):
+        names = [d.name for d in self._cur.description] if self._cur.description else []
+        for r in self._cur:
+            yield PgRow(r, names)
+
+    def close(self):
+        self._cur.close()
+
+
+class PgConnection:
+    """Обёртка соединения psycopg, повторяющая интерфейс sqlite3.Connection для пути правки."""
+
+    def __init__(self, raw_conn):
+        self._raw = raw_conn
+
+    @property
+    def row_factory(self):
+        return None
+
+    @row_factory.setter
+    def row_factory(self, value):
+        pass
+
+    def cursor(self):
+        return PgCursor(self._raw.cursor())
+
+    def execute(self, statement, params=None):
+        cur = self.cursor()
+        cur.execute(statement, params)
+        return cur
+
+    def executemany(self, statement, seq_of_params):
+        cur = self.cursor()
+        cur.executemany(statement, seq_of_params)
+        return cur
+
+    def commit(self):
+        self._raw.commit()
+
+    def rollback(self):
+        self._raw.rollback()
+
+    def close(self):
+        self._raw.close()
+
+    def create_function(self, name, n_args, fn, deterministic=False):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is not None:
+            self.rollback()
+        else:
+            self.commit()
+
+
+def connect(url):
+    """Открывает соединение с Postgres через psycopg и возвращает PgConnection."""
+    import psycopg
+    raw = psycopg.connect(url)
+    return PgConnection(raw)
+

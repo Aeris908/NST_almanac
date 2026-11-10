@@ -55,8 +55,7 @@ HEAVY_FIELDS = ("match_history",)
 IDENTITY_FIELDS = ("player", "id", "name", "doc_key", "rivalry", "club", "team", "stage")
 
 REVISION_MATCHES_SQL = """
-select m.id, m.status, coalesce(m.hidden_by, '') as hidden_by,
-       coalesce(m.duplicate_of, '') as duplicate_of, m.manual
+select m.id, m.status, m.hidden_by, m.duplicate_of, m.manual
 from matches m order by m.id
 """
 REVISION_SCORES_SQL = """
@@ -81,7 +80,7 @@ def revision(db_path=DB_PATH):
         for match_id, score in con.execute(REVISION_SCORES_SQL):
             if score is not None:  # пустой счёт источника в склейку не входит, как и раньше
                 scores.setdefault(match_id, []).append(str(score))
-        lines = [f"{row['id']}|{row['status']}|{row['hidden_by']}|{row['duplicate_of']}"
+        lines = [f"{row['id']}|{row['status']}|{row['hidden_by'] or ''}|{row['duplicate_of'] or ''}"
                  f"|{row['manual']}|{'/'.join(scores.get(row['id'], []))}"
                  for row in con.execute(REVISION_MATCHES_SQL)]
     finally:
@@ -340,8 +339,8 @@ def locate(a, b, *, season=None, tour=None, score=None, include_hidden=False, db
 def _candidate(row):
     """Строка LOCATE_SQL в том виде, в котором её показывает панель редактора."""
     return dict(row, display=_display(row),
-                links=json.loads(row["links"] or "[]"),
-                review=json.loads(row["review"]) if row["review"] else None,
+                links=store.parse_json(row["links"], default=[]),
+                review=store.parse_json(row["review"]),
                 sides=[
             {"side_index": 0, "label": row["label_a"], "players": row["players_a"],
              "score": row["score_a"], "outcome": row["outcome_a"]},
@@ -598,9 +597,11 @@ def mutate(operation, args, editor, *, persist=False, expect=None, db_path=DB_PA
 
     before = snapshot(db_path)
     if persist:
-        result, row, after = _apply_and_snapshot(Path(db_path), operation, editor, args)
+        target = db_path if store.is_pg(db_path) else Path(db_path)
+        result, row, after = _apply_and_snapshot(target, operation, editor, args)
     else:
-        with _preview_db(Path(db_path)) as clone:
+        preview_src = store.DB_PATH if store.is_pg(db_path) and store.DB_PATH.exists() else Path(db_path)
+        with _preview_db(preview_src) as clone:
             result, row, after = _apply_and_snapshot(clone, operation, editor, args)
 
     changed = diff(before["view"], after["view"])
@@ -705,7 +706,7 @@ def queue(db_path=DB_PATH):
     con.row_factory = sqlite3.Row
     tasks = []
     for row in con.execute(QUEUE_SQL):
-        payload = json.loads(row["payload"] or "{}")
+        payload = store.parse_json(row["payload"], default={})
         match = con.execute(LOCATE_SQL + " where m.id = ?", (row["matched_match_id"],)).fetchone() \
             if row["matched_match_id"] else None
         card = _with_rosters(con, [match])[0] if match else None
@@ -751,7 +752,7 @@ def doc_frame(doc_key, db_path=DB_PATH):
     con.close()
     if not row:
         raise edit.EditError(f"Турнира {doc_key!r} в базе нет")
-    return {**dict(row), "frame": json.loads(row["payload"])}
+    return {**dict(row), "frame": store.parse_json(row["payload"], default={})}
 
 
 PLAYERS_SQL = """
