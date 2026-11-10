@@ -1,35 +1,296 @@
-// Каталог игроков — выпускной альбом: рендер сетки карточек из встроенного PLAYERS.
+// Каталог игроков — общая витрина по всем дисциплинам.
+// Рендерит боевые карточки из встроенного PLAYERS, поиск/сортировку/фильтр
+// и досье-модалку с переходом «насквозь» в страницу дисциплины.
 (function () {
-  const data = typeof PLAYERS !== 'undefined' ? PLAYERS : { players: [] };
+  'use strict';
+
+  const data = typeof PLAYERS !== 'undefined' ? PLAYERS : { stats: {}, disciplines: [], players: [] };
   const players = data.players || [];
-  const grid = document.getElementById('playersGrid');
-  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g,
-    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  function disciplinesLine(p) {
-    return (p.disciplines || []).map((d) => `${d.icon || ''} ${d.name || d.slug}`.trim()).join(' • ');
+  // Страницы дисциплин, куда ведёт deep-link из досье. Остальные появятся,
+  // когда у дисциплины будет своя страница и реальные матчи.
+  const DISCIPLINE_PAGES = {
+    soccer: { page: 'soccer.html', label: 'футбол' },
+  };
+
+  const state = { disc: 'all', query: '', sort: 'wr' };
+  let lastFocused = null;
+  let firstPaint = true;
+
+  /* ---------- Утилиты ---------- */
+
+  function esc(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, (ch) => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
   }
 
-  function badge(p) {
-    if (p.is_hall_of_famer) return '<span class="album-badge hall">Зал славы</span>';
-    if (p.is_active) return '<span class="album-badge active">Активен</span>';
-    return '<span class="album-badge">Ветеран</span>';
+  // Цвет кромки карточки по статусу: Зал славы — gold, актив — cyan,
+  // ветеран — dim, прочий инактив — slate.
+  function edgeColor(p) {
+    if (p.is_hall_of_famer) return 'var(--gold)';
+    if (p.is_active) return 'var(--cyan)';
+    if (/ВЕТЕРАН/.test(p.status_badge || '')) return 'var(--dim)';
+    return 'var(--slate)';
   }
 
-  function card(p) {
-    const career = p.career || { wins: 0, matches: 0 };
-    const quote = p.featured_quote ? `<p class="album-quote">«${esc(p.featured_quote)}»</p>` : '';
-    return `<article class="album-card">
-      <div class="album-photo"><img src="${esc(p.avatar)}" alt="${esc(p.nick)}" loading="lazy"></div>
-      <h3 class="album-name">${esc(p.nick)}</h3>
-      ${badge(p)}
-      <p class="album-disc">${esc(disciplinesLine(p))}</p>
-      ${quote}
-      <p class="album-stats">${career.wins} побед • ${career.matches} матчей</p>
+  function initials(nick) {
+    const clean = String(nick || '').replace(/[^\p{L}\p{N}]/gu, '');
+    return clean.slice(0, 2).toUpperCase() || '?';
+  }
+
+  function formatDiff(diff) { return (diff > 0 ? '+' : '') + diff; }
+  function diffClass(diff) { return diff > 0 ? 'pos' : diff < 0 ? 'neg' : 'zero'; }
+
+  // Матчи в dataset отсортированы от новых к старым — берём первые пять.
+  function recentForm(p) {
+    return (p.matches || []).slice(0, 5).map((m) => m.res_type);
+  }
+
+  function disciplineCount(slug) {
+    return players.filter((p) => (p.disciplines || []).some((d) => d.slug === slug)).length;
+  }
+
+  /* ---------- Сводка и фильтр дисциплин ---------- */
+
+  function renderStats() {
+    const s = data.stats || {};
+    const num = (n) => Number(n || 0).toLocaleString('ru');
+    document.getElementById('catalogStats').innerHTML = [
+      `<div class="stat"><b class="c">${num(s.total_players)}</b> игроков</div>`,
+      `<div class="stat"><b class="c">${num(s.active_players)}</b> активных</div>`,
+      `<div class="stat"><b class="g">${num(s.hof_players)}</b> зал славы</div>`,
+      `<div class="stat"><b class="p">${num(s.total_matches)}</b> матчей в архиве</div>`,
+      `<div class="stat"><b>${num(s.disciplines_count)}</b> дисциплины</div>`,
+    ].join('');
+  }
+
+  function renderDisciplineFilters() {
+    const box = document.getElementById('disciplineFilters');
+    const chips = [
+      `<button class="disc-chip on" data-disc="all"><span class="ic">🎮</span>Все<span class="n">${players.length}</span></button>`,
+    ];
+    (data.disciplines || []).forEach((d) => {
+      const count = disciplineCount(d.slug);
+      const soon = count === 0;
+      const title = soon ? ' title="Нет реальных матчей — дисциплина появится, когда придут данные"' : '';
+      chips.push(
+        `<button class="disc-chip${soon ? ' soon' : ''}" data-disc="${esc(d.slug)}"${soon ? ' disabled' : ''}${title}>` +
+        `<span class="ic">${esc(d.icon)}</span>${esc(d.name)}<span class="n">${count}</span></button>`
+      );
+    });
+    box.innerHTML = chips.join('');
+
+    box.querySelectorAll('.disc-chip:not(.soon)').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.disc = btn.dataset.disc;
+        box.querySelectorAll('.disc-chip').forEach((b) => b.classList.remove('on'));
+        btn.classList.add('on');
+        renderGrid();
+      });
+    });
+  }
+
+  /* ---------- Выборка: фильтр + поиск + сортировка ---------- */
+
+  const SORTERS = {
+    wr: (a, b) => b.career.win_rate - a.career.win_rate,
+    matches: (a, b) => b.career.matches - a.career.matches,
+    wins: (a, b) => b.career.wins - a.career.wins,
+    name: (a, b) => a.nick.localeCompare(b.nick, 'ru'),
+  };
+
+  function visiblePlayers() {
+    let list = players.slice();
+    if (state.disc !== 'all') {
+      list = list.filter((p) => (p.disciplines || []).some((d) => d.slug === state.disc));
+    }
+    if (state.query) {
+      const q = state.query.toLowerCase();
+      list = list.filter((p) => p.nick.toLowerCase().includes(q) || (p.vk_name || '').toLowerCase().includes(q));
+    }
+    list.sort(SORTERS[state.sort] || SORTERS.wr);
+    return list;
+  }
+
+  /* ---------- Карточка ---------- */
+
+  // Точки формы: старые слева, свежий справа; недостающие слоты пустые.
+  function formDots(form) {
+    const labels = { win: 'победа', draw: 'ничья', loss: 'поражение' };
+    const slots = form.slice().reverse().map((r) => `<span class="dot ${esc(r)}" title="${labels[r] || ''}"></span>`);
+    while (slots.length < 5) slots.unshift('<span class="dot"></span>');
+    return slots.join('');
+  }
+
+  function cardHTML(p, index, animate) {
+    const c = p.career || { matches: 0, wins: 0, draws: 0, losses: 0, win_rate: 0, goals_for: 0, goals_against: 0, goal_diff: 0 };
+    const edge = edgeColor(p);
+    const total = c.matches || 1;
+    const winPct = (c.wins / total) * 100;
+    const drawPct = (c.draws / total) * 100;
+    const lossPct = (c.losses / total) * 100;
+    const icon = (p.disciplines && p.disciplines[0] && p.disciplines[0].icon) || '🎮';
+
+    const discChips = (p.disciplines || []).map((d) =>
+      `<span class="dchip" title="${esc(d.name)}"><span class="ic">${esc(d.icon)}</span><b>${d.matches}</b></span>`
+    ).join('');
+
+    const foot = p.soccer_elo
+      ? `<span class="elo">ELO ${Math.round(p.soccer_elo)}</span>` + (p.soccer_league ? `<span class="league">${esc(p.soccer_league)}</span>` : '')
+      : `<span class="league">${esc(p.soccer_league || 'без рейтинга')}</span>`;
+
+    const vkLine = p.vk_name && p.vk_name !== p.nick ? esc(p.vk_name) : '';
+    const tournaments = (p.tournaments || []).length;
+    const enterClass = animate ? ' enter' : '';
+    const delay = animate ? ` style="--edge:${edge};animation-delay:${Math.min(index, 11) * 45}ms"` : ` style="--edge:${edge}"`;
+
+    return `<article class="pcard${enterClass}"${delay} data-nick="${esc(p.nick)}" tabindex="0" role="button" aria-label="Досье ${esc(p.nick)}">
+      <div class="pc-head">
+        <div class="portrait"><span class="ini">${esc(initials(p.nick))}</span><img src="${esc(p.avatar)}" alt="" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="pc-name"><h3>${esc(p.nick)}</h3><div class="vk">${vkLine}</div></div>
+        <span class="badge">${esc(p.status_badge)}</span>
+      </div>
+      <div class="rating"><div class="wr">${c.win_rate.toFixed(0)}<small>%</small></div><div class="wr-lab">побед<br>за карьеру</div></div>
+      <div class="recbar"><i class="w" style="width:${winPct}%"></i><i class="d" style="width:${drawPct}%"></i><i class="l" style="width:${lossPct}%"></i></div>
+      <div class="recnums"><span class="w"><i>В</i><b>${c.wins}</b></span><span class="d"><i>Н</i><b>${c.draws}</b></span><span class="l"><i>П</i><b>${c.losses}</b></span></div>
+      <div class="metarow"><span class="goals">${esc(icon)} <b>${c.goals_for}</b>:<b>${c.goals_against}</b> <span class="diff ${diffClass(c.goal_diff)}">(${formatDiff(c.goal_diff)})</span></span><span class="tour">🏆 <b>${tournaments}</b></span></div>
+      <div class="discrow">${discChips}</div>
+      <div class="formrow"><span class="lab">Форма</span><span class="dots">${formDots(recentForm(p))}</span></div>
+      <div class="pc-foot">${foot}</div>
+      ${p.featured_quote ? `<div class="quote">«${esc(p.featured_quote)}»</div>` : ''}
+      <span class="hint">Досье ↗</span>
     </article>`;
   }
 
-  if (grid) grid.innerHTML = players.map(card).join('');
-  const count = document.getElementById('playersCount');
-  if (count) count.textContent = players.length;
+  function renderGrid() {
+    const list = visiblePlayers();
+    const animate = firstPaint;
+    firstPaint = false;
+    const grid = document.getElementById('playersGrid');
+    grid.innerHTML = list.length
+      ? list.map((p, i) => cardHTML(p, i, animate)).join('')
+      : '<div class="empty">Никого не найдено. Сбрось поиск или выбери другую дисциплину.</div>';
+    document.getElementById('catalogCount').innerHTML = `показано <b>${list.length}</b> из ${players.length}`;
+
+    grid.querySelectorAll('.pcard').forEach((el) => {
+      const open = () => openDossier(el.dataset.nick);
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+    });
+  }
+
+  /* ---------- Досье-модалка ---------- */
+
+  function disciplineRow(d) {
+    const extra = d.elo ? ` · ELO ${Math.round(d.elo)}${d.league ? ' · ' + esc(d.league) : ''}` : '';
+    return `<div class="dossier-disc">
+      <span class="ic">${esc(d.icon)}</span>
+      <div class="nm"><b>${esc(d.name)}</b><span>${d.matches} матчей · винрейт ${d.win_rate}%${extra}</span></div>
+      <div class="st"><b>${d.win_rate}%</b><br>${d.matches} игр</div>
+    </div>`;
+  }
+
+  function rivalBlock(r) {
+    if (!r) return '';
+    return `<div class="dossier-sec">Главный соперник</div>
+      <div class="rival"><span class="vs">VS</span><div class="rn"><b>${esc(r.nick)}</b><span>${r.matches} личных встреч</span></div><div class="h2h"><b>${r.wins}</b>–${r.draws}–<b>${r.losses}</b></div></div>`;
+  }
+
+  // Кнопки «насквозь в дисциплину»: только для дисциплин с готовой страницей.
+  function disciplineLinks(p) {
+    return (p.disciplines || [])
+      .filter((d) => DISCIPLINE_PAGES[d.slug])
+      .map((d) => {
+        const target = DISCIPLINE_PAGES[d.slug];
+        const href = `${target.page}#/player/${encodeURIComponent(p.nick)}`;
+        return `<a class="btn primary" href="${href}">Перейти в ${esc(target.label)} ↗</a>`;
+      }).join('');
+  }
+
+  function openDossier(nick) {
+    const p = players.find((x) => x.nick === nick);
+    if (!p) return;
+    const c = p.career || {};
+    const edge = edgeColor(p);
+    const rival = (p.top_rivals || [])[0];
+    const eloLine = p.soccer_elo ? ` · ELO ${Math.round(p.soccer_elo)} (пик ${Math.round(p.soccer_peak_elo || p.soccer_elo)})` : '';
+    const links = disciplineLinks(p);
+
+    const modal = document.getElementById('dossierModal');
+    modal.innerHTML = `<div class="dossier-in" style="--edge:${edge}">
+      <button class="dossier-close" id="dossierClose" aria-label="Закрыть">✕</button>
+      <div class="dossier-head">
+        <div class="dossier-portrait"><span class="ini">${esc(initials(p.nick))}</span><img src="${esc(p.avatar)}" alt="" onerror="this.style.display='none'"></div>
+        <div><h2 id="dossierTitle">${esc(p.nick)}</h2><div class="vk">${esc(p.vk_name)}${eloLine}</div><span class="badge">${esc(p.status_badge)}</span></div>
+      </div>
+      <div class="dossier-sec">Карьера · все дисциплины</div>
+      <div class="dossier-career">
+        <div class="dossier-cell hero"><div class="v">${(c.win_rate || 0).toFixed(0)}%</div><div class="k">винрейт</div></div>
+        <div class="dossier-cell"><div class="v">${c.matches || 0}</div><div class="k">матчей</div></div>
+        <div class="dossier-cell"><div class="v" style="color:var(--green)">${c.wins || 0}</div><div class="k">побед</div></div>
+        <div class="dossier-cell"><div class="v" style="color:var(--red)">${c.losses || 0}</div><div class="k">поражений</div></div>
+      </div>
+      <div class="dossier-sec">Где играет</div>
+      ${(p.disciplines || []).map(disciplineRow).join('')}
+      ${rivalBlock(rival)}
+      ${p.featured_quote ? `<div class="dossier-sec">Цитата</div><div class="dossier-quote">«${esc(p.featured_quote)}»</div>` : ''}
+      <div class="dossier-actions">${links}<button class="btn" id="dossierClose2">Закрыть</button></div>
+      ${links ? '' : '<div class="dossier-note">У этой дисциплины пока нет отдельной страницы — переход появится, когда она будет готова.</div>'}
+    </div>`;
+
+    lastFocused = document.activeElement;
+    const scrim = document.getElementById('dossierScrim');
+    scrim.classList.add('open');
+    modal.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.catalog-wrap').inert = true;
+    document.getElementById('dossierClose').addEventListener('click', closeDossier);
+    document.getElementById('dossierClose2').addEventListener('click', closeDossier);
+    modal.addEventListener('keydown', trapFocus);
+    document.getElementById('dossierClose').focus();
+  }
+
+  // Tab циклически ходит только по фокусируемым элементам досье.
+  function trapFocus(e) {
+    if (e.key !== 'Tab') return;
+    const items = Array.from(document.getElementById('dossierModal')
+      .querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function closeDossier() {
+    document.getElementById('dossierScrim').classList.remove('open');
+    document.getElementById('dossierModal').removeEventListener('keydown', trapFocus);
+    document.querySelector('.catalog-wrap').inert = false;
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.isConnected) lastFocused.focus();
+  }
+
+  /* ---------- Инициализация ---------- */
+
+  document.getElementById('playerSearch').addEventListener('input', (e) => {
+    state.query = e.target.value;
+    renderGrid();
+  });
+  document.getElementById('playerSort').addEventListener('change', (e) => {
+    state.sort = e.target.value;
+    renderGrid();
+  });
+  document.getElementById('dossierScrim').addEventListener('click', (e) => {
+    if (e.target.id === 'dossierScrim') closeDossier();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.getElementById('dossierScrim').classList.contains('open')) closeDossier();
+  });
+
+  renderStats();
+  renderDisciplineFilters();
+  renderGrid();
 })();

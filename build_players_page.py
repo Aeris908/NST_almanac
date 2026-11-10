@@ -1,21 +1,20 @@
 # build_players_page.py
-"""Build the NST player catalog page (players.html) — школьный выпускной альбом."""
-import json
+"""Build the NST player catalog page (players.html) — общая витрина боевых карточек."""
 import sys
 from pathlib import Path
 
 from db import store
 from portal.players_dataset import build_players_dataset
-from portal.templates import render
+from portal.templates import json_for_script, render
 
 sys.stdout.reconfigure(encoding="utf-8")
 OUTPUT_PATH = Path("players.html")
 
 
 def build_html(dataset):
-    """Шаблон альбома с встроенным каталогом; render бросит KeyError на лишний маркер."""
+    """Шаблон каталога с встроенными данными; render бросит KeyError на лишний маркер."""
     return render("players_page.html", {
-        "PLAYERS_JSON": json.dumps(dataset, ensure_ascii=False),
+        "PLAYERS_JSON": json_for_script(dataset),
     })
 
 

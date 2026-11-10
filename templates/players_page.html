@@ -4,31 +4,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Каталог игроков • Выпускной альбом NST • Альманах</title>
+  <title>Каталог игроков • NST • Альманах</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Marck+Script&family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="audio-player.css">
   <link rel="stylesheet" href="players.css">
 </head>
 <body data-discipline="players">
-  <header class="album-cover">
-    <p class="album-kicker">NEKKETSU SPORTS TOURNAMENTS • 2015–2026</p>
-    <h1>Выпускной альбом</h1>
-    <p class="album-sub">Каталог игроков сообщества • <span id="playersCount">0</span> чел.</p>
-    <a class="album-home" href="index.html">← На главную</a>
-  </header>
-  <main>
-    <div class="album-grid" id="playersGrid"></div>
-  </main>
-  <footer class="album-footer">
-    <div>Альманах киберспортивного сообщества <strong>NEKKETSU</strong> • 2015–2026</div>
-    <div class="album-footer-links">
-      <a href="index.html">На главную</a> •
-      <a href="soccer.html">Футбольная лига</a> •
-      <a href="https://vk.ru/nekketsu" target="_blank" rel="noopener">VK Группа</a>
+  <div class="catalog-wrap">
+
+    <header class="catalog-head">
+      <p class="eyebrow">Nekketsu · общий каталог по всем дисциплинам</p>
+      <h1>Каталог игроков</h1>
+      <p class="lede">Боевая карточка каждого игрока: рекорд, винрейт, форма и дисциплины, где он играет. Открой карточку — внутри досье с переходом вглубь дисциплины.</p>
+      <div class="statline" id="catalogStats"></div>
+      <nav class="disc-filters" id="disciplineFilters" aria-label="Фильтр по дисциплинам"></nav>
+      <a class="back-link" href="index.html">← На главную</a>
+    </header>
+
+    <div class="toolbar">
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="playerSearch" type="search" placeholder="Поиск по нику или VK-имени…" autocomplete="off" aria-label="Поиск игрока">
+      </label>
+      <div class="sortbox">
+        <label for="playerSort">Сорт</label>
+        <select id="playerSort">
+          <option value="wr">по винрейту</option>
+          <option value="matches">по матчам</option>
+          <option value="wins">по победам</option>
+          <option value="name">по имени</option>
+        </select>
+      </div>
+      <div class="count" id="catalogCount"></div>
     </div>
-  </footer>
+
+    <main>
+      <div class="catalog-grid" id="playersGrid"></div>
+      <div class="legend">
+        <span class="li"><span class="sw win"></span> победа</span>
+        <span class="li"><span class="sw draw"></span> ничья</span>
+        <span class="li"><span class="sw loss"></span> поражение</span>
+        <span class="li">рекорд В-Н-П пропорционально</span>
+        <span class="li">форма — последние 5 матчей, свежий справа</span>
+      </div>
+    </main>
+
+    <footer class="catalog-footer">
+      <div>Альманах киберспортивного сообщества <strong>NEKKETSU SPORTS TOURNAMENTS</strong> • 2015–2026</div>
+      <div class="footer-links">
+        <a href="index.html">На главную</a> •
+        <a href="soccer.html">Футбольная лига</a> •
+        <a href="quotes.html">Альманах цитат</a> •
+        <a href="https://vk.ru/nekketsu" target="_blank" rel="noopener">VK Группа</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <div class="dossier-scrim" id="dossierScrim">
+    <div class="dossier-modal" id="dossierModal" role="dialog" aria-modal="true" aria-labelledby="dossierTitle"></div>
+  </div>
+
   <script>const PLAYERS = @@PLAYERS_JSON@@;</script>
   <script src="players.js"></script>
   <script src="audio/playlist-manifest.js"></script>

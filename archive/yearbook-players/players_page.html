@@ -1,0 +1,37 @@
+<!-- templates/players_page.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог игроков • Выпускной альбом NST • Альманах</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Marck+Script&family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="audio-player.css">
+  <link rel="stylesheet" href="players.css">
+</head>
+<body data-discipline="players">
+  <header class="album-cover">
+    <p class="album-kicker">NEKKETSU SPORTS TOURNAMENTS • 2015–2026</p>
+    <h1>Выпускной альбом</h1>
+    <p class="album-sub">Каталог игроков сообщества • <span id="playersCount">0</span> чел.</p>
+    <a class="album-home" href="index.html">← На главную</a>
+  </header>
+  <main>
+    <div class="album-grid" id="playersGrid"></div>
+  </main>
+  <footer class="album-footer">
+    <div>Альманах киберспортивного сообщества <strong>NEKKETSU</strong> • 2015–2026</div>
+    <div class="album-footer-links">
+      <a href="index.html">На главную</a> •
+      <a href="soccer.html">Футбольная лига</a> •
+      <a href="https://vk.ru/nekketsu" target="_blank" rel="noopener">VK Группа</a>
+    </div>
+  </footer>
+  <script>const PLAYERS = @@PLAYERS_JSON@@;</script>
+  <script src="players.js"></script>
+  <script src="audio/playlist-manifest.js"></script>
+  <script src="audio-player.js"></script>
+</body>
+</html>
