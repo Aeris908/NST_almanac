@@ -1,0 +1,95 @@
+<!-- templates/queue_page.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кабинет лороведа • Очередь задач • NST Альманах</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="audio-player.css">
+  <link rel="stylesheet" href="queue.css">
+</head>
+<body data-discipline="hub">
+  <div class="queue-wrap">
+
+    <header class="queue-head">
+      <div class="head-top">
+        <a class="back-link" href="index.html">← На главную</a>
+        <div class="nav-links">
+          <a href="soccer.html">⚽ Футбол</a>
+          <a href="players.html">👥 Игроки</a>
+          <a href="quotes.html">📜 Цитаты</a>
+        </div>
+      </div>
+      <p class="eyebrow">⚖️ Кабинет лороведа · NST Альманах</p>
+      <h1>Очередь задач на проверку</h1>
+      <p class="lede">Спорные протоколы, неоднозначные комментарии плей-офф и матчи с нестыковками регламента. Здесь лоровед принимает решение, сверяет источники и сохраняет вердикт напрямую в облачную базу Neon Postgres.</p>
+
+      <!-- Блок авторизации и статуса соединения -->
+      <div class="auth-bar" id="authBar">
+        <div class="auth-status" id="authStatus">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Проверка подключения…</span>
+        </div>
+        <div class="auth-controls" id="authControls">
+          <input type="password" id="tokenInput" placeholder="Токен лороведа" autocomplete="current-password" aria-label="Токен редактора">
+          <button type="button" class="btn-primary" id="loginBtn">Войти</button>
+        </div>
+      </div>
+
+      <!-- Статистика очереди и табы-фильтры -->
+      <div class="statline" id="queueStats"></div>
+      <nav class="queue-tabs" id="queueTabs" aria-label="Фильтры очереди"></nav>
+    </header>
+
+    <div class="toolbar">
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="queueSearch" type="search" placeholder="Поиск по никам, туру, тексту задачи или номеру матча…" autocomplete="off" aria-label="Поиск по очереди">
+      </label>
+      <div class="actions">
+        <button type="button" class="btn-refresh" id="refreshBtn" title="Обновить с сервера">🔄 Обновить очередь</button>
+      </div>
+      <div class="count" id="queueCount"></div>
+    </div>
+
+    <!-- Область уведомлений и предпросмотра дельты -->
+    <div id="noticeBox" class="notice-box" hidden></div>
+
+    <main>
+      <div class="queue-list" id="queueList"></div>
+    </main>
+
+    <!-- Секция недавних правок журнала с кнопкой отката -->
+    <section class="journal-section" id="journalSection">
+      <div class="journal-header">
+        <h2>Журнал недавних решений лороведа</h2>
+        <button type="button" class="btn-undo" id="undoLastBtn" disabled>↩️ Откатить последнее решение</button>
+      </div>
+      <div class="journal-entries" id="journalEntries">
+        <p class="journal-empty">История загружается…</p>
+      </div>
+    </section>
+
+    <footer class="queue-footer">
+      <div>Альманах киберспортивного сообщества <strong>NEKKETSU SPORTS TOURNAMENTS</strong> • 2015–2026</div>
+      <div class="footer-links">
+        <a href="index.html">На главную</a> •
+        <a href="soccer.html">Футбольная лига</a> •
+        <a href="players.html">Каталог игроков</a> •
+        <a href="quotes.html">Альманах цитат</a> •
+        <a href="https://vk.ru/nekketsu" target="_blank" rel="noopener">VK Группа</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    window.__INITIAL_QUEUE__ = @@QUEUE_DATA_JSON@@;
+  </script>
+  <script src="audio-player.js"></script>
+  <script src="queue.js"></script>
+</body>
+</html>

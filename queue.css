@@ -1,0 +1,789 @@
+/* queue.css — Стили кабинета лороведа и очереди задач */
+
+:root {
+  --nes-bg: #091728;
+  --nes-bg-dark: #050d18;
+  --nes-card-bg: #0d1e32;
+  --nes-card-hover: #12253d;
+  --nes-panel-border: 1px solid #234568;
+  --nes-gold: #ffcb05;
+  --nes-cyan: #38bdf8;
+  --nes-green: #22c55e;
+  --nes-red: #f43f5e;
+  --nes-amber: #f59e0b;
+  --nes-purple: #c084fc;
+  --font-title: 'Russo One', sans-serif;
+  --font-body: 'Rubik', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  background-color: var(--nes-bg);
+  color: #f8fafc;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
+    linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+.queue-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* ── Шапка ───────────────────────────────────────────────────────────── */
+
+.queue-head {
+  margin-bottom: 24px;
+}
+
+.head-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.back-link {
+  color: var(--nes-cyan);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.nav-links {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  transition: all 0.15s ease;
+}
+
+.nav-links a:hover {
+  color: #f8fafc;
+  background: #334155;
+  border-color: var(--nes-cyan);
+}
+
+.eyebrow {
+  color: var(--nes-gold);
+  font-family: var(--font-title);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.queue-head h1 {
+  font-family: var(--font-title);
+  font-size: 32px;
+  color: #f8fafc;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.lede {
+  color: #94a3b8;
+  font-size: 14px;
+  max-width: 800px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* ── Блок авторизации ────────────────────────────────────────────────── */
+
+.auth-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d1e32;
+  border: var(--nes-panel-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.auth-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #64748b;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background: var(--nes-green);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.status-dot.offline {
+  background: var(--nes-amber);
+}
+
+.auth-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.auth-controls input {
+  background: #050d18;
+  border: 1px solid #334155;
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  width: 180px;
+  transition: border-color 0.15s;
+}
+
+.auth-controls input:focus {
+  outline: none;
+  border-color: var(--nes-cyan);
+}
+
+.btn-primary {
+  background: #0284c7;
+  color: #fff;
+  border: 1px solid #38bdf8;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover {
+  background: #0369a1;
+}
+
+/* ── Статистика и табы ───────────────────────────────────────────────── */
+
+.statline {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  margin-bottom: 14px;
+}
+
+.queue-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: #0d1e32;
+  border: 1px solid #234568;
+  color: #94a3b8;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.tab-btn .badge {
+  background: #1e293b;
+  color: var(--nes-cyan);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.tab-btn:hover {
+  border-color: #38bdf8;
+  color: #f8fafc;
+}
+
+.tab-btn.active {
+  background: #1e3a5f;
+  border-color: var(--nes-cyan);
+  color: #f8fafc;
+}
+
+.tab-btn.active .badge {
+  background: var(--nes-cyan);
+  color: #091728;
+}
+
+/* ── Тулбар ──────────────────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search {
+  flex: 1 1 300px;
+  display: flex;
+  align-items: center;
+  background: #0d1e32;
+  border: var(--nes-panel-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  gap: 8px;
+  color: #94a3b8;
+}
+
+.search input {
+  background: transparent;
+  border: none;
+  color: #f8fafc;
+  font-size: 13px;
+  width: 100%;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.btn-refresh {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.btn-refresh:hover {
+  background: #334155;
+  color: #f8fafc;
+  border-color: var(--nes-cyan);
+}
+
+.count {
+  color: #64748b;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+/* ── Уведомления ─────────────────────────────────────────────────────── */
+
+.notice-box {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.notice-box.success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid var(--nes-green);
+  color: #86efac;
+}
+
+.notice-box.error {
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid var(--nes-red);
+  color: #fda4af;
+}
+
+/* ── Список задач ────────────────────────────────────────────────────── */
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-card {
+  background: var(--nes-card-bg);
+  border: var(--nes-panel-border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.task-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.task-card.lore-s8 {
+  border-left: 5px solid var(--nes-gold);
+}
+
+.task-card.lore-unproven {
+  border-left: 5px solid var(--nes-amber);
+}
+
+.task-card.lore-live {
+  border-left: 5px solid var(--nes-cyan);
+}
+
+.task-card.resolved {
+  border-left: 5px solid var(--nes-green);
+  opacity: 0.85;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.badge-s8 {
+  background: rgba(255, 203, 5, 0.15);
+  color: var(--nes-gold);
+  border: 1px solid rgba(255, 203, 5, 0.4);
+}
+
+.badge-unproven {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--nes-amber);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.badge-live {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--nes-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.card-match-title {
+  font-family: var(--font-title);
+  font-size: 20px;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-match-title .vs {
+  font-size: 14px;
+  color: #64748b;
+  font-family: var(--font-mono);
+}
+
+.card-meta {
+  color: #94a3b8;
+  font-size: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card-meta .meta-pill {
+  background: #1e293b;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+}
+
+/* ── Блоки внутри карточки ───────────────────────────────────────────── */
+
+.card-doubt {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-left: 3px solid var(--nes-amber);
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #fef08a;
+  line-height: 1.5;
+}
+
+.card-doubt strong {
+  color: var(--nes-amber);
+  font-weight: 700;
+}
+
+.card-task {
+  background: rgba(56, 189, 248, 0.05);
+  border-left: 3px solid var(--nes-cyan);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.card-task strong {
+  color: var(--nes-cyan);
+}
+
+.card-current-state {
+  display: flex;
+  gap: 16px;
+  background: #050d18;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #1e293b;
+  font-size: 12px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.card-current-state .state-item strong {
+  color: #94a3b8;
+  margin-right: 4px;
+}
+
+.card-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  font-size: 12px;
+}
+
+.card-links strong {
+  color: #94a3b8;
+}
+
+.link-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #38bdf8 !important;
+  text-decoration: none;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.link-btn:hover {
+  background: #0284c7;
+  color: #fff !important;
+  border-color: #38bdf8;
+}
+
+/* ── Форма решения лороведа ──────────────────────────────────────────── */
+
+.decision-box {
+  background: #050d18;
+  border: 1px solid #234568;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-top: 10px;
+}
+
+.decision-header {
+  font-family: var(--font-title);
+  font-size: 13px;
+  color: var(--nes-gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: #0d1e32;
+  border: 1px solid #334155;
+  color: #f8fafc;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  transition: border-color 0.15s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--nes-cyan);
+}
+
+.score-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-inputs input {
+  width: 60px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  border-top: 1px solid #1e293b;
+  padding-top: 12px;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  border: 1px solid #34d399;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-save:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+}
+
+.btn-preview {
+  background: #1e293b;
+  color: var(--nes-cyan);
+  border: 1px solid #334155;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-preview:hover {
+  background: #334155;
+  border-color: var(--nes-cyan);
+}
+
+.diff-preview-box {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #091728;
+  border: 1px dashed var(--nes-cyan);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #e2e8f0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.diff-preview-box pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── Журнал ──────────────────────────────────────────────────────────── */
+
+.journal-section {
+  margin-top: 48px;
+  border-top: var(--nes-panel-border);
+  padding-top: 24px;
+}
+
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.journal-header h2 {
+  font-family: var(--font-title);
+  font-size: 20px;
+  color: #f8fafc;
+}
+
+.btn-undo {
+  background: #334155;
+  border: 1px solid #475569;
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-undo:hover:not(:disabled) {
+  background: #475569;
+  border-color: var(--nes-red);
+}
+
+.btn-undo:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.journal-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.journal-item {
+  background: #0d1e32;
+  border-left: 3px solid var(--nes-cyan);
+  padding: 8px 12px;
+  font-size: 12px;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.journal-item .time {
+  color: #64748b;
+  font-family: var(--font-mono);
+}
+
+.journal-item .author {
+  color: var(--nes-gold);
+  font-weight: 600;
+}
+
+/* ── Подвал ──────────────────────────────────────────────────────────── */
+
+.queue-footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid #1e293b;
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.footer-links {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--nes-cyan);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .queue-wrap {
+    padding: 16px 12px 40px;
+  }
+  .queue-head h1 {
+    font-size: 24px;
+  }
+  .card-match-title {
+    font-size: 17px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
