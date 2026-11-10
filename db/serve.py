@@ -87,7 +87,7 @@ def token():
 
 
 def editor_name():
-    return secret(NAME_ENV) or "Aeros"
+    return secret(NAME_ENV) or "Лоровед"
 
 
 class Handler(BaseHTTPRequestHandler):
