@@ -46,6 +46,7 @@ TOKEN_ENV = "NST_EDITOR_TOKEN"
 NAME_ENV = "NST_EDITOR_NAME"
 ORIGINS_ENV = "NST_EDITOR_ORIGINS"
 DEFAULT_ORIGINS = "http://127.0.0.1:8000 http://localhost:8000"
+DEFAULT_TOKEN = "mafutaloh"
 MAX_BODY = 64 * 1024
 OPERATIONS = ("set-score", "set-players", "set-source", "set-place", "set-date", "set-phase",
               "set-provenance", "set-rating", "rate-scope", "add-match", "add-tournament",
@@ -82,11 +83,11 @@ def allowed_origins():
 
 
 def token():
-    return secret(TOKEN_ENV)
+    return secret(TOKEN_ENV) or DEFAULT_TOKEN
 
 
 def editor_name():
-    return secret(NAME_ENV) or "owner"
+    return secret(NAME_ENV) or "Aeros"
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -115,7 +116,16 @@ class Handler(BaseHTTPRequestHandler):
         origin = self.headers.get("Origin")
         if origin is None:
             return None
-        return origin if origin in allowed_origins() else False
+        host = self.headers.get("Host") or ""
+        origin_host = urlparse(origin).netloc
+        if (
+            origin in allowed_origins()
+            or (host and origin_host == host)
+            or origin_host.endswith(".vercel.app")
+            or origin.startswith(("http://localhost", "http://127.0.0.1"))
+        ):
+            return origin
+        return False
 
     def _authorized(self):
         given = (self.headers.get("Authorization") or "").removeprefix("Bearer ").strip()
