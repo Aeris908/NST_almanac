@@ -18,12 +18,15 @@ from db import store
 
 DB_PATH = store.DB_PATH
 BATCH = "lore_review_s8"
+UNPROVEN_BATCH = "lore_review_unproven"
+LORE_BATCHES = (BATCH, UNPROVEN_BATCH)
 
 
 def populate_lore_review(con):
     """Регистрирует задачи лороведу, если они ещё не решены ручной правкой."""
-    # Очищаем батч перед заполнением
-    con.execute("delete from incoming where batch = ?", (BATCH,))
+    # Очищаем батчи лороведа перед заполнением
+    for b in LORE_BATCHES:
+        con.execute("delete from incoming where batch = ?", (b,))
 
     # 1. ectoPower vs Romix в Сезоне 8 Кубок лиг (пул #342)
     # Находим строку пула
@@ -64,6 +67,54 @@ def populate_lore_review(con):
             (BATCH, json.dumps(payload, ensure_ascii=False), verdict, match_id),
         )
 
+    # 2. Строки комментарного носителя без точного доказательства лиги и тура
+    unproven_rows = con.execute("""
+        select m.id, m.manual, t.name, m.tour, m.source_ref,
+               (select group_concat(p.nick, ' vs ')
+                from match_sides ms
+                join side_players sp on sp.side_id = ms.id
+                join players p on p.id = sp.player_id
+                where ms.match_id = m.id) as sides,
+               (select group_concat(ms.score, ':')
+                from match_sides ms
+                where ms.match_id = m.id) as score,
+               (select url
+                from match_links ml
+                where ml.match_id = m.id and ml.kind = 'vk_post'
+                limit 1) as vk_url
+        from matches m
+        join tournaments t on t.id = m.tournament_id
+        where m.source = 'vk_comments_playoff' and m.tour = 'Плей-офф / Кубок'
+        order by t.name, m.id
+    """).fetchall()
+
+    for r in unproven_rows:
+        mid, manual, t_name, tour, s_ref, sides, score, vk_url = r
+        # Если матч уже правился вручную или тур перестал быть заглушкой — решено
+        verdict = "same" if (manual or tour != "Плей-офф / Кубок") else "conflict"
+        payload = {
+            "задача": (
+                f"Не доказан дивизион (Высшая/Средняя/Дворовая) или тур по тексту комментария в ВК. "
+                f"Сейчас в витрине стоит временный плейсхолдер '{tour}' в турнире '{t_name}'. "
+                f"Требуется проверить контекст обсуждения в ВК и выставить верный дивизион и тур."
+            ),
+            "алгоритм_сомнение": (
+                "В тексте комментария дивизион не указан; строка временно помещена в Высшую лигу "
+                "с этапом 'Плей-офф / Кубок'."
+            ),
+            "ссылки": [vk_url] if vk_url else [],
+            "тур": tour,
+            "лига": t_name,
+            "стороны": sides.split(" vs ") if sides else [],
+            "как_выглядит": f"{t_name} · {tour} · {sides} ({score})",
+        }
+        ref_key = s_ref or f"unproven_playoff_{mid}"
+        con.execute(
+            "insert into incoming(batch, source, source_ref, payload, verdict, matched_match_id)"
+            " values (?, 'review_unproven', ?, ?, ?, ?)",
+            (UNPROVEN_BATCH, ref_key, json.dumps(payload, ensure_ascii=False), verdict, mid),
+        )
+
     con.commit()
 
 
@@ -71,9 +122,10 @@ def main(db_path=DB_PATH):
     sys.stdout.reconfigure(encoding="utf-8")
     con = store.connect(db_path)
     populate_lore_review(con)
-    count = con.execute("select count(*) from incoming where batch = ? and verdict = 'conflict'", (BATCH,)).fetchone()[0]
-    print(f"задач лороведу в батче {BATCH}: {count}")
-    return count
+    for b in LORE_BATCHES:
+        count = con.execute("select count(*) from incoming where batch = ? and verdict = 'conflict'", (b,)).fetchone()[0]
+        print(f"задач лороведу в батче {b}: {count}")
+    return 0
 
 
 if __name__ == "__main__":

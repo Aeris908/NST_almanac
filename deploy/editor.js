@@ -1191,7 +1191,8 @@
         const item = el("div", "nst-edit-task nst-edit-task-card");
         const header = el("div", "nst-edit-task-header");
         let badgeLabel = task.batch;
-        if (task.batch && task.batch.startsWith("lore_review")) badgeLabel = "⭐ Кубок лиг / Рейтинг";
+        if (task.batch === "lore_review_unproven") badgeLabel = "❓ Лига / Тур не доказаны";
+        else if (task.batch && task.batch.startsWith("lore_review")) badgeLabel = "⭐ Кубок лиг / Рейтинг";
         else if (task.batch && task.batch.includes("41270759")) badgeLabel = "Командный / Молодёжка";
         else if (task.batch && task.batch.includes("33437511")) badgeLabel = "Пенальти / Сетка";
         header.appendChild(el("span", "nst-edit-task-badge", badgeLabel));
