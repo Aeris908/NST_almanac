@@ -38,6 +38,14 @@
       if(status) status.textContent='Черновик сохранён в этом браузере · '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
     } catch (_) {if(status) status.textContent='Не удалось сохранить черновик в браузере. Не закрывайте страницу.';}
   }
+  function decisionAction(button, ready=false, busy=false) {
+    const form=button.closest('form'),saved=form.dataset.saved==='1';
+    button.disabled=busy||saved;
+    button.textContent=saved?'Решение сохранено':busy?'Проверяем решение…':ready?'Сохранить решение':'Проверить решение';
+    let hint=form.querySelector('.save-guidance');
+    if(!hint){hint=document.createElement('p');hint.className='save-guidance';hint.setAttribute('role','status');button.closest('.form-actions').after(hint);}
+    hint.textContent=saved?'Решение записано в базе.':busy?'Проверяем данные и рассчитываем изменения.':ready?'Проверьте изменения ниже. Нажмите «Сохранить решение», чтобы записать их в базу.':'Сначала проверим данные и покажем изменения. Запись в базу — только после вашего подтверждения.';
+  }
   function clearDraft(form) {
     delete drafts[draftId(form)];form.dataset.dirty='0';form.dataset.saved='1';
     try {localStorage.setItem(DRAFT_KEY,JSON.stringify(drafts));} catch (_) {}
@@ -597,7 +605,7 @@
             </div>
 
             <div class="form-actions">
-              <button type="button" class="btn-save" data-action="save" disabled>Сохранить решение</button>
+              <button type="button" class="btn-save" data-action="save">Проверить решение</button>
               <button type="button" class="btn-preview" data-action="preview">Предпросмотр дельты</button>
             </div>
 
@@ -703,7 +711,7 @@
       <button type="button" class="btn-preview" data-add-game>Добавить игру</button>
       <div class="form-grid review-verdict">      <label>Вердикт<select class="review-decision"><option value="save">Сохранить игры и закрыть задачу</option><option value="confirm">Подтвердить текущие данные без изменений</option><option value="reject">Отклонить отчёт: дубль, цитата или ошибка</option></select></label>
       <label>Обоснование вердикта<textarea class="review-note" required placeholder="Что проверено по источнику и какое решение принято"></textarea></label></div>
-      <div class="form-actions"><button type="button" class="btn-preview" data-review-preview>Предпросмотр решения</button><button type="submit" class="btn-save" disabled>Сохранить решение</button></div>
+      <div class="form-actions"><button type="button" class="btn-preview" data-review-preview>Предпросмотр решения</button><button type="submit" class="btn-save">Проверить решение</button></div>
       <div class="review-result" role="status"></div>
       <p>Запись в базу и публикация сайта — разные этапы. После сохранения игры ждут следующей публикации.</p>
     </form>`;
@@ -737,6 +745,8 @@
     });
     const output = form.querySelector('.review-result');
     const save = form.querySelector('[type=submit]');
+    const previewButton=form.querySelector('[data-review-preview]');
+    form.noValidate=true;decisionAction(save);
     let previewed = null;
     let previewRevision = null;
     const value = selector => form.querySelector(selector).value.trim();
@@ -754,8 +764,8 @@
       });
       return {task_id:task.id,task_expect:form.dataset.editVersion, decision, note:value('.review-note'), games};
     };
-    form.addEventListener('input',()=>{previewed=null;save.disabled=true;updateGames();});
-    form.addEventListener('change',()=>{previewed=null;save.disabled=true;updateGames();});
+    form.addEventListener('input',()=>{previewed=null;decisionAction(save);updateGames();});
+    form.addEventListener('change',()=>{previewed=null;decisionAction(save);updateGames();});
     const unconfirm=event=>{if(!event.target.matches('.review-player,.review-s1,.review-s2,.review-pk1,.review-pk2,.review-phase'))return;const row=event.target.closest('.review-game');(row?[row]:[...form.querySelectorAll('.review-game')]).forEach(el=>el.dataset.confirmed='0');updateGames();writeDraft(form);};
     form.addEventListener('input',unconfirm);form.addEventListener('change',unconfirm);
     const changePlace=event=>{const key=['league','tour','stage'].find(key=>event.target.matches('.review-'+key));if(!key)return;form.querySelectorAll('.review-game').forEach(row=>{const place=JSON.parse(row.dataset.place||'{}');delete place[key];row.dataset.place=JSON.stringify(place);});updateGames();writeDraft(form);};
@@ -786,40 +796,41 @@
         row.dataset.confirmed='0';
         row.dataset.useCommon='0';row.dataset.reversed='0';row.querySelector('.row-player-fields').hidden=!row.querySelector('.row-player-fields').hidden;
       }else return;
-      previewed=null;save.disabled=true;updateGames();writeDraft(form);
+      previewed=null;decisionAction(save);updateGames();writeDraft(form);
     });
-    form.querySelector('[data-review-preview]').onclick=async event=>{
+    const previewDecision=async ()=>{
       if(!state.isAuthorized) {output.textContent='Введите токен редактора вверху страницы.';return;}
       if(!validateReview(form,rowNames,true)||!form.reportValidity()) return;
-      const button=event.target;button.disabled=true;save.disabled=true;
+      const button=previewButton;button.disabled=true;decisionAction(save,false,true);
       try {
         if(!await resolveConflict(form,rowNames))return;
         const args=payload(); const status=await apiCall('/api/state');state.revision=status.revision;
         const result=await apiCall('/api/edit',{operation:'review-task',args,persist:false,expect:status.revision});
         previewed=JSON.stringify(args); previewRevision=result.revision;
         showComparison(output,result,args.note,args.decision);
-        save.disabled=false;
+        decisionAction(save,true);
       } catch(error){previewed=null;output.textContent='Предпросмотр не выполнен: '+error.message;
         const nick=error.message.match(/Игрок «([^»]+)»/);
         if(nick){const input=[...form.querySelectorAll('.review-player')].find(el=>el.value.trim()===nick[1]);fieldError(input,'Игрок не найден. Выберите ник из подсказок.');revealError(input);}
       }
-      finally{button.disabled=false;}
+      finally{button.disabled=false;decisionAction(save,!!previewed);}
     };
+    previewButton.onclick=previewDecision;
     form.onsubmit=async event=>{
       event.preventDefault();const args=payload();
-      if(!previewed || previewed!==JSON.stringify(args)) {save.disabled=true;output.textContent='Сначала обновите предпросмотр.';return;}
+      if(!previewed || previewed!==JSON.stringify(args)) {await previewDecision();return;}
       save.disabled=true;
       try {
         const result=await apiCall('/api/edit',{operation:'review-task',args,persist:true,expect:previewRevision});
         state.revision=result.revision_after;state.resolvedIds.add(task.id);
-        clearDraft(form);
+        clearDraft(form);decisionAction(save,true);
         document.getElementById('publicationStatus').textContent='Сохранено в базе. Публикация: ожидает обновления сайта.';
         output.textContent='Сохранено в базе. Задача закрыта. Публикация: ожидает обновления сайта.';
         form.querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
         const next=document.createElement('button');next.type='button';next.className='btn-save';next.textContent='Следующая задача';next.onclick=()=>nextTask(task.id);form.append(next);
         document.getElementById('task-'+task.id).classList.add('resolved');
         showNotice('Вердикт сохранён; публикация сайта обновит витрину.','success');loadJournal();
-      } catch(error){previewed=null;output.textContent='Решение не сохранено: '+error.message+' Повторите предпросмотр.';if(/измени|CONFLICT/.test(error.message))await resolveConflict(form,rowNames);}
+      } catch(error){previewed=null;decisionAction(save);output.textContent='Решение не сохранено: '+error.message+' Повторите предпросмотр.';if(/измени|CONFLICT/.test(error.message))await resolveConflict(form,rowNames);}
     };
   }
 
@@ -840,7 +851,7 @@
       const previewBtn = form.querySelector('[data-action="preview"]');
       let approved=null, approvedRevision=null;
       const update=()=>{
-        approved=null;saveBtn.disabled=true;
+        approved=null;decisionAction(saveBtn);
         form.querySelector('.legacy-pk').hidden=!['penalties','overtime_penalties'].includes(form.querySelector('.input-outcome').value);
       };
       update();
@@ -852,9 +863,9 @@
       previewBtn.onclick = async () => {
         if(!state.isAuthorized){showNotice('Введите токен редактора вверху страницы.','error');return;}
         if(!form.reportValidity())return;
-        approved=null;saveBtn.disabled=true;
+        approved=null;decisionAction(saveBtn);
         try {
-          previewBtn.disabled = true;
+          previewBtn.disabled = true;decisionAction(saveBtn,false,true);
           previewBtn.textContent = "Считаем дельту…";
           const payload = collectFormData(form, matchId);
           if(!await resolveConflict(form))return;
@@ -863,7 +874,7 @@
           const current=await apiCall('/api/state');payload.expect = current.revision;
 
           const res = await apiCall("/api/edit", payload);
-          approved=JSON.stringify(payload.args);approvedRevision=res.revision;saveBtn.disabled=false;
+          approved=JSON.stringify(payload.args);approvedRevision=res.revision;decisionAction(saveBtn,true);
           previewBox.hidden = false;
           const args=payload.args;
           showComparison(previewBox,res,args.note,args.outcome==='void'?'void':'save');
@@ -871,7 +882,7 @@
           previewBox.hidden = false;
           previewBox.innerHTML = `<span style="color:var(--nes-red);">Ошибка предпросмотра: ${escapeHTML(err.message)}</span>`;
         } finally {
-          previewBtn.disabled = false;
+          previewBtn.disabled = false;decisionAction(saveBtn,!!approved);
           previewBtn.textContent = "Предпросмотр дельты";
         }
       };
@@ -888,7 +899,7 @@
           saveBtn.disabled = true;
           saveBtn.textContent = "Записываем в Neon…";
           const payload = collectFormData(form, matchId);
-          if(!approved||approved!==JSON.stringify(payload.args))throw Error('Сначала выполните предпросмотр решения.');
+          if(!approved||approved!==JSON.stringify(payload.args)){await previewBtn.onclick();return;}
           payload.persist = true;
           payload.expect = approvedRevision;
 
@@ -919,8 +930,7 @@
           if(/измени|CONFLICT/.test(err.message))await resolveConflict(form);
           showNotice(`Ошибка записи: ${escapeHTML(err.message)}`, "error");
         } finally {
-          saveBtn.disabled = form.dataset.saved==='1'||!approved;
-          saveBtn.textContent = "Сохранить решение";
+          decisionAction(saveBtn,!!approved);
         }
       };
     });
