@@ -24,13 +24,13 @@
   let drafts = {};
   try { drafts = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}') || {}; } catch (_) {}
   const draftId = form => form.dataset.taskId || form.closest('article')?.id.replace('task-', '');
-  const draftFields = form => [...form.querySelectorAll('input,select,textarea')];
+  const draftFields = form => [...form.querySelectorAll('input,select,textarea')].filter(el=>!el.closest('.report-assistant,.conflict-panel'));
   function writeDraft(form) {
     if (form.dataset.saved === '1') return;
     const id = draftId(form); if (!id) return;
-    drafts[id] = {version:1, sourceRef:form.dataset.sourceRef, updated:Date.now(), fields:draftFields(form).map(el=>({value:el.value,checked:el.checked})),
+    drafts[id] = {version:1,helperText:form.querySelector('.report-text')?.value, editVersion:form.dataset.editVersion,sourceRef:form.dataset.sourceRef, updated:Date.now(), fields:draftFields(form).map(el=>({value:el.value,checked:el.checked})),
       rows:[...form.querySelectorAll('.review-game')].map(row=>({id:row.dataset.matchId,
-        common:row.dataset.useCommon,reversed:row.dataset.reversed,own:!row.querySelector('.row-player-fields').hidden}))};
+        place:row.dataset.place,common:row.dataset.useCommon,reversed:row.dataset.reversed,proposal:row.dataset.proposal,raw:row.dataset.raw,confirmed:row.dataset.confirmed,own:!row.querySelector('.row-player-fields').hidden}))};
     form.dataset.dirty='1';
     const status=form.querySelector('.draft-status');
     try {
@@ -44,10 +44,15 @@
   }
   function restoreDraft(form) {
     const draft=drafts[draftId(form)];if(!draft || draft.version!==1 || draft.sourceRef!==form.dataset.sourceRef || !Array.isArray(draft.fields))return false;
+    form.dataset.editVersion=draft.editVersion||'legacy-draft';
     if(form.matches('.archive-review-form') && Array.isArray(draft.rows)) {
+      const places=new Map([...form.querySelectorAll('.review-game')].map(row=>[row.dataset.matchId,row.dataset.place]));
       form.querySelector('.review-games').innerHTML=draft.rows.map(row=>reviewGameRow({id:row.id})).join('');
       form.querySelectorAll('.review-game').forEach((row,i)=>{
         row.dataset.useCommon=draft.rows[i].common;row.dataset.reversed=draft.rows[i].reversed;
+        row.dataset.proposal=draft.rows[i].proposal||'';row.dataset.confirmed=draft.rows[i].confirmed||'';
+        row.dataset.raw=draft.rows[i].raw||'';
+        row.dataset.place=draft.rows[i].place||places.get(row.dataset.matchId)||'{}';
         row.querySelector('.row-player-fields').hidden=!draft.rows[i].own;
       });
     }
@@ -56,6 +61,7 @@
   }
   function attachDraft(form) {
     form.dataset.sourceRef=state.tasks.find(task=>String(task.id)===String(draftId(form)))?.source_ref||'';
+    form.dataset.editVersion=state.tasks.find(task=>String(task.id)===String(draftId(form)))?.edit_version||'';
     const status=document.createElement('p');status.className='draft-status';status.setAttribute('role','status');
     status.textContent=restoreDraft(form)?'Черновик восстановлен. Сверьте его с актуальным источником и выполните предпросмотр.':'Черновик сохраняется в этом браузере при изменении полей.';
     form.prepend(status);
@@ -106,11 +112,87 @@
         if(phase==='overtime' && row.querySelector('.review-s1').value!=='' && row.querySelector('.review-s1').value===row.querySelector('.review-s2').value)fieldError(row.querySelector('.review-s2'),'В овертайме должен быть победитель.');
       });
     }
-    const invalid=form.querySelector('[aria-invalid=true]');if(invalid&&all)revealError(invalid);return !invalid;
+    const invalid=form.querySelector('[aria-invalid=true]');if(invalid&&all)revealError(invalid);
+    if(!invalid&&all){const pending=form.querySelector('.review-game[data-proposal="1"]:not([data-confirmed="1"])');if(pending){showNotice('Сверьте и подтвердите каждую предложенную строку перед предпросмотром.','error');pending.querySelector('[data-confirm-proposal]')?.focus();return false;}}
+    return !invalid;
   }
   window.addEventListener('beforeunload',event=>{
     if(document.querySelector('form[data-dirty="1"]')){event.preventDefault();event.returnValue='';}
   });
+  function showComparison(output,result,note,decision='save') {
+    output.replaceChildren();
+    const title=document.createElement('h4');title.textContent='Изменения перед сохранением';output.append(title);
+    const action=document.createElement('p');action.textContent=({save:'Сохранить игры и закрыть задачу',confirm:'Подтвердить данные без изменений',reject:'Отклонить отчёт',void:'Аннулировать встречу'})[decision]||'Сохранить решение';output.append(action);
+    const fields={doc_title:'Турнир',tour:'Тур',league:'Лига',stage:'Стадия',phase:'Результат',is_playoff:'Плей-офф',status:'Статус',note:'Счёт / протокол'};
+    for(const [index,item] of (result.comparison||[]).entries()) {
+      const section=document.createElement('section');section.className='comparison-game';
+      const heading=document.createElement('strong');heading.textContent='Игра '+(index+1)+(item.before?' · #'+item.before.id:' · новая');section.append(heading);
+      const table=document.createElement('table');const header=table.insertRow();for(const text of ['Поле','Было','Станет']){const th=document.createElement('th');th.textContent=text;header.append(th);}
+      const row=(label,a,b)=>{if(a===b)return;const values={regular:'Основное время',penalties:'Буллиты',overtime:'Овертайм',overtime_penalties:'Овертайм и буллиты',played:'Сыгран',technical:'Технический результат',void:'Аннулирован',win:'Победа',loss:'Поражение',draw:'Ничья',none:'Не учитывается'};const display=v=>/^(Результат|Исход|Статус)/.test(label)?values[v]||v:v;const tr=table.insertRow();for(const text of [label,display(a)??'—',display(b)??'—']){const td=tr.insertCell();td.textContent=String(text);}};
+      for(const [key,label] of Object.entries(fields))row(label,item.before?.[key],item.after?.[key]);
+      for(let i=0;i<2;i++)for(const [key,label] of [['players','Состав'],['score','Голы'],['outcome','Исход']])row(label+' '+(i?'B':'A'),item.before?.sides?.[i]?.[key],item.after?.sides?.[i]?.[key]);
+      if(table.rows.length===1){const p=document.createElement('p');p.textContent='Данные игры не меняются.';section.append(p);}else section.append(table);output.append(section);
+    }
+    const rating=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Влияние на Elo';rating.append(summary);
+    const ratings=[];for(const [name,change] of Object.entries(result.delta?.profiles||{}))for(const key of ['active_elo','peak_elo'])if(Array.isArray(change?.[key]))ratings.push(name+' · '+(key==='active_elo'?'Elo':'пик')+': '+change[key][0]+' → '+change[key][1]);
+    const text=document.createElement('p');text.textContent=ratings.join('\n')||'Рейтинговые значения не меняются.';rating.append(text);output.append(rating);
+    const reason=document.createElement('p');reason.textContent='Обоснование: '+note+'. После сохранения задача будет закрыта.';output.append(reason);
+  }
+  async function resolveConflict(form,namesForRow) {
+    const answer=await apiCall('/api/queue?task_id='+encodeURIComponent(draftId(form)));
+    const latest=answer.tasks?.[0];
+    if(!latest){showNotice('Задача уже закрыта или удалена. Черновик сохранён в этом браузере.','error');return false;}
+    if(!form.dataset.editVersion||latest.edit_version===form.dataset.editVersion){form.dataset.editVersion=latest.edit_version;return true;}
+    form.querySelector('.conflict-panel')?.remove();
+    const panel=document.createElement('section');panel.className='conflict-panel';panel.setAttribute('role','alert');
+    const heading=document.createElement('h4');heading.textContent='Данные изменил другой редактор';panel.append(heading);
+    const intro=document.createElement('p');intro.textContent='Выберите значения для продолжения. Черновик не удалён. После выбора нужен новый предпросмотр.';panel.append(intro);
+    if(latest.shown){const source=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Актуальный текст источника';const text=document.createElement('pre');text.textContent=latest.shown;source.append(summary,text);panel.append(source);}
+    const choices=[];
+    function choice(label,mine,server,apply) {
+      if(String(mine??'')===String(server??''))return;
+      const labelEl=document.createElement('label');labelEl.textContent=label;
+      const values=document.createElement('p');values.textContent='Черновик: '+(mine??'—')+'\nСервер: '+(server??'—');labelEl.append(values);
+      const select=document.createElement('select');for(const [value,text] of [['','Выберите версию'],['draft','Оставить черновик'],['server','Взять серверное значение']]){const option=new Option(text,value);select.add(option);}labelEl.append(select);panel.append(labelEl);choices.push({select,apply,server});
+    }
+    const serverRows=latest.review_matches?.length?latest.review_matches:(latest.row?[latest.row]:[]),first=serverRows[0]||{};
+    if(form.matches('.archive-review-form')) {
+      form.querySelectorAll('.review-game[data-match-id]').forEach((row,index)=>{
+        if(!row.dataset.matchId)return;const server=serverRows.find(r=>String(r.id)===row.dataset.matchId);if(!server)return;
+        const names=namesForRow(row);const theirs=server.sides.flatMap(s=>String(s.players||'').split(' & '));
+        for(const key of ['league','tour','stage']){const place=JSON.parse(row.dataset.place||'{}');const mine=place[key]??form.querySelector('.review-'+key).value;choice('Игра '+(index+1)+' · '+({league:'лига',tour:'тур',stage:'стадия'})[key],mine,server[key]||'',value=>{const values=JSON.parse(row.dataset.place||'{}');values[key]=value;row.dataset.place=JSON.stringify(values);});}
+        choice('Игра '+(index+1)+' · состав',names.join(' / '),theirs.join(' / '),()=>{row.dataset.useCommon='0';row.dataset.reversed='0';['a1','a2','b1','b2'].forEach((key,i)=>row.querySelector('.review-'+key).value=theirs[i]||'');row.querySelector('.row-player-fields').hidden=false;});
+        const pk=String(server.note||'').match(/(?:ПК|PK)\s*(\d+)\s*[:-]\s*(\d+)/i);
+        for(const [key,value] of [['s1',server.sides[0].score],['s2',server.sides[1].score],['phase',server.phase||'regular'],['pk1',pk?.[1]||''],['pk2',pk?.[2]||'']]){const input=row.querySelector('.review-'+key);choice('Игра '+(index+1)+' · '+({s1:'голы A',s2:'голы B',phase:'результат',pk1:'буллиты A',pk2:'буллиты B'})[key],input.value,value??'',v=>input.value=v);}
+      });
+    } else {
+      for(const [selector,value,label] of [['.input-s1',first.sides?.[0]?.score,'Голы A'],['.input-s2',first.sides?.[1]?.score,'Голы B'],['.input-stage',first.stage,'Стадия'],['.input-outcome',first.status==='technical'?'technical':first.phase||'regular','Результат']]){const input=form.querySelector(selector);choice(label,input.value,value??'',v=>input.value=v);}
+    }
+    const accept=document.createElement('button');accept.type='button';accept.className='btn-preview';accept.textContent='Применить выбранные версии';
+    accept.onclick=()=>{if(choices.some(c=>!c.select.value)){showNotice('Выберите версию для каждого изменённого поля.','error');return;}choices.forEach(c=>{if(c.select.value==='server')c.apply(c.server);});form.querySelectorAll('[data-proposal="1"]').forEach(row=>row.dataset.confirmed='0');const source=form.closest('.review-workspace')?.querySelector('.review-source pre');if(source)source.textContent=latest.shown||'';form.dataset.editVersion=latest.edit_version;const index=state.tasks.findIndex(t=>t.id===latest.id);if(index>=0)state.tasks[index]=latest;panel.remove();form.dispatchEvent(new Event('change',{bubbles:true}));writeDraft(form);};
+    panel.append(accept);form.prepend(panel);panel.scrollIntoView({block:'center'});return false;
+  }
+  function attachReportHelper(form,task,add) {
+    const box=document.createElement('details');box.className='report-assistant';
+    const summary=document.createElement('summary');summary.textContent='Помощник разбора отчёта';box.append(summary);
+    const explanation=document.createElement('p');explanation.textContent='Вставьте отчёт. Помощник предложит строки со счётом и точные ники. Выберите нужные строки, затем сверьте каждую добавленную игру с источником.';box.append(explanation);
+    const input=document.createElement('textarea');input.className='report-text';input.maxLength=30000;input.setAttribute('aria-label','Текст отчёта для разбора');input.value=drafts[task.id]?.helperText??task.shown??'';box.append(input);
+    const parse=document.createElement('button');parse.type='button';parse.className='btn-preview';parse.textContent='Предложить строки игр';box.append(parse);
+    const result=document.createElement('div');box.append(result);
+    parse.onclick=async()=>{
+      parse.disabled=true;result.textContent='Проверяем строки и ники…';
+      try {
+        const players=await apiCall('/api/players?limit=200');const answer=NSTReport.parse(input.value,players.players);
+        result.replaceChildren();const choices=[];
+        for(const game of answer.games){const label=document.createElement('label');label.className='report-choice';const checkbox=document.createElement('input');checkbox.type='checkbox';label.append(checkbox,document.createTextNode('Строка '+game.line+': '+game.raw));const warning=document.createElement('small');warning.textContent=game.warnings.join(' ');label.append(warning);result.append(label);choices.push({checkbox,game});}
+        const info=document.createElement('p');info.textContent='Предложено игр: '+answer.games.length+'. Строк без распознанного счёта: '+answer.unparsed.length+'. Ничего не добавлено автоматически.';result.append(info);
+        if(answer.unparsed.length){const rest=document.createElement('details');rest.innerHTML='<summary>Строки, которые нужно разобрать вручную</summary>';const pre=document.createElement('pre');pre.textContent=answer.unparsed.map(r=>r.line+': '+r.text).join('\n');rest.append(pre);result.append(rest);}
+        const apply=document.createElement('button');apply.type='button';apply.className='btn-preview';apply.textContent='Добавить выбранные строки';
+        apply.onclick=()=>{const selected=choices.filter(c=>c.checkbox.checked);if(!selected.length){info.textContent='Сначала отметьте строки, которые нужно добавить.';return;}if(form.querySelectorAll('.review-game').length+selected.length>30){info.textContent='Один отчёт содержит не более 30 игр. Уберите лишние строки.';return;}selected.forEach(c=>{add(c.game);c.checkbox.disabled=true;c.checkbox.checked=false;});apply.disabled=true;info.textContent='Строки добавлены как предложения. Сверьте составы, стороны и счёт каждой игры и подтвердите её.';};result.append(apply);
+      }catch(error){result.textContent='Разбор не выполнен: '+error.message;}finally{parse.disabled=false;}
+    };
+    form.querySelector('.review-games').before(box);
+  }
 
   // ── Сеть и API ────────────────────────────────────────────────────────
 
@@ -580,9 +662,10 @@
     const names=(row.sides||[]).map(s=>s.players||'');
     const a=String(names[0]||sides[0]||'').split(' & '),b=String(names[1]||sides[1]||'').split(' & ');
     const pk=String(row.note||'').match(/\((?:ПК|PK)?\s*(\d+)\s*[:-]\s*(\d+)/i);
-    return `<fieldset class="review-game" data-match-id="${row.id || ''}" data-use-common="${row.id?'0':'1'}" data-reversed="0">
+    return `<fieldset class="review-game" data-match-id="${row.id || ''}" data-place="${escapeHTML(JSON.stringify(row.id?{league:row.league||'',tour:row.tour||'',stage:row.stage||''}:{}))}" data-use-common="${row.id?'0':'1'}" data-reversed="0">
       <legend>${row.id?'Игра #'+Number(row.id):'Новая игра'}</legend>
       <div class="game-pairs" aria-live="polite"></div>
+      <p class="game-context"></p>
       <div class="review-scoreline">
         <label>Голы A<input type="number" class="review-s1" min="0" max="99" value="${row.score_a??''}"></label><span class="score-colon">:</span>
         <label>Голы B<input type="number" class="review-s2" min="0" max="99" value="${row.score_b??''}"></label>
@@ -602,7 +685,7 @@
     const rows = task.review_matches || (task.row ? [task.row] : []);
     const first = rows[0] || {};
     host.innerHTML = `<form class="archive-review-form" data-task-id="${Number(task.id)}">
-      <h3>Решение лороведа</h3><p>Сначала укажите пары, затем внесите счета игр. Ник выбирается из подсказок — сам он не заменяется.</p>
+      <h3>Решение лороведа</h3><p>Сначала укажите пары, затем внесите счета игр. Ник выбирается из подсказок — сам он не заменяется. Контекст существующих игр сохраняется; изменение общей лиги, тура или стадии применяется ко всем строкам.</p>
       <div class="form-grid">
       <label>Турнир<select class="review-doc" ${rows.length ? 'disabled' : ''}><option value="">Выберите турнир</option>${(task.review_documents || []).map(d=>`<option value="${escapeHTML(d.doc_key)}" ${d.doc_key === (first.doc_key || task.review_doc_key) ? 'selected' : ''}>${escapeHTML(d.title)}</option>`).join('')}</select></label>
       <label>Лига / группа<input class="review-league" value="${escapeHTML(first.league || '')}"></label>
@@ -615,7 +698,7 @@
       <div class="form-grid review-verdict">      <label>Вердикт<select class="review-decision"><option value="save">Сохранить игры и закрыть задачу</option><option value="confirm">Подтвердить текущие данные без изменений</option><option value="reject">Отклонить отчёт: дубль, цитата или ошибка</option></select></label>
       <label>Обоснование вердикта<textarea class="review-note" required placeholder="Что проверено по источнику и какое решение принято"></textarea></label></div>
       <div class="form-actions"><button type="button" class="btn-preview" data-review-preview>Предпросмотр решения</button><button type="submit" class="btn-save" disabled>Сохранить решение</button></div>
-      <pre class="review-result" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+      <div class="review-result" role="status"></div>
       <p>Запись в базу и публикация сайта — разные этапы. После сохранения игры ждут следующей публикации.</p>
     </form>`;
     const form = host.querySelector('form');
@@ -629,12 +712,23 @@
     function updateGames() {
       form.querySelectorAll('.review-game').forEach((row,index)=>{
         const n=rowNames(row);row.querySelector('.game-pairs').textContent=(index+1)+'. '+(n[0]||'Игрок A1')+' & '+(n[1]||'Игрок A2')+' — '+(n[2]||'Игрок B1')+' & '+(n[3]||'Игрок B2');
+        const place=JSON.parse(row.dataset.place||'{}');row.querySelector('.game-context').textContent=['league','tour','stage'].map(key=>place[key]??form.querySelector('.review-'+key).value).filter(Boolean).join(' · ');
         row.querySelector('.review-pk').hidden=row.querySelector('.review-phase').value!=='penalties';
+        if(row.dataset.proposal==='1'){
+          let confirm=row.querySelector('[data-confirm-proposal]');
+          if(!confirm){const quote=document.createElement('p');quote.className='proposal-source';quote.textContent='Из отчёта: '+(row.dataset.raw||'сверьте строку с источником');row.append(quote);confirm=document.createElement('button');confirm.type='button';confirm.className='btn-preview';confirm.dataset.confirmProposal='';row.append(confirm);}
+          confirm.textContent=row.dataset.confirmed==='1'?'✓ Строка сверена':'Составы, стороны и счёт сверены — подтвердить';confirm.setAttribute('aria-pressed',String(row.dataset.confirmed==='1'));
+        }
       });
       const editing=form.querySelector('.review-decision').value==='save';
       form.querySelector('.common-roster').hidden=!editing;form.querySelector('.review-games').hidden=!editing;form.querySelector('[data-add-game]').hidden=!editing;
     }
     updateGames();
+    attachReportHelper(form,task,game=>{
+      const host=form.querySelector('.review-games');host.insertAdjacentHTML('beforeend',reviewGameRow({sides:game.sides?.map(players=>({players:players.join(' & ')})),score_a:game.s1,score_b:game.s2,phase:game.phase,note:game.pk1!==null?'(ПК '+game.pk1+':'+game.pk2+')':''}));
+      const row=host.lastElementChild;row.dataset.proposal='1';row.dataset.confirmed='0';row.dataset.raw=game.raw;if(game.sides){row.dataset.useCommon='0';row.querySelector('.row-player-fields').hidden=false;}
+      updateGames();form.dispatchEvent(new Event('change',{bubbles:true}));
+    });
     const output = form.querySelector('.review-result');
     const save = form.querySelector('[type=submit]');
     let previewed = null;
@@ -645,16 +739,21 @@
       const games = decision !== 'save' ? [] : [...form.querySelectorAll('.review-game')].map(row => {
         const get = sel => row.querySelector(sel).value.trim();
         const integer = sel => get(sel) === '' ? null : Number(get(sel));
+        const place=JSON.parse(row.dataset.place||'{}');
         return {match_id:row.dataset.matchId ? Number(row.dataset.matchId) : undefined,
-          doc_key:value('.review-doc'), league:value('.review-league'),tour:value('.review-tour'),stage:value('.review-stage'),
+          doc_key:value('.review-doc'), league:place.league??value('.review-league'),tour:place.tour??value('.review-tour'),stage:place.stage??value('.review-stage'),
           sides:[rowNames(row).slice(0,2).join(' & '),rowNames(row).slice(2).join(' & ')],
           s1:integer('.review-s1'),s2:integer('.review-s2'),pk1:integer('.review-pk1'),pk2:integer('.review-pk2'),
-          phase:get('.review-phase'),playoff:row.querySelector('.review-playoff').checked};
+          phase:get('.review-phase'),playoff:row.querySelector('.review-playoff').checked,from_report:row.dataset.proposal==='1',confirmed:row.dataset.confirmed==='1'};
       });
-      return {task_id:task.id, decision, note:value('.review-note'), games};
+      return {task_id:task.id,task_expect:form.dataset.editVersion, decision, note:value('.review-note'), games};
     };
     form.addEventListener('input',()=>{previewed=null;save.disabled=true;updateGames();});
     form.addEventListener('change',()=>{previewed=null;save.disabled=true;updateGames();});
+    const unconfirm=event=>{if(!event.target.matches('.review-player,.review-s1,.review-s2,.review-pk1,.review-pk2,.review-phase'))return;const row=event.target.closest('.review-game');(row?[row]:[...form.querySelectorAll('.review-game')]).forEach(el=>el.dataset.confirmed='0');updateGames();writeDraft(form);};
+    form.addEventListener('input',unconfirm);form.addEventListener('change',unconfirm);
+    const changePlace=event=>{const key=['league','tour','stage'].find(key=>event.target.matches('.review-'+key));if(!key)return;form.querySelectorAll('.review-game').forEach(row=>{const place=JSON.parse(row.dataset.place||'{}');delete place[key];row.dataset.place=JSON.stringify(place);});updateGames();writeDraft(form);};
+    form.addEventListener('input',changePlace);form.addEventListener('change',changePlace);
     form.addEventListener('focusout',async event=>{
       const input=event.target;if(!input.matches('input,select,textarea'))return;
       validateReview(form,rowNames);
@@ -669,13 +768,16 @@
     form.addEventListener('click',event=>{
       const button=event.target.closest('button');if(!button)return;
       if(button.matches('[data-add-game]')) form.querySelector('.review-games').insertAdjacentHTML('beforeend',reviewGameRow());
+      else if(button.matches('[data-confirm-proposal]'))button.closest('.review-game').dataset.confirmed='1';
       else if(button.matches('[data-remove-game]')) button.closest('fieldset').remove();
-      else if(button.matches('[data-apply-roster]')) form.querySelectorAll('.review-game').forEach(row=>{row.dataset.useCommon='1';row.dataset.reversed='0';row.querySelector('.row-player-fields').hidden=true;});
+      else if(button.matches('[data-apply-roster]')) form.querySelectorAll('.review-game').forEach(row=>{row.dataset.useCommon='1';row.dataset.reversed='0';row.dataset.confirmed='0';row.querySelector('.row-player-fields').hidden=true;});
       else if(button.matches('[data-swap-game]')) {
         const row=button.closest('fieldset');row.dataset.reversed=row.dataset.reversed==='1'?'0':'1';
+        row.dataset.confirmed='0';
         for(const [a,b] of [['s1','s2'],['pk1','pk2']]){const left=row.querySelector('.review-'+a),right=row.querySelector('.review-'+b);[left.value,right.value]=[right.value,left.value];}
       }else if(button.matches('[data-own-roster]')) {
         const row=button.closest('fieldset'),names=rowNames(row);['a1','a2','b1','b2'].forEach((k,i)=>row.querySelector('.review-'+k).value=names[i]);
+        row.dataset.confirmed='0';
         row.dataset.useCommon='0';row.dataset.reversed='0';row.querySelector('.row-player-fields').hidden=!row.querySelector('.row-player-fields').hidden;
       }else return;
       previewed=null;save.disabled=true;updateGames();writeDraft(form);
@@ -685,15 +787,11 @@
       if(!validateReview(form,rowNames,true)||!form.reportValidity()) return;
       const button=event.target;button.disabled=true;save.disabled=true;
       try {
+        if(!await resolveConflict(form,rowNames))return;
         const args=payload(); const status=await apiCall('/api/state');state.revision=status.revision;
         const result=await apiCall('/api/edit',{operation:'review-task',args,persist:false,expect:status.revision});
         previewed=JSON.stringify(args); previewRevision=result.revision;
-        const decisions={save:'Сохранить игры',confirm:'Подтвердить без изменений',reject:'Отклонить отчёт'};
-        const lines=[decisions[args.decision], ...args.games.map((g,i)=>(i+1)+'. '+g.sides[0]+' — '+g.sides[1]+': '+g.s1+':'+g.s2+(g.phase==='penalties'&&g.pk1!==null?' (буллиты '+g.pk1+':'+g.pk2+')':''))];
-        const headline=result.delta?.headline || {};
-        for(const [key,label] of [['matches','Матчей в архиве'],['goals','Голов в архиве']]) if(Array.isArray(headline[key])) lines.push(label+': '+headline[key][0]+' → '+headline[key][1]);
-        lines.push('Обоснование: '+args.note,'После сохранения задача будет закрыта.');
-        output.textContent=lines.join('\n');
+        showComparison(output,result,args.note,args.decision);
         save.disabled=false;
       } catch(error){previewed=null;output.textContent='Предпросмотр не выполнен: '+error.message;
         const nick=error.message.match(/Игрок «([^»]+)»/);
@@ -715,7 +813,7 @@
         const next=document.createElement('button');next.type='button';next.className='btn-save';next.textContent='Следующая задача';next.onclick=()=>nextTask(task.id);form.append(next);
         document.getElementById('task-'+task.id).classList.add('resolved');
         showNotice('Вердикт сохранён; публикация сайта обновит витрину.','success');loadJournal();
-      } catch(error){previewed=null;output.textContent='Решение не сохранено: '+error.message+' Повторите предпросмотр.';}
+      } catch(error){previewed=null;output.textContent='Решение не сохранено: '+error.message+' Повторите предпросмотр.';if(/измени|CONFLICT/.test(error.message))await resolveConflict(form,rowNames);}
     };
   }
 
@@ -753,6 +851,8 @@
           previewBtn.disabled = true;
           previewBtn.textContent = "Считаем дельту…";
           const payload = collectFormData(form, matchId);
+          if(!await resolveConflict(form))return;
+          payload.args.task_expect=form.dataset.editVersion;
           payload.persist = false;
           const current=await apiCall('/api/state');payload.expect = current.revision;
 
@@ -760,7 +860,7 @@
           approved=JSON.stringify(payload.args);approvedRevision=res.revision;saveBtn.disabled=false;
           previewBox.hidden = false;
           const args=payload.args;
-          previewBox.textContent=`Матч #${matchId}: ${args.outcome==='void'?'аннулировать':args.s1+':'+args.s2+' · '+form.querySelector('.input-outcome').selectedOptions[0].textContent}\nСтадия: ${args.stage||'не указана'}\nОбоснование: ${args.note}\nПосле сохранения задача будет закрыта.`;
+          showComparison(previewBox,res,args.note,args.outcome==='void'?'void':'save');
         } catch (err) {
           previewBox.hidden = false;
           previewBox.innerHTML = `<span style="color:var(--nes-red);">Ошибка предпросмотра: ${escapeHTML(err.message)}</span>`;
@@ -810,6 +910,7 @@
         } catch (err) {
           approved=null;
           previewBox.hidden=false;previewBox.textContent='Решение не сохранено: '+err.message+' Повторите предпросмотр.';
+          if(/измени|CONFLICT/.test(err.message))await resolveConflict(form);
           showNotice(`Ошибка записи: ${escapeHTML(err.message)}`, "error");
         } finally {
           saveBtn.disabled = form.dataset.saved==='1'||!approved;
@@ -835,7 +936,7 @@
     if(outcome==='penalties'&&s1===s2&&(!pk1||!pk2||Number(pk1)===Number(pk2))){fieldError(form.querySelector('.input-pk2'),'Укажите разные результаты буллитов.');revealError(form.querySelector('.input-pk2'));throw Error('Проверьте результаты буллитов.');}
     return {
       operation: "review-existing",
-      args: {task_id:Number(form.dataset.taskId),match_id:matchId,s1,s2,outcome,stage,note,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
+      args: {task_id:Number(form.dataset.taskId),task_expect:form.dataset.editVersion,match_id:matchId,s1,s2,outcome,stage,note,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
     };
   }
 

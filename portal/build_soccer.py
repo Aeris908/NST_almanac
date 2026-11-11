@@ -19,6 +19,7 @@ from portal.site_payload import build as build_payload
 from portal.site_payload import headline_tokens
 from portal.templates import json_for_script, render
 from portal.ux_data import player_aliases, archive_reviews
+from portal.lazy_data import soccer_summary
 
 OUTPUT_PATH = Path("soccer.html")
 HEADLINE_STATS_PATH = Path("data/headline_stats.json")
@@ -77,7 +78,8 @@ def main():
 
     html = render("soccer_page.html",
                   {**headline_tokens(payload["headline"]), "EDITOR_API": escape(editor_api(), quote=True)})
-    final_html = html.replace(DATA_PLACEHOLDER, json_for_script(payload))
+    summary = soccer_summary(payload, OUTPUT_PATH.parent / 'site-data')
+    final_html = html.replace(DATA_PLACEHOLDER, json_for_script(summary))
     for attempt in range(5):
         try:
             OUTPUT_PATH.write_text(final_html, encoding="utf-8")

@@ -462,7 +462,7 @@ def match_row(con, match_id):
     """Строка матча так, как её показывает страница: стороны, счёт, статус, документ."""
     row = con.execute(
         """select m.id, m.row_set, m.status, m.manual, m.note, m.hidden_by, m.source, m.source_ref,
-                  t.season, t.name tournament, s.name stage, m.league, m.tour, d.doc_key, d.title doc_title
+                  t.season, t.name tournament, s.name stage, m.league, m.tour, m.phase,m.is_playoff,d.doc_key, d.title doc_title
            from matches m
            join tournaments t on t.id = m.tournament_id
            join stages s on s.id = m.stage_id
@@ -589,7 +589,13 @@ def _preview_db(db_path):
 def _apply_and_snapshot(target, operation, editor, args):
     con = edit.connect(target)
     try:
+        reviewing=operation in ('review-task','review-existing')
+        planned=args.get('games',[]) if operation=='review-task' else [args]
+        previous={r['match_id']:match_row(con,r['match_id']) for r in (planned if isinstance(planned,list) else []) if reviewing and isinstance(r,dict) and r.get('match_id')}
         result = _apply(con, operation, editor, args)
+        if reviewing:
+            ids=result.get('created',[]) if operation=='review-task' else [result['match_id']]
+            result['comparison']=[{'before':previous.get(mid),'after':match_row(con,mid)} for mid in ids]
         match_id = result.get("match_id")
         row = match_row(con, match_id) if match_id else None
         after = snapshot(target)
@@ -642,6 +648,7 @@ def mutate(operation, args, editor, *, persist=False, expect=None, db_path=DB_PA
         "released": result.get("released", 0),
         "match": row,
         "delta": changed,
+        "comparison": result.get('comparison',[]),
         "recomputed_in_ms": int((time.perf_counter() - started) * 1000),
     }
 
@@ -737,7 +744,7 @@ from incoming where verdict = 'conflict' order by batch, id
 """
 
 
-def queue(db_path=DB_PATH):
+def queue(db_path=DB_PATH, task_id=None):
     """Очередь редактуры: задача, ссылки источника и строка, которую ради неё править.
 
     Задача без перехода к матчу бесполезна — редактор получил бы список и пошёл искать встречу
@@ -746,7 +753,7 @@ def queue(db_path=DB_PATH):
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     tasks = []
-    pending = list(con.execute(QUEUE_SQL))
+    pending = list(con.execute(QUEUE_SQL if task_id is None else QUEUE_SQL.replace('order by batch, id','and id = ? order by batch, id'), () if task_id is None else (task_id,)))
     team_cards = {}
     team_docs = [dict(r) for r in con.execute(
         "select doc_key, title from tournament_docs where kind = 'team'")]
@@ -774,6 +781,9 @@ def queue(db_path=DB_PATH):
                       "shown": payload.get("как_выглядит") or "",
                       "algorithm_doubt": payload.get("алгоритм_сомнение") or "",
                       "row": _candidate(card) if card else None})
+        from db.review_state import version
+        version_rows=related or ([_candidate(card)] if card else [])
+        tasks[-1]['edit_version']=version(row['id'],'conflict',payload,version_rows)
     con.close()
     return tasks
 
@@ -831,6 +841,10 @@ def players(query="", limit=30, db_path=DB_PATH):
     con.row_factory = sqlite3.Row
     rows = [dict(row) for row in
             con.execute(PLAYERS_SQL, (_like(_norm(query)), max(1, min(int(limit), 200))))]
+    aliases={}
+    for player_id,alias in con.execute('select player_id,alias from player_aliases order by id'):
+        aliases.setdefault(player_id,[]).append(alias)
+    for row in rows:row['aliases']=aliases.get(row['id'],[])
     con.close()
     return rows
 

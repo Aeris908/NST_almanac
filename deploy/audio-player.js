@@ -342,13 +342,15 @@
 
     const collapse = document.createElement('button');
     collapse.className='deck-btn'; collapse.id='deckCollapse';
+    const editorDeck=location.pathname.endsWith('/queue.html')||new URLSearchParams(location.search).get('edit')==='1';
+    const collapseKey=editorDeck?'nst_audio_collapsed_editor':'nst_audio_collapsed';
     function applyCollapsed(value) {
       deck.classList.toggle('deck-collapsed',value); collapse.textContent=value?'♫':'−';
       collapse.title=value?'Показать аудиоплеер':'Свернуть аудиоплеер'; collapse.setAttribute('aria-label',collapse.title);
-      collapse.setAttribute('aria-expanded',String(!value)); remember('nst_audio_collapsed',value?'1':'0');
+      collapse.setAttribute('aria-expanded',String(!value)); remember(collapseKey,value?'1':'0');
     }
     collapse.addEventListener('click',()=>applyCollapsed(!deck.classList.contains('deck-collapsed')));
-    deck.appendChild(collapse); applyCollapsed(stored('nst_audio_collapsed')==='1');
+    deck.appendChild(collapse); applyCollapsed(stored(collapseKey,editorDeck?'1':'0')==='1');
     updateUI();
   }
 

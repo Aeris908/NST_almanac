@@ -16,6 +16,10 @@
   const state = { disc: 'all', query: '', sort: 'matches' };
   try {Object.assign(state,JSON.parse(sessionStorage.getItem('nst-catalog-view')||'{}'));}catch(_){}
   if(typeof state.query!=='string')state.query='';
+  const queryParams=new URLSearchParams(location.search);
+  if(queryParams.has('q'))state.query=queryParams.get('q');
+  if(queryParams.has('disc'))state.disc=queryParams.get('disc');
+  if(queryParams.has('sort'))state.sort=queryParams.get('sort');
   if(!(data.disciplines||[]).some(d=>d.slug===state.disc))state.disc='all';
   let lastFocused = null;
   let firstPaint = true;
@@ -167,6 +171,7 @@
   }
 
   function renderGrid() {
+    const address=new URL(location.href);for(const [key,value,fallback] of [['q',state.query,''],['disc',state.disc,'all'],['sort',state.sort,'matches']]){if(value===fallback)address.searchParams.delete(key);else address.searchParams.set(key,value);}history.replaceState(null,'',address);
     try{sessionStorage.setItem('nst-catalog-view',JSON.stringify(state));}catch(_){}
     const list = visiblePlayers();
     const animate = firstPaint;

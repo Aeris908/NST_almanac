@@ -32,6 +32,8 @@ def resolve_existing(con, args, editor):
             raise edit.EditError('Матч не относится к выбранной задаче')
         if task['verdict'] != 'conflict':
             raise edit.EditError('Задача уже решена; обновите очередь')
+        from db.review_state import check
+        check(con,task,args.get('task_expect'))
         mid = task['matched_match_id']
         batch = BatchConnection(con)
         results = []
@@ -103,6 +105,8 @@ def apply(con, args, editor):
             raise edit.EditError('Задача командного архива не найдена')
         if task['verdict'] != 'conflict':
             raise edit.EditError('Задача уже решена; обновите очередь')
+        from db.review_state import check
+        check(con,task,args.get('task_expect'))
         payload = store.parse_json(task['payload'], default={})
         batch = BatchConnection(con)
         journal_ids = []
@@ -112,6 +116,8 @@ def apply(con, args, editor):
         for game_index, row in enumerate(rows, 1):
             if not isinstance(row, dict):
                 raise edit.EditError('Каждая игра должна быть объектом')
+            if row.get('from_report') and row.get('confirmed') is not True:
+                raise edit.EditError('Подтвердите каждую предложенную строку отчёта после сверки с источником')
             sides = row.get('sides') or []
             if len(sides) != 2 or any(len(edit.canonical_roster(s)) != 2 for s in sides):
                 raise edit.EditError('Укажите двух игроков для каждой стороны 2×2')

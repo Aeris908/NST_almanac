@@ -35,7 +35,7 @@ STORE_STEPS = ("db/build_db.py", "db/import_stores.py", "db/import_live.py")
 
 PAGES = ("index.html", "soccer.html", "quotes.html", "players.html", "queue.html")
 ASSETS = ("audio-player.js", "audio-player.css", "soccer.css", "soccer.js", "editor.js", "editor.css",
-          "players.js", "players.css", "queue.js", "queue.css")
+          "players.js", "players.css", "queue.js", "queue.css", "site-data.js", "report-helper.js")
 
 
 def build_pages(from_store=False):
@@ -63,6 +63,8 @@ def copy_to_deploy():
                     time.sleep(0.4)
     if (ROOT / "audio").exists():
         shutil.copytree(ROOT / "audio", DEPLOY_DIR / "audio", dirs_exist_ok=True)
+    if (ROOT / 'site-data').exists():
+        shutil.copytree(ROOT / 'site-data', DEPLOY_DIR / 'site-data', dirs_exist_ok=True)
 
 
 def main():

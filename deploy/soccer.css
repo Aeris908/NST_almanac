@@ -3772,3 +3772,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .archive-coverage {display:grid;gap:8px;margin:16px 0;padding:16px;border-left:3px solid var(--nes-gold);background:var(--nes-card-bg);color:#cbd5e1;font-size:14px;line-height:1.6;}
 .archive-coverage strong {color:var(--nes-gold);}
 .archive-coverage a {color:var(--nes-cyan);}
+.data-status,.stats-explainer {margin:16px 0;padding:14px 16px;background:var(--nes-card-bg);border:1px solid #234568;color:#cbd5e1;line-height:1.6;font-size:14px;}
+.stats-explainer summary {cursor:pointer;color:var(--nes-cyan);font-weight:600;}
+.stats-explainer p {margin-top:12px;max-width:78ch;}
+.view-tools {display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:16px 0;}
+.view-tools a,.game-link {color:var(--nes-cyan);font-size:13px;}
+.game-link {padding:8px;white-space:normal;}
+.linked-game {outline:3px solid var(--nes-gold);outline-offset:3px;scroll-margin:100px;}

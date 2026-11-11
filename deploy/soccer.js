@@ -74,8 +74,13 @@
       if (profileFocus && profileFocus.isConnected) profileFocus.focus({preventScroll:true});
       window.scrollTo(0, profileScroll);
     }
+    function activateProfile(overlay) {
+      const wasOpen=overlay.classList.contains('active');overlay.classList.add('active');document.body.style.overflow='hidden';
+      if(!wasOpen){profileBackground=[...document.body.children].filter(el=>el!==overlay&&!['SCRIPT','STYLE'].includes(el.tagName)).map(el=>[el,el.inert]);profileBackground.forEach(([el])=>el.inert=true);overlay.querySelector('.modal-close').focus();}
+    }
     function handleRouting() {
-      const hash = window.location.hash || '#/leaderboard';
+      const [hash,query=''] = (window.location.hash || '#/leaderboard').split('?');
+      const params=new URLSearchParams(query);
       if (hash.startsWith('#/player/')) {
         let name;
         try { name = decodeURIComponent(hash.slice(9)); } catch (_) { name = ''; }
@@ -88,12 +93,20 @@
       hidePlayerModal();
       const season = hash.match(/^#\/season\/(.+)$/);
       if (season && DATA.seasons.some(s => String(s.id) === season[1])) {
-        switchTab('seasons', false); if (selectedSeasonId !== season[1]) selectSeason(season[1], false); return;
+        selectedSeasonId=season[1];seasonPlayerFilter=params.get('player')||'all';seasonLeagueFilter=params.get('league')||'all';seasonSubTab=['matches','tables','playoff','about'].includes(params.get('view'))?params.get('view'):'matches';renderSeasonsBar();switchTab('seasons',false);return;
       }
+      const tournament=hash.match(/^#\/(team|special)\/(.+)$/);
+      if(tournament){const team=tournament[1]==='team',list=team?DATA.team_tournaments:DATA.special_tournaments;let id;try{id=decodeURIComponent(tournament[2]);}catch(_){id='';}
+        if(list.some(t=>t.id===id)){const view=['matches','tables','playoff','about'].includes(params.get('view'))?params.get('view'):'matches';if(team){selectedTeamTournId=id;teamSubTab=view;teamPairFilter=params.get('pair')||'all';}else{selectedSpecialTournId=id;specialSubTab=view;specialPlayerFilter=params.get('player')||'all';}switchTab(team?'teams':'special',false);return;}}
       const tab = hash.replace('#/', '');
       if (!validTabs.includes(tab)) {
         switchTab('leaderboard', false); history.replaceState(null, '', '#/leaderboard');
         routeNotice('Раздел не найден. Открыт рейтинг.'); return;
+      }
+      if(tab==='leaderboard'||tab==='players'){
+        const input=document.getElementById(tab==='leaderboard'?'tableSearch':'cardsSearch');input.value=params.get('q')||'';
+        const allowed=['all','active','inactive','hof','all_inactive','Высшая','Средняя','Дворовая'];const filter=allowed.includes(params.get('filter'))?params.get('filter'):(tab==='leaderboard'?'active':'all');
+        if(tab==='leaderboard')currentDivisionFilter=filter;else playerCardFilter=filter;
       }
       switchTab(tab, false);
     }
@@ -107,12 +120,39 @@
       if (updateRoute) {
         const notice = document.getElementById('routeNotice'); if (notice) notice.textContent = '';
         hidePlayerModal();
-        const target = tabId === 'seasons' ? '#/season/' + selectedSeasonId : '#/' + tabId;
+        const target = tabId==='seasons'?'#/season/'+selectedSeasonId:tabId==='teams'?'#/team/'+selectedTeamTournId:tabId==='special'?'#/special/'+selectedSpecialTournId:'#/'+tabId;
         if (window.location.hash !== target) history.pushState(null, '', target);
       }
       if (tabId === 'seasons' && seasonSubTab === 'playoff') setTimeout(drawBracketConnectors, 60);
       if (tabId === 'teams' && teamSubTab === 'playoff') setTimeout(() => drawBracketConnectors('teamBracketWrapper','teamBracketContainer','teamBracketSvg'),60);
       if (tabId === 'special' && specialSubTab === 'playoff') setTimeout(() => drawBracketConnectors('specialBracketWrapper','specialBracketContainer','specialBracketSvg'),60);
+      if(tabId==='seasons')renderSeasonDetails(selectedSeasonId);
+      if(tabId==='teams')renderTeamTournaments();
+      if(tabId==='special')renderSpecialTournaments();
+      if(tabId==='h2h')renderH2H();
+      if(tabId==='leaderboard')renderTable();
+      if(tabId==='players')renderCards();
+    }
+    function viewAddress(kind,id) {
+      const tab=kind==='season'?'seasons':kind==='team'?'teams':'special';
+      if(!document.getElementById('tab-'+tab)?.classList.contains('active'))return;
+      const params=new URLSearchParams();params.set('view',kind==='season'?seasonSubTab:kind==='team'?teamSubTab:specialSubTab);
+      const filters=kind==='season'?{player:seasonPlayerFilter,league:seasonLeagueFilter}:kind==='team'?{pair:teamPairFilter}:{player:specialPlayerFilter};
+      for(const [key,value] of Object.entries(filters))if(value&&value!=='all')params.set(key,value);
+      const base='#/'+kind+'/'+encodeURIComponent(id),old=location.hash.split('?');const match=new URLSearchParams(old[1]||'').get('match');if(old[0]===base&&match)params.set('match',match);
+      history.replaceState(null,'',base+'?'+params);const link=document.getElementById('currentViewLink');if(link)link.href=location.href;
+    }
+    let highlightedAddress='';
+    function clearMatchAddress() {const parts=location.hash.split('?');const params=new URLSearchParams(parts[1]||'');params.delete('match');history.replaceState(null,'',parts[0]+(params.size?'?'+params:''));}
+    function decorateGames() {
+      const currentLink=document.getElementById('currentViewLink');if(currentLink)currentLink.href=location.href;
+      document.querySelectorAll('[data-match-anchor]').forEach(row=>{
+        if(!row.dataset.matchAnchor||row.querySelector('.game-link'))return;
+        const kind=row.closest('#seasonDetails')?'season':row.closest('#teamTournamentDetailContainer')?'team':'special';const id=kind==='season'?selectedSeasonId:kind==='team'?selectedTeamTournId:selectedSpecialTournId;
+        const link=document.createElement('a');link.className='game-link';link.textContent='Ссылка на игру';link.href='#/'+kind+'/'+encodeURIComponent(id)+'?view=matches&match='+row.dataset.matchAnchor;row.append(link);
+      });
+      const anchor=new URLSearchParams(location.hash.split('?')[1]||'').get('match');
+      if(anchor&&highlightedAddress!==location.hash){const row=[...document.querySelectorAll('.view-content.active [data-match-anchor]')].find(el=>el.dataset.matchAnchor===anchor);if(row){highlightedAddress=location.hash;document.querySelectorAll('.linked-game').forEach(el=>el.classList.remove('linked-game'));row.classList.add('linked-game');row.scrollIntoView({block:'center'});}}
     }
 
     // HUD Strip
@@ -174,6 +214,7 @@
 
     function renderTable() {
       rememberPlayerSearch();
+      searchAddress('leaderboard','tableSearch',currentDivisionFilter);
         const hofB = document.getElementById("hofCriteriaBanner");
         if (hofB) hofB.style.display = (currentDivisionFilter === "inactive") ? "block" : "none";
       const q = (document.getElementById('tableSearch')?.value || '').toLowerCase();
@@ -231,7 +272,7 @@
           <tr>
             <td style="text-align: center;">${rankDisplay}</td>
             <td>
-              <div class="p-cell" onclick="openPlayerModal('${p.player}')">
+              <div class="p-cell" role="button" tabindex="0" data-profile-name="${escapeHTML(p.player)}">
                 <img src="${p.avatar}" class="avatar-clean" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${p.player}'">
                 <div>
                   <div class="p-name">${p.player}</div>
@@ -295,6 +336,7 @@
 
     function renderCards() {
       rememberPlayerSearch();
+      searchAddress('players','cardsSearch',playerCardFilter);
       const hofCB = document.getElementById("hofCardsCriteriaBanner");
       if (hofCB) hofCB.style.display = (playerCardFilter === "hof") ? "block" : "none";
       const q = (document.getElementById('cardsSearch')?.value || '').toLowerCase();
@@ -389,6 +431,8 @@
 
       const header = document.getElementById('modalHeader');
       const body = document.getElementById('modalBody');
+      if(p.lazy_url){header.textContent=p.player;activateProfile(overlay);NSTData.ready(p,body,()=>{if(location.hash===target)openPlayerModal(pName);});return;}
+      delete body.dataset.loadKey;
       const badgeClass = !p.is_active ? 'badge-inactive' : (p.league === 'Высшая' ? 'badge-premier' : (p.league === 'Средняя' ? 'badge-middle' : 'badge-yard'));
       const sBadge = p.status_badge || (p.is_active ? 'Активен' : 'Зал славы');
       const vkLink = p.vk_domain ? `https://vk.ru/${p.vk_domain}` : (p.vk_id ? `https://vk.ru/id${p.vk_id}` : null);
@@ -638,14 +682,7 @@
         </div>
       `;
 
-      const wasOpen = overlay.classList.contains('active');
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      if (!wasOpen) {
-        profileBackground = [...document.body.children].filter(el => el !== overlay && !['SCRIPT','STYLE'].includes(el.tagName)).map(el => [el, el.inert]);
-        profileBackground.forEach(([el]) => { el.inert = true; });
-        overlay.querySelector('.modal-close').focus();
-      }
+      activateProfile(overlay);
     }
 
     function filterPlayerModalMatches(cat, btn) {
@@ -811,6 +848,7 @@
 
 
     function switchSeasonSubTab(st) {
+      clearMatchAddress();
 
       seasonSubTab = st;
 
@@ -841,6 +879,7 @@
 
 
     function filterSeasonPlayer(pName) {
+      clearMatchAddress();
 
       seasonPlayerFilter = pName;
 
@@ -851,6 +890,7 @@
 
 
     function filterSeasonLeague(leg) {
+      clearMatchAddress();
 
       seasonLeagueFilter = leg;
 
@@ -915,6 +955,8 @@
       const card = document.getElementById('seasonDetails');
 
       if (!card) return;
+      if(!NSTData.ready(s,card,()=>renderSeasonDetails(selectedSeasonId)))return;
+      viewAddress('season',sId);
 
 
 
@@ -1146,7 +1188,7 @@
 
           return `
 
-            <div class="h2h-match-item" style="padding: 12px 16px; margin-bottom: 8px;">
+            <div class="h2h-match-item" data-match-anchor="${m._anchor||''}" style="padding: 12px 16px; margin-bottom: 8px;">
 
               <div style="display: flex; align-items: center; gap: 8px; flex: 1.2; min-width: 140px;">
 
@@ -3635,6 +3677,11 @@
 
 
     function renderH2H() {
+      const pending=(DATA.seasons||[]).filter(s=>s.lazy_url);
+      if(pending.length){
+        const host=document.getElementById('h2hList');host.textContent='Загружаем протоколы для сравнения…';
+        Promise.all(pending.map(s=>NSTData.load(s))).then(renderH2H).catch(error=>{host.textContent=error.message;const button=document.createElement('button');button.textContent='Повторить загрузку';button.className='filter-btn';button.onclick=renderH2H;host.append(button);});return;
+      }
 
       initH2HControls();
 
@@ -3795,6 +3842,8 @@
 
 
     function selectTeamTournament(id) {
+      if(!(DATA.team_tournaments||[]).some(t=>t.id===id))return;
+      if(location.hash.split('?')[0]!=='#/team/'+encodeURIComponent(id))history.pushState(null,'','#/team/'+encodeURIComponent(id));
 
       selectedTeamTournId = id;
 
@@ -3809,6 +3858,7 @@
 
 
     function switchTeamSubTab(subTab) {
+      clearMatchAddress();
 
       teamSubTab = subTab;
 
@@ -3819,6 +3869,7 @@
 
 
     function filterTeamPair(pair) {
+      clearMatchAddress();
 
       teamPairFilter = pair;
 
@@ -3891,6 +3942,8 @@
       const t = all.find(x => x.id === selectedTeamTournId) || all[0];
 
       if (!t) return;
+      if(!NSTData.ready(t,container,renderTeamTournamentDetails))return;
+      viewAddress('team',t.id);
 
 
 
@@ -3981,7 +4034,7 @@
 
           return `
 
-            <div class="h2h-match-item" style="padding: 12px 16px; margin-bottom: 8px;">
+            <div class="h2h-match-item" data-match-anchor="${m._anchor||''}" style="padding: 12px 16px; margin-bottom: 8px;">
 
               <div style="display: flex; align-items: center; gap: 8px; flex: 1.2; min-width: 140px;">
 
@@ -4789,6 +4842,8 @@
 
 
     function selectSpecialTournament(id) {
+      if(!(DATA.special_tournaments||[]).some(t=>t.id===id))return;
+      if(location.hash.split('?')[0]!=='#/special/'+encodeURIComponent(id))history.pushState(null,'','#/special/'+encodeURIComponent(id));
 
       selectedSpecialTournId = id;
 
@@ -4803,6 +4858,7 @@
 
 
     function switchSpecialSubTab(subTab) {
+      clearMatchAddress();
 
       specialSubTab = subTab;
 
@@ -4813,6 +4869,7 @@
 
 
     function filterSpecialPlayer(p) {
+      clearMatchAddress();
 
       specialPlayerFilter = p;
 
@@ -4897,6 +4954,8 @@
       const all = DATA.special_tournaments || [];
 
       const t = all.find(x => x.id === selectedSpecialTournId) || all[0];
+      if(t&&!NSTData.ready(t,container,renderSpecialTournamentDetails))return;
+      if(t)viewAddress('special',t.id);
 
       if (!t) return;
 
@@ -5012,7 +5071,7 @@
 
           return `
 
-            <div class="h2h-match-item" style="padding: 12px 16px; margin-bottom: 8px;">
+            <div class="h2h-match-item" data-match-anchor="${m._anchor||''}" style="padding: 12px 16px; margin-bottom: 8px;">
 
               <div style="display: flex; align-items: center; gap: 8px; flex: 1.2; min-width: 140px;">
 
@@ -5863,6 +5922,12 @@
     function rememberPlayerSearch() {
       try {sessionStorage.setItem('nst-soccer-search',JSON.stringify({table:document.getElementById('tableSearch').value,cards:document.getElementById('cardsSearch').value,division:currentDivisionFilter,cardFilter:playerCardFilter}));}catch(_){}
     }
+    function searchAddress(tab,inputId,filter) {
+      const route=location.hash.split('?')[0]||'#/leaderboard';if(route!=='#/'+tab)return;
+      const params=new URLSearchParams();const query=document.getElementById(inputId).value;if(query)params.set('q',query);params.set('filter',filter);
+      history.replaceState(null,'','#/'+tab+'?'+params);
+      document.querySelectorAll('#tab-'+tab+' .filter-tabs .filter-btn').forEach(el=>el.classList.toggle('active',!!el.getAttribute('onclick')?.includes("('"+filter+"',")));
+    }
     function resetPlayerSearch(kind) {
       const input=document.getElementById(kind==='table'?'tableSearch':'cardsSearch');input.value='';
       const scope=document.getElementById(kind==='table'?'tab-leaderboard':'tab-players');
@@ -5870,6 +5935,8 @@
       if(kind==='table')filterDivision('all',button);else filterPlayerCards('all',button);input.focus();
     }
 function initPortal() {
+      new MutationObserver(decorateGames).observe(document.querySelector('main'),{childList:true,subtree:true});
+      document.getElementById('copyViewLink')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);routeNotice('Ссылка скопирована.');}catch(_){routeNotice('Скопируйте адрес из строки браузера: '+location.href);}});
       try {
         const saved=JSON.parse(sessionStorage.getItem('nst-soccer-search')||'{}');
         document.getElementById('tableSearch').value=typeof saved.table==='string'?saved.table:'';
@@ -5882,11 +5949,7 @@ function initPortal() {
       try { renderTable(); } catch(e) { console.error('renderTable:', e); }
       try { renderCards(); } catch(e) { console.error('renderCards:', e); }
       try { renderSeasonsBar(); } catch(e) { console.error('renderSeasonsBar:', e); }
-      try { selectSeason('9', false); } catch(e) { console.error('selectSeason:', e); }
       try { renderClutch(); } catch(e) { console.error('renderClutch:', e); }
-      try { renderH2H(); } catch(e) { console.error('renderH2H:', e); }
-      try { renderSpecialTournaments(); } catch(e) { console.error('renderSpecialTournaments:', e); }
-      try { renderTeamTournaments(); } catch(e) { console.error('renderTeamTournaments:', e); }
       try { handleRouting(); } catch(e) { console.error('handleRouting:', e); }
     }
 

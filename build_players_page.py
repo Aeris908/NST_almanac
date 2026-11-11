@@ -6,6 +6,7 @@ from pathlib import Path
 from db import store
 from portal.players_dataset import build_players_dataset
 from portal.templates import json_for_script, render
+from portal.lazy_data import catalog_summary
 
 sys.stdout.reconfigure(encoding="utf-8")
 OUTPUT_PATH = Path("players.html")
@@ -14,7 +15,7 @@ OUTPUT_PATH = Path("players.html")
 def build_html(dataset):
     """Шаблон каталога с встроенными данными; render бросит KeyError на лишний маркер."""
     return render("players_page.html", {
-        "PLAYERS_JSON": json_for_script(dataset),
+        "PLAYERS_JSON": json_for_script(catalog_summary(dataset)),
     })
 
 

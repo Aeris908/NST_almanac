@@ -161,7 +161,8 @@ class Handler(BaseHTTPRequestHandler):
                                      "operations": api.journal_operations(max(1, min(limit, 20)))},
                                origin=origin)
         if path == "/api/queue":
-            return self._reply(200, {"ok": True, "tasks": api.queue()}, origin=origin)
+            asked=(parse_qs(urlparse(self.path).query).get('task_id') or [''])[0]
+            return self._reply(200, {"ok": True, "tasks": api.queue(task_id=int(asked)) if asked else api.queue()}, origin=origin)
         if path == "/api/containers":
             return self._reply(200, {"ok": True, **api.containers()}, origin=origin)
         if path == "/api/doc":
@@ -169,7 +170,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._reply(200, {"ok": True, "doc": api.doc_frame(key)}, origin=origin)
         if path == "/api/players":
             found = (parse_qs(urlparse(self.path).query).get("q") or [""])[0]
-            return self._reply(200, {"ok": True, "players": api.players(found)}, origin=origin)
+            count=(parse_qs(urlparse(self.path).query).get('limit') or ['30'])[0]
+            return self._reply(200, {"ok": True, "players": api.players(found,limit=max(1,min(int(count),200)))}, origin=origin)
         if path == "/api/search":
             asked = parse_qs(urlparse(self.path).query)
             word = {name: (asked.get(name) or [""])[0] for name in

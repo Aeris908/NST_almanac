@@ -10,7 +10,8 @@ const sections = ['leaderboard','seasons','players','teams','special','h2h','clu
 }));
 const notices = {};
 const context = {
-  DATA: {profiles: [], seasons: [{id:'4'},{id:'6'}]},
+  DATA: {profiles: [], seasons: [{id:'4'},{id:'6'}],team_tournaments:[{id:'team_1'}],special_tournaments:[{id:'cup_1'}]},
+  URLSearchParams,
   window: {location:{hash:'#/bad'}},
   document: {
     querySelectorAll: q => q === '.view-content' ? sections : [],
@@ -25,7 +26,10 @@ const context = {
   setTimeout(){},
   selectedSeasonId:'6', seasonSubTab:'matches', teamSubTab:'matches', specialSubTab:'matches',
   selectSeason(id){context.selectedSeasonId=id;},
+  renderTable(){},renderCards(){},renderSeasonsBar(){},renderSeasonDetails(){},renderTeamTournaments(){},renderSpecialTournaments(){},renderH2H(){},
 };
+context.location=context.window.location;
+notices.tableSearch={value:''};notices.cardsSearch={value:''};
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('    // Маршруты'),source.indexOf('    // HUD Strip')),context);
 vm.runInContext('handleRouting()',context);
@@ -34,6 +38,15 @@ assert.equal(context.window.location.hash,'#/leaderboard');
 context.window.location.hash='#/player/%';
 assert.doesNotThrow(()=>vm.runInContext('handleRouting()',context));
 assert.equal(context.window.location.hash,'#/leaderboard');
+context.window.location.hash='#/team/team_1?view=tables&pair=A%20%26%20B';
+vm.runInContext('handleRouting()',context);
+assert.deepEqual([...active],['tab-teams']);
+assert.equal(context.teamPairFilter,'A & B');
+assert.equal(context.teamSubTab,'tables');
+context.window.location.hash='#/special/cup_1?player=Kunio';
+vm.runInContext('handleRouting()',context);
+assert.deepEqual([...active],['tab-special']);
+assert.equal(context.specialPlayerFilter,'Kunio');
 context.window.location.hash='#/season/4';
 vm.runInContext('handleRouting()',context);
 assert.deepEqual([...active],['tab-seasons']);
