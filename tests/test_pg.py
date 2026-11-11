@@ -5,6 +5,7 @@
 `db/pg.py` не знает, тест падает здесь, а не на боевой базе.
 """
 
+import os
 import re
 
 import pytest
@@ -197,6 +198,9 @@ def test_pg_store_identifies_postgres_urls():
     assert not store.is_pg(None)
 
 
+@pytest.mark.live
+@pytest.mark.skipif(os.environ.get("NST_RUN_LIVE_TESTS") != "1",
+                    reason="живая проверка включается через NST_RUN_LIVE_TESTS=1")
 def test_live_neon_postgres_connection_and_revision():
     """Если задан NST_POSTGRES_URL — боевая сверка с облачным Neon Postgres."""
     from portal.env_file import secret
@@ -207,10 +211,16 @@ def test_live_neon_postgres_connection_and_revision():
     try:
         cur = con.execute("select count(*) from v_rating_pool")
         rating_count = cur.fetchone()[0]
-        assert rating_count == 402, f"ожидалось 402 рейтинговых матча, получено {rating_count}"
+        local = store.connect()
+        try:
+            expected_rating = local.execute("select count(*) from v_rating_pool").fetchone()[0]
+            expected_singles = local.execute("select count(*) from v_singles_pool").fetchone()[0]
+        finally:
+            local.close()
+        assert rating_count == expected_rating
         cur = con.execute("select count(*) from v_singles_pool")
         singles_count = cur.fetchone()[0]
-        assert singles_count == 2990, f"ожидалось 2990 одиночных матчей, получено {singles_count}"
+        assert singles_count == expected_singles
         # Ревизия Neon обязана совпадать с локальной SQLite ревизией
         assert api.revision(url) == api.revision()
     finally:

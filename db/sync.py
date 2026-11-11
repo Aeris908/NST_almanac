@@ -8,6 +8,7 @@
 """
 
 import argparse
+import contextlib
 import sys
 from pathlib import Path
 
@@ -77,10 +78,12 @@ def init_pg(pg_con):
 
 def push(sqlite_path=None, pg_url=None):
     """Переносит весь срез данных из SQLite в Postgres."""
-    sqlite_con = store.connect(sqlite_path)
     url = get_pg_url(pg_url)
-
-    with psycopg.connect(url) as pg_con:
+    target = Path(sqlite_path or store.DB_PATH)
+    if not target.is_file():
+        raise FileNotFoundError(f"Нет локальной базы: {target}")
+    with contextlib.closing(store.connect(target)) as sqlite_con, psycopg.connect(url) as pg_con:
+        sqlite_con.execute("BEGIN")  # все таблицы читаются из одного среза
         # 1. Очистка таблиц в Postgres в безопасном режиме
         with pg_con.cursor() as cur:
             # Снимаем циклические внешние ключи на время массовой заливки
@@ -88,8 +91,6 @@ def push(sqlite_path=None, pg_url=None):
             cur.execute("ALTER TABLE matches DROP CONSTRAINT IF EXISTS matches_hidden_by_fkey;")
             tables_list = ", ".join(f'"{t}"' for t in TABLES_ORDER)
             cur.execute(f"TRUNCATE TABLE {tables_list} CASCADE;")
-        pg_con.commit()
-
         # 2. Перенос данных по каждой таблице
         total_rows = 0
         for table in TABLES_ORDER:
@@ -130,8 +131,44 @@ def push(sqlite_path=None, pg_url=None):
                 """)
         pg_con.commit()
 
-    sqlite_con.close()
     print(f"OK: push завершён успешно, всего перенесено строк: {total_rows}")
+
+
+def pull(sqlite_path=None, pg_url=None):
+    """Заменить данные готовой SQLite-базы одним согласованным срезом Postgres.
+
+    Схема должна быть подготовлена сборкой. При ошибке чтения, вставки или внешних ключей
+    локальная транзакция откатывается целиком; схема и прежние данные сохраняются.
+    """
+    url = get_pg_url(pg_url)
+    target = Path(sqlite_path or store.DB_PATH)
+    if not target.is_file():
+        raise FileNotFoundError(f"Нет локальной базы: {target}; сначала python build_all.py")
+    total_rows = 0
+    with contextlib.closing(store.connect(target)) as local, psycopg.connect(url) as remote:  # noqa: SIM117
+        with remote.cursor() as cur:
+            cur.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
+            local.execute("PRAGMA foreign_keys = OFF")
+            with local:
+                local.execute("BEGIN IMMEDIATE")
+                for table in reversed(TABLES_ORDER):
+                    local.execute(f'DELETE FROM "{table}"')
+                for table in TABLES_ORDER:
+                    columns = [row[1] for row in local.execute(f'PRAGMA table_info("{table}")')]
+                    if not columns:
+                        raise ValueError(f"Нет таблицы {table}; сначала обновите локальную схему")
+                    cols_sql = ", ".join(f'"{column}"' for column in columns)
+                    cur.execute(f'SELECT {cols_sql} FROM "{table}"')
+                    rows = cur.fetchall()
+                    placeholders = ", ".join("?" for _ in columns)
+                    local.executemany(
+                        f'INSERT INTO "{table}" ({cols_sql}) VALUES ({placeholders})', rows)
+                    total_rows += len(rows)
+                    print(f"  {table:18s}: {len(rows):5d} строк получено")
+                errors = local.execute("PRAGMA foreign_key_check").fetchall()
+                if errors:
+                    raise ValueError(f"Нарушены внешние ключи: {len(errors)}")
+    print(f"OK: pull завершён успешно, всего получено строк: {total_rows}")
 
 
 def status(sqlite_path=None, pg_url=None):
@@ -162,7 +199,7 @@ def status(sqlite_path=None, pg_url=None):
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Синхронизация SQLite <-> Postgres (Neon)")
-    parser.add_argument("command", choices=["init", "push", "status"], help="Команда для выполнения")
+    parser.add_argument("command", choices=["init", "push", "pull", "status"], help="Команда для выполнения")
     parser.add_argument("--url", help="Строка подключения к Postgres (по умолчанию из .env)")
     parser.add_argument("--sqlite", help="Путь к файлу SQLite (по умолчанию data/nst.db)")
 
@@ -172,6 +209,8 @@ def main(argv=None):
             init_pg(con)
     elif args.command == "push":
         push(args.sqlite, args.url)
+    elif args.command == "pull":
+        pull(args.sqlite, args.url)
     elif args.command == "status":
         sys.exit(status(args.sqlite, args.url))
 

@@ -42,10 +42,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from db import edit  # noqa: E402
-from portal.build_soccer import compose_payload  # noqa: E402
-from portal.names import clean_alias  # noqa: E402
-from db import store  # noqa: E402
+from db import (
+    edit,
+    store,
+)
+from portal.build_soccer import compose_payload
+from portal.names import clean_alias
 
 DB_PATH = store.DB_PATH
 # Десять тысяч строк на игрока: в общий снимок попадает только длина, а сами строки — для тех
@@ -467,7 +469,8 @@ def match_row(con, match_id):
            where m.id = ?""", (match_id,)).fetchone()
     if not row:
         return None
-    out = {key: row[key] for key in row.keys() if row[key] not in (None, "")}
+    # sqlite3.Row и PgRow при итерации возвращают значения, поэтому нужны именно keys().
+    out = {key: row[key] for key in row.keys() if row[key] not in (None, "")}  # noqa: SIM118
     # Подпись стороны есть не у всех строк (пуловые заводятся ником), а UI рисует именно её:
     # пустое поле заполняем игроками, чтобы форма `sides` не зависела от среза строки.
     out["sides"] = [{"side_index": side["side_index"], "players": side["players"],
@@ -544,6 +547,15 @@ def _apply(con, operation, editor, args):
 
 
 def _clone(db_path, target):
+    if store.is_pg(db_path):
+        from db.sync import pull
+        # Локальный файл даёт только схему: данные предпросмотра должны быть из той же
+        # серверной базы, чью ревизию подтвердил редактор, а не из старой сборки сайта.
+        if not store.DB_PATH.is_file():
+            raise edit.EditError("нет локального шаблона data/nst.db для предпросмотра Postgres")
+        _clone(store.DB_PATH, target)
+        pull(target, pg_url=str(db_path))
+        return
     source = store.connect(db_path)
     destination = store.connect(target)
     try:
@@ -600,8 +612,7 @@ def mutate(operation, args, editor, *, persist=False, expect=None, db_path=DB_PA
         target = db_path if store.is_pg(db_path) else Path(db_path)
         result, row, after = _apply_and_snapshot(target, operation, editor, args)
     else:
-        preview_src = store.DB_PATH if store.is_pg(db_path) and store.DB_PATH.exists() else Path(db_path)
-        with _preview_db(preview_src) as clone:
+        with _preview_db(db_path) as clone:
             result, row, after = _apply_and_snapshot(clone, operation, editor, args)
 
     changed = diff(before["view"], after["view"])

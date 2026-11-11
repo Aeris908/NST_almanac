@@ -1021,7 +1021,7 @@ def dashboard_insights(board, chronology):
         f"{dominator['premier_titles']} чемпионских титулов Высшей лиги, {dominator['cup_titles']} Кубка лиг, "
         f"{dominator['major_finals']} выходов в финал; {dominator['wins']} побед и разница мячей "
         f"{dominator['goal_diff']:+d} ({dominator['goals_for']} забито против {dominator['goals_against']} пропущенных).",
-        f"2. **Долнейшая чемпионская серия:** {dynasty}.",
+        f"2. **Самая длинная чемпионская серия:** {dynasty}.",
         f"3. **Лидер рейтинга — {elo_leader['player']} (Elo {elo_leader['elo']}):** "
         f"винрейт {elo_leader['win_rate']}%, в плей-офф {elo_leader['playoff_wins']}-"
         f"{elo_leader['playoff_losses']} ({clutch_rate}% побед).",
@@ -1053,7 +1053,7 @@ def render_dashboard(payload):
         "",
         f"*Модель FIDE/Esports: K={ELO_K_PLAYOFF} для плей-офф и матчей новичков, "
         f"K={ELO_K_REGULAR} для регулярки, веса овертаймов и буллитов — "
-        f"{OVERTIME_WIN_SCORE}/{DRAW_SCORE}.*",
+        f"{OVERTIME_WIN_SCORE}/{OVERTIME_LOSS_SCORE}, ничья — {DRAW_SCORE}.*",
         "",
         "| № | Игрок | Статус / Тир | Матчи | В | П | Винрейт | Забито | Пропущено | Разница | GPG | "
         "Сухие | Elo | Пик Elo | Dominator |",

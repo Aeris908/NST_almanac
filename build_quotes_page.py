@@ -4,7 +4,7 @@ import json
 import sys
 from pathlib import Path
 
-from portal.templates import group_thousands, render
+from portal.templates import group_thousands, json_for_script, render
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -22,8 +22,8 @@ def main():
     avatars = {name.lower(): avatar for name, avatar in load_json(AVATARS_PATH).items()}
 
     html_content = render("quotes_page.html", {
-        "QUOTES_JSON": json.dumps(quotes, ensure_ascii=False),
-        "AVATARS_JSON": json.dumps(avatars, ensure_ascii=False),
+        "QUOTES_JSON": json_for_script(quotes),
+        "AVATARS_JSON": json_for_script(avatars),
         "QUOTES": group_thousands(len(quotes)),
     })
 

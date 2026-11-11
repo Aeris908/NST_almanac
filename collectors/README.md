@@ -19,9 +19,11 @@ python collectors/generate_enhanced_vk_lookup.py     # vk_match_sources_lookup.j
 python collectors/match_comments_and_videos.py       # vk_soccer_comments_cache.json
 ```
 
-`fetch_avatars.py` обновляет `player_avatars.json`. `sync_sportcup.py` — единственный
-скрипт без токена: матчи Сезонов 8–9 берутся из публичных турнирных страниц Sportcup.
-Остальным нужен токен ВКонтакте — он читается из переменной окружения `VK_API_TOKEN`
+`fetch_avatars.py` обновляет `player_avatars.json`. `sync_sportcup.py` работает без токена:
+матчи Сезонов 8–9 берутся из публичных турнирных страниц Sportcup. Локальные преобразования
+готовых выгрузок (например, `merge_and_verify_all_matches.py` и
+`generate_enhanced_vk_lookup.py`) также не обращаются к API и токена не требуют.
+Скриптам, которые запрашивают API ВКонтакте, нужен `VK_API_TOKEN`
 (см. `.env.example` в корне). Без переменной скрипт сразу завершается с понятным
 сообщением и ничего не перезаписывает.
 

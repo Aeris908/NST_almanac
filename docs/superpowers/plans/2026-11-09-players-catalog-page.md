@@ -1,5 +1,9 @@
 # Страница каталога игроков — план реализации
 
+Статус: исторический план первой версии. Альбом заменён каталогом с фильтрами и досье,
+а его вёрстка сохранена в `archive/yearbook-players/`. Шаги и чекбоксы ниже описывают
+исходный план; актуальное поведение закреплено в `tests/test_players_page.py`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Самодостаточная страница `players.html` — плейсхолдер «школьный выпускной альбом» с реальными игроками из `build_players_dataset`, ссылка только с лендинг-хаба.

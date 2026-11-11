@@ -49,48 +49,70 @@
     let teamPlayoffViewMode = 'bracket';
     let specialPlayoffViewMode = 'bracket';
 
-    // Router
+    // Маршруты и контекст профиля.
+    const validTabs = ['leaderboard', 'players', 'seasons', 'teams', 'special', 'h2h', 'clutch'];
+    let profileReturn = '#/leaderboard';
+    let profileFocus = null;
+    let profileScroll = 0;
+    let profileBackground = [];
+    function escapeHTML(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g,
+        ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+    function routeNotice(text) {
+      let box = document.getElementById('routeNotice');
+      if (!box) { box = document.createElement('div'); box.id = 'routeNotice'; box.setAttribute('role', 'status'); document.querySelector('main').prepend(box); }
+      box.textContent = text;
+    }
+    function hidePlayerModal() {
+      const modal = document.getElementById('playerModal');
+      if (!modal.classList.contains('active')) return;
+      modal.classList.remove('active');
+      profileBackground.forEach(([el, previous]) => { el.inert = previous; });
+      profileBackground = [];
+      document.body.style.overflow = '';
+      if (profileFocus && profileFocus.isConnected) profileFocus.focus({preventScroll:true});
+      window.scrollTo(0, profileScroll);
+    }
     function handleRouting() {
       const hash = window.location.hash || '#/leaderboard';
       if (hash.startsWith('#/player/')) {
-        const pName = decodeURIComponent(hash.replace('#/player/', ''));
-        openPlayerModal(pName);
-      } else if (hash.startsWith('#/season/')) {
-        const sId = hash.replace('#/season/', '');
-        switchTab('seasons');
-        selectSeason(sId);
-      } else {
-        const tab = hash.replace('#/', '') || 'leaderboard';
-        switchTab(tab);
+        let name;
+        try { name = decodeURIComponent(hash.slice(9)); } catch (_) { name = ''; }
+        if (!DATA.profiles.some(p => p.player.toLowerCase() === name.toLowerCase())) {
+          hidePlayerModal(); switchTab('leaderboard', false);
+          history.replaceState(null, '', '#/leaderboard'); routeNotice('Игрок не найден. Выберите игрока в каталоге.'); return;
+        }
+        openPlayerModal(name); return;
       }
+      hidePlayerModal();
+      const season = hash.match(/^#\/season\/(.+)$/);
+      if (season && DATA.seasons.some(s => String(s.id) === season[1])) {
+        switchTab('seasons', false); if (selectedSeasonId !== season[1]) selectSeason(season[1], false); return;
+      }
+      const tab = hash.replace('#/', '');
+      if (!validTabs.includes(tab)) {
+        switchTab('leaderboard', false); history.replaceState(null, '', '#/leaderboard');
+        routeNotice('Раздел не найден. Открыт рейтинг.'); return;
+      }
+      switchTab(tab, false);
     }
-
-    function switchTab(tabId) {
-            document.querySelectorAll('.view-content').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-      const activeSection = document.getElementById(`tab-${tabId}`);
-      if (activeSection) activeSection.classList.add('active');
-
-      const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => {
-        const attr = b.getAttribute('onclick') || '';
-        return attr.includes(tabId);
+    function switchTab(tabId, updateRoute = true) {
+      if (!validTabs.includes(tabId)) tabId = 'leaderboard';
+      document.querySelectorAll('.view-content').forEach(s => s.classList.toggle('active', s.id === `tab-${tabId}`));
+      document.querySelectorAll('.nav-btn').forEach(b => {
+        const selected = (b.getAttribute('onclick') || '').includes("'" + tabId + "'");
+        b.classList.toggle('active', selected); b.setAttribute('aria-pressed', String(selected));
       });
-      if (activeBtn) activeBtn.classList.add('active');
-
-      if (tabId === 'seasons' && seasonSubTab === 'playoff' && playoffViewMode === 'bracket') {
-        setTimeout(drawBracketConnectors, 60);
+      if (updateRoute) {
+        const notice = document.getElementById('routeNotice'); if (notice) notice.textContent = '';
+        hidePlayerModal();
+        const target = tabId === 'seasons' ? '#/season/' + selectedSeasonId : '#/' + tabId;
+        if (window.location.hash !== target) history.pushState(null, '', target);
       }
-      if (tabId === 'teams' && teamSubTab === 'playoff' && teamPlayoffViewMode === 'bracket') {
-        setTimeout(() => drawBracketConnectors('teamBracketWrapper', 'teamBracketContainer', 'teamBracketSvg'), 60);
-      }
-      if (tabId === 'special' && specialSubTab === 'playoff' && specialPlayoffViewMode === 'bracket') {
-        setTimeout(() => drawBracketConnectors('specialBracketWrapper', 'specialBracketContainer', 'specialBracketSvg'), 60);
-      }
-
-      if (window.location.hash !== `#/${tabId}` && !window.location.hash.startsWith('#/player/')) {
-        history.pushState(null, null, `#/${tabId}`);
-      }
+      if (tabId === 'seasons' && seasonSubTab === 'playoff') setTimeout(drawBracketConnectors, 60);
+      if (tabId === 'teams' && teamSubTab === 'playoff') setTimeout(() => drawBracketConnectors('teamBracketWrapper','teamBracketContainer','teamBracketSvg'),60);
+      if (tabId === 'special' && specialSubTab === 'playoff') setTimeout(() => drawBracketConnectors('specialBracketWrapper','specialBracketContainer','specialBracketSvg'),60);
     }
 
     // HUD Strip
@@ -355,7 +377,13 @@
       const p = DATA.profiles.find(x => x.player.toLowerCase() === pName.toLowerCase());
       if (!p) return;
 
-      window.location.hash = `#/player/${p.player}`;
+      const overlay = document.getElementById('playerModal');
+      if (!overlay.classList.contains('active')) {
+        profileReturn = window.location.hash.startsWith('#/player/') ? '#/leaderboard' : (window.location.hash || '#/leaderboard');
+        profileFocus = document.activeElement; profileScroll = window.scrollY;
+      }
+      const target = '#/player/' + encodeURIComponent(p.player);
+      if (window.location.hash !== target) history.pushState(null, '', target);
 
       const header = document.getElementById('modalHeader');
       const body = document.getElementById('modalBody');
@@ -364,32 +392,32 @@
       const vkLink = p.vk_domain ? `https://vk.ru/${p.vk_domain}` : (p.vk_id ? `https://vk.ru/id${p.vk_id}` : null);
 
       header.innerHTML = `
-        <img src="${p.avatar}" class="modal-avatar-big" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${p.player}'">
+        <img src="${escapeHTML(p.avatar)}" class="modal-avatar-big" onerror="this.onerror=null;this.style.visibility='hidden'">
         <div class="modal-title-box">
-          <h2>${p.player}</h2>
+          <h2>${escapeHTML(p.player)}</h2>
           ${p.vk_name && p.vk_name !== p.player ? `
             <div style="font-size: 13px; color: #94a3b8; font-weight: 600; margin-top: 2px;">
-              ВКонтакте: ${p.vk_name}
+              ВКонтакте: ${escapeHTML(p.vk_name)}
             </div>
           ` : ''}
           ${p.quote ? `
             <div style="font-size: 12px; color: #f8fafc; font-style: italic; margin-top: 6px; background: rgba(0,0,0,0.4); border-left: 3px solid var(--nes-gold); padding: 6px 10px; border-radius: 2px; line-height: 1.4; max-width: 650px; white-space: pre-line;">
-              «${p.quote}»
+              «${escapeHTML(p.quote)}»
             </div>
           ` : ''}
           
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 8px;">
-            <span class="league-badge ${badgeClass}">${p.league} лига</span>
-            <span style="font-size: 12px; font-weight: 800; color: ${p.is_active ? '#22c55e' : '#cbd5e1'};">● ${sBadge}</span>
+            <span class="league-badge ${badgeClass}">${escapeHTML(p.league)} лига</span>
+            <span style="font-size: 12px; font-weight: 800; color: ${p.is_active ? '#22c55e' : '#cbd5e1'};">● ${escapeHTML(sBadge)}</span>
             ${p.medals && (p.medals.gold + p.medals.silver + p.medals.bronze) > 0 ? `
               <span style="font-size: 11px; font-weight: 800; background: rgba(255, 183, 3, 0.15); border: 1px solid var(--nes-gold); color: #fff; padding: 2px 8px; border-radius: 3px;">
                 🏆 ${p.medals.gold}🥇 ${p.medals.silver}🥈 ${p.medals.bronze}🥉
               </span>
             ` : ''}
             ${vkLink ? `
-              <a href="${vkLink}" target="_blank" class="vk-btn" title="Перейти на страницу ${p.vk_name || p.player} ВКонтакте">
+              <a href="${escapeHTML(vkLink)}" target="_blank" class="vk-btn" title="Перейти на страницу ${escapeHTML(p.vk_name || p.player)} ВКонтакте">
                 <svg viewBox="0 0 24 24"><path d="M13.162 18.994c.609 0 .858-.406.851-.915-.072-1.747.785-2.28 1.488-2.28.618 0 1.344.428 1.84 1.157.734 1.077 1.258 2.038 2.378 2.038h2.096c1.196 0 1.776-.566 1.442-1.637-.367-1.182-1.603-2.678-2.327-3.486-.554-.62-1.127-1.185-.758-2.02.478-1.076 1.947-3.212 2.27-4.472.167-.655-.178-1.077-.92-1.077h-2.122c-.663 0-.964.332-1.151.78-.445 1.066-1.57 3.327-2.247 3.993-.342.338-.598.24-.76-.085-.298-.596-.341-1.688-.341-2.585 0-2.316.357-3.327-.723-3.582-.437-.103-.984-.132-1.792-.132-1.644 0-2.73.045-3.385.733-.257.27-.37.604-.15.632.493.064.935.318 1.054.945.362 1.905.176 3.655-.66 4.31-.383.298-.828.188-1.156-.214-.943-1.156-1.89-3.39-2.518-5.011-.194-.502-.519-.884-1.139-.884H2.477c-.779 0-.946.368-.946.779 0 .73.945 4.354 4.394 9.176 2.302 3.228 5.568 4.976 8.528 4.976z"/></svg>
-                <span>${p.vk_name && p.vk_name !== p.player ? p.vk_name : 'Профиль ВКонтакте'} ↗</span>
+                <span>${escapeHTML(p.vk_name && p.vk_name !== p.player ? p.vk_name : 'Профиль ВКонтакте')} ↗</span>
               </a>
             ` : ''}
           </div>
@@ -440,7 +468,7 @@
       const matchesRows = mHistory.map(m => {
         const resClass = m.result === 'ПОБЕДА' ? 'res-win' : (m.result === 'ПОРАЖЕНИЕ' ? 'res-loss' : 'res-draw');
         const oppObj = DATA.profiles.find(x => x.player.toLowerCase() === m.opponent.toLowerCase());
-        const oppAvatar = oppObj ? oppObj.avatar : `https://api.dicebear.com/7.x/bottts/svg?seed=${m.opponent}`;
+        const oppAvatar = oppObj ? oppObj.avatar : `https://api.dicebear.com/7.x/bottts/svg?seed=${escapeHTML(m.opponent)}`;
 
         let catClass = 'badge-premier';
         if (m.category === 'team') catClass = 'badge-middle';
@@ -452,14 +480,14 @@
         const isLoss = m.score_for < m.score_against;
 
         return `
-          <div class="match-history-row" data-cat="${m.category || 'season'}">
+          <div class="match-history-row" data-cat="${escapeHTML(m.category || 'season')}">
             <!-- Tournament Info & Stage -->
             <div class="mhr-meta">
-              <span class="mhr-badge ${catClass}" title="${m.tournament || m.season}">
-                ${m.cat_label || m.season}
+              <span class="mhr-badge ${catClass}" title="${escapeHTML(m.tournament || m.season)}">
+                ${escapeHTML(m.cat_label || m.season)}
               </span>
               <span class="mhr-stage">
-                ${m.stage || m.tour || ''}
+                ${escapeHTML(m.stage || m.tour || '')}
               </span>
             </div>
 
@@ -472,8 +500,8 @@
             <div class="mhr-duel">
               <!-- Home Player -->
               <div class="mhr-player mhr-home">
-                <span class="mhr-name ${isWin ? 'mhr-winner' : ''}">${p.player}${m.partner ? ` <small style="color: #94a3b8;">& ${m.partner}</small>` : ''}</span>
-                <img src="${p.avatar}" class="mhr-avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${p.player}'">
+                <span class="mhr-name ${isWin ? 'mhr-winner' : ''}">${escapeHTML(p.player)}${m.partner ? ` <small style="color: #94a3b8;">& ${escapeHTML(m.partner)}</small>` : ''}</span>
+                <img src="${escapeHTML(p.avatar)}" class="mhr-avatar" onerror="this.onerror=null;this.style.visibility='hidden'">
               </div>
 
               <!-- Score Box -->
@@ -485,9 +513,9 @@
               </div>
 
               <!-- Away Opponent -->
-              <div class="mhr-player mhr-away" onclick="openPlayerModal('${m.opponent}')" title="Открыть профиль ${m.opponent}">
-                <img src="${oppAvatar}" class="mhr-avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${m.opponent}'">
-                <span class="mhr-name ${isLoss ? 'mhr-winner' : ''}">${m.opponent}</span>
+              <div class="mhr-player mhr-away" data-profile-name="${escapeHTML(m.opponent)}" role="button" tabindex="0" title="Открыть профиль ${escapeHTML(m.opponent)}">
+                <img src="${escapeHTML(oppAvatar)}" class="mhr-avatar" onerror="this.onerror=null;this.style.visibility='hidden'">
+                <span class="mhr-name ${isLoss ? 'mhr-winner' : ''}">${escapeHTML(m.opponent)}</span>
               </div>
             </div>
           </div>
@@ -514,12 +542,12 @@
       const topOpponents = Object.values(oppMap).sort((a, b) => b.matches - a.matches).slice(0, 6);
       const topOppHtml = topOpponents.map(opp => {
         const oppProf = DATA.profiles.find(x => x.player.toLowerCase() === opp.name.toLowerCase());
-        const oppAv = oppProf ? oppProf.avatar : `https://api.dicebear.com/7.x/bottts/svg?seed=${opp.name}`;
+        const oppAv = oppProf ? oppProf.avatar : `https://api.dicebear.com/7.x/bottts/svg?seed=${escapeHTML(opp.name)}`;
         return `
           <div style="background: rgba(10, 27, 45, 0.8); border: 1px solid rgba(255,255,255,0.25); padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;" onclick="openPlayerModal('${opp.name}')" title="Открыть анкету ${opp.name}">
-              <img src="${oppAv}" style="width: 28px; height: 28px; border: 1px solid #fff;" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${opp.name}'">
-              <span style="font-weight: 700; font-size: 13px; color: #fff;">${opp.name}</span>
+            <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;" onclick="openPlayerModal('${escapeHTML(opp.name)}')" title="Открыть анкету ${escapeHTML(opp.name)}">
+              <img src="${oppAv}" style="width: 28px; height: 28px; border: 1px solid #fff;" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${escapeHTML(opp.name)}'">
+              <span style="font-weight: 700; font-size: 13px; color: #fff;">${escapeHTML(opp.name)}</span>
             </div>
             <div style="font-size: 12px; text-align: right;">
               <span style="color: var(--nes-green); font-weight: 800;">${opp.wins}В</span>
@@ -538,7 +566,7 @@
               <span>🏛️</span> В ЗАЛЕ СЛАВЫ NEKKETSU LEAGUE &bull; ОБОСНОВАНИЕ И ЗАСЛУГИ:
             </div>
             <div style="font-size: 14px; color: #fff; line-height: 1.5;">
-              ${p.hof_reason}
+              ${escapeHTML(p.hof_reason)}
             </div>
           </div>
         ` : ''}
@@ -608,7 +636,14 @@
         </div>
       `;
 
-      document.getElementById('playerModal').classList.add('active');
+      const wasOpen = overlay.classList.contains('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (!wasOpen) {
+        profileBackground = [...document.body.children].filter(el => el !== overlay && !['SCRIPT','STYLE'].includes(el.tagName)).map(el => [el, el.inert]);
+        profileBackground.forEach(([el]) => { el.inert = true; });
+        overlay.querySelector('.modal-close').focus();
+      }
     }
 
     function filterPlayerModalMatches(cat, btn) {
@@ -707,10 +742,31 @@
       if (modal) modal.style.display = 'none';
     }
 
-    function closePlayerModal() {
-      document.getElementById('playerModal').classList.remove('active');
-      window.location.hash = '#/leaderboard';
+    function closePlayerModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      hidePlayerModal();
+      history.replaceState(null, '', profileReturn);
+      handleRouting();
     }
+    document.addEventListener('click', event => {
+      const target = event.target.closest('[data-profile-name]');
+      if (target) openPlayerModal(target.dataset.profileName);
+    });
+    document.addEventListener('keydown', event => {
+      if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-profile-name]')) {
+        event.preventDefault(); openPlayerModal(event.target.dataset.profileName); return;
+      }
+      const overlay = document.getElementById('playerModal');
+      if (!overlay || !overlay.classList.contains('active')) return;
+      if (event.key === 'Escape') { event.preventDefault(); closePlayerModal(); }
+      if (event.key === 'Tab') {
+        const items = [...overlay.querySelectorAll('button, a[href], input, select, [tabindex="0"]')].filter(el => !el.disabled && el.getClientRects().length);
+        if (!items.length) return;
+        const first = items[0], last = items[items.length-1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    });
 
     // Seasons Module
 
@@ -734,7 +790,9 @@
 
 
 
-    function selectSeason(sId) {
+    function selectSeason(sId, updateRoute = true) {
+      if (!DATA.seasons.some(s => String(s.id) === String(sId))) return;
+      if (updateRoute && window.location.hash !== "#/season/" + sId) history.pushState(null, "", "#/season/" + sId);
 
       selectedSeasonId = sId;
 
@@ -5792,7 +5850,7 @@ function initPortal() {
       try { renderTable(); } catch(e) { console.error('renderTable:', e); }
       try { renderCards(); } catch(e) { console.error('renderCards:', e); }
       try { renderSeasonsBar(); } catch(e) { console.error('renderSeasonsBar:', e); }
-      try { selectSeason('9'); } catch(e) { console.error('selectSeason:', e); }
+      try { selectSeason('9', false); } catch(e) { console.error('selectSeason:', e); }
       try { renderClutch(); } catch(e) { console.error('renderClutch:', e); }
       try { renderH2H(); } catch(e) { console.error('renderH2H:', e); }
       try { renderSpecialTournaments(); } catch(e) { console.error('renderSpecialTournaments:', e); }

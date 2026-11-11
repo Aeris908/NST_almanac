@@ -230,3 +230,6 @@ body {
     max-width: 220px;
   }
 }
+
+#nekketsu-audio-deck.deck-collapsed { width: 52px; left: auto; right: 0; }
+#nekketsu-audio-deck.deck-collapsed > :not(#deckCollapse) { display: none; }

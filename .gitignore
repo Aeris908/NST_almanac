@@ -82,3 +82,7 @@ desktop.ini
 # в git попадают только носители из data/*.json, которые питают импортёры.
 data/nst.db
 data/vk_dump_*/
+
+# Локальные артефакты браузерных проверок
+.playwright-cli/
+output/playwright/

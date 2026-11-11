@@ -1,5 +1,5 @@
 /* ==============================================================================
-   NEKKETSU RETRO AUDIO DECK & DISCIPLINE-AWARE SEAMLESS ROUTER (PJAX)
+   NEKKETSU RETRO AUDIO DECK & DISCIPLINE-AWARE PLAYBACK RESTORE
    - Dynamic Folder Sorting (audio/hub, audio/soccer, audio/quotes, etc.)
    - No hardcoded filenames: accepts ANY user .mp3/.ogg/.wav file!
    - Built-in ID3v1/ID3v2 metadata parser with real-time tag extraction
@@ -14,6 +14,17 @@
     new URL('.', document.currentScript.src).href :
     (window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1));
 
+  function escapeHTML(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g,
+      ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function stored(key, fallback = '') { try { return localStorage.getItem(key) || fallback; } catch (_) { return fallback; } }
+  function remember(key, value) { try { localStorage.setItem(key, value); } catch (_) {} }
+  function savePlayback() {
+    if (!audioEl) return;
+    remember('nst_audio_resume', JSON.stringify({discipline:currentDiscipline,index:currentTrackIdx,time:audioEl.currentTime,playing:isPlaying}));
+  }
+  window.addEventListener('pagehide', savePlayback);
   function resolveAudioUrl(relPath) {
     if (!relPath) return '';
     if (relPath.startsWith('http://') || relPath.startsWith('https://') || relPath.startsWith('blob:') || relPath.startsWith('data:')) {
@@ -232,17 +243,26 @@
     audioEl = document.createElement('audio');
     audioEl.id = 'nekketsu-master-audio';
     audioEl.preload = 'metadata';
-    audioEl.volume = parseFloat(localStorage.getItem('nekketsu_vol') || '0.7');
+    audioEl.volume = Math.max(0, Math.min(1, Number(stored('nekketsu_vol', '0.7')) || 0));
 
     audioEl.addEventListener('ended', nextTrack);
     audioEl.addEventListener('error', handleAudioError);
     audioEl.addEventListener('timeupdate', () => {
       if (audioEl && isPlaying) {
-        localStorage.setItem('nekketsu_track_time', audioEl.currentTime.toString());
+        savePlayback();
       }
     });
 
     document.body.appendChild(audioEl);
+    let resume;
+    try { resume = JSON.parse(stored('nst_audio_resume', 'null')); } catch (_) {}
+    if (resume && resume.discipline === currentDiscipline && Number.isInteger(resume.index) && currentPlaylist[resume.index]) {
+      currentTrackIdx = resume.index;
+      audioEl.addEventListener('loadedmetadata', () => {
+        if (Number.isFinite(resume.time)) audioEl.currentTime = Math.max(0, Math.min(resume.time, audioEl.duration || resume.time));
+        if (resume.playing) audioEl.play().then(() => { isPlaying=true; updateUI(); }).catch(() => { isPlaying=false; updateUI(); });
+      }, {once:true});
+    }
     loadTrack(currentTrackIdx, false);
   }
 
@@ -299,7 +319,7 @@
     volSlider.addEventListener('input', (e) => {
       const v = parseFloat(e.target.value);
       if (audioEl) audioEl.volume = v;
-      localStorage.setItem('nekketsu_vol', v.toString());
+      remember('nekketsu_vol', v.toString());
     });
 
     const plBtn = document.getElementById('deckPlaylistBtn');
@@ -320,6 +340,15 @@
       }
     });
 
+    const collapse = document.createElement('button');
+    collapse.className='deck-btn'; collapse.id='deckCollapse';
+    function applyCollapsed(value) {
+      deck.classList.toggle('deck-collapsed',value); collapse.textContent=value?'♫':'−';
+      collapse.title=value?'Показать аудиоплеер':'Свернуть аудиоплеер'; collapse.setAttribute('aria-label',collapse.title);
+      collapse.setAttribute('aria-expanded',String(!value)); remember('nst_audio_collapsed',value?'1':'0');
+    }
+    collapse.addEventListener('click',()=>applyCollapsed(!deck.classList.contains('deck-collapsed')));
+    deck.appendChild(collapse); applyCollapsed(stored('nst_audio_collapsed')==='1');
     updateUI();
   }
 
@@ -328,13 +357,13 @@
     if (!list) return;
 
     if (!currentPlaylist || currentPlaylist.length === 0) {
-      list.innerHTML = `<div style="padding: 12px; color: #94a3b8; font-size: 12px; text-align: center;">Папка пуста. Закиньте .mp3 файлы!</div>`;
+      list.innerHTML = `<div style="padding: 12px; color: #94a3b8; font-size: 12px; text-align: center;">Музыка пока недоступна.</div>`;
       return;
     }
 
     list.innerHTML = currentPlaylist.map((t, idx) => `
       <div class="playlist-item ${idx === currentTrackIdx ? 'active' : ''}" data-idx="${idx}">
-        <span>${idx + 1}. ${t.title}</span>
+        <span>${idx + 1}. ${escapeHTML(t.is_placeholder ? 'Музыка пока недоступна' : t.title)}</span>
         <span style="font-size: 11px; opacity: 0.7;">${idx === currentTrackIdx && isPlaying ? '▶' : ''}</span>
       </div>
     `).join('');
@@ -350,13 +379,14 @@
   }
 
   function loadTrack(idx, autoPlay = true) {
-    if (!currentPlaylist || currentPlaylist.length === 0) return;
+    if (!currentPlaylist || currentPlaylist.length === 0) { updateUI(); return; }
     if (idx < 0) idx = currentPlaylist.length - 1;
     if (idx >= currentPlaylist.length) idx = 0;
     currentTrackIdx = idx;
 
     const track = currentPlaylist[idx];
     if (audioEl) {
+      if (track.is_placeholder) { audioEl.removeAttribute('src'); isPlaying = false; updateUI(); return; }
       audioEl.src = resolveAudioUrl(track.file);
       inspectTrackMetadata(track);
 
@@ -383,7 +413,7 @@
     } else {
       const curTrack = currentPlaylist[currentTrackIdx];
       if (curTrack && curTrack.is_placeholder) {
-        playSyntheticChime();
+        handleAudioError();
         return;
       }
       audioEl.play().then(() => {
@@ -391,7 +421,7 @@
         updateUI();
       }).catch(err => {
         console.warn("Audio play prevented:", err);
-        playSyntheticChime(); // Play 8-bit retro chime if file not yet uploaded
+        handleAudioError();
       });
     }
   }
@@ -407,7 +437,7 @@
   function updateUI() {
     const track = currentPlaylist[currentTrackIdx] || { title: "Трек" };
     const titleEl = document.getElementById('deckTrackTitle');
-    if (titleEl) titleEl.textContent = track.title;
+    if (titleEl) titleEl.textContent = track.is_placeholder ? 'Музыка пока недоступна' : track.title;
 
     const discData = DISCIPLINE_PLAYLISTS[currentDiscipline] || DISCIPLINE_PLAYLISTS.hub;
     const badgeEl = document.getElementById('deckTrackBadge');
@@ -471,7 +501,7 @@
       });
       const titleEl = document.getElementById('deckTrackTitle');
       if (titleEl) {
-        titleEl.textContent = `♫ [8-Bit Chime] Закиньте MP3 в ${DISCIPLINE_PLAYLISTS[currentDiscipline].folder} ♫`;
+        titleEl.textContent = 'Музыка пока недоступна';
       }
     } catch (e) {
       console.log(e);
@@ -483,7 +513,7 @@
     console.info(`Audio track not found: ${curTrack ? curTrack.file : ''}`);
     const titleEl = document.getElementById('deckTrackTitle');
     if (titleEl) {
-      titleEl.textContent = `[Файл не найден] Закиньте MP3 в ${DISCIPLINE_PLAYLISTS[currentDiscipline].folder}`;
+      titleEl.textContent = 'Не удалось загрузить трек. Выберите другой.';
     }
     isPlaying = false;
     updateUI();

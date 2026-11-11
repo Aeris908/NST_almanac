@@ -13,7 +13,7 @@
     soccer: { page: 'soccer.html', label: 'футбол' },
   };
 
-  const state = { disc: 'all', query: '', sort: 'wr' };
+  const state = { disc: 'all', query: '', sort: 'matches' };
   let lastFocused = null;
   let firstPaint = true;
 
@@ -94,7 +94,7 @@
   /* ---------- Выборка: фильтр + поиск + сортировка ---------- */
 
   const SORTERS = {
-    wr: (a, b) => b.career.win_rate - a.career.win_rate,
+    wr: (a, b) => b.career.win_rate - a.career.win_rate || b.career.matches - a.career.matches,
     matches: (a, b) => b.career.matches - a.career.matches,
     wins: (a, b) => b.career.wins - a.career.wins,
     name: (a, b) => a.nick.localeCompare(b.nick, 'ru'),
@@ -106,7 +106,7 @@
       list = list.filter((p) => (p.disciplines || []).some((d) => d.slug === state.disc));
     }
     if (state.query) {
-      const q = state.query.toLowerCase();
+      const q = state.query.trim().toLowerCase();
       list = list.filter((p) => p.nick.toLowerCase().includes(q) || (p.vk_name || '').toLowerCase().includes(q));
     }
     list.sort(SORTERS[state.sort] || SORTERS.wr);

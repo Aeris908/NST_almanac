@@ -5,7 +5,7 @@
   const API_BASE = isLocal ? "http://127.0.0.1:8090" : "";
 
   const state = {
-    token: sessionStorage.getItem("nstEditorToken") || localStorage.getItem("nstEditorToken") || "mafutaloh",
+    token: sessionStorage.getItem("nstEditorToken") || localStorage.getItem("nstEditorToken") || "",
     tasks: Array.isArray(window.__INITIAL_QUEUE__) ? window.__INITIAL_QUEUE__ : [],
     filter: "all",
     search: "",
@@ -14,6 +14,9 @@
     busy: false,
     resolvedIds: new Set(),
   };
+
+  const escapeHTML = value => String(value == null ? '' : value).replace(/[&<>"']/g,
+    ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
   // ── Сеть и API ────────────────────────────────────────────────────────
 
@@ -50,14 +53,14 @@
       state.isAuthorized = true;
       state.revision = data.revision;
       dot.className = "status-dot online";
-      text.innerHTML = `🟢 Авторизован: <strong>Лоровед</strong> · База: <strong>Neon Postgres</strong> · Ревизия: <code>${data.revision || "актуальна"}</code>`;
+      text.innerHTML = `🟢 Авторизован: <strong>Лоровед</strong> · Подключение: <strong>сервер редактора</strong> · Ревизия: <code>${escapeHTML(data.revision || "актуальна")}</code>`;
       if (undoBtn) undoBtn.disabled = !data.corrections_live;
       loadJournal();
       return true;
     } catch (err) {
       state.isAuthorized = false;
       dot.className = "status-dot offline";
-      text.textContent = `❌ Ошибка доступа: ${err.message}. Проверьте токен`;
+      text.textContent = `❌ Ошибка доступа: ${escapeHTML(err.message)}. Проверьте токен`;
       return false;
     }
   }
@@ -75,7 +78,7 @@
         showNotice(`Очередь успешно обновлена с сервера (всего ${state.tasks.length} задач)`, "success");
       }
     } catch (err) {
-      showNotice(`Не удалось обновить очередь с сервера: ${err.message}`, "error");
+      showNotice(`Не удалось обновить очередь с сервера: ${escapeHTML(err.message)}`, "error");
     } finally {
       if (btn) btn.disabled = false;
     }
@@ -89,7 +92,7 @@
     try {
       const data = await apiCall("/api/log?limit=8");
       if (!data.entries || !data.entries.length) {
-        container.innerHTML = '<p class="journal-empty">Журнал правок пуст — база находится в эталонном состоянии.</p>';
+        container.innerHTML = '<p class="journal-empty">В журнале пока нет записей.</p>';
         if (undoBtn) undoBtn.disabled = true;
         return;
       }
@@ -98,16 +101,16 @@
       container.innerHTML = data.entries.map(e => `
         <div class="journal-item">
           <div>
-            <span class="time">${e.created_at || "—"}</span>
-            <span class="author">@${e.editor || "Лоровед"}</span>: 
-            <strong>${e.table_name || "матч"}</strong> #${e.row_id} [${e.field}]: 
-            <code>${e.old_value !== null ? e.old_value : "—"}</code> → <strong>${e.new_value !== null ? e.new_value : "—"}</strong>
+            <span class="time">${escapeHTML(e.created_at || "—")}</span>
+            <span class="author">@${escapeHTML(e.editor || "Лоровед")}</span>:
+            <strong>${escapeHTML(e.table_name || "матч")}</strong> #${escapeHTML(e.row_id)} [${escapeHTML(e.field)}]:
+            <code>${escapeHTML(e.old_value !== null ? e.old_value : "—")}</code> → <strong>${escapeHTML(e.new_value !== null ? e.new_value : "—")}</strong>
           </div>
           ${e.reverted_at ? '<span style="color:var(--nes-red);font-size:11px;">отменено</span>' : ''}
         </div>
       `).join("");
     } catch (e) {
-      container.innerHTML = `<p class="journal-empty" style="color:var(--nes-red)">Не удалось загрузить историю: ${e.message}</p>`;
+      container.innerHTML = `<p class="journal-empty" style="color:var(--nes-red)">Не удалось загрузить историю: ${escapeHTML(e.message)}</p>`;
     }
   }
 
@@ -161,7 +164,7 @@
         <span>•</span>
         <span>Решено в сессии: <strong>${state.resolvedIds.size}</strong></span>
         <span>•</span>
-        <span>База: <strong>Neon Postgres</strong></span>
+        <span>Подключение: <strong>сервер редактора</strong></span>
       `;
     }
 
@@ -383,11 +386,11 @@
           const deltaStr = JSON.stringify(res.delta || {}, null, 2);
           previewBox.innerHTML = `
             <strong>Дельта изменений (предпросмотр):</strong>
-            <pre>${deltaStr === "{}" ? "Правка не меняет видимых итоговых чисел таблицы." : deltaStr}</pre>
+            <pre>${deltaStr === "{}" ? "Правка не меняет видимых итоговых чисел таблицы." : escapeHTML(deltaStr)}</pre>
           `;
         } catch (err) {
           previewBox.hidden = false;
-          previewBox.innerHTML = `<span style="color:var(--nes-red);">Ошибка предпросмотра: ${err.message}</span>`;
+          previewBox.innerHTML = `<span style="color:var(--nes-red);">Ошибка предпросмотра: ${escapeHTML(err.message)}</span>`;
         } finally {
           previewBtn.disabled = false;
           previewBtn.textContent = "Предпросмотр дельты";
@@ -417,7 +420,7 @@
           state.resolvedIds.add(taskId);
 
           showNotice(`✅ Вердикт по матчу #${matchId} успешно сохранён в Neon Postgres! Новая ревизия: ${res.revision}`, "success");
-          
+
           // Отмечаем карточку как решённую
           const card = document.getElementById(`task-${taskId}`);
           if (card) {
@@ -431,8 +434,8 @@
           loadJournal();
           checkAuth();
         } catch (err) {
-          alert(`Не удалось сохранить вердикт: ${err.message}`);
-          showNotice(`Ошибка записи: ${err.message}`, "error");
+          alert(`Не удалось сохранить вердикт: ${escapeHTML(err.message)}`);
+          showNotice(`Ошибка записи: ${escapeHTML(err.message)}`, "error");
         } finally {
           saveBtn.disabled = false;
           saveBtn.textContent = "💾 Записать в летопись (Neon Postgres)";
@@ -517,7 +520,7 @@
           checkAuth();
           fetchLiveQueue();
         } catch (err) {
-          alert(`Не удалось отменить: ${err.message}`);
+          alert(`Не удалось отменить: ${escapeHTML(err.message)}`);
         } finally {
           undoBtn.disabled = false;
           undoBtn.textContent = "↩️ Откатить последнее решение";

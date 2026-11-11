@@ -2,6 +2,7 @@
 
 import json
 from dataclasses import replace
+from html import escape
 from pathlib import Path
 
 from db.catalog import catalog_from_db, cup_rows_from_db
@@ -12,9 +13,11 @@ from portal.league_analytics import build as build_analytics
 from portal.player_profiles import build as build_profiles
 from portal.player_records import build as build_records
 from portal.quotes import player_quotes_by_author
-from portal.season_pages import build as build_seasons, without_mislabelled_cup_rows
-from portal.site_payload import build as build_payload, headline_tokens
-from portal.templates import render
+from portal.season_pages import build as build_seasons
+from portal.season_pages import without_mislabelled_cup_rows
+from portal.site_payload import build as build_payload
+from portal.site_payload import headline_tokens
+from portal.templates import json_for_script, render
 
 OUTPUT_PATH = Path("soccer.html")
 HEADLINE_STATS_PATH = Path("data/headline_stats.json")
@@ -66,8 +69,8 @@ def main():
     save_headline_stats(payload["headline"])
 
     html = render("soccer_page.html",
-                  {**headline_tokens(payload["headline"]), "EDITOR_API": editor_api()})
-    final_html = html.replace(DATA_PLACEHOLDER, json.dumps(payload, ensure_ascii=False))
+                  {**headline_tokens(payload["headline"]), "EDITOR_API": escape(editor_api(), quote=True)})
+    final_html = html.replace(DATA_PLACEHOLDER, json_for_script(payload))
     for attempt in range(5):
         try:
             OUTPUT_PATH.write_text(final_html, encoding="utf-8")

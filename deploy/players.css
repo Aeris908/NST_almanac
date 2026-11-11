@@ -21,7 +21,7 @@
 
   --text: #e8eef6;
   --muted: #8ba3bd;
-  --faint: #5f7891;
+  --faint: #91a8bf;
 
   --font-display: 'Russo One', sans-serif;
   --font-body: 'Rubik', sans-serif;
@@ -480,3 +480,5 @@ body {
   .pcard:hover { transform: none; }
   .dossier-scrim.open, .dossier-modal { animation: none; }
 }
+/* Читаемые вспомогательные подписи. */
+.wr-lab, .formrow .lab, .recnums span i, .league, .pc-name .vk, .count, .disc-chip .n { font-size: 12px; }

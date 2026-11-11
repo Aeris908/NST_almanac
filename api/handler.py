@@ -8,9 +8,8 @@
 (`NST_DB_PATH`, по умолчанию — та же `data/nst.db`) и JSON на аварию внутри ручки, которую
 `db/serve.py` перехватывает только на записи.
 
-Файловая система функции на Vercel доступна только на чтение, поэтому `persist: true` вернёт 500
-с текстом отказа, а предпросмотр работает: он считается на копии базы в временном каталоге.
-Постоянной базе записи — серверному Postgres — отведено одно место: `bind_database`.
+При заданном `NST_POSTGRES_URL` правки сохраняются в Postgres. Предпросмотр получает серверный
+срез во временную SQLite-копию. Без серверной базы SQLite на Vercel доступна только на чтение.
 """
 
 import sys
@@ -22,8 +21,8 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from db import api, serve  # noqa: E402
-from portal.env_file import secret  # noqa: E402
+from db import api, serve
+from portal.env_file import secret
 
 DB_PATH_ENV = "NST_DB_PATH"
 POSTGRES_URL_ENV = "NST_POSTGRES_URL"
@@ -96,10 +95,10 @@ class handler(serve.Handler):
     соединение, поэтому он идёт только пока ничего не ушло.
     """
 
-    def do_GET(self):  # noqa: N802 — имя метода задаёт http.server
+    def do_GET(self):
         return self._guarded(super().do_GET)
 
-    def do_POST(self):  # noqa: N802 — имя метода задаёт http.server
+    def do_POST(self):
         return self._guarded(super().do_POST)
 
     def _reply(self, status, payload, *, origin=None):
@@ -111,7 +110,7 @@ class handler(serve.Handler):
         self.path = _restored_path(self)
         try:
             return handle()
-        except Exception as error:  # noqa: BLE001 — соединение не должно обрываться без ответа
+        except Exception as error:
             if getattr(self, "answered", False):
                 raise
             sys.stderr.write(f"500 {self.path}: {type(error).__name__}: {error}\n")
