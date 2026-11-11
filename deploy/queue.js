@@ -103,7 +103,7 @@
         });
         ['s1','s2'].forEach(key=>{const input=row.querySelector('.review-'+key);required(input,'Укажите число голов.');if(input.value && (!Number.isInteger(Number(input.value))||Number(input.value)<0||Number(input.value)>99))fieldError(input,'Укажите целое число от 0 до 99.');});
         const phase=row.querySelector('.review-phase').value;
-        if(phase==='penalties' && row.querySelector('.review-s1').value===row.querySelector('.review-s2').value){
+        if(['penalties','overtime_penalties'].includes(phase) && row.querySelector('.review-s1').value===row.querySelector('.review-s2').value){
           ['pk1','pk2'].forEach(key=>required(row.querySelector('.review-'+key),'Укажите результат буллитов.'));
           const a=row.querySelector('.review-pk1'),b=row.querySelector('.review-pk2');
           for(const input of [a,b])if(input.value!==''&&(!Number.isInteger(Number(input.value))||Number(input.value)<0||Number(input.value)>99))fieldError(input,'Укажите целое число от 0 до 99.');
@@ -123,7 +123,7 @@
     output.replaceChildren();
     const title=document.createElement('h4');title.textContent='Изменения перед сохранением';output.append(title);
     const action=document.createElement('p');action.textContent=({save:'Сохранить игры и закрыть задачу',confirm:'Подтвердить данные без изменений',reject:'Отклонить отчёт',void:'Аннулировать встречу'})[decision]||'Сохранить решение';output.append(action);
-    const fields={doc_title:'Турнир',tour:'Тур',league:'Лига',stage:'Стадия',phase:'Результат',is_playoff:'Плей-офф',status:'Статус',note:'Счёт / протокол'};
+    const fields={doc_title:'Турнир',tour:'Тур',league:'Лига',stage:'Стадия',played_on:'Дата игры',phase:'Результат',is_playoff:'Плей-офф',status:'Статус',note:'Счёт / протокол'};
     for(const [index,item] of (result.comparison||[]).entries()) {
       const section=document.createElement('section');section.className='comparison-game';
       const heading=document.createElement('strong');heading.textContent='Игра '+(index+1)+(item.before?' · #'+item.before.id:' · новая');section.append(heading);
@@ -166,7 +166,7 @@
         for(const [key,value] of [['s1',server.sides[0].score],['s2',server.sides[1].score],['phase',server.phase||'regular'],['pk1',pk?.[1]||''],['pk2',pk?.[2]||'']]){const input=row.querySelector('.review-'+key);choice('Игра '+(index+1)+' · '+({s1:'голы A',s2:'голы B',phase:'результат',pk1:'буллиты A',pk2:'буллиты B'})[key],input.value,value??'',v=>input.value=v);}
       });
     } else {
-      for(const [selector,value,label] of [['.input-s1',first.sides?.[0]?.score,'Голы A'],['.input-s2',first.sides?.[1]?.score,'Голы B'],['.input-stage',first.stage,'Стадия'],['.input-outcome',first.status==='technical'?'technical':first.phase||'regular','Результат']]){const input=form.querySelector(selector);choice(label,input.value,value??'',v=>input.value=v);}
+      for(const [selector,value,label] of [['.input-s1',first.sides?.[0]?.score,'Голы A'],['.input-s2',first.sides?.[1]?.score,'Голы B'],['.input-stage',first.stage,'Стадия'],['.input-played-on',first.played_on,'Дата игры'],['.input-outcome',first.status==='technical'?'technical':first.phase||'regular','Результат']]){const input=form.querySelector(selector);if(input)choice(label,input.value,value??'',v=>input.value=v);}
     }
     const accept=document.createElement('button');accept.type='button';accept.className='btn-preview';accept.textContent='Применить выбранные версии';
     accept.onclick=()=>{if(choices.some(c=>!c.select.value)){showNotice('Выберите версию для каждого изменённого поля.','error');return;}choices.forEach(c=>{if(c.select.value==='server')c.apply(c.server);});form.querySelectorAll('[data-proposal="1"]').forEach(row=>row.dataset.confirmed='0');const source=form.closest('.review-workspace')?.querySelector('.review-source pre');if(source)source.textContent=latest.shown||'';form.dataset.editVersion=latest.edit_version;const index=state.tasks.findIndex(t=>t.id===latest.id);if(index>=0)state.tasks[index]=latest;panel.remove();form.dispatchEvent(new Event('change',{bubbles:true}));writeDraft(form);};
@@ -336,6 +336,7 @@
 
   const BATCH_CATEGORIES = [
     { id: "all", label: "Все задачи" },
+    { id: "elo_review", label: "📊 Данные рейтинга" },
     { id: "team_archive_review", label: "👥 Командный архив" },
     { id: "lore_review_s8", label: "⭐ Рейтинг и Кубок лиг" },
     { id: "lore_review_unproven", label: "❓ Недоказанные стадии" },
@@ -343,6 +344,7 @@
   ];
 
   function getBatchCategory(batch) {
+    if(batch==='elo_review')return 'elo_review';
     if (batch === "team_archive_review") return "team_archive_review";
     if (!batch) return "vk_live";
     if (batch === "lore_review_s8" || batch.startsWith("lore_review_s")) return "lore_review_s8";
@@ -470,11 +472,13 @@
       </article>`;
     }
     const row = task.row || {};
+    const legacyPk=String(row.note||"").match(/(?:ПК|PK)\s*(\d+)\s*[:−-]\s*(\d+)/i);
     const sides = task.sides || (row.players_a && row.players_b ? [row.players_a, row.players_b] : ["Сторона 1", "Сторона 2"]);
     const isResolved = state.resolvedIds.has(task.id);
 
     let batchClass = "lore-live";
     let badgeLabel = "📋 Не вошедший в сводку матч";
+    if(task.batch==='elo_review')badgeLabel='📊 Проверка данных рейтинга';
     if (task.batch === "lore_review_s8" || (task.batch && task.batch.includes("s8"))) {
       batchClass = "lore-s8";
       badgeLabel = "⭐ Рейтинг Elo · Кубок лиг";
@@ -562,15 +566,16 @@
               <div class="form-group">
                 <label>Решение / Исход матча</label>
                 <select class="input-outcome" aria-label="Тип результата">
-                  <option value="regular" ${(!['penalties','overtime'].includes(row.phase) && !['technical','void'].includes(row.status)) ? 'selected' : ''}>Основное время (по счёту)</option>
+                  <option value="regular" ${(!['penalties','overtime','overtime_penalties'].includes(row.phase) && !['technical','void'].includes(row.status)) ? 'selected' : ''}>Основное время (по счёту)</option>
                   <option value="penalties" ${row.phase === 'penalties' ? 'selected' : ''}>Победа по пенальти / буллитам (PK)</option>
+                  <option value="overtime_penalties" ${row.phase==='overtime_penalties'?'selected':''}>Овертайм и буллиты</option>
                   <option value="overtime" ${row.phase === 'overtime' ? 'selected' : ''}>Победа в овертайме (OT)</option>
                   <option value="technical" ${row.status === 'technical' ? 'selected' : ''}>Технический результат (ТП)</option>
                   <option value="void" ${row.status === 'void' ? 'selected' : ''}>Аннулировать встречу (Void)</option>
                 </select>
               </div>
 
-              <div class="legacy-pk form-group" ${row.phase==='penalties'?'':'hidden'}><label>Буллиты первой стороны<input class="input-pk1" type="number" min="0" max="99"></label><label>Буллиты второй стороны<input class="input-pk2" type="number" min="0" max="99"></label></div>
+              <div class="legacy-pk form-group" ${['penalties','overtime_penalties'].includes(row.phase)?'':'hidden'}><label>Буллиты первой стороны<input class="input-pk1" type="number" min="0" max="99" value="${legacyPk?.[1]||''}"></label><label>Буллиты второй стороны<input class="input-pk2" type="number" min="0" max="99" value="${legacyPk?.[2]||''}"></label></div>
 
               ${task.batch === 'lore_review_unproven' ? `
                 <div class="form-group">
@@ -588,6 +593,7 @@
                 <label>Пояснение вердикта лороведа (для журнала летописи)</label>
                 <input type="text" class="input-note" aria-label="Обоснование решения" required placeholder="Что проверено и какое решение принято">
               </div>
+              ${task.batch==='elo_review'?`<label>Подтверждённая дата игры<input type="date" class="input-played-on" value="${escapeHTML(String(row.played_on||'').slice(0,10))}"></label>`:''}
             </div>
 
             <div class="form-actions">
@@ -669,10 +675,10 @@
       <div class="review-scoreline">
         <label>Голы A<input type="number" class="review-s1" min="0" max="99" value="${row.score_a??''}"></label><span class="score-colon">:</span>
         <label>Голы B<input type="number" class="review-s2" min="0" max="99" value="${row.score_b??''}"></label>
-        <label>Результат<select class="review-phase">${[['regular','Основное время'],['overtime','Овертайм'],['penalties','Буллиты']].map(([v,t])=>`<option value="${v}"${row.phase===v?' selected':''}>${t}</option>`).join('')}</select></label>
+        <label>Результат<select class="review-phase">${[['regular','Основное время'],['overtime','Овертайм'],['penalties','Буллиты'],['overtime_penalties','Овертайм и буллиты']].map(([v,t])=>`<option value="${v}"${row.phase===v?' selected':''}>${t}</option>`).join('')}</select></label>
         <label class="game-playoff"><input type="checkbox" class="review-playoff" ${row.is_playoff?'checked':''}>Плей-офф</label>
       </div>
-      <div class="review-pk" ${row.phase==='penalties'?'':'hidden'}><label>Буллиты A<input type="number" class="review-pk1" min="0" max="99" value="${pk?pk[1]:''}"></label><label>Буллиты B<input type="number" class="review-pk2" min="0" max="99" value="${pk?pk[2]:''}"></label></div>
+      <div class="review-pk" ${['penalties','overtime_penalties'].includes(row.phase)?'':'hidden'}><label>Буллиты A<input type="number" class="review-pk1" min="0" max="99" value="${pk?pk[1]:''}"></label><label>Буллиты B<input type="number" class="review-pk2" min="0" max="99" value="${pk?pk[2]:''}"></label></div>
       <div class="game-tools"><button type="button" class="btn-preview" data-swap-game>⇄ Поменять пары и счёт</button><button type="button" class="btn-preview" data-own-roster>Изменить игроков этой игры</button><button type="button" class="btn-preview" data-remove-game>Убрать строку</button></div>
       <div class="row-player-fields form-grid" hidden>${nickField('a1','Игрок A1',a[0]||'')}${nickField('a2','Игрок A2',a[1]||'')}${nickField('b1','Игрок B1',b[0]||'')}${nickField('b2','Игрок B2',b[1]||'')}</div>
     </fieldset>`;
@@ -713,7 +719,7 @@
       form.querySelectorAll('.review-game').forEach((row,index)=>{
         const n=rowNames(row);row.querySelector('.game-pairs').textContent=(index+1)+'. '+(n[0]||'Игрок A1')+' & '+(n[1]||'Игрок A2')+' — '+(n[2]||'Игрок B1')+' & '+(n[3]||'Игрок B2');
         const place=JSON.parse(row.dataset.place||'{}');row.querySelector('.game-context').textContent=['league','tour','stage'].map(key=>place[key]??form.querySelector('.review-'+key).value).filter(Boolean).join(' · ');
-        row.querySelector('.review-pk').hidden=row.querySelector('.review-phase').value!=='penalties';
+        row.querySelector('.review-pk').hidden=!['penalties','overtime_penalties'].includes(row.querySelector('.review-phase').value);
         if(row.dataset.proposal==='1'){
           let confirm=row.querySelector('[data-confirm-proposal]');
           if(!confirm){const quote=document.createElement('p');quote.className='proposal-source';quote.textContent='Из отчёта: '+(row.dataset.raw||'сверьте строку с источником');row.append(quote);confirm=document.createElement('button');confirm.type='button';confirm.className='btn-preview';confirm.dataset.confirmProposal='';row.append(confirm);}
@@ -835,7 +841,7 @@
       let approved=null, approvedRevision=null;
       const update=()=>{
         approved=null;saveBtn.disabled=true;
-        form.querySelector('.legacy-pk').hidden=form.querySelector('.input-outcome').value!=='penalties';
+        form.querySelector('.legacy-pk').hidden=!['penalties','overtime_penalties'].includes(form.querySelector('.input-outcome').value);
       };
       update();
       form.addEventListener('input',update);form.addEventListener('change',update);
@@ -933,10 +939,10 @@
     }
     if(!note){const input=form.querySelector('.input-note');fieldError(input,'Укажите обоснование решения.');revealError(input);throw Error('Укажите обоснование решения.');}
     const pk1=form.querySelector('.input-pk1').value,pk2=form.querySelector('.input-pk2').value;
-    if(outcome==='penalties'&&s1===s2&&(!pk1||!pk2||Number(pk1)===Number(pk2))){fieldError(form.querySelector('.input-pk2'),'Укажите разные результаты буллитов.');revealError(form.querySelector('.input-pk2'));throw Error('Проверьте результаты буллитов.');}
+    if(['penalties','overtime_penalties'].includes(outcome)&&s1===s2&&(!pk1||!pk2||Number(pk1)===Number(pk2))){fieldError(form.querySelector('.input-pk2'),'Укажите разные результаты буллитов.');revealError(form.querySelector('.input-pk2'));throw Error('Проверьте результаты буллитов.');}
     return {
       operation: "review-existing",
-      args: {task_id:Number(form.dataset.taskId),task_expect:form.dataset.editVersion,match_id:matchId,s1,s2,outcome,stage,note,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
+      args: {task_id:Number(form.dataset.taskId),task_expect:form.dataset.editVersion,match_id:matchId,s1,s2,outcome,stage,note,played_on:form.querySelector('.input-played-on')?.value,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
     };
   }
 

@@ -21,7 +21,7 @@ def resolve_existing(con, args, editor):
     """Решение обычной задачи: счёт, стадия, тип результата и закрытие без частичной записи."""
     note = str(args.get('note') or '').strip()
     outcome = args.get('outcome')
-    if not note or outcome not in ('regular','overtime','penalties','technical','void'):
+    if not note or outcome not in ('regular','overtime','penalties','overtime_penalties','technical','void'):
         raise edit.EditError('Укажите тип результата и обоснование решения')
     pg = hasattr(con, '_raw')
     con.execute('BEGIN' if pg else 'BEGIN IMMEDIATE')
@@ -44,14 +44,14 @@ def resolve_existing(con, args, editor):
             scores = [args.get('s1'), args.get('s2')]
             if any(type(v) is not int or not 0 <= v <= 99 for v in scores):
                 raise edit.EditError('Укажите целое число голов от 0 до 99')
-            phase = outcome if outcome in ('overtime','penalties') else 'regular'
+            phase = outcome if outcome in ('overtime','penalties','overtime_penalties') else 'regular'
             if outcome == 'technical' and scores[0] == scores[1]:
                 raise edit.EditError('Технический результат должен определить победителя')
             results.append(edit.set_status(batch, mid, 'technical' if outcome == 'technical' else 'played', editor))
             results.append(edit.set_score(batch, mid, *scores, editor))
             outcomes = edit.outcome_of(*scores)
             shown = f'{scores[0]}:{scores[1]}'
-            if phase == 'penalties' and scores[0] == scores[1]:
+            if phase in ('penalties','overtime_penalties') and scores[0] == scores[1]:
                 pk = [args.get('pk1'), args.get('pk2')]
                 if any(type(v) is not int or not 0 <= v <= 99 for v in pk) or pk[0] == pk[1]:
                     raise edit.EditError('Укажите разные результаты буллитов от 0 до 99')
@@ -67,6 +67,8 @@ def resolve_existing(con, args, editor):
             results.append(edit.set_source(batch, mid, editor, shown))
             if args.get('stage') is not None:
                 results.append(edit.set_place(batch, mid, editor, stage=str(args['stage']).strip()))
+            if args.get('played_on'):
+                results.append(edit.set_date(batch,mid,editor,played_on=str(args['played_on'])))
         payload = store.parse_json(task['payload'], default={})
         payload['вердикт_редактора'] = {'decision':'void' if outcome=='void' else 'save',
                                         'note':note,'editor':editor,'match_ids':[mid]}
@@ -138,11 +140,11 @@ def apply(con, args, editor):
             if any(type(v) is not int or v < 0 or v > 99 for v in scores):
                 raise edit.EditError('Счёт игры — целые числа от 0 до 99')
             phase = row.get('phase', 'regular')
-            if phase not in ('regular','overtime','penalties'):
+            if phase not in ('regular','overtime','penalties','overtime_penalties'):
                 raise edit.EditError('Неизвестная фаза игры')
             shown = f'{scores[0]}:{scores[1]}'
             outcomes = ['win','loss'] if scores[0]>scores[1] else ['loss','win'] if scores[0]<scores[1] else ['draw','draw']
-            if scores[0] == scores[1] and phase == 'penalties':
+            if scores[0] == scores[1] and phase in ('penalties','overtime_penalties'):
                 pk = [row.get('pk1'), row.get('pk2')]
                 if any(type(v) is not int or v < 0 or v > 99 for v in pk) or pk[0] == pk[1]:
                     raise edit.EditError('При равном счёте укажите разные результаты буллитов')

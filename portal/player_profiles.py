@@ -175,7 +175,6 @@ def apply_status_badges(p, name, is_active, is_hall_of_famer):
         p["hof_reason"] = HOF_REASONS.get(name, HOF_FALLBACK_REASON)
         p["status_badge"] = "Зал славы (Легенда)"
         p["status"] = "Зал славы"
-        p["league"] = "Высшая"
     else:
         p["is_hall_of_fame"] = False
         p["hof_reason"] = None
@@ -251,12 +250,17 @@ def build(
         apply_career_stats(p, stats, player_stats_addon[name], matches)
         p["is_active"] = is_active
         apply_quotes_and_avatar(p, name, player_quotes_dict, data.avatars)
+        p['rating_eligible']=bool(p.get('rated') and not p.get('provisional',True) and p.get('rating_calibrated',True))
         profiles.append(p)
 
     profiles.sort(key=profile_sort_order)
     # Сначала рейтингованные по убыванию active_elo, затем без рейтинга: None с числом
     # не сравнивается, поэтому отсутствующий рейтинг вынесен в отдельный младший ключ.
-    profiles.sort(key=lambda p: (p["active_elo"] is not None,
+    profiles.sort(key=lambda p: (p['rating_eligible'],p["active_elo"] is not None,
                                  p["active_elo"] if p["active_elo"] is not None else 0.0),
                   reverse=True)
+    position=0
+    for p in profiles:
+        if p['rating_eligible']:position+=1;p['rating_rank']=position
+        else:p['rating_rank']=None
     return profiles

@@ -144,7 +144,7 @@
     ).join('');
 
     const foot = p.soccer_elo
-      ? `<span class="elo">ELO ${Math.round(p.soccer_elo)}</span>` + (p.soccer_league ? `<span class="league">${esc(p.soccer_league)}</span>` : '')
+      ? `<span class="elo">Elo v2 ${Math.round(p.soccer_elo)}${p.soccer_provisional ? " · калибровка" : ""}</span>` + (p.soccer_league ? `<span class="league">${esc(p.soccer_league)}</span>` : '')
       : `<span class="league">${esc(p.soccer_league || 'без рейтинга')}</span>`;
 
     const vkLine = p.vk_name && p.vk_name !== p.nick ? esc(p.vk_name) : '';
@@ -226,7 +226,7 @@
     const c = p.career || {};
     const edge = edgeColor(p);
     const rival = (p.top_rivals || [])[0];
-    const eloLine = p.soccer_elo ? ` · ELO ${Math.round(p.soccer_elo)} (пик ${Math.round(p.soccer_peak_elo || p.soccer_elo)})` : '';
+    const eloLine = p.soccer_elo ? ` · Elo v2 ${Math.round(p.soccer_elo)} (пик ${Math.round(p.soccer_peak_elo || p.soccer_elo)})${p.soccer_provisional ? " · калибровка, без места" : ""} · результатов в Elo: ${p.soccer_rated_games || 0}` : '';
     const links = disciplineLinks(p);
 
     const modal = document.getElementById('dossierModal');

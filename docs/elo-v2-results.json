@@ -1,0 +1,2106 @@
+{
+  "model": "division-elo-v2",
+  "scope": {
+    "model": "division-elo-v2",
+    "included": 2584,
+    "seasons": {
+      "Season 8": 201,
+      "Season 9": 147,
+      "Season 4": 360,
+      "Season 5": 228,
+      "Season 6": 397,
+      "Season 7": 282,
+      "Season 1": 338,
+      "Season 2": 325,
+      "Season 3": 306
+    },
+    "excluded": [
+      {
+        "id": 58,
+        "season": "Season 8",
+        "p1": "Кирпич57",
+        "p2": "RASH",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 93,
+        "season": "Season 8",
+        "p1": "RASH",
+        "p2": "Кирпич57",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 127,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "PacnyTHuK",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 131,
+        "season": "Season 8",
+        "p1": "Romix",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 134,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "ectoPower",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 138,
+        "season": "Season 8",
+        "p1": "Memori",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 140,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "leonudomlya",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 142,
+        "season": "Season 8",
+        "p1": "Ric25",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 145,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "Kunio",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 147,
+        "season": "Season 8",
+        "p1": "Cyneprepou4uk",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 154,
+        "season": "Season 8",
+        "p1": "PacnyTHuK",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 158,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "Romix",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 161,
+        "season": "Season 8",
+        "p1": "ectoPower",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 165,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "Memori",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 167,
+        "season": "Season 8",
+        "p1": "leonudomlya",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 169,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "Ric25",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 172,
+        "season": "Season 8",
+        "p1": "Kunio",
+        "p2": "RVD (МГБ)",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 174,
+        "season": "Season 8",
+        "p1": "RVD (МГБ)",
+        "p2": "Cyneprepou4uk",
+        "reason": "технический или несыгранный результат"
+      },
+      {
+        "id": 342,
+        "season": "Season 8",
+        "p1": "ectoPower",
+        "p2": "Romix",
+        "reason": "не подтверждён победитель дополнительного времени / буллитов"
+      },
+      {
+        "id": 368,
+        "season": "Season 4",
+        "p1": "mafuta",
+        "p2": "Transistor",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 376,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "mafuta",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 377,
+        "season": "Season 5",
+        "p1": "mafuta",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 378,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "mafuta",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 379,
+        "season": "Season 5",
+        "p1": "mafuta",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 380,
+        "season": "Season 5",
+        "p1": "mafuta",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 381,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "mafuta",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 387,
+        "season": "Season 6",
+        "p1": "ectoPower",
+        "p2": "Transistor",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 388,
+        "season": "Season 6",
+        "p1": "Transistor",
+        "p2": "ectoPower",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 389,
+        "season": "Season 6",
+        "p1": "ectoPower",
+        "p2": "Transistor",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 390,
+        "season": "Season 6",
+        "p1": "Transistor",
+        "p2": "ectoPower",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 391,
+        "season": "Season 6",
+        "p1": "Transistor",
+        "p2": "ectoPower",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 392,
+        "season": "Season 6",
+        "p1": "ectoPower",
+        "p2": "Transistor",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 393,
+        "season": "Season 6",
+        "p1": "Transistor",
+        "p2": "ectoPower",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 394,
+        "season": "Season 6",
+        "p1": "ectoPower",
+        "p2": "Transistor",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 395,
+        "season": "Season 6",
+        "p1": "ectoPower",
+        "p2": "Transistor",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 398,
+        "season": "Season 7",
+        "p1": "RVD (МГБ)",
+        "p2": "ectoPower",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98333,
+        "season": "Season 2",
+        "p1": "Kipriot",
+        "p2": "Romario",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98336,
+        "season": "Season 2",
+        "p1": "Dr1N",
+        "p2": "Dopi",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98337,
+        "season": "Season 2",
+        "p1": "mafuta",
+        "p2": "Dopi",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98338,
+        "season": "Season 2",
+        "p1": "ectoPower",
+        "p2": "Huba Buba",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98339,
+        "season": "Season 2",
+        "p1": "mafuta",
+        "p2": "Memori",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98340,
+        "season": "Season 2",
+        "p1": "mafuta",
+        "p2": "Kunio",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98363,
+        "season": "Season 4",
+        "p1": "FC Pushistik",
+        "p2": "3aBuCTb",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98364,
+        "season": "Season 4",
+        "p1": "FC Pushistik",
+        "p2": "3aBuCTb",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98365,
+        "season": "Season 4",
+        "p1": "FC Pushistik",
+        "p2": "3aBuCTb",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98366,
+        "season": "Season 4",
+        "p1": "Kipriot",
+        "p2": "3aBuCTb",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98367,
+        "season": "Season 4",
+        "p1": "Kipriot",
+        "p2": "3aBuCTb",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98375,
+        "season": "Season 5",
+        "p1": "Romix",
+        "p2": "Kubik",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98376,
+        "season": "Season 5",
+        "p1": "Centurion",
+        "p2": "Jamlight",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98377,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "Chocopie",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98378,
+        "season": "Season 5",
+        "p1": "Chocopie",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98379,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "Chocopie",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98380,
+        "season": "Season 5",
+        "p1": "Kunio",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98381,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "Kunio",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98382,
+        "season": "Season 5",
+        "p1": "Kunio",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98389,
+        "season": "Season 5",
+        "p1": "FC Pushistik",
+        "p2": "Centurion",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98390,
+        "season": "Season 5",
+        "p1": "Ric25",
+        "p2": "Romix",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98392,
+        "season": "Season 5",
+        "p1": "Буц",
+        "p2": "Texas",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98394,
+        "season": "Season 5",
+        "p1": "mafuta",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98395,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "mafuta",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98396,
+        "season": "Season 5",
+        "p1": "mafuta",
+        "p2": "RVD (МГБ)",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98397,
+        "season": "Season 5",
+        "p1": "RVD (МГБ)",
+        "p2": "mafuta",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98412,
+        "season": "Season 6",
+        "p1": "Memori",
+        "p2": "E_not",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98413,
+        "season": "Season 6",
+        "p1": "Bubnov",
+        "p2": "Dynamik",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98414,
+        "season": "Season 6",
+        "p1": "Буц",
+        "p2": "Bubnov",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98415,
+        "season": "Season 6",
+        "p1": "FC Pushistik",
+        "p2": "Memori",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98416,
+        "season": "Season 6",
+        "p1": "Rock",
+        "p2": "yoxter",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98417,
+        "season": "Season 6",
+        "p1": "Romix",
+        "p2": "Memori",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98418,
+        "season": "Season 6",
+        "p1": "Ric25",
+        "p2": "Rock",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98428,
+        "season": "Season 7",
+        "p1": "Aeris",
+        "p2": "ruby",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98429,
+        "season": "Season 7",
+        "p1": "Aeris",
+        "p2": "ruby",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98430,
+        "season": "Season 7",
+        "p1": "ruby",
+        "p2": "Aeris",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98431,
+        "season": "Season 7",
+        "p1": "Aeris",
+        "p2": "ruby",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98432,
+        "season": "Season 7",
+        "p1": "leonudomlya",
+        "p2": "wanchous",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98433,
+        "season": "Season 7",
+        "p1": "leonudomlya",
+        "p2": "wanchous",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98434,
+        "season": "Season 7",
+        "p1": "wanchous",
+        "p2": "leonudomlya",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98435,
+        "season": "Season 7",
+        "p1": "leonudomlya",
+        "p2": "wanchous",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98436,
+        "season": "Season 7",
+        "p1": "Bubnov",
+        "p2": "leonudomlya",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98437,
+        "season": "Season 7",
+        "p1": "Kunio",
+        "p2": "Aeris",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98438,
+        "season": "Season 7",
+        "p1": "Cyneprepou4uk",
+        "p2": "E_not",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98439,
+        "season": "Season 7",
+        "p1": "mafuta",
+        "p2": "Kunio",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98440,
+        "season": "Season 7",
+        "p1": "Romix",
+        "p2": "Memori",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98441,
+        "season": "Season 7",
+        "p1": "ectoPower",
+        "p2": "Cyneprepou4uk",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98442,
+        "season": "Season 7",
+        "p1": "RVD (МГБ)",
+        "p2": "Romix",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      },
+      {
+        "id": 98443,
+        "season": "Season 7",
+        "p1": "mafuta",
+        "p2": "ectoPower",
+        "reason": "отдельная нога серии с уже учтённой сводкой"
+      }
+    ],
+    "reviews": [
+      {
+        "id": 96179,
+        "source_ref": null,
+        "season": "Season 2",
+        "p1": "BOР95",
+        "p2": "Centurion",
+        "played_on": "2015-07-23",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      },
+      {
+        "id": 96504,
+        "source_ref": null,
+        "season": "Season 3",
+        "p1": "Memori",
+        "p2": "Ric25",
+        "played_on": "2025-09-15",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      },
+      {
+        "id": 97096,
+        "source_ref": null,
+        "season": "Season 5",
+        "p1": "ectoPower",
+        "p2": "Ric25",
+        "played_on": "2024-06-10",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      },
+      {
+        "id": 97141,
+        "source_ref": null,
+        "season": "Season 5",
+        "p1": "Буц",
+        "p2": "Ric25",
+        "played_on": "2017-04-05",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      },
+      {
+        "id": 97412,
+        "source_ref": null,
+        "season": "Season 6",
+        "p1": "ectoPower",
+        "p2": "Centurion",
+        "played_on": "2016-03-30",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      },
+      {
+        "id": 97615,
+        "source_ref": null,
+        "season": "Season 6",
+        "p1": "Dynamik",
+        "p2": "E_not",
+        "played_on": "2016-03-12",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      },
+      {
+        "id": 97749,
+        "source_ref": null,
+        "season": "Season 7",
+        "p1": "Aeris",
+        "p2": "Jamlight",
+        "played_on": "2024-06-14",
+        "reason": "Дата записи противоречит периоду сезона. Проверить дату самой игры и дату публикации источника."
+      }
+    ],
+    "excluded_reasons": {
+      "технический или несыгранный результат": 18,
+      "не подтверждён победитель дополнительного времени / буллитов": 1,
+      "отдельная нога серии с уже учтённой сводкой": 66
+    }
+  },
+  "players": [
+    {
+      "player": "Transistor",
+      "league": "Высшая",
+      "active_elo": 2018.1,
+      "peak_elo": 2061.7,
+      "rated_games": 70,
+      "provisional": false,
+      "rating_rank": 1,
+      "matches": 98,
+      "is_active": false
+    },
+    {
+      "player": "RVD (МГБ)",
+      "league": "Высшая",
+      "active_elo": 1978.1,
+      "peak_elo": 2004.4,
+      "rated_games": 53,
+      "provisional": false,
+      "rating_rank": 2,
+      "matches": 114,
+      "is_active": false
+    },
+    {
+      "player": "ectoPower",
+      "league": "Высшая",
+      "active_elo": 1968.5,
+      "peak_elo": 2088.9,
+      "rated_games": 179,
+      "provisional": false,
+      "rating_rank": 3,
+      "matches": 236,
+      "is_active": true
+    },
+    {
+      "player": "mafuta",
+      "league": "Высшая",
+      "active_elo": 1967.9,
+      "peak_elo": 2184.9,
+      "rated_games": 138,
+      "provisional": false,
+      "rating_rank": 4,
+      "matches": 330,
+      "is_active": false
+    },
+    {
+      "player": "PacnyTHuK",
+      "league": "Высшая",
+      "active_elo": 1959.8,
+      "peak_elo": 1959.8,
+      "rated_games": 43,
+      "provisional": false,
+      "rating_rank": 5,
+      "matches": 102,
+      "is_active": true
+    },
+    {
+      "player": "Huba Buba",
+      "league": "Высшая",
+      "active_elo": 1878.0,
+      "peak_elo": 1953.2,
+      "rated_games": 67,
+      "provisional": false,
+      "rating_rank": 6,
+      "matches": 211,
+      "is_active": false
+    },
+    {
+      "player": "Romix",
+      "league": "Высшая",
+      "active_elo": 1805.0,
+      "peak_elo": 1832.9,
+      "rated_games": 107,
+      "provisional": false,
+      "rating_rank": 7,
+      "matches": 170,
+      "is_active": true
+    },
+    {
+      "player": "BOР95",
+      "league": "Высшая",
+      "active_elo": 1773.9,
+      "peak_elo": 1976.0,
+      "rated_games": 86,
+      "provisional": false,
+      "rating_rank": 8,
+      "matches": 164,
+      "is_active": false
+    },
+    {
+      "player": "Kunio",
+      "league": "Высшая",
+      "active_elo": 1747.9,
+      "peak_elo": 1996.8,
+      "rated_games": 152,
+      "provisional": false,
+      "rating_rank": 9,
+      "matches": 249,
+      "is_active": true
+    },
+    {
+      "player": "Буц",
+      "league": "Средняя",
+      "active_elo": 1729.9,
+      "peak_elo": 1884.6,
+      "rated_games": 87,
+      "provisional": false,
+      "rating_rank": 10,
+      "matches": 126,
+      "is_active": true
+    },
+    {
+      "player": "Cyneprepou4uk",
+      "league": "Высшая",
+      "active_elo": 1720.7,
+      "peak_elo": 1852.9,
+      "rated_games": 99,
+      "provisional": false,
+      "rating_rank": 11,
+      "matches": 196,
+      "is_active": true
+    },
+    {
+      "player": "izzzotope",
+      "league": "Высшая",
+      "active_elo": 1707.9,
+      "peak_elo": 1776.1,
+      "rated_games": 79,
+      "provisional": false,
+      "rating_rank": 12,
+      "matches": 105,
+      "is_active": false
+    },
+    {
+      "player": "Bubnov",
+      "league": "Высшая",
+      "active_elo": 1703.8,
+      "peak_elo": 1709.4,
+      "rated_games": 76,
+      "provisional": false,
+      "rating_rank": 13,
+      "matches": 119,
+      "is_active": false
+    },
+    {
+      "player": "artemis",
+      "league": "Высшая",
+      "active_elo": 1684.5,
+      "peak_elo": 1788.0,
+      "rated_games": 15,
+      "provisional": false,
+      "rating_rank": 14,
+      "matches": 15,
+      "is_active": false
+    },
+    {
+      "player": "Kipriot",
+      "league": "Высшая",
+      "active_elo": 1667.1,
+      "peak_elo": 1893.8,
+      "rated_games": 97,
+      "provisional": false,
+      "rating_rank": 15,
+      "matches": 112,
+      "is_active": false
+    },
+    {
+      "player": "Dr1N",
+      "league": "Высшая",
+      "active_elo": 1655.3,
+      "peak_elo": 1887.4,
+      "rated_games": 79,
+      "provisional": false,
+      "rating_rank": 16,
+      "matches": 83,
+      "is_active": false
+    },
+    {
+      "player": "tubustd",
+      "league": "Средняя",
+      "active_elo": 1607.1,
+      "peak_elo": 1622.4,
+      "rated_games": 62,
+      "provisional": false,
+      "rating_rank": 17,
+      "matches": 77,
+      "is_active": false
+    },
+    {
+      "player": "Ric25",
+      "league": "Высшая",
+      "active_elo": 1555.8,
+      "peak_elo": 1986.4,
+      "rated_games": 164,
+      "provisional": false,
+      "rating_rank": 18,
+      "matches": 254,
+      "is_active": true
+    },
+    {
+      "player": "ArmFly",
+      "league": "Высшая",
+      "active_elo": 1552.3,
+      "peak_elo": 1569.2,
+      "rated_games": 39,
+      "provisional": false,
+      "rating_rank": 19,
+      "matches": 48,
+      "is_active": false
+    },
+    {
+      "player": "Rock",
+      "league": "Высшая",
+      "active_elo": 1546.1,
+      "peak_elo": 1549.2,
+      "rated_games": 43,
+      "provisional": false,
+      "rating_rank": 20,
+      "matches": 53,
+      "is_active": true
+    },
+    {
+      "player": "Memori",
+      "league": "Высшая",
+      "active_elo": 1537.6,
+      "peak_elo": 2002.7,
+      "rated_games": 172,
+      "provisional": false,
+      "rating_rank": 21,
+      "matches": 267,
+      "is_active": true
+    },
+    {
+      "player": "FC Pushistik",
+      "league": "Высшая",
+      "active_elo": 1525.4,
+      "peak_elo": 1538.6,
+      "rated_games": 80,
+      "provisional": false,
+      "rating_rank": 22,
+      "matches": 113,
+      "is_active": false
+    },
+    {
+      "player": "High",
+      "league": "Средняя",
+      "active_elo": 1490.7,
+      "peak_elo": 1493.6,
+      "rated_games": 22,
+      "provisional": false,
+      "rating_rank": 23,
+      "matches": 22,
+      "is_active": false
+    },
+    {
+      "player": "Dopi",
+      "league": "Средняя",
+      "active_elo": 1486.7,
+      "peak_elo": 1635.6,
+      "rated_games": 73,
+      "provisional": false,
+      "rating_rank": 24,
+      "matches": 105,
+      "is_active": false
+    },
+    {
+      "player": "leonudomlya",
+      "league": "Высшая",
+      "active_elo": 1433.9,
+      "peak_elo": 1435.7,
+      "rated_games": 49,
+      "provisional": false,
+      "rating_rank": 25,
+      "matches": 58,
+      "is_active": true
+    },
+    {
+      "player": "Centurion",
+      "league": "Высшая",
+      "active_elo": 1424.4,
+      "peak_elo": 1860.1,
+      "rated_games": 148,
+      "provisional": false,
+      "rating_rank": 26,
+      "matches": 212,
+      "is_active": false
+    },
+    {
+      "player": "Aeris",
+      "league": "Высшая",
+      "active_elo": 1394.7,
+      "peak_elo": 1400.2,
+      "rated_games": 149,
+      "provisional": false,
+      "rating_rank": 27,
+      "matches": 216,
+      "is_active": true
+    },
+    {
+      "player": "Yuliy_Cezar",
+      "league": "Средняя",
+      "active_elo": 1365.0,
+      "peak_elo": 1430.3,
+      "rated_games": 54,
+      "provisional": false,
+      "rating_rank": 28,
+      "matches": 79,
+      "is_active": false
+    },
+    {
+      "player": "psycho",
+      "league": "Средняя",
+      "active_elo": 1315.0,
+      "peak_elo": 1440.2,
+      "rated_games": 67,
+      "provisional": false,
+      "rating_rank": 29,
+      "matches": 79,
+      "is_active": false
+    },
+    {
+      "player": "Greyson",
+      "league": "Средняя",
+      "active_elo": 1314.6,
+      "peak_elo": 1396.6,
+      "rated_games": 21,
+      "provisional": false,
+      "rating_rank": 30,
+      "matches": 21,
+      "is_active": false
+    },
+    {
+      "player": "Sokol",
+      "league": "Дворовая",
+      "active_elo": 1299.2,
+      "peak_elo": 1312.5,
+      "rated_games": 27,
+      "provisional": false,
+      "rating_rank": 31,
+      "matches": 50,
+      "is_active": true
+    },
+    {
+      "player": "Wenderfit",
+      "league": "Средняя",
+      "active_elo": 1290.9,
+      "peak_elo": 1797.1,
+      "rated_games": 132,
+      "provisional": false,
+      "rating_rank": 32,
+      "matches": 146,
+      "is_active": false
+    },
+    {
+      "player": "gagagatch",
+      "league": "Средняя",
+      "active_elo": 1284.6,
+      "peak_elo": 1380.2,
+      "rated_games": 17,
+      "provisional": false,
+      "rating_rank": 33,
+      "matches": 17,
+      "is_active": false
+    },
+    {
+      "player": "Kubik",
+      "league": "Средняя",
+      "active_elo": 1272.9,
+      "peak_elo": 1299.0,
+      "rated_games": 168,
+      "provisional": false,
+      "rating_rank": 34,
+      "matches": 242,
+      "is_active": true
+    },
+    {
+      "player": "Dune",
+      "league": "Средняя",
+      "active_elo": 1224.1,
+      "peak_elo": 1387.3,
+      "rated_games": 88,
+      "provisional": false,
+      "rating_rank": 35,
+      "matches": 110,
+      "is_active": true
+    },
+    {
+      "player": "Jamlight",
+      "league": "Средняя",
+      "active_elo": 1219.4,
+      "peak_elo": 1268.6,
+      "rated_games": 109,
+      "provisional": false,
+      "rating_rank": 36,
+      "matches": 147,
+      "is_active": true
+    },
+    {
+      "player": "E_not",
+      "league": "Средняя",
+      "active_elo": 1213.2,
+      "peak_elo": 1295.6,
+      "rated_games": 124,
+      "provisional": false,
+      "rating_rank": 37,
+      "matches": 157,
+      "is_active": true
+    },
+    {
+      "player": "Rustin Cohle",
+      "league": "Средняя",
+      "active_elo": 1209.7,
+      "peak_elo": 1414.2,
+      "rated_games": 128,
+      "provisional": false,
+      "rating_rank": 38,
+      "matches": 162,
+      "is_active": false
+    },
+    {
+      "player": "Romol",
+      "league": "Дворовая",
+      "active_elo": 1188.6,
+      "peak_elo": 1188.6,
+      "rated_games": 20,
+      "provisional": false,
+      "rating_rank": 39,
+      "matches": 20,
+      "is_active": false
+    },
+    {
+      "player": "Texas",
+      "league": "Средняя",
+      "active_elo": 1188.0,
+      "peak_elo": 1358.6,
+      "rated_games": 93,
+      "provisional": false,
+      "rating_rank": 40,
+      "matches": 127,
+      "is_active": false
+    },
+    {
+      "player": "Flash",
+      "league": "Средняя",
+      "active_elo": 1171.5,
+      "peak_elo": 1171.5,
+      "rated_games": 57,
+      "provisional": false,
+      "rating_rank": 41,
+      "matches": 130,
+      "is_active": false
+    },
+    {
+      "player": "3aBuCTb",
+      "league": "Дворовая",
+      "active_elo": 1144.1,
+      "peak_elo": 1144.6,
+      "rated_games": 22,
+      "provisional": false,
+      "rating_rank": 42,
+      "matches": 22,
+      "is_active": false
+    },
+    {
+      "player": "wanchous",
+      "league": "Дворовая",
+      "active_elo": 1126.6,
+      "peak_elo": 1420.3,
+      "rated_games": 93,
+      "provisional": false,
+      "rating_rank": 43,
+      "matches": 131,
+      "is_active": false
+    },
+    {
+      "player": "Santa Claus",
+      "league": "Дворовая",
+      "active_elo": 1114.3,
+      "peak_elo": 1114.3,
+      "rated_games": 18,
+      "provisional": false,
+      "rating_rank": 44,
+      "matches": 18,
+      "is_active": false
+    },
+    {
+      "player": "yoxter",
+      "league": "Средняя",
+      "active_elo": 1111.6,
+      "peak_elo": 1774.3,
+      "rated_games": 183,
+      "provisional": false,
+      "rating_rank": 45,
+      "matches": 188,
+      "is_active": false
+    },
+    {
+      "player": "RASH",
+      "league": "Средняя",
+      "active_elo": 1096.2,
+      "peak_elo": 1125.7,
+      "rated_games": 33,
+      "provisional": false,
+      "rating_rank": 46,
+      "matches": 41,
+      "is_active": true
+    },
+    {
+      "player": "Dynamik",
+      "league": "Средняя",
+      "active_elo": 1094.9,
+      "peak_elo": 1099.3,
+      "rated_games": 55,
+      "provisional": false,
+      "rating_rank": 47,
+      "matches": 76,
+      "is_active": false
+    },
+    {
+      "player": "Chocopie",
+      "league": "Дворовая",
+      "active_elo": 1082.3,
+      "peak_elo": 1082.5,
+      "rated_games": 74,
+      "provisional": false,
+      "rating_rank": 48,
+      "matches": 77,
+      "is_active": false
+    },
+    {
+      "player": "Ryumaru",
+      "league": "Дворовая",
+      "active_elo": 1053.2,
+      "peak_elo": 1072.5,
+      "rated_games": 15,
+      "provisional": false,
+      "rating_rank": 49,
+      "matches": 21,
+      "is_active": false
+    },
+    {
+      "player": "frzz",
+      "league": "Средняя",
+      "active_elo": 1050.1,
+      "peak_elo": 1065.0,
+      "rated_games": 28,
+      "provisional": false,
+      "rating_rank": 50,
+      "matches": 28,
+      "is_active": false
+    },
+    {
+      "player": "Кирпич57",
+      "league": "Средняя",
+      "active_elo": 1036.4,
+      "peak_elo": 1344.5,
+      "rated_games": 151,
+      "provisional": false,
+      "rating_rank": 51,
+      "matches": 190,
+      "is_active": true
+    },
+    {
+      "player": "ruby",
+      "league": "Дворовая",
+      "active_elo": 1022.3,
+      "peak_elo": 1052.8,
+      "rated_games": 44,
+      "provisional": false,
+      "rating_rank": 52,
+      "matches": 45,
+      "is_active": false
+    },
+    {
+      "player": "Aoshi",
+      "league": "Дворовая",
+      "active_elo": 1019.5,
+      "peak_elo": 1019.5,
+      "rated_games": 71,
+      "provisional": false,
+      "rating_rank": 53,
+      "matches": 98,
+      "is_active": false
+    },
+    {
+      "player": "lenin1st",
+      "league": "Дворовая",
+      "active_elo": 1002.8,
+      "peak_elo": 1012.0,
+      "rated_games": 17,
+      "provisional": false,
+      "rating_rank": 54,
+      "matches": 42,
+      "is_active": false
+    },
+    {
+      "player": "Anubis",
+      "league": "Дворовая",
+      "active_elo": 988.5,
+      "peak_elo": 1045.1,
+      "rated_games": 17,
+      "provisional": false,
+      "rating_rank": 55,
+      "matches": 17,
+      "is_active": false
+    },
+    {
+      "player": "Taeda",
+      "league": "Дворовая",
+      "active_elo": 987.8,
+      "peak_elo": 1065.2,
+      "rated_games": 45,
+      "provisional": false,
+      "rating_rank": 56,
+      "matches": 49,
+      "is_active": true
+    },
+    {
+      "player": "Legnahar",
+      "league": "Дворовая",
+      "active_elo": 960.3,
+      "peak_elo": 1006.7,
+      "rated_games": 37,
+      "provisional": false,
+      "rating_rank": 57,
+      "matches": 37,
+      "is_active": false
+    },
+    {
+      "player": "Mag.of.Shadow",
+      "league": "Дворовая",
+      "active_elo": 957.7,
+      "peak_elo": 1020.3,
+      "rated_games": 17,
+      "provisional": false,
+      "rating_rank": 58,
+      "matches": 17,
+      "is_active": false
+    },
+    {
+      "player": "Gilmour",
+      "league": "Дворовая",
+      "active_elo": 930.1,
+      "peak_elo": 930.1,
+      "rated_games": 74,
+      "provisional": false,
+      "rating_rank": 59,
+      "matches": 75,
+      "is_active": false
+    },
+    {
+      "player": "Stalin",
+      "league": "Дворовая",
+      "active_elo": 915.9,
+      "peak_elo": 990.5,
+      "rated_games": 35,
+      "provisional": false,
+      "rating_rank": 60,
+      "matches": 35,
+      "is_active": false
+    },
+    {
+      "player": "kot-from-ussr",
+      "league": "Дворовая",
+      "active_elo": 906.0,
+      "peak_elo": 993.3,
+      "rated_games": 34,
+      "provisional": false,
+      "rating_rank": 61,
+      "matches": 35,
+      "is_active": false
+    },
+    {
+      "player": "Vasya1995",
+      "league": "Дворовая",
+      "active_elo": 901.8,
+      "peak_elo": 1002.0,
+      "rated_games": 16,
+      "provisional": false,
+      "rating_rank": 62,
+      "matches": 16,
+      "is_active": false
+    },
+    {
+      "player": "Веселый Роджер",
+      "league": "Дворовая",
+      "active_elo": 888.5,
+      "peak_elo": 1000.0,
+      "rated_games": 56,
+      "provisional": false,
+      "rating_rank": 63,
+      "matches": 61,
+      "is_active": true
+    },
+    {
+      "player": "Palka Palych",
+      "league": "Дворовая",
+      "active_elo": 888.5,
+      "peak_elo": 986.8,
+      "rated_games": 25,
+      "provisional": false,
+      "rating_rank": 64,
+      "matches": 95,
+      "is_active": false
+    },
+    {
+      "player": "Дядюшка АУ",
+      "league": "Дворовая",
+      "active_elo": 862.3,
+      "peak_elo": 987.4,
+      "rated_games": 20,
+      "provisional": false,
+      "rating_rank": 65,
+      "matches": 20,
+      "is_active": false
+    },
+    {
+      "player": "daz",
+      "league": "Дворовая",
+      "active_elo": 857.9,
+      "peak_elo": 989.6,
+      "rated_games": 34,
+      "provisional": false,
+      "rating_rank": 66,
+      "matches": 34,
+      "is_active": true
+    },
+    {
+      "player": "Zupka Knorra",
+      "league": "Дворовая",
+      "active_elo": 839.2,
+      "peak_elo": 993.2,
+      "rated_games": 17,
+      "provisional": false,
+      "rating_rank": 67,
+      "matches": 17,
+      "is_active": false
+    },
+    {
+      "player": "AJ_Maker",
+      "league": "Дворовая",
+      "active_elo": 834.8,
+      "peak_elo": 945.7,
+      "rated_games": 57,
+      "provisional": false,
+      "rating_rank": 68,
+      "matches": 69,
+      "is_active": false
+    },
+    {
+      "player": "eXponat",
+      "league": "Не подтверждена",
+      "active_elo": 1625.6,
+      "peak_elo": 1625.6,
+      "rated_games": 9,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 66,
+      "is_active": false
+    },
+    {
+      "player": "WiSe",
+      "league": "Не подтверждена",
+      "active_elo": 1491.9,
+      "peak_elo": 1491.9,
+      "rated_games": 26,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 26,
+      "is_active": false
+    },
+    {
+      "player": "Joe Duffy",
+      "league": "Не подтверждена",
+      "active_elo": 1397.8,
+      "peak_elo": 1454.4,
+      "rated_games": 18,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 18,
+      "is_active": false
+    },
+    {
+      "player": "Chole",
+      "league": "Не подтверждена",
+      "active_elo": 1384.3,
+      "peak_elo": 1384.3,
+      "rated_games": 1,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 1,
+      "is_active": false
+    },
+    {
+      "player": "Misfits",
+      "league": "Не подтверждена",
+      "active_elo": 1368.4,
+      "peak_elo": 1407.5,
+      "rated_games": 34,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 34,
+      "is_active": false
+    },
+    {
+      "player": "Damian",
+      "league": "Не подтверждена",
+      "active_elo": 1357.0,
+      "peak_elo": 1407.3,
+      "rated_games": 17,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 22,
+      "is_active": false
+    },
+    {
+      "player": "Romario",
+      "league": "Не подтверждена",
+      "active_elo": 1353.2,
+      "peak_elo": 1400.9,
+      "rated_games": 53,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 56,
+      "is_active": false
+    },
+    {
+      "player": "Eg_or3",
+      "league": "Не подтверждена",
+      "active_elo": 1308.1,
+      "peak_elo": 1421.4,
+      "rated_games": 36,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 36,
+      "is_active": false
+    },
+    {
+      "player": "Azatron",
+      "league": "Не подтверждена",
+      "active_elo": 1304.5,
+      "peak_elo": 1389.7,
+      "rated_games": 13,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 33,
+      "is_active": false
+    },
+    {
+      "player": "Dan_Lavis",
+      "league": "Не подтверждена",
+      "active_elo": 1300.6,
+      "peak_elo": 1436.2,
+      "rated_games": 50,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 52,
+      "is_active": false
+    },
+    {
+      "player": "Hanter",
+      "league": "Дворовая",
+      "active_elo": 1120.7,
+      "peak_elo": 1123.2,
+      "rated_games": 14,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 16,
+      "is_active": true
+    },
+    {
+      "player": "Сахарок",
+      "league": "Дворовая",
+      "active_elo": 1022.3,
+      "peak_elo": 1029.2,
+      "rated_games": 10,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 10,
+      "is_active": false
+    },
+    {
+      "player": "Chabby_59",
+      "league": "Дворовая",
+      "active_elo": 997.6,
+      "peak_elo": 997.6,
+      "rated_games": 2,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 2,
+      "is_active": false
+    },
+    {
+      "player": "Mcfly",
+      "league": "Дворовая",
+      "active_elo": 980.3,
+      "peak_elo": 995.5,
+      "rated_games": 8,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 8,
+      "is_active": false
+    },
+    {
+      "player": "starspro",
+      "league": "Дворовая",
+      "active_elo": 964.0,
+      "peak_elo": 1000.4,
+      "rated_games": 12,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 44,
+      "is_active": false
+    },
+    {
+      "player": "TBP_Machiavelli",
+      "league": "Дворовая",
+      "active_elo": 963.3,
+      "peak_elo": 992.0,
+      "rated_games": 4,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 4,
+      "is_active": false
+    },
+    {
+      "player": "JohnnyBravo",
+      "league": "Дворовая",
+      "active_elo": 961.6,
+      "peak_elo": 984.2,
+      "rated_games": 4,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 4,
+      "is_active": false
+    },
+    {
+      "player": "BigPlay",
+      "league": "Дворовая",
+      "active_elo": 942.8,
+      "peak_elo": 1006.8,
+      "rated_games": 10,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 10,
+      "is_active": false
+    },
+    {
+      "player": "Spartacus",
+      "league": "Дворовая",
+      "active_elo": 942.6,
+      "peak_elo": 991.8,
+      "rated_games": 10,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 10,
+      "is_active": false
+    },
+    {
+      "player": "Krasnodar",
+      "league": "Дворовая",
+      "active_elo": 941.7,
+      "peak_elo": 1008.2,
+      "rated_games": 6,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 6,
+      "is_active": false
+    },
+    {
+      "player": "mikr84",
+      "league": "Дворовая",
+      "active_elo": 940.4,
+      "peak_elo": 986.7,
+      "rated_games": 10,
+      "provisional": true,
+      "rating_rank": null,
+      "matches": 10,
+      "is_active": false
+    },
+    {
+      "player": "TaRantull",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 103,
+      "is_active": false
+    },
+    {
+      "player": "Jora",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 83,
+      "is_active": false
+    },
+    {
+      "player": "Partsigah",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 78,
+      "is_active": false
+    },
+    {
+      "player": "Alpharushin",
+      "league": "Высшая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 75,
+      "is_active": false
+    },
+    {
+      "player": "Kinbeas",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 73,
+      "is_active": false
+    },
+    {
+      "player": "wenderfit",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 64,
+      "is_active": false
+    },
+    {
+      "player": "Davitel",
+      "league": "Высшая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 61,
+      "is_active": false
+    },
+    {
+      "player": "Jgunishka",
+      "league": "Высшая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 61,
+      "is_active": false
+    },
+    {
+      "player": "letopisec",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 59,
+      "is_active": false
+    },
+    {
+      "player": "esteban",
+      "league": "Высшая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 57,
+      "is_active": false
+    },
+    {
+      "player": "Alexasha",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 55,
+      "is_active": false
+    },
+    {
+      "player": "Focus",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 48,
+      "is_active": false
+    },
+    {
+      "player": "ROOS",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 42,
+      "is_active": false
+    },
+    {
+      "player": "Angel",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 37,
+      "is_active": false
+    },
+    {
+      "player": "Kotix",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 32,
+      "is_active": false
+    },
+    {
+      "player": "BullDozeRrrr",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 28,
+      "is_active": false
+    },
+    {
+      "player": "SaikoDelph",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 25,
+      "is_active": false
+    },
+    {
+      "player": "Noboru",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 24,
+      "is_active": false
+    },
+    {
+      "player": "SideofClouds",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 24,
+      "is_active": false
+    },
+    {
+      "player": "Bender",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 23,
+      "is_active": false
+    },
+    {
+      "player": "K-R",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 22,
+      "is_active": false
+    },
+    {
+      "player": "Daria_P",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 21,
+      "is_active": false
+    },
+    {
+      "player": "Islambolt Pornce",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 21,
+      "is_active": false
+    },
+    {
+      "player": "edexy",
+      "league": "Высшая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 21,
+      "is_active": false
+    },
+    {
+      "player": "Lipetsk",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 20,
+      "is_active": false
+    },
+    {
+      "player": "Metallist Balalaykin",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 20,
+      "is_active": false
+    },
+    {
+      "player": "MyNameIsFreeman",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 20,
+      "is_active": false
+    },
+    {
+      "player": "Narak",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 16,
+      "is_active": false
+    },
+    {
+      "player": "Thorogood",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 16,
+      "is_active": false
+    },
+    {
+      "player": "teo_heel",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 10,
+      "is_active": false
+    },
+    {
+      "player": "Edexy",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 8,
+      "is_active": false
+    },
+    {
+      "player": "edward54",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 8,
+      "is_active": false
+    },
+    {
+      "player": "ROC666",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 6,
+      "is_active": false
+    },
+    {
+      "player": "Christian",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 5,
+      "is_active": false
+    },
+    {
+      "player": "Kamaz",
+      "league": "Средняя",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 5,
+      "is_active": false
+    },
+    {
+      "player": "Snipe",
+      "league": "Средняя",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 5,
+      "is_active": false
+    },
+    {
+      "player": "Telpecarne",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 4,
+      "is_active": false
+    },
+    {
+      "player": "Wolya63",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 4,
+      "is_active": false
+    },
+    {
+      "player": "andrdjey",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 4,
+      "is_active": false
+    },
+    {
+      "player": "eXpress",
+      "league": "Дворовая",
+      "active_elo": null,
+      "peak_elo": null,
+      "rated_games": null,
+      "provisional": null,
+      "rating_rank": null,
+      "matches": 4,
+      "is_active": false
+    }
+  ]
+}

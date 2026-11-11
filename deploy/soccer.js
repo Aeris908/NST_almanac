@@ -105,7 +105,7 @@
       }
       if(tab==='leaderboard'||tab==='players'){
         const input=document.getElementById(tab==='leaderboard'?'tableSearch':'cardsSearch');input.value=params.get('q')||'';
-        const allowed=['all','active','inactive','hof','all_inactive','Высшая','Средняя','Дворовая'];const filter=allowed.includes(params.get('filter'))?params.get('filter'):(tab==='leaderboard'?'active':'all');
+        const allowed=['all','calibration','active','inactive','hof','all_inactive','Высшая','Средняя','Дворовая'];const filter=allowed.includes(params.get('filter'))?params.get('filter'):(tab==='leaderboard'?'active':'all');
         if(tab==='leaderboard')currentDivisionFilter=filter;else playerCardFilter=filter;
       }
       switchTab(tab, false);
@@ -232,6 +232,8 @@
         list = list.filter(p => p.is_active && p.league === 'Средняя');
       } else if (currentDivisionFilter === 'Дворовая') {
         list = list.filter(p => p.is_active && p.league === 'Дворовая');
+      } else if(currentDivisionFilter==='calibration') {
+        list=list.filter(p=>p.rated && p.provisional);
       }
 
       if (q) {
@@ -239,6 +241,7 @@
       }
 
       list.sort((a, b) => {
+        if(a.rating_eligible!==b.rating_eligible)return a.rating_eligible?-1:1;
         let v1 = a[currentSortColumn];
         let v2 = b[currentSortColumn];
         // Рейтинга может не быть (null): такие строки всегда в конце, и в прямом, и в
@@ -258,13 +261,14 @@
         const sBadge = p.status_badge || (p.is_active ? 'Активен' : 'Зал славы');
         const sColor = p.is_active ? ((p.status_badge && p.status_badge.includes('Сезон 9')) ? '#22c55e' : '#f59e0b') : '#94a3b8';
 
-        const rankDisplay = idx === 0 
+        const official=p.rating_rank;
+        const rankDisplay = !official?'—':official === 1
           ? `<span style="display: inline-block; width: 26px; height: 26px; line-height: 24px; text-align: center; border-radius: 50%; background: linear-gradient(135deg, #ffcb05, #d97706); color: #000; font-weight: 900; ">1</span>`
-          : (idx === 1
+          : (official === 2
             ? `<span style="display: inline-block; width: 26px; height: 26px; line-height: 24px; text-align: center; border-radius: 50%; background: linear-gradient(135deg, #f1f5f9, #94a3b8); color: #000; font-weight: 900; ">2</span>`
-            : (idx === 2
+            : (official === 3
               ? `<span style="display: inline-block; width: 26px; height: 26px; line-height: 24px; text-align: center; border-radius: 50%; background: linear-gradient(135deg, #fdba74, #c2410c); color: #000; font-weight: 900; ">3</span>`
-              : `<span style="font-family: var(--font-mono); font-weight: 700; color: #cbd5e1; font-size: 14px;">${idx + 1}</span>`
+              : `<span style="font-family: var(--font-mono); font-weight: 700; color: #cbd5e1; font-size: 14px;">${official}</span>`
             )
           );
 
@@ -291,11 +295,11 @@
               </div>
             </td>
             <td>
-              <div style="font-family: var(--font-mono); font-weight: 800; font-size: 16px; color: #fff;">${formatElo(p.active_elo)}</div>
+              <div style="font-family: var(--font-mono); font-weight: 800; font-size: 16px; color: #fff;">${formatElo(p.active_elo)}</div>${p.provisional&&p.rated?'<span class="rating-provisional">Калибровка · без места</span>':''}
               ${p.decay_penalty > 0 ? `<div style="font-size: 11px; color: var(--nes-red); font-weight: 700;">-${p.decay_penalty} за простой</div>` : ''}
             </td>
             <td><span style="font-family: var(--font-mono); font-weight: 800; color: var(--nes-gold); font-size: 15px;">${formatElo(p.peak_elo)}</span></td>
-            <td style="font-family: var(--font-mono); font-weight: 700; font-size: 14px;">${p.matches}</td>
+            <td style="font-family: var(--font-mono); font-weight: 700; font-size: 14px;">${p.rated_games||0}<small class="rating-scope">${p.matches} в карьере</small></td>
             <td>
               <span style="font-family: var(--font-mono); font-weight: 800; color: var(--nes-green); font-size: 14px;">${p.wins}</span>
               <span style="color: #94a3b8; margin: 0 4px;">/</span>
@@ -394,7 +398,7 @@
             <div class="card-stat-strip">
               <div>
                 <div class="lbl">РЕЙТИНГ</div>
-                <div class="v" style="color: var(--nes-gold);">${formatElo(p.active_elo)}</div>
+                <div class="v" style="color: var(--nes-gold);">${formatElo(p.active_elo)}</div>${p.provisional&&p.rated?'<span class="rating-provisional">Калибровка · без места</span>':''}
               </div>
               <div>
                 <div class="lbl">% ПОБЕД</div>
@@ -619,15 +623,15 @@
         <div class="metric-tiles">
           <div class="metric-tile">
             <div class="l">Текущий рейтинг</div>
-            <div class="num" style="color: var(--nes-gold);">${formatElo(p.active_elo)}</div>
+            <div class="num" style="color: var(--nes-gold);">${formatElo(p.active_elo)}</div>${p.provisional&&p.rated?'<span class="rating-provisional">Калибровка · без места</span>':''}
           </div>
           <div class="metric-tile">
             <div class="l">Рекорд рейтинга</div>
             <div class="num">${formatElo(p.peak_elo)}</div>
           </div>
           <div class="metric-tile">
-            <div class="l">Штраф за простой</div>
-            <div class="num" style="color: ${p.decay_penalty > 0 ? 'var(--nes-red)' : 'var(--nes-green)'};">${p.decay_penalty > 0 ? `-${p.decay_penalty} очков` : '—'}</div>
+            <div class="l">Результатов в Elo v2</div>
+            <div class="num">${p.rated_games||0}</div>
           </div>
           <div class="metric-tile">
             <div class="l">Всего матчей</div>
@@ -5935,13 +5939,14 @@
       if(kind==='table')filterDivision('all',button);else filterPlayerCards('all',button);input.focus();
     }
 function initPortal() {
+      const initialRoute=location.hash;
       new MutationObserver(decorateGames).observe(document.querySelector('main'),{childList:true,subtree:true});
       document.getElementById('copyViewLink')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);routeNotice('Ссылка скопирована.');}catch(_){routeNotice('Скопируйте адрес из строки браузера: '+location.href);}});
       try {
         const saved=JSON.parse(sessionStorage.getItem('nst-soccer-search')||'{}');
         document.getElementById('tableSearch').value=typeof saved.table==='string'?saved.table:'';
         document.getElementById('cardsSearch').value=typeof saved.cards==='string'?saved.cards:'';
-        if(['all','active','inactive','all_inactive','Высшая','Средняя','Дворовая'].includes(saved.division))currentDivisionFilter=saved.division;
+        if(['all','calibration','active','inactive','all_inactive','Высшая','Средняя','Дворовая'].includes(saved.division))currentDivisionFilter=saved.division;
         if(['all','active','hof','all_inactive','Высшая','Средняя','Дворовая'].includes(saved.cardFilter))playerCardFilter=saved.cardFilter;
         for(const [id,filter] of [['tab-leaderboard',currentDivisionFilter],['tab-players',playerCardFilter]])document.querySelectorAll('#'+id+' .filter-tabs .filter-btn').forEach(el=>el.classList.toggle('active',!!el.getAttribute('onclick')?.includes("('"+filter+"',")));
       }catch(_){}
@@ -5950,6 +5955,7 @@ function initPortal() {
       try { renderCards(); } catch(e) { console.error('renderCards:', e); }
       try { renderSeasonsBar(); } catch(e) { console.error('renderSeasonsBar:', e); }
       try { renderClutch(); } catch(e) { console.error('renderClutch:', e); }
+      if(initialRoute.startsWith("#/"))history.replaceState(null,"",initialRoute);
       try { handleRouting(); } catch(e) { console.error('handleRouting:', e); }
     }
 

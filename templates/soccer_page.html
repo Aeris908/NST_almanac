@@ -98,7 +98,8 @@
     <div class="view-tools"><a id="currentViewLink" href="#/leaderboard">Ссылка на текущий раздел и фильтры</a><button type="button" class="filter-btn" id="copyViewLink">Скопировать ссылку</button></div>
     <details class="stats-explainer"><summary>Как читать статистику и Elo</summary>
       <p>Процент побед — число побед, делённое на число учтённых встреч. Ничьи входят в число встреч. История игрока и рейтинговый пул могут различаться: наличие игры в архиве ещё не означает, что она влияет на Elo.</p>
-      <p>Elo считается последовательно по рейтинговым матчам 1×1 с учётом силы соперника. В расчёте обычная победа даёт результат 1, ничья — 0,5; победа по буллитам или в овертайме — 0,75, поражение — 0,25. Число голов, тип турнира и первые игры участника влияют на величину изменения. Технические результаты обрабатываются отдельно по статусу протокола.</p>
+      <p>Division Elo v2 использует исходные уровни: Высшая — 1800, Средняя — 1400, Дворовая — 1000. Это модель разрыва дивизионов. Учитывается дивизион на момент выступления, а переход в более высокую лигу сам по себе не добавляет очков. Победа повышает рейтинг, поражение снижает; буллиты и овертайм уменьшают вес изменения. Простой очки силы не отнимает.</p>
+      <p>Расчёт охватывает подтверждённые одиночные результаты сезонов 1–9. Технические игры исключены; сводка серии не считается второй раз вместе с её ногами. Калибровка длится минимум 15 рейтинговых встреч и требует подтверждённого исходного дивизиона. Предварительная оценка показывается без места. Колонка «В Elo» отделена от числа встреч всей карьеры.</p>
       <p>В истории серия может отображаться одной встречей с итоговым счётом. Её отдельные игры остаются в протоколах турнира; их не следует прибавлять к итогу серии повторно.</p>
     </details>
 
@@ -115,6 +116,7 @@
           <button class="filter-btn inactive-tab" id="btnInactiveFilter" onclick="filterDivision('inactive', this)">🏛️ Зал славы (11)</button>
           <button class="filter-btn inactive-tab" onclick="filterDivision('all_inactive', this)">📦 Все неактивные (78)</button>
           <button class="filter-btn" onclick="filterDivision('all', this)">Все игроки</button>
+          <button class="filter-btn" onclick="filterDivision('calibration', this)">Калибровка</button>
         </div>
         <input type="search" class="clean-search" id="tableSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в рейтинге" oninput="renderTable()">
         <button type="button" class="filter-btn" onclick="resetPlayerSearch('table')">Сбросить поиск и фильтр</button>
@@ -153,11 +155,11 @@
 
               <th onclick="sortTable('league')">Лига и статус</th>
 
-              <th onclick="sortTable('active_elo')">Текущий рейтинг ▾</th>
+              <th onclick="sortTable('active_elo')">Elo силы v2 ▾</th>
 
               <th onclick="sortTable('peak_elo')">Рекорд рейтинга</th>
 
-              <th onclick="sortTable('matches')">Матчи</th>
+              <th onclick="sortTable('rated_games')">В Elo / карьера</th>
 
               <th onclick="sortTable('wins')">Победы / Поражения</th>
 

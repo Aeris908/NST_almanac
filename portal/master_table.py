@@ -48,12 +48,15 @@ class Tally:
     # Сколько партий игрок провёл именно в рейтинговом пуле: по ним движок решает, новичок ли
     # он (у новичка K полуторный), и по ним же страница может показать, что рейтинг ещё шаткий.
     rated_games: dict = field(default_factory=dict)
+    calibration: dict = field(default_factory=dict)
     last_active_year: dict = field(default_factory=dict)
+    last_played_season: dict = field(default_factory=dict)
     matches_played: dict = field(default_factory=lambda: defaultdict(int))
     wins: dict = field(default_factory=lambda: defaultdict(int))
     losses: dict = field(default_factory=lambda: defaultdict(int))
     goals_for: dict = field(default_factory=lambda: defaultdict(int))
     goals_against: dict = field(default_factory=lambda: defaultdict(int))
+    scored_games: dict = field(default_factory=lambda: defaultdict(int))
     clean_sheets: dict = field(default_factory=lambda: defaultdict(int))
     failed_to_score: dict = field(default_factory=lambda: defaultdict(int))
     ot_matches: dict = field(default_factory=lambda: defaultdict(int))
@@ -117,37 +120,42 @@ def replay(matches):
 
         tally.last_active_year[p1] = season_year
         tally.last_active_year[p2] = season_year
+        tally.last_played_season[p1]=season;tally.last_played_season[p2]=season
         tally.matches_played[p1] += 1
         tally.matches_played[p2] += 1
-        tally.goals_for[p1] += s1
-        tally.goals_against[p1] += s2
-        tally.goals_for[p2] += s2
-        tally.goals_against[p2] += s1
+        actual_goals=not match.get('is_series')
+        g1,g2=(s1,s2) if actual_goals else (0,0)
+        tally.goals_for[p1] += g1
+        tally.goals_against[p1] += g2
+        tally.goals_for[p2] += g2
+        tally.goals_against[p2] += g1
+        if actual_goals:
+            tally.scored_games[p1]+=1;tally.scored_games[p2]+=1
 
-        if s2 == 0:
+        if actual_goals and s2 == 0:
             tally.clean_sheets[p1] += 1
-        if s1 == 0:
+        if actual_goals and s1 == 0:
             tally.clean_sheets[p2] += 1
-        if s1 == 0:
+        if actual_goals and s1 == 0:
             tally.failed_to_score[p1] += 1
-        if s2 == 0:
+        if actual_goals and s2 == 0:
             tally.failed_to_score[p2] += 1
 
-        tally.thrillers.append({"p1": p1, "p2": p2, "s1": s1, "s2": s2,
+        if actual_goals:tally.thrillers.append({"p1": p1, "p2": p2, "s1": s1, "s2": s2,
                                 "total_goals": s1 + s2, "tournament": match["tournament"],
                                 "stage": match.get("stage", "Регулярный сезон"), "season": season})
 
-        if s1 != s2:
+        if actual_goals and s1 != s2:
             top, bottom = (p1, p2) if s1 > s2 else (p2, p1)
             tally.blowouts.append({"winner": top, "loser": bottom,
                                    "score_winner": max(s1, s2), "score_loser": min(s1, s2),
                                    "diff": abs(s1 - s2), "tournament": match["tournament"],
                                    "stage": match.get("stage", "Регулярный сезон"), "season": season})
 
-        tally.head_to_head[p1][p2]["gf"] += s1
-        tally.head_to_head[p1][p2]["ga"] += s2
-        tally.head_to_head[p2][p1]["gf"] += s2
-        tally.head_to_head[p2][p1]["ga"] += s1
+        tally.head_to_head[p1][p2]["gf"] += g1
+        tally.head_to_head[p1][p2]["ga"] += g2
+        tally.head_to_head[p2][p1]["gf"] += g2
+        tally.head_to_head[p2][p1]["ga"] += g1
 
         if ot or pk:
             tally.ot_matches[p1] += 1
@@ -156,12 +164,15 @@ def replay(matches):
             tally.playoff_matches[p1] += 1
             tally.playoff_matches[p2] += 1
 
-        tally.elo[p1], tally.elo[p2] = elo.play(match, tally.elo, tally.rated_games)
-        tally.peak_elo[p1] = max(tally.peak_elo.get(p1, elo.R0), tally.elo[p1])
-        tally.peak_elo[p2] = max(tally.peak_elo.get(p2, elo.R0), tally.elo[p2])
+        previous_calibration={name:tally.calibration.get(name,{}).get('calibrated',False) for name in (p1,p2)}
+        tally.elo[p1], tally.elo[p2] = elo.play(match, tally.elo, tally.rated_games,tally.calibration)
+        for name in (p1,p2):
+            first=tally.calibration[name]['calibrated'] and not previous_calibration[name]
+            tally.peak_elo[name]=tally.elo[name] if first else max(tally.peak_elo.get(name,tally.elo[name]),tally.elo[name])
 
-        if s1 != s2:
-            top, bottom = (p1, p2) if s1 > s2 else (p2, p1)
+        decided=match.get('outcome_a') in ('win','loss') and match.get('outcome_b') in ('win','loss')
+        if s1 != s2 or decided:
+            top, bottom = ((p1,p2) if match['outcome_a']=='win' else (p2,p1)) if decided else ((p1,p2) if s1>s2 else (p2,p1))
             tally.wins[top] += 1
             tally.losses[bottom] += 1
             tally.head_to_head[top][bottom]["w"] += 1
@@ -179,7 +190,7 @@ def replay(matches):
 
 
 def decay(tally):
-    """Активный рейтинг = рейтинг минус штраф за простой, но не ниже пола."""
+    """Совместимый интерфейс: в v2 простой не меняет оценку силы."""
     active_elo, penalties = {}, {}
     for name, rating in tally.elo.items():
         penalty = elo.decay_penalty(max(0.0, CURRENT_YEAR - tally.last_active_year[name]))
@@ -199,9 +210,10 @@ def build_profiles(tally, active_elo, penalties):
     profiles = []
     for name in tally.matches_played:
         gp = tally.matches_played[name]
-        tier = LEAGUE_TIERS.get(name, DEFAULT_TIER)
+        scored=tally.scored_games[name]
+        tier = tally.calibration.get(name,{}).get('tier') or 'Не подтверждена'
         titles = TITLES.get(name, DEFAULT_TITLE)
-        years_inactive = round(CURRENT_YEAR - tally.last_active_year[name], 1)
+        years_inactive = max(0.0,round(CURRENT_YEAR - tally.last_active_year[name], 1))
         tier_mult = TIER_MULTIPLIER.get(tier, DEFAULT_TIER_MULTIPLIER)
         activity_mult = max(ACTIVITY_FLOOR, 1.0 - (years_inactive * ACTIVITY_PER_YEAR))
         goal_diff = tally.goals_for[name] - tally.goals_against[name]
@@ -227,10 +239,12 @@ def build_profiles(tally, active_elo, penalties):
             "active_elo": active_elo[name],
             "peak_elo": tally.peak_elo[name],
             "rated_games": tally.rated_games.get(name, 0),
-            "provisional": tally.rated_games.get(name, 0) < elo.LEARNING_WINDOW,
+            "provisional": tally.rated_games.get(name, 0) < elo.LEARNING_WINDOW or not tally.calibration.get(name,{}).get('calibrated'),
+            "rating_model":elo.MODEL_VERSION,
+            "rating_calibrated":bool(tally.calibration.get(name,{}).get('calibrated')),
             "decay_penalty": penalties[name],
             "years_inactive": years_inactive,
-            "last_season": last_season_of(tally.last_active_year[name]),
+            "last_season": tally.last_played_season.get(name,last_season_of(tally.last_active_year[name])),
             "matches": gp,
             "wins": tally.wins[name],
             "losses": tally.losses[name],
@@ -238,9 +252,9 @@ def build_profiles(tally, active_elo, penalties):
             "goals_for": tally.goals_for[name],
             "goals_against": tally.goals_against[name],
             "goal_diff": goal_diff,
-            "gpg": round(tally.goals_for[name] / gp, 2) if gp > 0 else 0,
-            "gapg": round(tally.goals_against[name] / gp, 2) if gp > 0 else 0,
-            "spectacle_factor": round((tally.goals_for[name] + tally.goals_against[name]) / gp, 2) if gp > 0 else 0,
+            "gpg": round(tally.goals_for[name] / scored, 2) if scored > 0 else 0,
+            "gapg": round(tally.goals_against[name] / scored, 2) if scored > 0 else 0,
+            "spectacle_factor": round((tally.goals_for[name] + tally.goals_against[name]) / scored, 2) if scored > 0 else 0,
             "ot_matches": ot_gp,
             "ot_wins": tally.ot_wins[name],
             "ot_losses": tally.ot_losses[name],
@@ -251,9 +265,9 @@ def build_profiles(tally, active_elo, penalties):
             "playoff_win_rate": round(tally.playoff_wins[name] / tally.playoff_matches[name] * 100, 1)
             if tally.playoff_matches[name] > 0 else 0.0,
             "clean_sheets": tally.clean_sheets[name],
-            "clean_sheet_pct": round(tally.clean_sheets[name] / gp * 100, 1) if gp > 0 else 0.0,
+            "clean_sheet_pct": round(tally.clean_sheets[name] / scored * 100, 1) if scored > 0 else 0.0,
             "failed_to_score": tally.failed_to_score[name],
-            "failed_to_score_pct": round(tally.failed_to_score[name] / gp * 100, 1) if gp > 0 else 0.0,
+            "failed_to_score_pct": round(tally.failed_to_score[name] / scored * 100, 1) if scored > 0 else 0.0,
             "premier_titles": titles["premier"],
             "cup_titles": titles["cup"],
             "minor_titles": titles["minor"],
@@ -303,7 +317,8 @@ def pool_fingerprint(matches):
     любого матча меняет его, и по файлу видно, из каких данных он собран."""
     canonical = json.dumps(
         [[m["season"], m["tournament"], m.get("stage", ""), m["p1"], m["p2"], m["s1"], m["s2"],
-          bool(m.get("ot")), bool(m.get("pk")), bool(m.get("is_playoff")), bool(technical_winner(m))]
+          bool(m.get("ot")), bool(m.get("pk")), bool(m.get("is_playoff")), bool(technical_winner(m)),
+          m.get('league'),m.get('played_on'),m.get('outcome_a'),m.get('outcome_b'),bool(m.get('is_series')),elo.MODEL_VERSION]
          for m in matches],
         ensure_ascii=False, sort_keys=True,
     )
@@ -315,7 +330,8 @@ def build_payload(matches):
     active_elo, penalties = decay(tally)
     profiles = build_profiles(tally, active_elo, penalties)
     clutch, defensive, offensive, spectacle = build_indexes(profiles)
-    total_goals = sum(m["s1"] + m["s2"] for m in matches)
+    scored_matches=[m for m in matches if not m.get('is_series')]
+    total_goals = sum(m["s1"] + m["s2"] for m in scored_matches)
 
     return {
         "title": DOCUMENT_TITLE,
@@ -328,7 +344,8 @@ def build_payload(matches):
             "total_players_tracked": len(profiles),
             "total_goals_recorded": total_goals,
             "total_ot_pk_matches": sum(1 for m in matches if m.get("ot") or m.get("pk")),
-            "avg_goals_per_match": round(total_goals / len(matches), 2),
+            "avg_goals_per_match": round(total_goals / len(scored_matches), 2) if scored_matches else 0,
+            "rating_model":elo.MODEL_VERSION,
         },
         "power_rankings": profiles,
         "divisions": {

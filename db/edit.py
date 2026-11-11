@@ -666,6 +666,11 @@ def set_rating(con, match_id, rated, editor):
         if bool(row["in_rating_pool"]) != bool(rated):
             changes.append(("matches", current, "in_rating_pool", row["in_rating_pool"],
                             1 if rated else 0))
+        elif not rated and not con.execute("select 1 from corrections where table_name='matches' "
+                "and row_id=? and field='in_rating_pool' and new_value='0' and reverted_at is null limit 1",(current,)).fetchone():
+            # v2 автоматически включает сезонные встречи. Явное исключение — отдельное намерение,
+            # даже когда старый импортный флаг уже равен 0; undo снимает именно это намерение.
+            changes.append(('matches',current,'in_rating_pool',0,0))
     return _write(con, editor, "set-rating", match_id, changes, linked)
 
 
@@ -699,6 +704,9 @@ def set_rating_scope(con, rated, editor, season=None, doc_key=None):
         state = con.execute("select in_rating_pool from matches where id = ?", (current,)).fetchone()[0]
         if bool(state) != bool(rated):
             changes.append(("matches", current, "in_rating_pool", state, 1 if rated else 0))
+        elif not rated and not con.execute("select 1 from corrections where table_name='matches' "
+                "and row_id=? and field='in_rating_pool' and new_value='0' and reverted_at is null limit 1",(current,)).fetchone():
+            changes.append(('matches',current,'in_rating_pool',0,0))
     result = _write(con, editor, "set-rating", rows[0] if rows else 0, changes,
                     [change[1] for change in changes])
     result["skipped"] = skipped

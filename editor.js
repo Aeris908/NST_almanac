@@ -435,7 +435,7 @@
     (row.sides || []).forEach((side) => box.appendChild(line(
       `[${side.side_index}] ${side.players || side.label}`,
       `${side.score ?? "—"} · ${OUTCOME_WORDS[side.outcome] || side.outcome}`)));
-    if (row.in_rating_pool) {
+    if (row.rating_included ?? row.in_rating_pool) {
       box.appendChild(el("p", "nst-edit-warn",
         "матч входит в рейтинговый пул: счёт и игроки двигают Elo и мастер-таблицу — "
         + "предпросмотр покажет, насколько"));
@@ -510,7 +510,7 @@
     const rated = document.createElement("input");
     rated.type = "checkbox";
     rated.id = `nst-rated-${row.id}`;
-    rated.checked = !!row.in_rating_pool;
+    rated.checked = !!(row.rating_included ?? row.in_rating_pool);
     ratingForm.appendChild(rated);
     ratingForm.appendChild(el("label", null, "рейтинговая партия — считается в Elo"));
     for (const [label, persist] of [["предпросмотр рейтинга", false], ["записать флаг", true]]) {

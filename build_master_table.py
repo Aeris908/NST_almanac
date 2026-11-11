@@ -2,10 +2,10 @@
 
 import sys
 
-from db.pool import pool_from_db
+from db.rating_history import rating_history_from_db
 from portal import master_table
 
 sys.stdout.reconfigure(encoding="utf-8")
 
 if __name__ == "__main__":
-    master_table.main(pool_from_db())
+    master_table.main(rating_history_from_db())

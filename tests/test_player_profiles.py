@@ -191,12 +191,12 @@ def test_soccer_js_formatelo_handles_null(tmp_path):
 
 def test_page_profiles_equal_engine_on_real_db(db_path):
     """Каждый пуловый профиль страницы равен движку по пяти полям; вне пула рейтинга нет."""
-    from db.pool import pool_from_db
+    from db.rating_history import rating_history_from_db
     from portal import master_table
     from portal.build_soccer import compose_payload
 
     engine = {p["player"]: p for p in
-              master_table.build_payload(pool_from_db(db_path))["power_rankings"]}
+              master_table.build_payload(rating_history_from_db(db_path))["power_rankings"]}
     profiles = compose_payload(db_path)["profiles"]
     assert engine, "в копии базы нет рейтингового пула"
     seen_pool = 0

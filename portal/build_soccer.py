@@ -68,7 +68,11 @@ def compose_payload(db_path=DB_PATH):
         tournament['archive_pending'] = pending.get(tournament['id'], 0)
     seasons = build_seasons(data, combined_matches, profiles)
     analytics = build_analytics(profiles, seasons["seasons_list"])
-    return build_payload(data, seasons["combined_matches"], profiles, seasons, analytics)
+    payload=build_payload(data, seasons["combined_matches"], profiles, seasons, analytics)
+    from portal import elo
+    payload['rating_policy']={'model':elo.MODEL_VERSION,'rated_matches':len(data.base_matches),
+        'bases':elo.DIVISION_BASE,'provisional_games':elo.LEARNING_WINDOW,'inactivity_deduction':False}
+    return payload
 
 
 def main():

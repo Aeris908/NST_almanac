@@ -21,6 +21,7 @@ BUILDERS = (
     ("Syncing the rating pool into the match database", "db/build_db.py"),
     ("Importing season, special and team matches into the database", "db/import_stores.py"),
     ("Loading live VK results (data/vk_live_matches.json) into the database", "db/import_live.py"),
+    ("Refreshing lore review of rating dates", "db/elo_review_queue.py"),
     ("Validating the match database", "db/validate.py"),
     ("Rebuilding the master table (nekketsu_master_table.json)", "build_master_table.py"),
     ("Building soccer portal (soccer.html)", "build_nekketsu_portal_v2.py"),

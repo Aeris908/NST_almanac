@@ -6,7 +6,8 @@ from pathlib import Path
 
 import prepare_site_data
 from db.docs import special_from_db, team_from_db
-from db.pool import DB_PATH, pool_from_db
+from db.pool import DB_PATH
+from db.rating_history import rating_history_from_db
 
 QUOTES_PATH = "nst_quotes.json"
 VK_SOURCES_PATH = "vk_match_sources_lookup.json"
@@ -53,7 +54,7 @@ def load(db_path=DB_PATH):
         early_matches=load_json("early_seasons_matches.json"),
         vk_matches=load_json("all_vk_seasons_matches.json"),
         wiki_matches=load_json("wiki_seasons_matches.json"),
-        base_matches=pool_from_db(db_path),
+        base_matches=rating_history_from_db(db_path),
         vk_sources_lookup=load_optional_json(VK_SOURCES_PATH, {}),
         team_tournaments=team_from_db(db_path),
         special_tournaments=special_from_db(db_path),

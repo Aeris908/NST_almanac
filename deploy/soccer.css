@@ -3779,3 +3779,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .view-tools a,.game-link {color:var(--nes-cyan);font-size:13px;}
 .game-link {padding:8px;white-space:normal;}
 .linked-game {outline:3px solid var(--nes-gold);outline-offset:3px;scroll-margin:100px;}
+.rating-provisional {display:block;color:#fbbf24;font:11px var(--font-body);margin-top:5px;}
+.rating-scope {display:block;font:11px var(--font-body);color:#94a3b8;white-space:nowrap;margin-top:5px;}

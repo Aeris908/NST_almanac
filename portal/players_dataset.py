@@ -356,6 +356,8 @@ def build_players_dataset(db_path=DB_PATH):
             "all_quotes": all_quotes,
             "soccer_elo": sp.get("active_elo"),
             "soccer_peak_elo": sp.get("peak_elo"),
+            "soccer_provisional": sp.get("provisional",False),
+            "soccer_rated_games": sp.get("rated_games",0),
             "soccer_league": sp.get("league"),
             "career": {
                 "matches": total_m,

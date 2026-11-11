@@ -368,6 +368,8 @@ def _group_pairs(rows, con_path):
         groups.setdefault(key, []).append(row)
     con.close()
 
+    from db.rating_history import rating_history_from_db
+    included={r["id"] for r in rating_history_from_db(con_path)}
     ordered = []
     for key, members in groups.items():
         # Победителем связки обязан стать тот показ игры, который видит витрина: иначе поиск со
@@ -375,6 +377,7 @@ def _group_pairs(rows, con_path):
         winner = min(members, key=lambda row: (bool(row["hidden_by"]),
                                                VISIBLE_FIRST.get(row["row_set"], 9), row["id"]))
         winner["linked"] = [other for other in key if other != winner["id"]]
+        winner["rating_included"] = any(mid in included for mid in key)
         if winner["linked"]:
             winner["display"] += f" · связка #{', #'.join(str(other) for other in winner['linked'])}"
         ordered.append(winner)
@@ -462,7 +465,7 @@ def match_row(con, match_id):
     """Строка матча так, как её показывает страница: стороны, счёт, статус, документ."""
     row = con.execute(
         """select m.id, m.row_set, m.status, m.manual, m.note, m.hidden_by, m.source, m.source_ref,
-                  t.season, t.name tournament, s.name stage, m.league, m.tour, m.phase,m.is_playoff,d.doc_key, d.title doc_title
+                  t.season, t.name tournament, s.name stage, m.league, m.tour, m.phase,m.is_playoff,m.played_on,d.doc_key, d.title doc_title
            from matches m
            join tournaments t on t.id = m.tournament_id
            join stages s on s.id = m.stage_id
