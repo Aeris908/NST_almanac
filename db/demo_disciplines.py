@@ -82,7 +82,7 @@ def ensure_demo_disciplines(con):
         d_id = game["discipline_id"]
         # Турнир
         con.execute(
-            "insert or ignore into tournaments(discipline_id, season, kind, name) values (?, ?, ?, ?)",
+            "insert into tournaments(discipline_id, season, kind, name) values (?, ?, ?, ?) on conflict do nothing",
             (d_id, game["season"], game["kind"], game["tournament"]),
         )
         t_id = con.execute(
@@ -92,7 +92,7 @@ def ensure_demo_disciplines(con):
 
         # Стадия
         con.execute(
-            "insert or ignore into stages(tournament_id, name, order_index) values (?, ?, 1)",
+            "insert into stages(tournament_id, name, order_index) values (?, ?, 1) on conflict do nothing",
             (t_id, game["stage"]),
         )
         s_id = con.execute(

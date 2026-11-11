@@ -152,7 +152,7 @@ def ensure_tournament(con, name, season, cache, kind=None):
     if kind is None:
         kind = "cup" if bfa.CUP_TOURNAMENT in name else "league"
     con.execute(
-        "insert or ignore into tournaments(discipline_id, season, kind, name) values (1, ?, ?, ?)",
+        "insert into tournaments(discipline_id, season, kind, name) values (1, ?, ?, ?) on conflict do nothing",
         (season, kind, name),
     )
     tournament_id = con.execute(
@@ -165,7 +165,7 @@ def ensure_tournament(con, name, season, cache, kind=None):
 def ensure_stage(con, tournament_id, name, cache):
     if (tournament_id, name) in cache:
         return cache[(tournament_id, name)]
-    con.execute("insert or ignore into stages(tournament_id, name, order_index) values (?, ?, ?)",
+    con.execute("insert into stages(tournament_id, name, order_index) values (?, ?, ?) on conflict do nothing",
                 (tournament_id, name, stage_order(name)))
     stage_id = con.execute("select id from stages where tournament_id = ? and name = ?",
                            (tournament_id, name)).fetchone()[0]
@@ -294,7 +294,7 @@ def main():
 
     sys.stdout.reconfigure(encoding="utf-8")
     con = open_db(DB_PATH, rebuild=args.rebuild)
-    con.execute("insert or ignore into disciplines(id, slug, name) values (1, 'soccer', 'Футбол Goal 3')")
+    con.execute("insert into disciplines(id, slug, name) values (1, 'soccer', 'Футбол Goal 3') on conflict do nothing")
 
     pool = bfa.all_matches
     added, skipped, refreshed = import_pool(con, pool)
