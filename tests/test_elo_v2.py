@@ -115,3 +115,11 @@ def test_editor_shows_automatic_rating_and_can_correct_lore_date(con,db_path):
     assert con.execute('select played_on from matches where id=?',(mid,)).fetchone()[0]=='2016-05-01'
     edit.undo(con,'op:'+result['op'])
     assert con.execute('select played_on from matches where id=?',(mid,)).fetchone()[0]==previous
+
+
+def test_sportcup_projection_cannot_count_twice_when_mirror_marker_is_missing(con,db_path):
+    before=rating_history_from_db(db_path)
+    con.execute("update matches set duplicate_of=null where row_set='catalog' and source='sportcup_api'")
+    con.commit()
+    after=rating_history_from_db(db_path)
+    assert [r['id'] for r in after]==[r['id'] for r in before]

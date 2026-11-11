@@ -38,7 +38,11 @@ def rating_history(db_path=store.DB_PATH):
         reason=None
         seasonal=bool(re.fullmatch(r'(?:Season|Сезон)\s+[1-9]',str(row['season'])))
         if not seasonal and not row['in_rating_pool']:continue
-        if row['id'] in opt_out:reason='явное исключение редактором'
+        if row['row_set']=='catalog' and row['source']=='sportcup_api' and row['season'] in ('Season 8','Season 9'):
+            # from_sportcup_api — документированная проекция того же пула. Не зависит от
+            # состояния close_sportcup_pairs и количества исключённых технических строк.
+            reason='витринная проекция уже учтённого пула Sportcup'
+        elif row['id'] in opt_out:reason='явное исключение редактором'
         elif row['status']!='played' or row['is_technical']:reason='технический или несыгранный результат'
         elif row['s1'] is None or row['s2'] is None:reason='счёт не подтверждён'
         elif row['source']!='cup_tables' and meeting(row) in summaries and (
