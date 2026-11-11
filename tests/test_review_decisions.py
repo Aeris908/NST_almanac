@@ -88,3 +88,18 @@ def test_two_new_games_with_same_score_are_separate_legs(con):
                                 "games": [game(), game()]}, "tester")
     assert len(result["created"]) == 2
     assert len(set(result["created"])) == 2
+
+
+def test_mistyped_nickname_cannot_create_player(con):
+    task = unresolved(con)
+    before = con.execute("select count(*) from players").fetchone()[0]
+    with pytest.raises(edit.EditError, match="из подсказок"):
+        review.apply(con, {"task_id": task, "decision": "save", "note": "Проверка",
+                           "games": [{**game(), "sides": ["Kuniooo & Memori", "ectoPower & Davitel"]}]}, "tester")
+    assert con.execute("select count(*) from players").fetchone()[0] == before
+
+
+def test_nick_suggestions_find_alias_and_ignore_case(db_path):
+    aliases = api.players("CENTZ", db_path=db_path)
+    assert any(row["nick"] == "Centurion" for row in aliases)
+    assert any(row["nick"] == "Kunio" for row in api.players("kUn", db_path=db_path))

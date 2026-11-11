@@ -51,6 +51,16 @@ def apply(con, args, editor):
             if len(sides) != 2 or any(len(edit.canonical_roster(s)) != 2 for s in sides):
                 raise edit.EditError('Укажите двух игроков для каждой стороны 2×2')
             rosters = [edit.canonical_roster(s) for s in sides]
+            for roster in rosters:
+                for index, nick in enumerate(roster):
+                    found = con.execute("select nick from players where kind='player' "
+                                        "and fold(nick)=fold(?)", (nick,)).fetchone()
+                    if not found:
+                        raise edit.EditError(f'Игрок «{nick}» не найден. Выберите ник из подсказок')
+                    roster[index] = found[0]
+            if len(set(rosters[0] + rosters[1])) != 4:
+                raise edit.EditError('В игре 2×2 должны участвовать четыре разных игрока')
+            sides = [' & '.join(roster) for roster in rosters]
             if set(rosters[0]) & set(rosters[1]):
                 raise edit.EditError('Игрок не может играть против самого себя')
             scores = [row.get('s1'), row.get('s2')]
@@ -69,7 +79,7 @@ def apply(con, args, editor):
                 outcomes = ['win','loss'] if pk[0]>pk[1] else ['loss','win']
             if scores[0] == scores[1] and phase == 'overtime':
                 raise edit.EditError('Победа в овертайме требует неравного счёта')
-            spec = {**row, 'note':shown,'source_text':payload.get('как_выглядит',''),
+            spec = {**row, 'sides':sides, 'note':shown,'source_text':payload.get('как_выглядит',''),
                     'links':[['vk_post',url] for url in payload.get('ссылки',[]) if str(url).startswith(('http://','https://'))]}
             mid = row.get('match_id')
             if mid:

@@ -267,7 +267,7 @@ def test_router_replacement_does_not_change_the_answer():
     with_param = f"/api/handler?{urlencode({'nst_handle': '/api/log', 'limit': '3'})}"
     assert function("GET", with_param) == served("GET", "/api/log?limit=3")
     bare = f"/api/handler?{urlencode({'nst_handle': 'players', 'q': 'сокол'})}"
-    assert function("GET", bare) == served("GET", f"/api/players?q={urlencode({'q': 'сокол'})}")
+    assert function("GET", bare) == served("GET", f"/api/players?{urlencode({'q': 'сокол'})}")
     header = {"x-now-route-matches": urlencode({"handle": "containers"})}
     assert function("GET", "/api/handler", extra=header) == served("GET", "/api/containers")
     body = {"operation": "set-score", "args": {"match_id": 1}}

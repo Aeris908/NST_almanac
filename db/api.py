@@ -791,9 +791,11 @@ PLAYERS_SQL = """
 select p.id, p.nick, p.slug, p.kind,
        (select count(*) from side_players sp where sp.player_id = p.id) as sides
 from players p
-where p.nick like ? escape '\\'
+where p.kind = 'player' and (fold(p.nick) like ?1 escape '\\'
+   or exists (select 1 from player_aliases a where a.player_id=p.id
+              and fold(a.alias) like ?1 escape '\\'))
 order by sides desc, p.nick
-limit ?
+limit ?2
 """
 
 

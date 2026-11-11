@@ -387,22 +387,76 @@
 
   // ── Обработчики карточек и сохранение ─────────────────────────────────
 
+  let nickFieldId = 0;
+  function nickField(key, label, value = '') {
+    const id = 'nick-options-' + (++nickFieldId);
+    return `<label class="nick-label">${label}<span class="nick-combobox"><input class="review-${key} review-player" aria-label="${escapeHTML(label)}" value="${escapeHTML(value)}" placeholder="Начните вводить ник…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${id}"><span class="nick-options" id="${id}" role="listbox" hidden></span></span></label>`;
+  }
+  function attachNickSuggestions(form) {
+    const controls = new WeakMap();
+    function control(input) {
+      if(controls.has(input)) return controls.get(input);
+      const box=input.parentElement.querySelector('.nick-options');
+      const state={items:[],active:-1,request:0,timer:null};
+      function close() {box.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');state.active=-1;state.request++;}
+      function choose(index) {
+        const player=state.items[index];if(!player)return;
+        input.value=player.nick;close();input.dispatchEvent(new Event('change',{bubbles:true}));input.focus();
+      }
+      function highlight() {
+        [...box.querySelectorAll('[role=option]')].forEach((el,i)=>el.setAttribute('aria-selected',String(i===state.active)));
+        const active=box.querySelector('[aria-selected=true]');
+        if(active){input.setAttribute('aria-activedescendant',active.id);active.scrollIntoView({block:'nearest'});}
+      }
+      async function search() {
+        const request=++state.request;const query=input.value.trim();
+        if(!form.isConnected || document.activeElement!==input) return;
+        box.hidden=false;input.setAttribute('aria-expanded','true');box.textContent='Ищем игроков…';
+        try {
+          const answer=await apiCall('/api/players?q='+encodeURIComponent(query));
+          if(request!==state.request || document.activeElement!==input)return;
+          state.items=(answer.players||[]).slice(0,8);state.active=-1;
+          box.replaceChildren();
+          if(!state.items.length){box.textContent='Игрок не найден. Проверьте ник.';return;}
+          state.items.forEach((player,i)=>{
+            const option=document.createElement('span');option.id=box.id+'-'+i;option.setAttribute('role','option');option.setAttribute('aria-selected','false');option.textContent=player.nick;
+            option.addEventListener('pointerdown',event=>{event.preventDefault();choose(i);});box.appendChild(option);
+          });
+        }catch(_){if(request===state.request)box.textContent='Подсказки недоступны. Проверьте вход редактора.';}
+      }
+      input.addEventListener('keydown',event=>{
+        if(event.key==='Escape'){close();return;}
+        if((event.key==='ArrowDown'||event.key==='ArrowUp')&&!box.hidden&&state.items.length){
+          event.preventDefault();state.active=(state.active+(event.key==='ArrowDown'?1:-1)+state.items.length)%state.items.length;highlight();
+        }else if(event.key==='Enter'&&!box.hidden){event.preventDefault();if(state.active>=0)choose(state.active);}
+      });
+      input.addEventListener('blur',close);
+      const value={search,close,state};controls.set(input,value);return value;
+    }
+    form.addEventListener('focusin',event=>{if(event.target.matches('.review-player'))control(event.target).search();});
+    form.addEventListener('input',event=>{
+      if(!event.target.matches('.review-player'))return;
+      const c=control(event.target);clearTimeout(c.state.timer);c.close();c.state.items=[];c.state.active=-1;
+      c.state.timer=setTimeout(c.search,180);
+    });
+  }
+
   function reviewGameRow(row = {}, sides = []) {
-    const names = (row.sides || []).map(s => s.players || '');
-    const a = String(names[0] || sides[0] || '').split(' & ');
-    const b = String(names[1] || sides[1] || '').split(' & ');
-    const pk = String(row.note || '').match(/\((?:ПК|PK)?\s*(\d+)\s*[:-]\s*(\d+)/i);
-    return `<fieldset class="review-game" data-match-id="${row.id || ''}">
-      <legend>${row.id ? 'Игра #' + Number(row.id) : 'Новая игра'}</legend>
-      <div class="form-grid">${[['a1','Игрок A1',a[0]],['a2','Игрок A2',a[1]],['b1','Игрок B1',b[0]],['b2','Игрок B2',b[1]]].map(([key,label,value]) =>
-        `<label>${label}<input class="review-${key} review-player" list="review-player-list" value="${escapeHTML(value || '')}" placeholder="Ник игрока"></label>`).join('')}
-      <label>Голы A<input type="number" class="review-s1" min="0" max="99" value="${row.score_a ?? ''}"></label>
-      <label>Голы B<input type="number" class="review-s2" min="0" max="99" value="${row.score_b ?? ''}"></label>
-      <label>Фаза<select class="review-phase">${[['regular','Основное время'],['overtime','Овертайм'],['penalties','Буллиты']].map(([v,t])=>`<option value="${v}"${row.phase === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
-      <label>Плей-офф<input type="checkbox" class="review-playoff" ${row.is_playoff ? 'checked' : ''}></label>
-      <label>Буллиты A (при равных голах)<input type="number" class="review-pk1" min="0" max="99" value="${pk ? pk[1] : ''}"></label>
-      <label>Буллиты B (при равных голах)<input type="number" class="review-pk2" min="0" max="99" value="${pk ? pk[2] : ''}"></label></div>
-      <button type="button" class="btn-preview" data-remove-game>Убрать из этого решения</button>
+    const names=(row.sides||[]).map(s=>s.players||'');
+    const a=String(names[0]||sides[0]||'').split(' & '),b=String(names[1]||sides[1]||'').split(' & ');
+    const pk=String(row.note||'').match(/\((?:ПК|PK)?\s*(\d+)\s*[:-]\s*(\d+)/i);
+    return `<fieldset class="review-game" data-match-id="${row.id || ''}" data-use-common="${row.id?'0':'1'}" data-reversed="0">
+      <legend>${row.id?'Игра #'+Number(row.id):'Новая игра'}</legend>
+      <div class="game-pairs" aria-live="polite"></div>
+      <div class="review-scoreline">
+        <label>Голы A<input type="number" class="review-s1" min="0" max="99" value="${row.score_a??''}"></label><span class="score-colon">:</span>
+        <label>Голы B<input type="number" class="review-s2" min="0" max="99" value="${row.score_b??''}"></label>
+        <label>Результат<select class="review-phase">${[['regular','Основное время'],['overtime','Овертайм'],['penalties','Буллиты']].map(([v,t])=>`<option value="${v}"${row.phase===v?' selected':''}>${t}</option>`).join('')}</select></label>
+        <label class="game-playoff"><input type="checkbox" class="review-playoff" ${row.is_playoff?'checked':''}>Плей-офф</label>
+      </div>
+      <div class="review-pk" ${row.phase==='penalties'?'':'hidden'}><label>Буллиты A<input type="number" class="review-pk1" min="0" max="99" value="${pk?pk[1]:''}"></label><label>Буллиты B<input type="number" class="review-pk2" min="0" max="99" value="${pk?pk[2]:''}"></label></div>
+      <div class="game-tools"><button type="button" class="btn-preview" data-swap-game>⇄ Поменять пары и счёт</button><button type="button" class="btn-preview" data-own-roster>Изменить игроков этой игры</button><button type="button" class="btn-preview" data-remove-game>Убрать строку</button></div>
+      <div class="row-player-fields form-grid" hidden>${nickField('a1','Игрок A1',a[0]||'')}${nickField('a2','Игрок A2',a[1]||'')}${nickField('b1','Игрок B1',b[0]||'')}${nickField('b2','Игрок B2',b[1]||'')}</div>
     </fieldset>`;
   }
 
@@ -411,21 +465,38 @@
     const rows = task.review_matches || (task.row ? [task.row] : []);
     const first = rows[0] || {};
     host.innerHTML = `<form class="archive-review-form" data-task-id="${Number(task.id)}">
-      <h3>Решение лороведа</h3><p>Каждая строка — отдельная игра. Новые игры нумеруются по порядку. Имена можно выбрать из подсказок или ввести вручную.</p>
+      <h3>Решение лороведа</h3><p>Сначала укажите пары, затем внесите счета игр. Ник выбирается из подсказок — сам он не заменяется.</p>
       <div class="form-grid">
       <label>Турнир<select class="review-doc" ${rows.length ? 'disabled' : ''}><option value="">Выберите турнир</option>${(task.review_documents || []).map(d=>`<option value="${escapeHTML(d.doc_key)}" ${d.doc_key === (first.doc_key || task.review_doc_key) ? 'selected' : ''}>${escapeHTML(d.title)}</option>`).join('')}</select></label>
       <label>Лига / группа<input class="review-league" value="${escapeHTML(first.league || '')}"></label>
       <label>Тур<input class="review-tour" value="${escapeHTML(first.tour || task.tour || '')}"></label>
       <label>Стадия<input class="review-stage" value="${escapeHTML(first.stage || '')}" placeholder="Групповой этап / 1/2 финала"></label>
-      <label>Вердикт<select class="review-decision"><option value="save">Сохранить игры и закрыть задачу</option><option value="confirm">Подтвердить текущие данные без изменений</option><option value="reject">Отклонить отчёт: дубль, цитата или ошибка</option></select></label>
-      <label>Обоснование вердикта<textarea class="review-note" required placeholder="Что проверено по источнику и какое решение принято"></textarea></label></div>
+</div>
+      <section class="common-roster"><h4>Составы отчёта</h4><div class="form-grid">${nickField('common-a1','Пара A · первый игрок',String(first.players_a||first.sides?.[0]?.players||task.sides?.[0]||'').split(' & ')[0]||'')}${nickField('common-a2','Пара A · второй игрок',String(first.players_a||first.sides?.[0]?.players||task.sides?.[0]||'').split(' & ')[1]||'')}${nickField('common-b1','Пара B · первый игрок',String(first.players_b||first.sides?.[1]?.players||task.sides?.[1]||'').split(' & ')[0]||'')}${nickField('common-b2','Пара B · второй игрок',String(first.players_b||first.sides?.[1]?.players||task.sides?.[1]||'').split(' & ')[1]||'')}</div><button type="button" class="btn-preview" data-apply-roster>Применить состав ко всем играм</button></section>
       <div class="review-games">${(rows.length ? rows : [{}]).map(row=>reviewGameRow(row,task.sides)).join('')}</div>
       <button type="button" class="btn-preview" data-add-game>Добавить игру</button>
+      <div class="form-grid review-verdict">      <label>Вердикт<select class="review-decision"><option value="save">Сохранить игры и закрыть задачу</option><option value="confirm">Подтвердить текущие данные без изменений</option><option value="reject">Отклонить отчёт: дубль, цитата или ошибка</option></select></label>
+      <label>Обоснование вердикта<textarea class="review-note" required placeholder="Что проверено по источнику и какое решение принято"></textarea></label></div>
       <div class="form-actions"><button type="button" class="btn-preview" data-review-preview>Предпросмотр решения</button><button type="submit" class="btn-save" disabled>Сохранить решение</button></div>
       <pre class="review-result" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
       <p>Запись в базу и публикация сайта — разные этапы. После сохранения игры ждут следующей публикации.</p>
     </form>`;
     const form = host.querySelector('form');
+    attachNickSuggestions(form);
+    const commonNames=()=>['a1','a2','b1','b2'].map(k=>form.querySelector('.review-common-'+k).value.trim());
+    const rowNames=row=>{
+      let names=row.dataset.useCommon==='1'?commonNames():['a1','a2','b1','b2'].map(k=>row.querySelector('.review-'+k).value.trim());
+      return row.dataset.reversed==='1'?[names[2],names[3],names[0],names[1]]:names;
+    };
+    function updateGames() {
+      form.querySelectorAll('.review-game').forEach((row,index)=>{
+        const n=rowNames(row);row.querySelector('.game-pairs').textContent=(index+1)+'. '+(n[0]||'Игрок A1')+' & '+(n[1]||'Игрок A2')+' — '+(n[2]||'Игрок B1')+' & '+(n[3]||'Игрок B2');
+        row.querySelector('.review-pk').hidden=row.querySelector('.review-phase').value!=='penalties';
+      });
+      const editing=form.querySelector('.review-decision').value==='save';
+      form.querySelector('.common-roster').hidden=!editing;form.querySelector('.review-games').hidden=!editing;form.querySelector('[data-add-game]').hidden=!editing;
+    }
+    updateGames();
     const output = form.querySelector('.review-result');
     const save = form.querySelector('[type=submit]');
     let previewed = null;
@@ -438,27 +509,27 @@
         const integer = sel => get(sel) === '' ? null : Number(get(sel));
         return {match_id:row.dataset.matchId ? Number(row.dataset.matchId) : undefined,
           doc_key:value('.review-doc'), league:value('.review-league'),tour:value('.review-tour'),stage:value('.review-stage'),
-          sides:[get('.review-a1')+' & '+get('.review-a2'),get('.review-b1')+' & '+get('.review-b2')],
+          sides:[rowNames(row).slice(0,2).join(' & '),rowNames(row).slice(2).join(' & ')],
           s1:integer('.review-s1'),s2:integer('.review-s2'),pk1:integer('.review-pk1'),pk2:integer('.review-pk2'),
           phase:get('.review-phase'),playoff:row.querySelector('.review-playoff').checked};
       });
       return {task_id:task.id, decision, note:value('.review-note'), games};
     };
-    form.addEventListener('input',()=>{previewed=null;save.disabled=true;});
-    form.addEventListener('change',()=>{previewed=null;save.disabled=true;});
+    form.addEventListener('input',()=>{previewed=null;save.disabled=true;updateGames();});
+    form.addEventListener('change',()=>{previewed=null;save.disabled=true;updateGames();});
     form.addEventListener('click',event=>{
-      if(event.target.matches('[data-add-game]')) {form.querySelector('.review-games').insertAdjacentHTML('beforeend',reviewGameRow({},task.sides));previewed=null;save.disabled=true;}
-      if(event.target.matches('[data-remove-game]')) {event.target.closest('fieldset').remove();previewed=null;save.disabled=true;}
-    });
-    let lookup = 0;
-    form.addEventListener('input',async event=>{
-      if(!event.target.matches('.review-player') || !state.isAuthorized) return;
-      const request = ++lookup;
-      try { const result=await apiCall('/api/players?q='+encodeURIComponent(event.target.value));
-        if(request!==lookup) return;
-        const list=document.getElementById('review-player-list');
-        list.replaceChildren(...result.players.map(p=>{const el=document.createElement('option');el.value=p.nick;return el;}));
-      } catch (_) { /* Свободный ввод остаётся доступен при недоступных подсказках. */ }
+      const button=event.target.closest('button');if(!button)return;
+      if(button.matches('[data-add-game]')) form.querySelector('.review-games').insertAdjacentHTML('beforeend',reviewGameRow());
+      else if(button.matches('[data-remove-game]')) button.closest('fieldset').remove();
+      else if(button.matches('[data-apply-roster]')) form.querySelectorAll('.review-game').forEach(row=>{row.dataset.useCommon='1';row.dataset.reversed='0';row.querySelector('.row-player-fields').hidden=true;});
+      else if(button.matches('[data-swap-game]')) {
+        const row=button.closest('fieldset');row.dataset.reversed=row.dataset.reversed==='1'?'0':'1';
+        for(const [a,b] of [['s1','s2'],['pk1','pk2']]){const left=row.querySelector('.review-'+a),right=row.querySelector('.review-'+b);[left.value,right.value]=[right.value,left.value];}
+      }else if(button.matches('[data-own-roster]')) {
+        const row=button.closest('fieldset'),names=rowNames(row);['a1','a2','b1','b2'].forEach((k,i)=>row.querySelector('.review-'+k).value=names[i]);
+        row.dataset.useCommon='0';row.dataset.reversed='0';row.querySelector('.row-player-fields').hidden=!row.querySelector('.row-player-fields').hidden;
+      }else return;
+      previewed=null;save.disabled=true;updateGames();
     });
     form.querySelector('[data-review-preview]').onclick=async event=>{
       if(!state.isAuthorized) {output.textContent='Введите токен редактора вверху страницы.';return;}
@@ -661,7 +732,6 @@
       };
     }
 
-    const rosterList=document.createElement('datalist');rosterList.id='review-player-list';document.body.appendChild(rosterList);
     renderTabs();
     renderList();
     checkAuth().then(ok=>{if(ok) fetchLiveQueue();});
