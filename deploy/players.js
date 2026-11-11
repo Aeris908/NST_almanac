@@ -14,6 +14,9 @@
   };
 
   const state = { disc: 'all', query: '', sort: 'matches' };
+  try {Object.assign(state,JSON.parse(sessionStorage.getItem('nst-catalog-view')||'{}'));}catch(_){}
+  if(typeof state.query!=='string')state.query='';
+  if(!(data.disciplines||[]).some(d=>d.slug===state.disc))state.disc='all';
   let lastFocused = null;
   let firstPaint = true;
 
@@ -68,14 +71,14 @@
   function renderDisciplineFilters() {
     const box = document.getElementById('disciplineFilters');
     const chips = [
-      `<button class="disc-chip on" aria-pressed="true" data-disc="all"><span class="ic">🎮</span>Все<span class="n">${players.length}</span></button>`,
+      `<button class="disc-chip ${state.disc==='all'?'on':''}" aria-pressed="${state.disc==='all'}" data-disc="all"><span class="ic">🎮</span>Все<span class="n">${players.length}</span></button>`,
     ];
     (data.disciplines || []).forEach((d) => {
       const count = disciplineCount(d.slug);
       const soon = count === 0;
       const title = soon ? ' title="Нет реальных матчей — дисциплина появится, когда придут данные"' : '';
       chips.push(
-        `<button class="disc-chip${soon ? ' soon' : ''}" aria-pressed="false" data-disc="${esc(d.slug)}"${soon ? ' disabled' : ''}${title}>` +
+        `<button class="disc-chip${soon ? ' soon' : ''}${state.disc===d.slug?' on':''}" aria-pressed="${state.disc===d.slug}" data-disc="${esc(d.slug)}"${soon ? ' disabled' : ''}${title}>` +
         `<span class="ic">${esc(d.icon)}</span>${esc(d.name)}<span class="n">${count}</span></button>`
       );
     });
@@ -107,7 +110,7 @@
     }
     if (state.query) {
       const q = state.query.trim().toLowerCase();
-      list = list.filter((p) => p.nick.toLowerCase().includes(q) || (p.vk_name || '').toLowerCase().includes(q));
+      list = list.filter((p) => [p.nick,p.vk_name,...(p.aliases||[])].some(name=>String(name||'').toLowerCase().includes(q)));
     }
     list.sort(SORTERS[state.sort] || SORTERS.wr);
     return list;
@@ -164,13 +167,15 @@
   }
 
   function renderGrid() {
+    try{sessionStorage.setItem('nst-catalog-view',JSON.stringify(state));}catch(_){}
     const list = visiblePlayers();
     const animate = firstPaint;
     firstPaint = false;
     const grid = document.getElementById('playersGrid');
     grid.innerHTML = list.length
       ? list.map((p, i) => cardHTML(p, i, animate)).join('')
-      : '<div class="empty">Никого не найдено. Сбрось поиск или выбери другую дисциплину.</div>';
+      : '<div class="empty">Игроки не найдены. Проверьте ник или алиас и выбранную дисциплину. <button type="button" id="emptyReset">Сбросить поиск и фильтр</button></div>';
+    document.getElementById('emptyReset')?.addEventListener('click',resetSearch);
     document.getElementById('catalogCount').innerHTML = `показано <b>${list.length}</b> из ${players.length}`;
 
     grid.querySelectorAll('.pcard').forEach((el) => {
@@ -274,6 +279,11 @@
   }
 
   /* ---------- Инициализация ---------- */
+
+  function resetSearch() {state.query='';state.disc='all';document.getElementById('playerSearch').value='';renderDisciplineFilters();renderGrid();document.getElementById('playerSearch').focus();}
+  document.getElementById('playerSearch').value=state.query;
+  document.getElementById('playerSort').value=SORTERS[state.sort]?state.sort:'matches';
+  document.getElementById('playerSearchReset')?.addEventListener('click',resetSearch);
 
   document.getElementById('playerSearch').addEventListener('input', (e) => {
     state.query = e.target.value;

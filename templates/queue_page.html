@@ -56,6 +56,12 @@
     </div>
 
     <!-- Область уведомлений и предпросмотра дельты -->
+    <div class="work-filters">
+      <label>Турнир<select id="queueTournament"><option value="">Все турниры</option></select></label>
+      <label>Состояние задачи<select id="queueWorkFilter"><option value="all">Все нерешённые</option><option value="no-games">Без игр</option><option value="uncertain">Требует уточнения</option><option value="draft">Есть черновик</option></select></label>
+      <button type="button" class="btn-preview" id="queueReset">Сбросить фильтры</button>
+    </div>
+    <p class="publication-status" id="publicationStatus" role="status">Публикация: состояние проверяется после входа редактора.</p>
     <div id="noticeBox" class="notice-box" hidden></div>
 
     <main>
@@ -66,7 +72,7 @@
     <section class="journal-section" id="journalSection">
       <div class="journal-header">
         <h2>Журнал недавних решений лороведа</h2>
-        <button type="button" class="btn-undo" id="undoLastBtn" disabled>↩️ Откатить последнее решение</button>
+        <span>Откройте решение в журнале, чтобы проверить изменения и отменить его.</span>
       </div>
       <div class="journal-entries" id="journalEntries">
         <p class="journal-empty">История загружается…</p>
@@ -87,6 +93,7 @@
   </div>
 
   <script>
+    window.__PUBLISHED_REVISION__ = @@PUBLISHED_REVISION_JSON@@;
     window.__INITIAL_QUEUE__ = @@QUEUE_DATA_JSON@@;
   </script>
   <script src="audio-player.js"></script>

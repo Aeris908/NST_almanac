@@ -108,8 +108,10 @@
           <button class="filter-btn" onclick="filterDivision('Дворовая', this)">⚽ Дворовая лига (5)</button>
           <button class="filter-btn inactive-tab" id="btnInactiveFilter" onclick="filterDivision('inactive', this)">🏛️ Зал славы (11)</button>
           <button class="filter-btn inactive-tab" onclick="filterDivision('all_inactive', this)">📦 Все неактивные (78)</button>
+          <button class="filter-btn" onclick="filterDivision('all', this)">Все игроки</button>
         </div>
-        <input type="text" class="clean-search" id="tableSearch" placeholder="Поиск по нику или имени..." oninput="renderTable()">
+        <input type="search" class="clean-search" id="tableSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в рейтинге" oninput="renderTable()">
+        <button type="button" class="filter-btn" onclick="resetPlayerSearch('table')">Сбросить поиск и фильтр</button>
       </div>
 
       <div id="hofCriteriaBanner" style="display: none; background: rgba(255, 183, 3, 0.08); border: 2px solid var(--nes-gold); padding: 14px 18px; margin-bottom: 16px; box-shadow: 3px 3px 0 #000;">
@@ -205,7 +207,8 @@
 
         </div>
 
-        <input type="text" class="clean-search" id="cardsSearch" placeholder="Поиск по имени игрока..." oninput="renderCards()">
+        <input type="search" class="clean-search" id="cardsSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в карточках игроков" oninput="renderCards()">
+        <button type="button" class="filter-btn" onclick="resetPlayerSearch('cards')">Сбросить поиск и фильтр</button>
 
       </div>
 

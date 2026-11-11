@@ -9,6 +9,8 @@
     tasks: Array.isArray(window.__INITIAL_QUEUE__) ? window.__INITIAL_QUEUE__ : [],
     filter: "all",
     search: "",
+    tournament:new URLSearchParams(location.search).get('tournament')||'',
+    workFilter:'all',
     revision: null,
     isAuthorized: false,
     busy: false,
@@ -17,6 +19,98 @@
 
   const escapeHTML = value => String(value == null ? '' : value).replace(/[&<>"']/g,
     ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+
+  const DRAFT_KEY = 'nst-review-drafts-v1';
+  let drafts = {};
+  try { drafts = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}') || {}; } catch (_) {}
+  const draftId = form => form.dataset.taskId || form.closest('article')?.id.replace('task-', '');
+  const draftFields = form => [...form.querySelectorAll('input,select,textarea')];
+  function writeDraft(form) {
+    if (form.dataset.saved === '1') return;
+    const id = draftId(form); if (!id) return;
+    drafts[id] = {version:1, sourceRef:form.dataset.sourceRef, updated:Date.now(), fields:draftFields(form).map(el=>({value:el.value,checked:el.checked})),
+      rows:[...form.querySelectorAll('.review-game')].map(row=>({id:row.dataset.matchId,
+        common:row.dataset.useCommon,reversed:row.dataset.reversed,own:!row.querySelector('.row-player-fields').hidden}))};
+    form.dataset.dirty='1';
+    const status=form.querySelector('.draft-status');
+    try {
+      localStorage.setItem(DRAFT_KEY,JSON.stringify(drafts));
+      if(status) status.textContent='Черновик сохранён в этом браузере · '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+    } catch (_) {if(status) status.textContent='Не удалось сохранить черновик в браузере. Не закрывайте страницу.';}
+  }
+  function clearDraft(form) {
+    delete drafts[draftId(form)];form.dataset.dirty='0';form.dataset.saved='1';
+    try {localStorage.setItem(DRAFT_KEY,JSON.stringify(drafts));} catch (_) {}
+  }
+  function restoreDraft(form) {
+    const draft=drafts[draftId(form)];if(!draft || draft.version!==1 || draft.sourceRef!==form.dataset.sourceRef || !Array.isArray(draft.fields))return false;
+    if(form.matches('.archive-review-form') && Array.isArray(draft.rows)) {
+      form.querySelector('.review-games').innerHTML=draft.rows.map(row=>reviewGameRow({id:row.id})).join('');
+      form.querySelectorAll('.review-game').forEach((row,i)=>{
+        row.dataset.useCommon=draft.rows[i].common;row.dataset.reversed=draft.rows[i].reversed;
+        row.querySelector('.row-player-fields').hidden=!draft.rows[i].own;
+      });
+    }
+    draftFields(form).forEach((el,i)=>{if(draft.fields[i]){el.value=draft.fields[i].value;el.checked=!!draft.fields[i].checked;}});
+    form.dataset.dirty='1';return true;
+  }
+  function attachDraft(form) {
+    form.dataset.sourceRef=state.tasks.find(task=>String(task.id)===String(draftId(form)))?.source_ref||'';
+    const status=document.createElement('p');status.className='draft-status';status.setAttribute('role','status');
+    status.textContent=restoreDraft(form)?'Черновик восстановлен. Сверьте его с актуальным источником и выполните предпросмотр.':'Черновик сохраняется в этом браузере при изменении полей.';
+    form.prepend(status);
+    const discard=document.createElement('button');discard.type='button';discard.className='btn-preview';discard.textContent='Сбросить черновик';
+    status.after(discard);
+    discard.onclick=()=>{
+      if(!confirm('Сбросить введённые правки этой задачи и загрузить данные заново?'))return;
+      clearDraft(form);const task=state.tasks.find(t=>String(t.id)===String(draftId(form)));
+      if(form.matches('.archive-review-form')&&task){const host=form.parentElement;host.replaceChildren();openReviewEditor(task,host);}else renderList();
+    };
+    form.addEventListener('input',()=>writeDraft(form));form.addEventListener('change',()=>writeDraft(form));
+  }
+  let errorSequence=0;
+  function fieldError(input,message) {
+    if(!input)return;
+    let hint=input.parentElement.querySelector('.field-error');
+    if(!hint){hint=document.createElement('span');hint.className='field-error';hint.id='field-error-'+(++errorSequence);input.after(hint);input.setAttribute('aria-describedby',hint.id);}
+    hint.textContent=message;hint.hidden=!message;input.setAttribute('aria-invalid',String(!!message));input.setCustomValidity(message);
+  }
+  function revealError(input) {
+    const own=input?.closest('.row-player-fields');if(own)own.hidden=false;
+    input?.scrollIntoView({block:'center'});input?.focus();
+  }
+  function validateReview(form, rowNames, all=false) {
+    form.querySelectorAll('input,select,textarea').forEach(input=>fieldError(input,''));
+    const required=(input,message)=>{if(all&&!input.value.trim())fieldError(input,message);};
+    required(form.querySelector('.review-note'),'Укажите, что проверено и какое решение принято.');
+    if(form.querySelector('.review-decision').value==='save') {
+      required(form.querySelector('.review-doc'),'Выберите турнир.');
+      form.querySelectorAll('.review-game').forEach(row=>{
+        const names=rowNames(row),seen=new Set();
+        names.forEach((name,i)=>{
+          const keys=['a1','a2','b1','b2'];
+          const original=row.dataset.reversed==='1'?(i+2)%4:i;
+          const input=row.dataset.useCommon==='1'?form.querySelector('.review-common-'+keys[original]):row.querySelector('.review-'+keys[original]);
+          if(!name){if(all)fieldError(input,'Выберите игрока из подсказок.');}
+          else if(seen.has(name.toLowerCase()))fieldError(input,'Этот игрок уже указан в этой игре.');
+          seen.add(name.toLowerCase());
+        });
+        ['s1','s2'].forEach(key=>{const input=row.querySelector('.review-'+key);required(input,'Укажите число голов.');if(input.value && (!Number.isInteger(Number(input.value))||Number(input.value)<0||Number(input.value)>99))fieldError(input,'Укажите целое число от 0 до 99.');});
+        const phase=row.querySelector('.review-phase').value;
+        if(phase==='penalties' && row.querySelector('.review-s1').value===row.querySelector('.review-s2').value){
+          ['pk1','pk2'].forEach(key=>required(row.querySelector('.review-'+key),'Укажите результат буллитов.'));
+          const a=row.querySelector('.review-pk1'),b=row.querySelector('.review-pk2');
+          for(const input of [a,b])if(input.value!==''&&(!Number.isInteger(Number(input.value))||Number(input.value)<0||Number(input.value)>99))fieldError(input,'Укажите целое число от 0 до 99.');
+          if(a.value!==''&&b.value!==''&&Number(a.value)===Number(b.value))fieldError(b,'Счёт буллитов должен определить победителя.');
+        }
+        if(phase==='overtime' && row.querySelector('.review-s1').value!=='' && row.querySelector('.review-s1').value===row.querySelector('.review-s2').value)fieldError(row.querySelector('.review-s2'),'В овертайме должен быть победитель.');
+      });
+    }
+    const invalid=form.querySelector('[aria-invalid=true]');if(invalid&&all)revealError(invalid);return !invalid;
+  }
+  window.addEventListener('beforeunload',event=>{
+    if(document.querySelector('form[data-dirty="1"]')){event.preventDefault();event.returnValue='';}
+  });
 
   // ── Сеть и API ────────────────────────────────────────────────────────
 
@@ -52,6 +146,10 @@
       const data = await apiCall("/api/state");
       state.isAuthorized = true;
       state.revision = data.revision;
+      const publication=document.getElementById('publicationStatus');
+      if(publication)publication.textContent=data.publication_revision && window.__PUBLISHED_REVISION__===data.publication_revision
+        ? 'Публикация: открытая версия сайта соответствует текущей базе.'
+        : 'Публикация: в базе есть изменения, которых ещё нет в открытой версии сайта. Требуется сборка и публикация.';
       dot.className = "status-dot online";
       text.innerHTML = `🟢 Авторизован: <strong>Лоровед</strong> · Подключение: <strong>сервер редактора</strong> · Ревизия: <code>${escapeHTML(data.revision || "актуальна")}</code>`;
       if (undoBtn) undoBtn.disabled = !data.corrections_live;
@@ -85,6 +183,7 @@
   }
 
   function journalValue(entry,value) {
+    if(entry.field==='exists')return value?'Запись существует':'Записи нет';
     if(entry.table_name==='incoming' && entry.field==='payload') {
       try {return JSON.parse(value || '{}')['вердикт_редактора']?.note || 'Вердикт ещё не вынесен';} catch (_) {return 'Обновлены сведения задачи';}
     }
@@ -105,6 +204,23 @@
       }
 
       if (undoBtn) undoBtn.disabled = false;
+      if(data.operations?.length) {
+        const fields={score:'Счёт',outcome:'Исход',tour:'Тур',league:'Лига',stage:'Стадия',stage_id:'Этап',phase:'Результат',note:'Примечание',verdict:'Статус задачи',payload:'Решение',manual:'Ручная правка',player_id:'Игрок',exists:'Наличие записи',label:'Состав',is_playoff:'Плей-офф',source_text:'Текст источника'};
+        container.innerHTML=data.operations.map(op=>`<details class="journal-operation"><summary>${escapeHTML(op.created_at)} · ${escapeHTML(op.editor)} · ${escapeHTML(op.note||'Изменение данных архива')} ${op.live?'':'· отменено'}</summary>
+          <ul>${op.entries.map(e=>`<li>${escapeHTML(fields[e.field]||'Данные записи')} · #${Number(e.row_id)}: ${escapeHTML(journalValue(e,e.old_value))} → ${escapeHTML(journalValue(e,e.new_value))}</li>`).join('')}</ul>
+          ${op.live?`<button type="button" class="btn-preview" data-undo-op="${escapeHTML(op.op)}">Отменить это решение</button>`:''}</details>`).join('');
+        container.querySelectorAll('[data-undo-op]').forEach(button=>button.onclick=async()=>{
+          if(!confirm('Отменить именно это решение и все входящие в него изменения?'))return;
+          button.disabled=true;
+          try {
+            const current=await apiCall('/api/state');
+            await apiCall('/api/edit',{operation:'undo',args:{what:'op:'+button.dataset.undoOp},persist:true,expect:current.revision});
+            showNotice('Выбранное решение отменено. Обновите открытую форму перед новой правкой.','success');
+            state.resolvedIds.clear();await checkAuth();await fetchLiveQueue();
+          }catch(error){showNotice(error.message,'error');button.disabled=false;}
+        });
+        return;
+      }
       container.innerHTML = data.entries.map(e => `
         <div class="journal-item">
           <div>
@@ -195,6 +311,11 @@
 
   function getFilteredTasks() {
     return state.tasks.filter(task => {
+      if(state.resolvedIds.has(task.id))return false;
+      if(state.tournament && taskTournament(task)!==state.tournament)return false;
+      if(state.workFilter==='draft' && (!drafts[task.id]||drafts[task.id].sourceRef!==(task.source_ref||'')))return false;
+      if(state.workFilter==='no-games' && (task.review_matches?.length || task.match_id))return false;
+      if(state.workFilter==='uncertain' && !task.algorithm_doubt)return false;
       // Категория
       if (state.filter !== "all" && getBatchCategory(task.batch) !== state.filter) {
         return false;
@@ -236,7 +357,17 @@
     }
 
     list.innerHTML = filtered.map(task => renderTaskCard(task)).join("");
+    list.querySelectorAll('.decision-form').forEach(attachDraft);
     attachCardListeners(list);
+  }
+
+  function taskTournament(task) {return task.review_doc_key || task.row?.doc_key || task.row?.tournament || '';}
+  function nextTask(id) {
+    const all=getFilteredTasks(), task=all.find(t=>t.id>id)||all[0];
+    renderTabs();renderList();
+    if(!task){showNotice('Все задачи по выбранным фильтрам решены.','success');return;}
+    const card=document.getElementById('task-'+task.id);
+    card?.querySelector('[data-review-open]')?.click();card?.scrollIntoView({block:'start'});
   }
 
   function renderTaskCard(task) {
@@ -248,10 +379,12 @@
         <div class="card-task">${escapeHTML(task.task)}</div>
         <div class="card-doubt"><strong>Что не доказано:</strong> ${escapeHTML(task.algorithm_doubt)}</div>
         <div class="card-links">${links}</div>
-        <details style="margin-top:16px"><summary>Текст источника</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6 var(--font-body);margin-top:12px">${escapeHTML(task.shown)}</pre></details>
+        <div class="review-workspace" data-pane="editor"><nav class="workspace-tabs" aria-label="Рабочая область"><button type="button" data-pane="source">Источник</button><button type="button" data-pane="editor" aria-pressed="true">Редактор</button></nav>
+        <aside class="review-source"><details><summary>Текст источника</summary><pre>${escapeHTML(task.shown)}</pre></details></aside><div class="review-edit-pane">
         <p style="color:#cbd5e1;font-size:13px;margin-top:16px">${task.match_id ? `Связанный матч: #${Number(task.match_id)}. ` : 'Отдельная запись матча ещё не создана. '}Составы и результаты, которые не удалось доказать, не подставляются автоматически.</p>
         <button type="button" class="btn-preview" data-review-open="${Number(task.id)}" style="margin-top:16px">${task.match_id ? 'Редактировать игры и вынести вердикт' : 'Разобрать отчёт и добавить игры'}</button>
         <div data-review-editor="${Number(task.id)}"></div>
+        </div></div>
       </article>`;
     }
     const row = task.row || {};
@@ -338,16 +471,16 @@
               <div class="form-group">
                 <label>Счёт встречи (${sides[0]} : ${sides[1]})</label>
                 <div class="score-inputs">
-                  <input type="number" min="0" max="99" class="input-s1" value="${row.score_a !== null && row.score_a !== undefined ? row.score_a : ""}" placeholder="0" required>
+                  <input aria-label="Голы первой стороны" type="number" min="0" max="99" class="input-s1" value="${row.score_a !== null && row.score_a !== undefined ? row.score_a : ""}" placeholder="0">
                   <span style="color:#64748b;font-weight:700;">:</span>
-                  <input type="number" min="0" max="99" class="input-s2" value="${row.score_b !== null && row.score_b !== undefined ? row.score_b : ""}" placeholder="0" required>
+                  <input aria-label="Голы второй стороны" type="number" min="0" max="99" class="input-s2" value="${row.score_b !== null && row.score_b !== undefined ? row.score_b : ""}" placeholder="0">
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Решение / Исход матча</label>
-                <select class="input-outcome">
-                  <option value="regular" ${(row.phase !== 'penalties' && row.status !== 'technical') ? 'selected' : ''}>Обычное время (по счёту)</option>
+                <select class="input-outcome" aria-label="Тип результата">
+                  <option value="regular" ${(!['penalties','overtime'].includes(row.phase) && !['technical','void'].includes(row.status)) ? 'selected' : ''}>Основное время (по счёту)</option>
                   <option value="penalties" ${row.phase === 'penalties' ? 'selected' : ''}>Победа по пенальти / буллитам (PK)</option>
                   <option value="overtime" ${row.phase === 'overtime' ? 'selected' : ''}>Победа в овертайме (OT)</option>
                   <option value="technical" ${row.status === 'technical' ? 'selected' : ''}>Технический результат (ТП)</option>
@@ -355,26 +488,28 @@
                 </select>
               </div>
 
+              <div class="legacy-pk form-group" ${row.phase==='penalties'?'':'hidden'}><label>Буллиты первой стороны<input class="input-pk1" type="number" min="0" max="99"></label><label>Буллиты второй стороны<input class="input-pk2" type="number" min="0" max="99"></label></div>
+
               ${task.batch === 'lore_review_unproven' ? `
                 <div class="form-group">
                   <label>Уточнение лиги / стадии</label>
-                  <input type="text" class="input-stage" value="${row.stage || task.tour || ''}" placeholder="Например: 1/4 финала">
+                  <input type="text" class="input-stage" aria-label="Стадия матча" value="${escapeHTML(row.stage || task.tour || '')}" placeholder="Например: 1/4 финала">
                 </div>
               ` : `
                 <div class="form-group">
                   <label>Тур / Стадия</label>
-                  <input type="text" class="input-stage" value="${row.stage || task.tour || ''}" placeholder="Тур или стадия">
+                  <input type="text" class="input-stage" aria-label="Стадия матча" value="${escapeHTML(row.stage || task.tour || '')}" placeholder="Стадия матча">
                 </div>
               `}
 
               <div class="form-group" style="grid-column: 1 / -1;">
                 <label>Пояснение вердикта лороведа (для журнала летописи)</label>
-                <input type="text" class="input-note" placeholder="Обоснование: например, 'Подтверждено видеозаписью ВК, серия буллитов 9:7'">
+                <input type="text" class="input-note" aria-label="Обоснование решения" required placeholder="Что проверено и какое решение принято">
               </div>
             </div>
 
             <div class="form-actions">
-              <button type="button" class="btn-save" data-action="save">💾 Записать в летопись (Neon Postgres)</button>
+              <button type="button" class="btn-save" data-action="save" disabled>Сохранить решение</button>
               <button type="button" class="btn-preview" data-action="preview">Предпросмотр дельты</button>
             </div>
 
@@ -427,7 +562,7 @@
       input.addEventListener('keydown',event=>{
         if(event.key==='Escape'){close();return;}
         if((event.key==='ArrowDown'||event.key==='ArrowUp')&&!box.hidden&&state.items.length){
-          event.preventDefault();state.active=(state.active+(event.key==='ArrowDown'?1:-1)+state.items.length)%state.items.length;highlight();
+          event.preventDefault();state.active=state.active<0?(event.key==='ArrowDown'?0:state.items.length-1):(state.active+(event.key==='ArrowDown'?1:-1)+state.items.length)%state.items.length;highlight();
         }else if(event.key==='Enter'&&!box.hidden){event.preventDefault();if(state.active>=0)choose(state.active);}
       });
       input.addEventListener('blur',close);
@@ -462,6 +597,8 @@
 
   function openReviewEditor(task, host) {
     if (host.querySelector('form')) return;
+    const workspace=host.closest('.review-workspace');
+    if(workspace){workspace.classList.add('editing');workspace.querySelector('details').open=true;}
     const rows = task.review_matches || (task.row ? [task.row] : []);
     const first = rows[0] || {};
     host.innerHTML = `<form class="archive-review-form" data-task-id="${Number(task.id)}">
@@ -482,6 +619,7 @@
       <p>Запись в базу и публикация сайта — разные этапы. После сохранения игры ждут следующей публикации.</p>
     </form>`;
     const form = host.querySelector('form');
+    attachDraft(form);
     attachNickSuggestions(form);
     const commonNames=()=>['a1','a2','b1','b2'].map(k=>form.querySelector('.review-common-'+k).value.trim());
     const rowNames=row=>{
@@ -517,6 +655,17 @@
     };
     form.addEventListener('input',()=>{previewed=null;save.disabled=true;updateGames();});
     form.addEventListener('change',()=>{previewed=null;save.disabled=true;updateGames();});
+    form.addEventListener('focusout',async event=>{
+      const input=event.target;if(!input.matches('input,select,textarea'))return;
+      validateReview(form,rowNames);
+      if(input.matches('.review-player')&&input.value.trim()) {
+        const typed=input.value.trim();
+        try {const answer=await apiCall('/api/players?q='+encodeURIComponent(typed));
+          if(input.value.trim()===typed&&!answer.players.some(p=>p.nick.toLowerCase()===typed.toLowerCase()))fieldError(input,'Выберите точный ник из подсказок.');
+        }catch(_){/* Сервер проверит ник при предпросмотре. */}
+      }
+    });
+    form.addEventListener('input',event=>{if(event.target.setCustomValidity)fieldError(event.target,'');});
     form.addEventListener('click',event=>{
       const button=event.target.closest('button');if(!button)return;
       if(button.matches('[data-add-game]')) form.querySelector('.review-games').insertAdjacentHTML('beforeend',reviewGameRow());
@@ -529,11 +678,11 @@
         const row=button.closest('fieldset'),names=rowNames(row);['a1','a2','b1','b2'].forEach((k,i)=>row.querySelector('.review-'+k).value=names[i]);
         row.dataset.useCommon='0';row.dataset.reversed='0';row.querySelector('.row-player-fields').hidden=!row.querySelector('.row-player-fields').hidden;
       }else return;
-      previewed=null;save.disabled=true;updateGames();
+      previewed=null;save.disabled=true;updateGames();writeDraft(form);
     });
     form.querySelector('[data-review-preview]').onclick=async event=>{
       if(!state.isAuthorized) {output.textContent='Введите токен редактора вверху страницы.';return;}
-      if(!form.reportValidity()) return;
+      if(!validateReview(form,rowNames,true)||!form.reportValidity()) return;
       const button=event.target;button.disabled=true;save.disabled=true;
       try {
         const args=payload(); const status=await apiCall('/api/state');state.revision=status.revision;
@@ -546,7 +695,10 @@
         lines.push('Обоснование: '+args.note,'После сохранения задача будет закрыта.');
         output.textContent=lines.join('\n');
         save.disabled=false;
-      } catch(error){previewed=null;output.textContent='Предпросмотр не выполнен: '+error.message;}
+      } catch(error){previewed=null;output.textContent='Предпросмотр не выполнен: '+error.message;
+        const nick=error.message.match(/Игрок «([^»]+)»/);
+        if(nick){const input=[...form.querySelectorAll('.review-player')].find(el=>el.value.trim()===nick[1]);fieldError(input,'Игрок не найден. Выберите ник из подсказок.');revealError(input);}
+      }
       finally{button.disabled=false;}
     };
     form.onsubmit=async event=>{
@@ -556,8 +708,11 @@
       try {
         const result=await apiCall('/api/edit',{operation:'review-task',args,persist:true,expect:previewRevision});
         state.revision=result.revision_after;state.resolvedIds.add(task.id);
-        output.textContent='Решение сохранено. Задача закрыта. Операция для отката: '+result.op;
+        clearDraft(form);
+        document.getElementById('publicationStatus').textContent='Сохранено в базе. Публикация: ожидает обновления сайта.';
+        output.textContent='Сохранено в базе. Задача закрыта. Публикация: ожидает обновления сайта.';
         form.querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
+        const next=document.createElement('button');next.type='button';next.className='btn-save';next.textContent='Следующая задача';next.onclick=()=>nextTask(task.id);form.append(next);
         document.getElementById('task-'+task.id).classList.add('resolved');
         showNotice('Вердикт сохранён; публикация сайта обновит витрину.','success');loadJournal();
       } catch(error){previewed=null;output.textContent='Решение не сохранено: '+error.message+' Повторите предпросмотр.';}
@@ -565,6 +720,10 @@
   }
 
   function attachCardListeners(root) {
+    root.querySelectorAll('.workspace-tabs button').forEach(button=>button.onclick=()=>{
+      const workspace=button.closest('.review-workspace');workspace.dataset.pane=button.dataset.pane;
+      workspace.querySelectorAll('.workspace-tabs button').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));
+    });
     root.querySelectorAll('[data-review-open]').forEach(button=>button.onclick=()=>{
       const task=state.tasks.find(t=>t.id===Number(button.dataset.reviewOpen));
       if(task) openReviewEditor(task,root.querySelector('[data-review-editor="'+task.id+'"]'));
@@ -575,23 +734,33 @@
       const previewBox = form.querySelector(".diff-preview-box");
       const saveBtn = form.querySelector('[data-action="save"]');
       const previewBtn = form.querySelector('[data-action="preview"]');
+      let approved=null, approvedRevision=null;
+      const update=()=>{
+        approved=null;saveBtn.disabled=true;
+        form.querySelector('.legacy-pk').hidden=form.querySelector('.input-outcome').value!=='penalties';
+      };
+      update();
+      form.addEventListener('input',update);form.addEventListener('change',update);
+      form.addEventListener('focusout',event=>{if(event.target.matches('.input-s1,.input-s2')&&event.target.value&&!event.target.checkValidity())fieldError(event.target,'Укажите целое число от 0 до 99.');});
+      form.addEventListener('input',event=>{if(event.target.setCustomValidity)fieldError(event.target,'');});
 
       // Клик по предпросмотру
       previewBtn.onclick = async () => {
+        if(!state.isAuthorized){showNotice('Введите токен редактора вверху страницы.','error');return;}
+        if(!form.reportValidity())return;
+        approved=null;saveBtn.disabled=true;
         try {
           previewBtn.disabled = true;
           previewBtn.textContent = "Считаем дельту…";
           const payload = collectFormData(form, matchId);
           payload.persist = false;
-          payload.expect = state.revision;
+          const current=await apiCall('/api/state');payload.expect = current.revision;
 
           const res = await apiCall("/api/edit", payload);
+          approved=JSON.stringify(payload.args);approvedRevision=res.revision;saveBtn.disabled=false;
           previewBox.hidden = false;
-          const deltaStr = JSON.stringify(res.delta || {}, null, 2);
-          previewBox.innerHTML = `
-            <strong>Дельта изменений (предпросмотр):</strong>
-            <pre>${deltaStr === "{}" ? "Правка не меняет видимых итоговых чисел таблицы." : escapeHTML(deltaStr)}</pre>
-          `;
+          const args=payload.args;
+          previewBox.textContent=`Матч #${matchId}: ${args.outcome==='void'?'аннулировать':args.s1+':'+args.s2+' · '+form.querySelector('.input-outcome').selectedOptions[0].textContent}\nСтадия: ${args.stage||'не указана'}\nОбоснование: ${args.note}\nПосле сохранения задача будет закрыта.`;
         } catch (err) {
           previewBox.hidden = false;
           previewBox.innerHTML = `<span style="color:var(--nes-red);">Ошибка предпросмотра: ${escapeHTML(err.message)}</span>`;
@@ -609,21 +778,22 @@
           return;
         }
 
-        const confirmMsg = `Записать вердикт лороведа по матчу #${matchId} в облачную базу Neon Postgres?`;
-        if (!confirm(confirmMsg)) return;
-
         try {
           saveBtn.disabled = true;
           saveBtn.textContent = "Записываем в Neon…";
           const payload = collectFormData(form, matchId);
+          if(!approved||approved!==JSON.stringify(payload.args))throw Error('Сначала выполните предпросмотр решения.');
           payload.persist = true;
-          payload.expect = state.revision;
+          payload.expect = approvedRevision;
 
           const res = await apiCall("/api/edit", payload);
-          state.revision = res.revision;
+          state.revision = res.revision_after || res.revision;
           state.resolvedIds.add(taskId);
+          clearDraft(form);
 
-          showNotice(`✅ Вердикт по матчу #${matchId} успешно сохранён в Neon Postgres! Новая ревизия: ${res.revision}`, "success");
+          showNotice(`Вердикт по матчу #${matchId} сохранён в базе. Публикация ожидает обновления сайта.`, "success");
+          form.querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
+          const next=document.createElement('button');next.type='button';next.className='btn-save';next.textContent='Следующая задача';next.onclick=()=>nextTask(taskId);form.append(next);
 
           // Отмечаем карточку как решённую
           const card = document.getElementById(`task-${taskId}`);
@@ -638,34 +808,34 @@
           loadJournal();
           checkAuth();
         } catch (err) {
-          alert(`Не удалось сохранить вердикт: ${escapeHTML(err.message)}`);
+          approved=null;
+          previewBox.hidden=false;previewBox.textContent='Решение не сохранено: '+err.message+' Повторите предпросмотр.';
           showNotice(`Ошибка записи: ${escapeHTML(err.message)}`, "error");
         } finally {
-          saveBtn.disabled = false;
-          saveBtn.textContent = "💾 Записать в летопись (Neon Postgres)";
+          saveBtn.disabled = form.dataset.saved==='1'||!approved;
+          saveBtn.textContent = "Сохранить решение";
         }
       };
     });
   }
 
   function collectFormData(form, matchId) {
-    const s1 = parseInt(form.querySelector(".input-s1").value, 10);
-    const s2 = parseInt(form.querySelector(".input-s2").value, 10);
+    const s1 = form.querySelector('.input-s1').value===''?NaN:Number(form.querySelector('.input-s1').value);
+    const s2 = form.querySelector('.input-s2').value===''?NaN:Number(form.querySelector('.input-s2').value);
     const outcome = form.querySelector(".input-outcome").value;
     const stage = form.querySelector(".input-stage")?.value?.trim() || "";
     const note = form.querySelector(".input-note")?.value?.trim() || "";
 
-    if (isNaN(s1) || isNaN(s2) || s1 < 0 || s2 < 0) {
-      throw new Error("Укажите корректный неотрицательный счёт обеих сторон!");
+    if (outcome!=='void' && (!Number.isInteger(s1)||!Number.isInteger(s2)||s1<0||s2<0||s1>99||s2>99)) {
+      const input=form.querySelector(!Number.isInteger(s1)||s1<0||s1>99?'.input-s1':'.input-s2');fieldError(input,'Укажите целое число голов от 0 до 99.');revealError(input);
+      throw new Error("Укажите корректный счёт обеих сторон.");
     }
-
-    if (outcome === "void") {
-      return { operation: "void", args: { match_id: matchId, reason: note || "Аннулировано лороведом" } };
-    }
-
+    if(!note){const input=form.querySelector('.input-note');fieldError(input,'Укажите обоснование решения.');revealError(input);throw Error('Укажите обоснование решения.');}
+    const pk1=form.querySelector('.input-pk1').value,pk2=form.querySelector('.input-pk2').value;
+    if(outcome==='penalties'&&s1===s2&&(!pk1||!pk2||Number(pk1)===Number(pk2))){fieldError(form.querySelector('.input-pk2'),'Укажите разные результаты буллитов.');revealError(form.querySelector('.input-pk2'));throw Error('Проверьте результаты буллитов.');}
     return {
-      operation: "set-score",
-      args: { match_id: matchId, s1, s2 },
+      operation: "review-existing",
+      args: {task_id:Number(form.dataset.taskId),match_id:matchId,s1,s2,outcome,stage,note,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
     };
   }
 
@@ -677,6 +847,25 @@
     const searchInput = document.getElementById("queueSearch");
     const refreshBtn = document.getElementById("refreshBtn");
     const undoBtn = document.getElementById("undoLastBtn");
+
+    const tournament=document.getElementById('queueTournament');
+    function updateTournamentOptions() {
+      if(!tournament)return;
+      const docs=new Map();state.tasks.forEach(task=>{
+        const key=taskTournament(task);if(!key)return;
+        docs.set(key,task.review_documents?.find(d=>d.doc_key===key)?.title||task.row?.tournament||key);
+      });
+      tournament.innerHTML='<option value="">Все турниры</option>'+[...docs].map(([key,title])=>`<option value="${escapeHTML(key)}">${escapeHTML(title)}</option>`).join('');
+      tournament.value=state.tournament||'';
+    }
+    updateTournamentOptions();
+    if(tournament)tournament.onchange=()=>{state.tournament=tournament.value;renderList();};
+    const work=document.getElementById('queueWorkFilter');
+    if(work)work.onchange=()=>{state.workFilter=work.value;renderList();};
+    document.getElementById('queueReset')?.addEventListener('click',()=>{
+      state.filter='all';state.search='';state.tournament='';state.workFilter='all';
+      searchInput.value='';if(work)work.value='all';updateTournamentOptions();renderTabs();renderList();
+    });
 
     if (tokenInput) {
       tokenInput.value = state.token;

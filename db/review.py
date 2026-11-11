@@ -17,6 +17,71 @@ class BatchConnection:
         pass
 
 
+def resolve_existing(con, args, editor):
+    """Решение обычной задачи: счёт, стадия, тип результата и закрытие без частичной записи."""
+    note = str(args.get('note') or '').strip()
+    outcome = args.get('outcome')
+    if not note or outcome not in ('regular','overtime','penalties','technical','void'):
+        raise edit.EditError('Укажите тип результата и обоснование решения')
+    pg = hasattr(con, '_raw')
+    con.execute('BEGIN' if pg else 'BEGIN IMMEDIATE')
+    try:
+        task = con.execute('select * from incoming where id=?' + (' FOR UPDATE' if pg else ''),
+                           (args.get('task_id'),)).fetchone()
+        if not task or task['batch'] == 'team_archive_review' or task['matched_match_id'] != args.get('match_id'):
+            raise edit.EditError('Матч не относится к выбранной задаче')
+        if task['verdict'] != 'conflict':
+            raise edit.EditError('Задача уже решена; обновите очередь')
+        mid = task['matched_match_id']
+        batch = BatchConnection(con)
+        results = []
+        extra_ids = []
+        if outcome == 'void':
+            results.append(edit.set_status(batch, mid, 'void', editor, note))
+        else:
+            scores = [args.get('s1'), args.get('s2')]
+            if any(type(v) is not int or not 0 <= v <= 99 for v in scores):
+                raise edit.EditError('Укажите целое число голов от 0 до 99')
+            phase = outcome if outcome in ('overtime','penalties') else 'regular'
+            if outcome == 'technical' and scores[0] == scores[1]:
+                raise edit.EditError('Технический результат должен определить победителя')
+            results.append(edit.set_status(batch, mid, 'technical' if outcome == 'technical' else 'played', editor))
+            results.append(edit.set_score(batch, mid, *scores, editor))
+            outcomes = edit.outcome_of(*scores)
+            shown = f'{scores[0]}:{scores[1]}'
+            if phase == 'penalties' and scores[0] == scores[1]:
+                pk = [args.get('pk1'), args.get('pk2')]
+                if any(type(v) is not int or not 0 <= v <= 99 for v in pk) or pk[0] == pk[1]:
+                    raise edit.EditError('Укажите разные результаты буллитов от 0 до 99')
+                outcomes = ['win','loss'] if pk[0]>pk[1] else ['loss','win']
+                shown += f' (ПК {pk[0]}:{pk[1]})'
+            changes = []
+            for current in edit.pair_ids(con, mid):
+                for side, result in zip(edit.sides_of(con,current),outcomes):
+                    if side['outcome'] != result:
+                        changes.append(('match_sides',side['id'],'outcome',side['outcome'],result))
+            extra_ids.extend(edit.journal(batch,editor,changes,edit.pair_ids(con,mid),uuid.uuid4().hex[:12]))
+            results.append(edit.set_phase(batch, mid, editor, phase))
+            results.append(edit.set_source(batch, mid, editor, shown))
+            if args.get('stage') is not None:
+                results.append(edit.set_place(batch, mid, editor, stage=str(args['stage']).strip()))
+        payload = store.parse_json(task['payload'], default={})
+        payload['вердикт_редактора'] = {'decision':'void' if outcome=='void' else 'save',
+                                        'note':note,'editor':editor,'match_ids':[mid]}
+        changes = [('incoming',task['id'],'payload',task['payload'],json.dumps(payload,ensure_ascii=False)),
+                   ('incoming',task['id'],'verdict',task['verdict'],'same')]
+        op = uuid.uuid4().hex[:12]
+        ids = extra_ids + edit.journal(batch,editor,changes,[],op)
+        ids.extend(entry for result in results for entry in result.get('journal', []))
+        placeholders = ','.join('?' for _ in ids)
+        con.execute(f'update corrections set op=? where id in ({placeholders})', (op,*ids))
+        con.commit()
+        return {'operation':'review-existing','match_id':mid,'changes':changes,'journal':ids,'op':op,'linked':edit.pair_ids(con,mid)}
+    except Exception:
+        con.rollback()
+        raise
+
+
 def apply(con, args, editor):
     task_id = args.get('task_id')
     decision = args.get('decision')

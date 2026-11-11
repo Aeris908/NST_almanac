@@ -18,6 +18,7 @@ from portal.season_pages import without_mislabelled_cup_rows
 from portal.site_payload import build as build_payload
 from portal.site_payload import headline_tokens
 from portal.templates import json_for_script, render
+from portal.ux_data import player_aliases, archive_reviews
 
 OUTPUT_PATH = Path("soccer.html")
 HEADLINE_STATS_PATH = Path("data/headline_stats.json")
@@ -58,6 +59,12 @@ def compose_payload(db_path=DB_PATH):
     profiles = build_profiles(
         data, player_matches, player_stats_addon, player_quotes_by_author(data.quotes)
     )
+    aliases = player_aliases(db_path)
+    for profile in profiles:
+        profile['aliases'] = aliases.get(profile['player'], [])
+    pending = archive_reviews(db_path)
+    for tournament in data.team_tournaments:
+        tournament['archive_pending'] = pending.get(tournament['id'], 0)
     seasons = build_seasons(data, combined_matches, profiles)
     analytics = build_analytics(profiles, seasons["seasons_list"])
     return build_payload(data, seasons["combined_matches"], profiles, seasons, analytics)

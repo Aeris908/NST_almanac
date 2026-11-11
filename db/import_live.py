@@ -203,8 +203,10 @@ def write_review_queue(con, rows):
     считает панель редактора (`db/api.state`), поэтому работа не теряется: в карточке строки
     видно задачу, а `payload.ссылки` ведёт и на тему, и на гугл-таблицу турнира.
     """
-    con.execute("delete from incoming where substr(batch, 1, ?) = ?",
-                (len(REVIEW_PREFIX), REVIEW_PREFIX))
+    from db.review_queue import upsert, remove_obsolete
+    batches = [r[0] for r in con.execute('select distinct batch from incoming where substr(batch,1,?)=?',
+                                        (len(REVIEW_PREFIX),REVIEW_PREFIX))]
+    seen = set()
     done = {row[0] for row in con.execute("select id from matches where manual = 1")}
     for match_id, game in rows:
         payload = {
@@ -220,12 +222,10 @@ def write_review_queue(con, rows):
         # запись оставляем в базе закрытой (`same`), иначе каждый пересборочный прогон возвращал
         # бы сделанное в счётчик очереди.
         verdict = "same" if match_id in done else "conflict"
-        con.execute(
-            "insert into incoming(batch, source, source_ref, payload, verdict, matched_match_id)"
-            " values (?, ?, ?, ?, ?, ?)",
-            (review_batch(game), SOURCE, game["source_ref"], json.dumps(payload, ensure_ascii=False),
-             verdict, match_id),
-        )
+        batch = review_batch(game)
+        seen.add((batch,game['source_ref']))
+        upsert(con,batch,SOURCE,game['source_ref'],payload,verdict,match_id)
+    remove_obsolete(con,batches,seen)
     return len(rows)
 
 

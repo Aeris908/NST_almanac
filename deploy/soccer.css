@@ -3768,3 +3768,7 @@
 #playerModal { z-index: 100001; }
 #routeNotice:not(:empty) { padding: 12px 16px; margin-bottom: 16px; background: var(--nes-card-bg); border: var(--nes-panel-border); color: #f8fafc; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--nes-cyan); outline-offset: 3px; }
+/* Полнота архива отделена от наличия итоговой таблицы. */
+.archive-coverage {display:grid;gap:8px;margin:16px 0;padding:16px;border-left:3px solid var(--nes-gold);background:var(--nes-card-bg);color:#cbd5e1;font-size:14px;line-height:1.6;}
+.archive-coverage strong {color:var(--nes-gold);}
+.archive-coverage a {color:var(--nes-cyan);}

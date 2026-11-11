@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from db import store
+from db.review_queue import upsert, remove_obsolete
 
 DB_PATH = store.DB_PATH
 BATCH = "lore_review_s8"
@@ -24,9 +25,7 @@ LORE_BATCHES = (BATCH, UNPROVEN_BATCH)
 
 def populate_lore_review(con):
     """Регистрирует задачи лороведу, если они ещё не решены ручной правкой."""
-    # Очищаем батчи лороведа перед заполнением
-    for b in LORE_BATCHES:
-        con.execute("delete from incoming where batch = ?", (b,))
+    seen = set()
 
     # 1. ectoPower vs Romix в Сезоне 8 Кубок лиг (пул #342)
     # Находим строку пула
@@ -61,11 +60,9 @@ def populate_lore_review(con):
             "стороны": ["ectoPower", "Romix"],
             "как_выглядит": "Пул: 4:4 (draw/draw, Elo не сдвинут победой). Протокол ВК: 4:4 (пк: 9-7, победа ectoPower).",
         }
-        con.execute(
-            "insert into incoming(batch, source, source_ref, payload, verdict, matched_match_id)"
-            " values (?, 'review_pool', 's8_cup_semifinal_ectopower_romix', ?, ?, ?)",
-            (BATCH, json.dumps(payload, ensure_ascii=False), verdict, match_id),
-        )
+        ref = 's8_cup_semifinal_ectopower_romix'
+        seen.add((BATCH,ref))
+        upsert(con,BATCH,'review_pool',ref,payload,verdict,match_id)
 
     # 2. Строки комментарного носителя без точного доказательства лиги и тура
     unproven_rows = con.execute("""
@@ -109,12 +106,10 @@ def populate_lore_review(con):
             "как_выглядит": f"{t_name} · {tour} · {sides} ({score})",
         }
         ref_key = s_ref or f"unproven_playoff_{mid}"
-        con.execute(
-            "insert into incoming(batch, source, source_ref, payload, verdict, matched_match_id)"
-            " values (?, 'review_unproven', ?, ?, ?, ?)",
-            (UNPROVEN_BATCH, ref_key, json.dumps(payload, ensure_ascii=False), verdict, mid),
-        )
+        seen.add((UNPROVEN_BATCH,ref_key))
+        upsert(con,UNPROVEN_BATCH,'review_unproven',ref_key,payload,verdict,mid)
 
+    remove_obsolete(con,LORE_BATCHES,seen)
     con.commit()
 
 

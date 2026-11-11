@@ -48,6 +48,7 @@ from db import (
 )
 from portal.build_soccer import compose_payload
 from portal.names import clean_alias
+from portal.ux_data import review_document_key
 
 DB_PATH = store.DB_PATH
 # Десять тысяч строк на игрока: в общий снимок попадает только длина, а сами строки — для тех
@@ -496,6 +497,9 @@ def _apply(con, operation, editor, args):
     if operation == "review-task":
         from db.review import apply
         return apply(con, args, editor)
+    if operation == "review-existing":
+        from db.review import resolve_existing
+        return resolve_existing(con, args, editor)
     if operation == "set-score":
         return edit.set_score(con, args["match_id"], args["s1"], args["s2"], editor)
     if operation == "set-players":
@@ -704,8 +708,31 @@ def journal_entries(limit=20, db_path=DB_PATH):
     return entries
 
 
+def journal_operations(limit=8, db_path=DB_PATH):
+    """Последние решения целиком: лимит операций не обрезает пакет на восьмой записи."""
+    con = store.connect(db_path)
+    con.row_factory = sqlite3.Row
+    try:
+        result = []
+        labels = con.execute('select op, max(id) as newest from corrections where op is not null '
+                             'group by op order by newest desc limit ?', (limit,)).fetchall()
+        for label in labels:
+            entries = [dict(row) for row in con.execute(
+                'select * from corrections where op = ? order by id', (label['op'],))]
+            note = ''
+            for entry in entries:
+                if entry['table_name'] == 'incoming' and entry['field'] == 'payload':
+                    note = store.parse_json(entry['new_value'], default={}).get('вердикт_редактора', {}).get('note', '')
+            result.append({'op':label['op'], 'editor':entries[-1]['editor'],
+                           'created_at':entries[-1]['created_at'], 'note':note,
+                           'live':any(e['reverted_at'] is None for e in entries), 'entries':entries})
+        return result
+    finally:
+        con.close()
+
+
 QUEUE_SQL = """
-select id, batch, source, matched_match_id, payload
+select id, batch, source, source_ref, matched_match_id, payload
 from incoming where verdict = 'conflict' order by batch, id
 """
 
@@ -738,11 +765,10 @@ def queue(db_path=DB_PATH):
         card = cards.get(row["matched_match_id"])
         prefix = str(payload.get("match_ref") or "").rsplit(":line-", 1)[0]
         related = team_cards.get(prefix, [])
-        tasks.append({"id": row["id"], "batch": row["batch"], "match_id": row["matched_match_id"],
+        tasks.append({"id": row["id"], "source_ref":row['source_ref'], "batch": row["batch"], "match_id": row["matched_match_id"],
                       "review_matches": related,
                       "review_documents": team_docs if row["batch"] == "team_archive_review" else [],
-                      "review_doc_key": next((d["doc_key"] for d in team_docs
-                                              if (payload.get("задача") or "").startswith(d["title"])), ""),
+                      "review_doc_key": review_document_key(payload.get("задача"), team_docs),
                       "task": payload.get("задача") or "", "links": payload.get("ссылки") or [],
                       "tour": payload.get("тур") or "", "sides": payload.get("стороны") or [],
                       "shown": payload.get("как_выглядит") or "",
@@ -809,12 +835,33 @@ def players(query="", limit=30, db_path=DB_PATH):
     return rows
 
 
+def publication_revision(db_path=DB_PATH):
+    """Отпечаток содержимого витрины и очереди, включая ники и вердикты без изменения счёта."""
+    con = store.connect(db_path)
+    con.row_factory = sqlite3.Row
+    try:
+        digest = hashlib.sha256()
+        for table in ('disciplines', 'tournaments', 'stages', 'series', 'tournament_docs',
+                      'players', 'player_aliases', 'matches', 'match_sides', 'side_players',
+                      'match_links', 'incoming'):
+            digest.update(table.encode())
+            used = ' where exists (select 1 from matches m where m.stage_id=stages.id)' if table == 'stages' else ''
+            for row in con.execute(f'select * from {table}{used} order by id'):
+                content = {key:row[key] for key in row.keys() if key not in ('updated_at','created_at','imported_at')}
+                digest.update(json.dumps(content, ensure_ascii=False, default=str, sort_keys=True,
+                                         separators=(',', ':')).encode())
+        return digest.hexdigest()[:20]
+    finally:
+        con.close()
+
+
 def state(db_path=DB_PATH):
     """Что редактор видит о базе, прежде чем править: ревизия, размер, живые правки, очередь."""
     con = store.connect(db_path)
     try:
         return {
             "revision": revision(db_path),
+            "publication_revision": publication_revision(db_path),
             "matches": con.execute("select count(*) from matches").fetchone()[0],
             "visible": con.execute("select count(*) from matches where hidden_by is null").fetchone()[0],
             "manual": con.execute("select count(*) from matches where manual = 1").fetchone()[0],

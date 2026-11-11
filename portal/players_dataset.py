@@ -65,6 +65,8 @@ def period_flags(phase):
 
 
 def build_players_dataset(db_path=DB_PATH):
+    from portal.ux_data import player_aliases
+    aliases = player_aliases(db_path)
     con = connect(str(db_path))
     con.row_factory = sqlite3.Row
 
@@ -340,6 +342,7 @@ def build_players_dataset(db_path=DB_PATH):
 
         players_list.append({
             "nick": nick,
+            "aliases": aliases.get(nick, []),
             "slug": prow["slug"],
             "vk_name": vk_name,
             "avatar": avatar,

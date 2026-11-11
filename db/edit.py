@@ -1312,6 +1312,21 @@ def _live_entries(con, op):
 
 
 def undo(con, what):
+    """Проверка конфликтов и откат выполняются в одной транзакции."""
+    try:
+        if hasattr(con, '_raw'):
+            con.execute('LOCK TABLE corrections IN SHARE ROW EXCLUSIVE MODE')
+        elif not con.in_transaction:
+            con.execute('BEGIN IMMEDIATE')
+        result = _undo(con, what)
+        con.commit()
+        return result
+    except Exception:
+        con.rollback()
+        raise
+
+
+def _undo(con, what):
     """Откатить операцию: `last` — все поля последней, `op:<метка>` — все поля операции по её
     метке, `<id>` — одну запись журнала.
 
@@ -1341,6 +1356,17 @@ def undo(con, what):
         entries = [entry]
     if not entries:
         return {"operation": "undo", "entries": [], "released": 0}
+
+    # Откат старого решения не должен затирать более позднюю работу другого редактора.
+    if text.startswith(OP_PREFIX):
+        keys = {(e['table_name'], e['row_id']) for e in entries}
+        matches = {_entry_match_id(con, e) for e in entries} - {None}
+        later = con.execute('select * from corrections where reverted_at is null and id > ? '
+                            'and op != ?', (min(e['id'] for e in entries), label)).fetchall()
+        for entry in later:
+            if (entry['table_name'], entry['row_id']) in keys or _entry_match_id(con, entry) in matches:
+                raise EditError('После этого решения те же данные уже изменены. '
+                                'Сначала отмените более позднее решение или внесите новую правку.')
 
     affected = []
     restores, updates = [], []

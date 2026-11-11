@@ -161,7 +161,7 @@
     // Leaderboard
     function filterDivision(div, btn) {
       currentDivisionFilter = div;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#tab-leaderboard .filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderTable();
     }
@@ -173,6 +173,7 @@
     }
 
     function renderTable() {
+      rememberPlayerSearch();
         const hofB = document.getElementById("hofCriteriaBanner");
         if (hofB) hofB.style.display = (currentDivisionFilter === "inactive") ? "block" : "none";
       const q = (document.getElementById('tableSearch')?.value || '').toLowerCase();
@@ -193,7 +194,7 @@
       }
 
       if (q) {
-        list = list.filter(p => p.player.toLowerCase().includes(q) || (p.vk_name && p.vk_name.toLowerCase().includes(q)));
+        list = list.filter(p => [p.player,p.vk_name,...(p.aliases||[])].some(name=>String(name||'').toLowerCase().includes(q.trim())));
       }
 
       list.sort((a, b) => {
@@ -293,6 +294,7 @@
     }
 
     function renderCards() {
+      rememberPlayerSearch();
       const hofCB = document.getElementById("hofCardsCriteriaBanner");
       if (hofCB) hofCB.style.display = (playerCardFilter === "hof") ? "block" : "none";
       const q = (document.getElementById('cardsSearch')?.value || '').toLowerCase();
@@ -313,7 +315,7 @@
       }
 
       if (q) {
-        list = list.filter(p => p.player.toLowerCase().includes(q) || (p.vk_name && p.vk_name.toLowerCase().includes(q)));
+        list = list.filter(p => [p.player,p.vk_name,...(p.aliases||[])].some(name=>String(name||'').toLowerCase().includes(q.trim())));
       }
 
       const grid = document.getElementById('cardsGrid');
@@ -4706,6 +4708,12 @@
 
 
 
+          <div class="archive-coverage" role="note">
+            <strong>${matches.length?'Архив протоколов: полнота не подтверждена':'Отдельные протоколы пока не восстановлены'}</strong>
+            <span>Доступно записей игр и серий: ${matches.length}. ${t.archive_pending?`Связанных задач на проверку: ${Number(t.archive_pending)}.`:'Открытых связанных задач в очереди нет; это не гарантирует полноту архива.'}</span>
+            <span>Итоги турнира и протоколы восстанавливаются по отдельным источникам.</span>
+            ${t.archive_pending?`<a href="queue.html?tournament=${encodeURIComponent(t.id)}">Задачи по этому турниру</a>`:''}
+          </div>
           ${t.archive_note ? `<p style="margin:16px 0;padding:12px 16px;background:var(--nes-card-bg);border:var(--nes-panel-border);border-radius:6px;color:#cbd5e1;font-size:13px">${escapeHTML(t.archive_note)}</p>` : ''}
 
           <!-- Key Master Players -->
@@ -5852,7 +5860,24 @@
 
 
 
+    function rememberPlayerSearch() {
+      try {sessionStorage.setItem('nst-soccer-search',JSON.stringify({table:document.getElementById('tableSearch').value,cards:document.getElementById('cardsSearch').value,division:currentDivisionFilter,cardFilter:playerCardFilter}));}catch(_){}
+    }
+    function resetPlayerSearch(kind) {
+      const input=document.getElementById(kind==='table'?'tableSearch':'cardsSearch');input.value='';
+      const scope=document.getElementById(kind==='table'?'tab-leaderboard':'tab-players');
+      const button=[...scope.querySelectorAll('.filter-btn')].find(el=>el.getAttribute('onclick')?.includes("('all',"));
+      if(kind==='table')filterDivision('all',button);else filterPlayerCards('all',button);input.focus();
+    }
 function initPortal() {
+      try {
+        const saved=JSON.parse(sessionStorage.getItem('nst-soccer-search')||'{}');
+        document.getElementById('tableSearch').value=typeof saved.table==='string'?saved.table:'';
+        document.getElementById('cardsSearch').value=typeof saved.cards==='string'?saved.cards:'';
+        if(['all','active','inactive','all_inactive','Высшая','Средняя','Дворовая'].includes(saved.division))currentDivisionFilter=saved.division;
+        if(['all','active','hof','all_inactive','Высшая','Средняя','Дворовая'].includes(saved.cardFilter))playerCardFilter=saved.cardFilter;
+        for(const [id,filter] of [['tab-leaderboard',currentDivisionFilter],['tab-players',playerCardFilter]])document.querySelectorAll('#'+id+' .filter-tabs .filter-btn').forEach(el=>el.classList.toggle('active',!!el.getAttribute('onclick')?.includes("('"+filter+"',")));
+      }catch(_){}
       try { renderHud(); } catch(e) { console.error('renderHud:', e); }
       try { renderTable(); } catch(e) { console.error('renderTable:', e); }
       try { renderCards(); } catch(e) { console.error('renderCards:', e); }

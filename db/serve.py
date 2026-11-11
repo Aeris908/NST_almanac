@@ -51,11 +51,12 @@ MAX_BODY = 64 * 1024
 OPERATIONS = ("set-score", "set-players", "set-source", "set-place", "set-date", "set-phase",
               "set-provenance", "set-rating", "rate-scope", "add-match", "add-tournament",
               "set-doc", "drop-match", "drop-tournament", "rename-player", "merge-player",
-              "void", "unvoid", "unhide", "publish-request", "undo", "review-task")
+              "void", "unvoid", "unhide", "publish-request", "undo", "review-task", "review-existing")
 # Что обязано приехать в args: у каждой операции свой идентификатор, и отсутствие match_id у
 # правки игрока — это не «забыли», а перепутанная ручка.
 REQUIRED_ARGS = {
     "review-task": ("task_id", "decision", "note"),
+    "review-existing": ("task_id", "match_id", "outcome", "note"),
     "set-score": ("match_id", "s1", "s2"),
     "set-players": ("match_id", "sides"),
     "set-source": ("match_id",),
@@ -156,7 +157,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._reply(200, {"ok": True, **api.state()}, origin=origin)
         if path == "/api/log":
             limit = int((parse_qs(urlparse(self.path).query).get("limit") or ["20"])[0])
-            return self._reply(200, {"ok": True, "entries": api.journal_entries(max(1, min(limit, 200)))},
+            return self._reply(200, {"ok": True, "entries": api.journal_entries(max(1, min(limit, 200))),
+                                     "operations": api.journal_operations(max(1, min(limit, 20)))},
                                origin=origin)
         if path == "/api/queue":
             return self._reply(200, {"ok": True, "tasks": api.queue()}, origin=origin)
