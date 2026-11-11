@@ -152,12 +152,22 @@ team_tournaments = [
         "format": "2x2 Командный",
         "organizer": "Пионеры сообщества NST",
         "champion": "Huba_Buba_5 & mafuta (Двукратные чемпионы)",
-        "runner_up": "Kunio & напарник / Ветераны лиги",
-        "bronze": "Ветераны 2х2",
+        "runner_up": "Jora & TaRantull (I) / Angel & Davitel (II)",
+        "bronze": "I — уточняется; Kunio & Memori (II)",
         "description": "Исторические первые командные первенства, с которых началась культура соревнований 2 на 2 в русскоязычном комьюнити. Пара Huba_Buba_5 & mafuta установила исторический рекорд, выиграв два дебютных командных кубка подряд.",
         "key_players": ["mafuta", "Kunio"]
     }
 ]
+
+for tournament in team_tournaments:
+    if tournament["id"] in {"team_champ_5", "team_champ_3", "team_champ_1_2"}:
+        tournament["playoff_matches"] = []
+        tournament["row_keys"] = ["league", "stage", "t1", "t2", "score", "vk_url"]
+        tournament["archive_note"] = "Восстановлены явно подписанные протоколы из первичных источников. Архив неполный; отсутствие игры не означает, что она не проводилась."
+
+for tournament in team_tournaments:
+    if tournament["id"] == "team_champ_5":
+        tournament["archive_note"] += " Призёры Дворовой лиги требуют сверки: описание и доступная таблица расходятся; задача передана лороведу."
 
 with open("team_tournaments_data.json", "w", encoding="utf-8") as f:
     json.dump(team_tournaments, f, ensure_ascii=False, indent=2)

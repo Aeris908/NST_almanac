@@ -21,3 +21,15 @@ def test_team_match_arrays_are_not_counted_twice():
     match = {"t1": "Kunio & Memori", "t2": "ectoPower & Davitel", "score": "6:2"}
     add_team_records(histories, 0, {"matches": [match], "playoff_matches": [match]})
     assert sum(len(rows) for rows in histories.values()) == 4
+
+
+def test_penalty_result_and_source_reach_history():
+    histories = defaultdict(list)
+    add_team_records(histories, 0, {"playoff_matches": [{
+        "t1": "Kunio & Memori", "t2": "ectoPower & Davitel",
+        "score": "4:4 (ПК 7:6)", "vk_url": "https://example.org/source",
+    }]})
+    assert histories["Kunio"][0]["result"] == "ПОБЕДА"
+    assert histories["ectoPower"][0]["result"] == "ПОРАЖЕНИЕ"
+    assert histories["Kunio"][0]["pk"]
+    assert histories["Kunio"][0]["vk_url"] == "https://example.org/source"

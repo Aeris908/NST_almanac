@@ -34,6 +34,7 @@ FIELD_BY_KEY = {
     "t1": "label_a",
     "t2": "label_b",
     "games": "series_detail",
+    "vk_url": "primary_url",
 }
 # Счёт — не колонка: его читатель считает со сторон матча (см. score_text).
 COMPUTED_KEYS = ("score",)
@@ -52,6 +53,8 @@ order by order_index, id
 # `{manual}` — то же для игр и правок, которые внёс человек: носитель о них не знает.
 DOC_MATCHES_SQL = """
 select m.tour, m.league, m.note, m.series_detail, s.name as stage,
+       (select l.url from match_links l where l.match_id = m.id and l.kind = 'vk_post'
+        order by l.id limit 1) as primary_url,
        sa.label as label_a, sb.label as label_b,
        sa.score as score_a, sb.score as score_b
 from matches m

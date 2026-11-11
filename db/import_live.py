@@ -45,6 +45,7 @@ PENALTY_REPORT = ROOT / "data" / "penalty_report.json"
 CLUB_REPORT = ROOT / "data" / "club_goal4_report.json"
 DB_PATH = store.DB_PATH
 SOURCE = "vk_live"
+TEAM_REVIEW_BATCH = "team_archive_review"
 YOUTH_SEASON = "Молодёжные турниры"
 
 # Какие страницы какого турнира какой лиги. Берётся заголовком страницы, а не угадывается:
@@ -264,12 +265,38 @@ def containers(con):
     return found
 
 
+def write_team_review_queue(con):
+    """Хранит сомнения отдельно от матчей и сохраняет вердикты при переимпорте."""
+    path = ROOT / "data" / "team_recovery_review.json"
+    if not path.exists():
+        return 0
+    items = json.loads(path.read_text(encoding="utf-8"))
+    for item in items:
+        found = con.execute("select id from matches where source = ? and source_ref = ?",
+                            (SOURCE, item.get("match_ref"))).fetchone()
+        match_id = found[0] if found else None
+        existing = con.execute("select id from incoming where batch = ? and source_ref = ?",
+                               (TEAM_REVIEW_BATCH, item["source_ref"])).fetchone()
+        payload = json.dumps(item, ensure_ascii=False)
+        if existing:
+            con.execute("update incoming set payload = ?, matched_match_id = ? where id = ?",
+                        (payload, match_id, existing[0]))
+        else:
+            con.execute("insert into incoming(batch, source, source_ref, payload, verdict, matched_match_id) "
+                        "values (?, 'team_archive', ?, ?, 'conflict', ?)",
+                        (TEAM_REVIEW_BATCH, item["source_ref"], payload, match_id))
+    return len(items)
+
+
 def load(db_path=DB_PATH):
     """Носитель → `matches`: строка привязывается к документу рамки либо к сезонной рамке."""
     if not CARRIER.exists():
         print("файл data/vk_live_matches.json не найден — живые результаты в базу не заносятся")
         return 0
     games = json.loads(CARRIER.read_text(encoding="utf-8"))
+    recovered = ROOT / "data" / "team_recovered_matches.json"
+    if recovered.exists():
+        games.extend(json.loads(recovered.read_text(encoding="utf-8")))
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA foreign_keys = ON")
@@ -302,7 +329,7 @@ def load(db_path=DB_PATH):
         links = [("video", url) for url in game.get("links") or []]
         # Комментарий темы и есть доказательство ноги — ссылку кладём рядом с видео. Для строк
         # сезона и дивизионов другого доказательства нет вовсе: без ссылки строка недоказуема.
-        if game.get("kind") in ("special", "league"):
+        if game.get("kind") in ("special", "league") or game.get("source_ref", "").startswith("team-recovered:"):
             links.append(("vk_post", game["page_url"]))
         label_a = " & ".join(game["team_a"])
         label_b = " & ".join(game["team_b"])
@@ -333,11 +360,13 @@ def load(db_path=DB_PATH):
         renumber_group_first(con, doc_id)
 
     queue = write_review_queue(con, queued)
+    team_queue = write_team_review_queue(con)
 
     con.commit()
     people = con.execute("select count(*) from players where kind = 'player'").fetchone()[0]
     print(f"\nживых строк занесено: {added} (в носителе {len(games)}, без документа пропущено {skipped}, "
           f"ТП обоим {tp}) | игроков {people} | в очередь редактуры {queue}")
+    print(f"Задач по командному архиву: {team_queue}")
     if imp.unresolved:
         print("   ники вне справочника (заведены новыми игроками, решить алиасом): "
               + ", ".join(sorted(imp.unresolved)))

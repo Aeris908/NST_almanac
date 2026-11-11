@@ -3985,7 +3985,7 @@
 
                 <span style="font-family: var(--font-mono); font-size: 12px; color: var(--nes-gold); font-weight: 800; min-width: 70px;">
 
-                  ${escapeHTML(m.tour || m.stage || 'Матч')}
+                  ${escapeHTML(m.stage || m.tour || 'Матч')}
 
                 </span>
 
@@ -4007,7 +4007,7 @@
 
                 <div class="score-badge" style="font-size: 15px; padding: 5px 14px; letter-spacing: 1px; font-weight: 900; color: var(--nes-cyan); min-width: 80px; text-align: center;">
 
-                  ${escapeHTML(m.score)}
+                  ${escapeHTML(m.score)}${m.vk_url && /^https?:\/\//.test(m.vk_url) ? `<a href="${escapeHTML(m.vk_url)}" target="_blank" rel="noopener" style="display:block;font:12px var(--font-body);color:var(--nes-cyan);margin-top:4px">Источник ↗</a>` : ''}
 
                 </div>
 
@@ -4199,6 +4199,14 @@
               </button>
             </div>
           `;
+        } else if (t.archive_note) {
+          // Восстановлены ноги серий, а не итоговые счета серий: не строим из них вымышленную сетку.
+          subContentHtml = `<p style="color:#cbd5e1;margin:16px 0">Протоколы отдельных игр плей-офф. Счёт каждой строки относится к игре, а не ко всей серии.</p>` + uniquePlayoff.map(m => `
+            <div class="h2h-match-item" style="padding:12px;margin-bottom:8px;flex-wrap:wrap">
+              <span>${escapeHTML(m.stage || '')}</span><strong>${escapeHTML(m.t1)} — ${escapeHTML(m.t2)}</strong>
+              <span class="score-badge">${escapeHTML(m.score)}</span>
+              ${m.vk_url ? `<a href="${escapeHTML(m.vk_url)}" target="_blank" rel="noopener" style="color:var(--nes-cyan)">Источник ↗</a>` : ''}
+            </div>`).join('');
         } else {
           // Normalize matches
           const playoffMatches = uniquePlayoff.map(m => {
@@ -4697,6 +4705,8 @@
           </div>
 
 
+
+          ${t.archive_note ? `<p style="margin:16px 0;padding:12px 16px;background:var(--nes-card-bg);border:var(--nes-panel-border);border-radius:6px;color:#cbd5e1;font-size:13px">${escapeHTML(t.archive_note)}</p>` : ''}
 
           <!-- Key Master Players -->
 

@@ -239,10 +239,11 @@ def add_special_records(player_matches, t_idx, t, vk_sources_lookup):
 def add_team_records(player_matches, t_idx, t):
     title = t.get("title", "Командный чемпионат")
     for m in (t.get("matches") or t.get("playoff_matches") or []):
-        scores = parse_scores(m.get("score", ""))
+        scores = parse_score_cell(m.get("score", ""))
         if not m.get("t1") or not m.get("t2") or scores is None:
             continue
-        s1, s2 = scores
+        s1, s2 = scores[:2]
+        series = scores[2:] if len(scores) > 2 else None
         common = {
             "category": "team",
             "cat_label": "👥 2х2 Командник",
@@ -252,7 +253,7 @@ def add_team_records(player_matches, t_idx, t):
             "stage": m.get("stage") or m.get("tour") or "Матч 2х2",
             "league": m.get("league", "Командная лига"),
             "ot": False,
-            "pk": False,
+            "pk": bool(series),
         }
         for side, opponent_side, score_for, score_against in (
             (parse_pair(m["t1"]), m["t2"], s1, s2),
@@ -264,9 +265,11 @@ def add_team_records(player_matches, t_idx, t):
                     opponent=opponent_side,
                     score_for=score_for,
                     score_against=score_against,
-                    result=result_of(score_for, score_against),
+                    result=result_of(score_for, score_against, series if side == parse_pair(m["t1"]) else list(reversed(series)) if series else None),
                     **common,
                 )
+                if m.get("vk_url"):
+                    record["vk_url"] = m["vk_url"]
                 player_matches[player].append(record)
 
 

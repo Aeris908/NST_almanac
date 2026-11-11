@@ -131,12 +131,14 @@
 
   const BATCH_CATEGORIES = [
     { id: "all", label: "Все задачи" },
+    { id: "team_archive_review", label: "👥 Командный архив" },
     { id: "lore_review_s8", label: "⭐ Рейтинг и Кубок лиг" },
     { id: "lore_review_unproven", label: "❓ Недоказанные стадии" },
     { id: "vk_live", label: "📋 Не вошедшие в сводку" },
   ];
 
   function getBatchCategory(batch) {
+    if (batch === "team_archive_review") return "team_archive_review";
     if (!batch) return "vk_live";
     if (batch === "lore_review_s8" || batch.startsWith("lore_review_s")) return "lore_review_s8";
     if (batch === "lore_review_unproven") return "lore_review_unproven";
@@ -231,6 +233,19 @@
   }
 
   function renderTaskCard(task) {
+    if (task.batch === "team_archive_review") {
+      const links = (task.links || []).filter(url => /^https?:\/\//.test(url)).map(url =>
+        `<a class="link-btn" href="${escapeHTML(url)}" target="_blank" rel="noopener">Источник ↗</a>`).join(' ');
+      return `<article class="task-card lore-unproven" id="task-${Number(task.id)}">
+        <div class="card-header"><span class="badge-tag badge-unproven">👥 Проверка командного архива</span></div>
+        <div class="card-task">${escapeHTML(task.task)}</div>
+        <div class="card-doubt"><strong>Что не доказано:</strong> ${escapeHTML(task.algorithm_doubt)}</div>
+        <div class="card-links">${links}</div>
+        <details style="margin-top:16px"><summary>Текст источника</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6 var(--font-body);margin-top:12px">${escapeHTML(task.shown)}</pre></details>
+        <p style="color:#cbd5e1;font-size:13px;margin-top:16px">${task.match_id ? `Связанный матч: #${Number(task.match_id)}. ` : 'Отдельная запись матча ещё не создана. '}Составы и результаты, которые не удалось доказать, не подставляются автоматически.</p>
+        ${task.match_id ? `<a class="link-btn" href="soccer.html?edit=1#/teams" style="margin-top:12px">Открыть редактор командного раздела</a>` : ''}
+      </article>`;
+    }
     const row = task.row || {};
     const sides = task.sides || (row.players_a && row.players_b ? [row.players_a, row.players_b] : ["Сторона 1", "Сторона 2"]);
     const isResolved = state.resolvedIds.has(task.id);
