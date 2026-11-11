@@ -787,3 +787,16 @@ html, body {
     grid-template-columns: 1fr;
   }
 }
+.archive-review-form { margin-top:20px; padding:18px; border:1px solid #234568; border-radius:8px; background:#091728; }
+.archive-review-form h3 { color:var(--nes-gold); margin-bottom:12px; }
+.archive-review-form p { color:#a5b8ce; font-size:13px; margin:12px 0; }
+.archive-review-form label { display:flex; flex-direction:column; gap:6px; color:#cbd5e1; font-size:13px; }
+.archive-review-form input,.archive-review-form select,.archive-review-form textarea { padding:10px; border:1px solid #234568; border-radius:6px; background:#06111e; color:#f8fafc; width:100%; min-width:0; font:14px var(--font-body); }
+.archive-review-form input[type=checkbox] { width:24px; height:24px; }
+.archive-review-form textarea { min-height:80px; resize:vertical; }
+.review-game { padding:14px; margin:16px 0; border:1px solid #234568; border-radius:6px; }
+.review-game legend { color:var(--nes-cyan); padding:0 6px; }
+.review-result { margin-top:16px; color:#f8fafc; max-height:360px; overflow:auto; font-size:12px; }
+
+.archive-review-form .form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(max-width:640px) { .archive-review-form .form-grid { grid-template-columns:minmax(0,1fr); } }

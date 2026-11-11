@@ -275,8 +275,12 @@ def write_team_review_queue(con):
         found = con.execute("select id from matches where source = ? and source_ref = ?",
                             (SOURCE, item.get("match_ref"))).fetchone()
         match_id = found[0] if found else None
-        existing = con.execute("select id from incoming where batch = ? and source_ref = ?",
+        existing = con.execute("select id, payload from incoming where batch = ? and source_ref = ?",
                                (TEAM_REVIEW_BATCH, item["source_ref"])).fetchone()
+        if existing:
+            previous = store.parse_json(existing[1], default={})
+            if previous.get("вердикт_редактора"):
+                item = {**item, "вердикт_редактора": previous["вердикт_редактора"]}
         payload = json.dumps(item, ensure_ascii=False)
         if existing:
             con.execute("update incoming set payload = ?, matched_match_id = ? where id = ?",

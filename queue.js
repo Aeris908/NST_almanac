@@ -74,7 +74,7 @@
       if (Array.isArray(answer.tasks)) {
         state.tasks = answer.tasks;
         renderTabs();
-        renderList();
+        if (!document.querySelector(".archive-review-form")) renderList();
         showNotice(`Очередь успешно обновлена с сервера (всего ${state.tasks.length} задач)`, "success");
       }
     } catch (err) {
@@ -82,6 +82,13 @@
     } finally {
       if (btn) btn.disabled = false;
     }
+  }
+
+  function journalValue(entry,value) {
+    if(entry.table_name==='incoming' && entry.field==='payload') {
+      try {return JSON.parse(value || '{}')['вердикт_редактора']?.note || 'Вердикт ещё не вынесен';} catch (_) {return 'Обновлены сведения задачи';}
+    }
+    return value ?? '—';
   }
 
   async function loadJournal() {
@@ -104,7 +111,7 @@
             <span class="time">${escapeHTML(e.created_at || "—")}</span>
             <span class="author">@${escapeHTML(e.editor || "Лоровед")}</span>:
             <strong>${escapeHTML(e.table_name || "матч")}</strong> #${escapeHTML(e.row_id)} [${escapeHTML(e.field)}]:
-            <code>${escapeHTML(e.old_value !== null ? e.old_value : "—")}</code> → <strong>${escapeHTML(e.new_value !== null ? e.new_value : "—")}</strong>
+            <code>${escapeHTML(journalValue(e,e.old_value))}</code> → <strong>${escapeHTML(journalValue(e,e.new_value))}</strong>
           </div>
           ${e.reverted_at ? '<span style="color:var(--nes-red);font-size:11px;">отменено</span>' : ''}
         </div>
@@ -243,7 +250,8 @@
         <div class="card-links">${links}</div>
         <details style="margin-top:16px"><summary>Текст источника</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6 var(--font-body);margin-top:12px">${escapeHTML(task.shown)}</pre></details>
         <p style="color:#cbd5e1;font-size:13px;margin-top:16px">${task.match_id ? `Связанный матч: #${Number(task.match_id)}. ` : 'Отдельная запись матча ещё не создана. '}Составы и результаты, которые не удалось доказать, не подставляются автоматически.</p>
-        ${task.match_id ? `<a class="link-btn" href="soccer.html?edit=1#/teams" style="margin-top:12px">Открыть редактор командного раздела</a>` : ''}
+        <button type="button" class="btn-preview" data-review-open="${Number(task.id)}" style="margin-top:16px">${task.match_id ? 'Редактировать игры и вынести вердикт' : 'Разобрать отчёт и добавить игры'}</button>
+        <div data-review-editor="${Number(task.id)}"></div>
       </article>`;
     }
     const row = task.row || {};
@@ -379,7 +387,117 @@
 
   // ── Обработчики карточек и сохранение ─────────────────────────────────
 
+  function reviewGameRow(row = {}, sides = []) {
+    const names = (row.sides || []).map(s => s.players || '');
+    const a = String(names[0] || sides[0] || '').split(' & ');
+    const b = String(names[1] || sides[1] || '').split(' & ');
+    const pk = String(row.note || '').match(/\((?:ПК|PK)?\s*(\d+)\s*[:-]\s*(\d+)/i);
+    return `<fieldset class="review-game" data-match-id="${row.id || ''}">
+      <legend>${row.id ? 'Игра #' + Number(row.id) : 'Новая игра'}</legend>
+      <div class="form-grid">${[['a1','Игрок A1',a[0]],['a2','Игрок A2',a[1]],['b1','Игрок B1',b[0]],['b2','Игрок B2',b[1]]].map(([key,label,value]) =>
+        `<label>${label}<input class="review-${key} review-player" list="review-player-list" value="${escapeHTML(value || '')}" placeholder="Ник игрока"></label>`).join('')}
+      <label>Голы A<input type="number" class="review-s1" min="0" max="99" value="${row.score_a ?? ''}"></label>
+      <label>Голы B<input type="number" class="review-s2" min="0" max="99" value="${row.score_b ?? ''}"></label>
+      <label>Фаза<select class="review-phase">${[['regular','Основное время'],['overtime','Овертайм'],['penalties','Буллиты']].map(([v,t])=>`<option value="${v}"${row.phase === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
+      <label>Плей-офф<input type="checkbox" class="review-playoff" ${row.is_playoff ? 'checked' : ''}></label>
+      <label>Буллиты A (при равных голах)<input type="number" class="review-pk1" min="0" max="99" value="${pk ? pk[1] : ''}"></label>
+      <label>Буллиты B (при равных голах)<input type="number" class="review-pk2" min="0" max="99" value="${pk ? pk[2] : ''}"></label></div>
+      <button type="button" class="btn-preview" data-remove-game>Убрать из этого решения</button>
+    </fieldset>`;
+  }
+
+  function openReviewEditor(task, host) {
+    if (host.querySelector('form')) return;
+    const rows = task.review_matches || (task.row ? [task.row] : []);
+    const first = rows[0] || {};
+    host.innerHTML = `<form class="archive-review-form" data-task-id="${Number(task.id)}">
+      <h3>Решение лороведа</h3><p>Каждая строка — отдельная игра. Новые игры нумеруются по порядку. Имена можно выбрать из подсказок или ввести вручную.</p>
+      <div class="form-grid">
+      <label>Турнир<select class="review-doc" ${rows.length ? 'disabled' : ''}><option value="">Выберите турнир</option>${(task.review_documents || []).map(d=>`<option value="${escapeHTML(d.doc_key)}" ${d.doc_key === (first.doc_key || task.review_doc_key) ? 'selected' : ''}>${escapeHTML(d.title)}</option>`).join('')}</select></label>
+      <label>Лига / группа<input class="review-league" value="${escapeHTML(first.league || '')}"></label>
+      <label>Тур<input class="review-tour" value="${escapeHTML(first.tour || task.tour || '')}"></label>
+      <label>Стадия<input class="review-stage" value="${escapeHTML(first.stage || '')}" placeholder="Групповой этап / 1/2 финала"></label>
+      <label>Вердикт<select class="review-decision"><option value="save">Сохранить игры и закрыть задачу</option><option value="confirm">Подтвердить текущие данные без изменений</option><option value="reject">Отклонить отчёт: дубль, цитата или ошибка</option></select></label>
+      <label>Обоснование вердикта<textarea class="review-note" required placeholder="Что проверено по источнику и какое решение принято"></textarea></label></div>
+      <div class="review-games">${(rows.length ? rows : [{}]).map(row=>reviewGameRow(row,task.sides)).join('')}</div>
+      <button type="button" class="btn-preview" data-add-game>Добавить игру</button>
+      <div class="form-actions"><button type="button" class="btn-preview" data-review-preview>Предпросмотр решения</button><button type="submit" class="btn-save" disabled>Сохранить решение</button></div>
+      <pre class="review-result" role="status" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+      <p>Запись в базу и публикация сайта — разные этапы. После сохранения игры ждут следующей публикации.</p>
+    </form>`;
+    const form = host.querySelector('form');
+    const output = form.querySelector('.review-result');
+    const save = form.querySelector('[type=submit]');
+    let previewed = null;
+    let previewRevision = null;
+    const value = selector => form.querySelector(selector).value.trim();
+    const payload = () => {
+      const decision = value('.review-decision');
+      const games = decision !== 'save' ? [] : [...form.querySelectorAll('.review-game')].map(row => {
+        const get = sel => row.querySelector(sel).value.trim();
+        const integer = sel => get(sel) === '' ? null : Number(get(sel));
+        return {match_id:row.dataset.matchId ? Number(row.dataset.matchId) : undefined,
+          doc_key:value('.review-doc'), league:value('.review-league'),tour:value('.review-tour'),stage:value('.review-stage'),
+          sides:[get('.review-a1')+' & '+get('.review-a2'),get('.review-b1')+' & '+get('.review-b2')],
+          s1:integer('.review-s1'),s2:integer('.review-s2'),pk1:integer('.review-pk1'),pk2:integer('.review-pk2'),
+          phase:get('.review-phase'),playoff:row.querySelector('.review-playoff').checked};
+      });
+      return {task_id:task.id, decision, note:value('.review-note'), games};
+    };
+    form.addEventListener('input',()=>{previewed=null;save.disabled=true;});
+    form.addEventListener('change',()=>{previewed=null;save.disabled=true;});
+    form.addEventListener('click',event=>{
+      if(event.target.matches('[data-add-game]')) {form.querySelector('.review-games').insertAdjacentHTML('beforeend',reviewGameRow({},task.sides));previewed=null;save.disabled=true;}
+      if(event.target.matches('[data-remove-game]')) {event.target.closest('fieldset').remove();previewed=null;save.disabled=true;}
+    });
+    let lookup = 0;
+    form.addEventListener('input',async event=>{
+      if(!event.target.matches('.review-player') || !state.isAuthorized) return;
+      const request = ++lookup;
+      try { const result=await apiCall('/api/players?q='+encodeURIComponent(event.target.value));
+        if(request!==lookup) return;
+        const list=document.getElementById('review-player-list');
+        list.replaceChildren(...result.players.map(p=>{const el=document.createElement('option');el.value=p.nick;return el;}));
+      } catch (_) { /* Свободный ввод остаётся доступен при недоступных подсказках. */ }
+    });
+    form.querySelector('[data-review-preview]').onclick=async event=>{
+      if(!state.isAuthorized) {output.textContent='Введите токен редактора вверху страницы.';return;}
+      if(!form.reportValidity()) return;
+      const button=event.target;button.disabled=true;save.disabled=true;
+      try {
+        const args=payload(); const status=await apiCall('/api/state');state.revision=status.revision;
+        const result=await apiCall('/api/edit',{operation:'review-task',args,persist:false,expect:status.revision});
+        previewed=JSON.stringify(args); previewRevision=result.revision;
+        const decisions={save:'Сохранить игры',confirm:'Подтвердить без изменений',reject:'Отклонить отчёт'};
+        const lines=[decisions[args.decision], ...args.games.map((g,i)=>(i+1)+'. '+g.sides[0]+' — '+g.sides[1]+': '+g.s1+':'+g.s2+(g.phase==='penalties'&&g.pk1!==null?' (буллиты '+g.pk1+':'+g.pk2+')':''))];
+        const headline=result.delta?.headline || {};
+        for(const [key,label] of [['matches','Матчей в архиве'],['goals','Голов в архиве']]) if(Array.isArray(headline[key])) lines.push(label+': '+headline[key][0]+' → '+headline[key][1]);
+        lines.push('Обоснование: '+args.note,'После сохранения задача будет закрыта.');
+        output.textContent=lines.join('\n');
+        save.disabled=false;
+      } catch(error){previewed=null;output.textContent='Предпросмотр не выполнен: '+error.message;}
+      finally{button.disabled=false;}
+    };
+    form.onsubmit=async event=>{
+      event.preventDefault();const args=payload();
+      if(!previewed || previewed!==JSON.stringify(args)) {save.disabled=true;output.textContent='Сначала обновите предпросмотр.';return;}
+      save.disabled=true;
+      try {
+        const result=await apiCall('/api/edit',{operation:'review-task',args,persist:true,expect:previewRevision});
+        state.revision=result.revision_after;state.resolvedIds.add(task.id);
+        output.textContent='Решение сохранено. Задача закрыта. Операция для отката: '+result.op;
+        form.querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
+        document.getElementById('task-'+task.id).classList.add('resolved');
+        showNotice('Вердикт сохранён; публикация сайта обновит витрину.','success');loadJournal();
+      } catch(error){previewed=null;output.textContent='Решение не сохранено: '+error.message+' Повторите предпросмотр.';}
+    };
+  }
+
   function attachCardListeners(root) {
+    root.querySelectorAll('[data-review-open]').forEach(button=>button.onclick=()=>{
+      const task=state.tasks.find(t=>t.id===Number(button.dataset.reviewOpen));
+      if(task) openReviewEditor(task,root.querySelector('[data-review-editor="'+task.id+'"]'));
+    });
     root.querySelectorAll(".decision-form").forEach(form => {
       const matchId = parseInt(form.dataset.matchId, 10);
       const taskId = parseInt(form.dataset.taskId, 10);
@@ -502,7 +620,7 @@
         state.token = val;
         sessionStorage.setItem("nstEditorToken", val);
         localStorage.setItem("nstEditorToken", val);
-        checkAuth();
+        checkAuth().then(ok=>{if(ok) fetchLiveQueue();});
       };
     }
 
@@ -543,9 +661,10 @@
       };
     }
 
+    const rosterList=document.createElement('datalist');rosterList.id='review-player-list';document.body.appendChild(rosterList);
     renderTabs();
     renderList();
-    checkAuth();
+    checkAuth().then(ok=>{if(ok) fetchLiveQueue();});
   }
 
   if (document.readyState === "loading") {

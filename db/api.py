@@ -493,6 +493,9 @@ def _publish():
 
 def _apply(con, operation, editor, args):
     """Одна операция на одном соединении — те же функции вызывает CLI `db/edit.py`."""
+    if operation == "review-task":
+        from db.review import apply
+        return apply(con, args, editor)
     if operation == "set-score":
         return edit.set_score(con, args["match_id"], args["s1"], args["s2"], editor)
     if operation == "set-players":
@@ -716,12 +719,30 @@ def queue(db_path=DB_PATH):
     con = store.connect(db_path)
     con.row_factory = sqlite3.Row
     tasks = []
-    for row in con.execute(QUEUE_SQL):
+    pending = list(con.execute(QUEUE_SQL))
+    team_cards = {}
+    team_docs = [dict(r) for r in con.execute(
+        "select doc_key, title from tournament_docs where kind = 'team'")]
+    for record in _with_rosters(con, con.execute(
+            LOCATE_SQL + " where m.source_ref like 'team-recovered:%'").fetchall()):
+        prefix = str(record["source_ref"] or "").rsplit(":line-", 1)[0]
+        team_cards.setdefault(prefix, []).append(_candidate(record))
+    match_ids = [row["matched_match_id"] for row in pending if row["matched_match_id"]]
+    cards = {}
+    if match_ids:
+        placeholders = ','.join('?' for _ in match_ids)
+        records = con.execute(LOCATE_SQL + f" where m.id in ({placeholders})", match_ids).fetchall()
+        cards = {record['id']: record for record in _with_rosters(con, records)}
+    for row in pending:
         payload = store.parse_json(row["payload"], default={})
-        match = con.execute(LOCATE_SQL + " where m.id = ?", (row["matched_match_id"],)).fetchone() \
-            if row["matched_match_id"] else None
-        card = _with_rosters(con, [match])[0] if match else None
+        card = cards.get(row["matched_match_id"])
+        prefix = str(payload.get("match_ref") or "").rsplit(":line-", 1)[0]
+        related = team_cards.get(prefix, [])
         tasks.append({"id": row["id"], "batch": row["batch"], "match_id": row["matched_match_id"],
+                      "review_matches": related,
+                      "review_documents": team_docs if row["batch"] == "team_archive_review" else [],
+                      "review_doc_key": next((d["doc_key"] for d in team_docs
+                                              if (payload.get("задача") or "").startswith(d["title"])), ""),
                       "task": payload.get("задача") or "", "links": payload.get("ссылки") or [],
                       "tour": payload.get("тур") or "", "sides": payload.get("стороны") or [],
                       "shown": payload.get("как_выглядит") or "",

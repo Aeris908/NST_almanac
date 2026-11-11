@@ -51,10 +51,11 @@ MAX_BODY = 64 * 1024
 OPERATIONS = ("set-score", "set-players", "set-source", "set-place", "set-date", "set-phase",
               "set-provenance", "set-rating", "rate-scope", "add-match", "add-tournament",
               "set-doc", "drop-match", "drop-tournament", "rename-player", "merge-player",
-              "void", "unvoid", "unhide", "publish-request", "undo")
+              "void", "unvoid", "unhide", "publish-request", "undo", "review-task")
 # Что обязано приехать в args: у каждой операции свой идентификатор, и отсутствие match_id у
 # правки игрока — это не «забыли», а перепутанная ручка.
 REQUIRED_ARGS = {
+    "review-task": ("task_id", "decision", "note"),
     "set-score": ("match_id", "s1", "s2"),
     "set-players": ("match_id", "sides"),
     "set-source": ("match_id",),

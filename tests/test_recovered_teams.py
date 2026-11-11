@@ -49,8 +49,12 @@ def test_review_queue_is_idempotent_and_preserves_verdict(con, tmp_path, monkeyp
     }]), encoding="utf-8")
     monkeypatch.setattr(import_live, "ROOT", tmp_path)
     import_live.write_team_review_queue(con)
-    con.execute("update incoming set verdict = 'same' where source_ref = 'team-archive-review:test'")
+    saved = {"вердикт_редактора": {"note": "Проверено вручную"}}
+    con.execute("update incoming set verdict = 'same', payload = ? where source_ref = 'team-archive-review:test'",
+                (json.dumps(saved),))
     import_live.write_team_review_queue(con)
     rows = con.execute("select verdict, matched_match_id from incoming "
                        "where source_ref = 'team-archive-review:test'").fetchall()
     assert [tuple(row) for row in rows] == [("same", None)]
+    payload = con.execute("select payload from incoming where source_ref='team-archive-review:test'").fetchone()[0]
+    assert json.loads(payload)["вердикт_редактора"]["note"] == "Проверено вручную"
