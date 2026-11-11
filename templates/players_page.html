@@ -14,14 +14,28 @@
 <body data-discipline="players">
   <div class="catalog-wrap">
 
-    <header class="catalog-head">
-      <p class="eyebrow">Nekketsu · общий каталог по всем дисциплинам</p>
-      <h1>Каталог игроков</h1>
-      <p class="lede">Боевая карточка каждого игрока: рекорд, винрейт, форма и дисциплины, где он играет. Открой карточку — внутри досье с переходом вглубь дисциплины.</p>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo-block">
+          <span class="logo-badge">NST</span>
+          <div class="logo-text"><h1>Каталог игроков</h1><p>Участники Nekketsu Sports Tournaments · все дисциплины</p></div>
+        </a>
+        <nav class="header-links" aria-label="Разделы альманаха">
+          <a href="index.html">🏛️ В Альманах</a>
+          <a href="soccer.html">⚽ Футбол</a>
+          <a href="quotes.html">💬 Цитатник</a>
+          <a href="queue.html">⚖️ Очередь лороведа</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="catalog-head" aria-labelledby="catalogHeading">
+      <div class="section-intro"><h2 id="catalogHeading">Игроки сообщества</h2>
+        <p class="lede">Найдите участника и откройте досье: статистику карьеры, последние результаты и историю по дисциплинам.</p>
+      </div>
       <div class="statline" id="catalogStats"></div>
       <nav class="disc-filters" id="disciplineFilters" aria-label="Фильтр по дисциплинам"></nav>
-      <a class="back-link" href="index.html">← На главную</a>
-    </header>
+    </section>
 
     <div class="toolbar">
       <label class="search">
@@ -37,7 +51,7 @@
           <option value="name">по имени</option>
         </select>
       </div>
-      <div class="count" id="catalogCount"></div>
+      <div class="count" id="catalogCount" role="status" aria-live="polite"></div>
     </div>
 
     <main>

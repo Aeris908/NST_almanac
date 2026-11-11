@@ -68,14 +68,14 @@
   function renderDisciplineFilters() {
     const box = document.getElementById('disciplineFilters');
     const chips = [
-      `<button class="disc-chip on" data-disc="all"><span class="ic">🎮</span>Все<span class="n">${players.length}</span></button>`,
+      `<button class="disc-chip on" aria-pressed="true" data-disc="all"><span class="ic">🎮</span>Все<span class="n">${players.length}</span></button>`,
     ];
     (data.disciplines || []).forEach((d) => {
       const count = disciplineCount(d.slug);
       const soon = count === 0;
       const title = soon ? ' title="Нет реальных матчей — дисциплина появится, когда придут данные"' : '';
       chips.push(
-        `<button class="disc-chip${soon ? ' soon' : ''}" data-disc="${esc(d.slug)}"${soon ? ' disabled' : ''}${title}>` +
+        `<button class="disc-chip${soon ? ' soon' : ''}" aria-pressed="false" data-disc="${esc(d.slug)}"${soon ? ' disabled' : ''}${title}>` +
         `<span class="ic">${esc(d.icon)}</span>${esc(d.name)}<span class="n">${count}</span></button>`
       );
     });
@@ -84,8 +84,8 @@
     box.querySelectorAll('.disc-chip:not(.soon)').forEach((btn) => {
       btn.addEventListener('click', () => {
         state.disc = btn.dataset.disc;
-        box.querySelectorAll('.disc-chip').forEach((b) => b.classList.remove('on'));
-        btn.classList.add('on');
+        box.querySelectorAll('.disc-chip').forEach((b) => { b.classList.remove('on'); b.setAttribute('aria-pressed','false'); });
+        btn.classList.add('on'); btn.setAttribute('aria-pressed','true');
         renderGrid();
       });
     });
@@ -151,7 +151,7 @@
         <div class="pc-name"><h3>${esc(p.nick)}</h3><div class="vk">${vkLine}</div></div>
         <span class="badge">${esc(p.status_badge)}</span>
       </div>
-      <div class="rating"><div class="wr">${c.win_rate.toFixed(0)}<small>%</small></div><div class="wr-lab">побед<br>за карьеру</div></div>
+      <div class="rating"><div class="wr">${c.win_rate.toFixed(0)}<small>%</small></div><div class="wr-lab">побед за карьеру</div></div>
       <div class="recbar"><i class="w" style="width:${winPct}%"></i><i class="d" style="width:${drawPct}%"></i><i class="l" style="width:${lossPct}%"></i></div>
       <div class="recnums"><span class="w"><i>В</i><b>${c.wins}</b></span><span class="d"><i>Н</i><b>${c.draws}</b></span><span class="l"><i>П</i><b>${c.losses}</b></span></div>
       <div class="metarow"><span class="goals">${esc(icon)} <b>${c.goals_for}</b>:<b>${c.goals_against}</b> <span class="diff ${diffClass(c.goal_diff)}">(${formatDiff(c.goal_diff)})</span></span><span class="tour">🏆 <b>${tournaments}</b></span></div>
@@ -159,7 +159,7 @@
       <div class="formrow"><span class="lab">Форма</span><span class="dots">${formDots(recentForm(p))}</span></div>
       <div class="pc-foot">${foot}</div>
       ${p.featured_quote ? `<div class="quote">«${esc(p.featured_quote)}»</div>` : ''}
-      <span class="hint">Досье ↗</span>
+      <span class="hint">Открыть досье ↗</span>
     </article>`;
   }
 
