@@ -238,7 +238,7 @@ def add_special_records(player_matches, t_idx, t, vk_sources_lookup):
 
 def add_team_records(player_matches, t_idx, t):
     title = t.get("title", "Командный чемпионат")
-    for m in t.get("matches", []):
+    for m in (t.get("matches") or t.get("playoff_matches") or []):
         scores = parse_scores(m.get("score", ""))
         if not m.get("t1") or not m.get("t2") or scores is None:
             continue

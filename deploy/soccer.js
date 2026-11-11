@@ -3866,6 +3866,16 @@
 
 
 
+    // Носитель командных турниров хранит все известные игры в playoff_matches,
+    // включая групповой этап. Отдельного массива matches у него может не быть.
+    function teamTournamentMatches(t) {
+      return (Array.isArray(t.matches) && t.matches.length) ? t.matches : (t.playoff_matches || []);
+    }
+    function isTeamPlayoffMatch(m) {
+      const stage = String(m.stage || m.tour || '').toLowerCase();
+      return /финал|1\/[248]|за\s+[35](?:-?е)?\s+место/.test(stage);
+    }
+
     function renderTeamTournamentDetails() {
 
       const container = document.getElementById('teamTournamentDetailContainer');
@@ -3882,7 +3892,7 @@
 
 
 
-      const matches = t.matches || [];
+      const matches = teamTournamentMatches(t);
 
       const divisions = t.divisions || {};
 
@@ -3956,7 +3966,7 @@
 
         const pairOptions = allTeamsList.map(pair => `
 
-          <option value="${pair}" ${teamPairFilter === pair ? 'selected' : ''}>${pair}</option>
+          <option value="${escapeHTML(pair)}" ${teamPairFilter === pair ? 'selected' : ''}>${escapeHTML(pair)}</option>
 
         `).join('');
 
@@ -3964,7 +3974,6 @@
 
         const matchesListHtml = filteredMatches.length > 0 ? filteredMatches.map(m => {
 
-          const isT1Win = m.score.startsWith('5:') || m.score.startsWith('6:') || m.score.startsWith('7:') || m.score.includes('победа t1') || m.score.includes('Победа leon') || m.score.includes('Победа Kamaz') || m.score.includes('Победа ectopower') || m.score.includes('Победа PacnyTHuK') || m.score.includes('Победа Буц');
 
           
 
@@ -3976,7 +3985,7 @@
 
                 <span style="font-family: var(--font-mono); font-size: 12px; color: var(--nes-gold); font-weight: 800; min-width: 70px;">
 
-                  ${m.tour || 'Матч'}
+                  ${escapeHTML(m.tour || m.stage || 'Матч')}
 
                 </span>
 
@@ -3992,19 +4001,19 @@
 
                 <span style="font-family: var(--font-title); font-size: 14px; color: #fff; text-align: right; flex: 1;">
 
-                  ${m.t1}
+                  ${escapeHTML(m.t1)}
 
                 </span>
 
                 <div class="score-badge" style="font-size: 15px; padding: 5px 14px; letter-spacing: 1px; font-weight: 900; color: var(--nes-cyan); min-width: 80px; text-align: center;">
 
-                  ${m.score}
+                  ${escapeHTML(m.score)}
 
                 </div>
 
                 <span style="font-family: var(--font-title); font-size: 14px; color: #cbd5e1; text-align: left; flex: 1;">
 
-                  ${m.t2}
+                  ${escapeHTML(m.t2)}
 
                 </span>
 
@@ -4018,7 +4027,8 @@
 
           <div style="background: rgba(0,0,0,0.4); border: 2px dashed #94a3b8; padding: 32px; text-align: center; color: #cbd5e1;">
 
-            Матчи по выбранному фильтру не найдены.
+            ${matches.length ? 'Матчи по выбранному фильтру не найдены.' : 'В архиве пока нет отдельных протоколов этого турнира. Итоги и описание доступны в соседних вкладках.'}
+            ${!matches.length ? `<div style="margin-top:16px"><button class="filter-btn" onclick="switchTeamSubTab('tables')">Посмотреть итоги</button> <button class="filter-btn" onclick="switchTeamSubTab('about')">О турнире</button></div>` : ''}
 
           </div>
 
@@ -4171,31 +4181,18 @@
       // 3. PLAYOFF SUB-TAB
 
       else if (teamSubTab === 'playoff') {
-        const rawPlayoff = (t.playoff_matches && t.playoff_matches.length > 0) ? t.playoff_matches : (matches || []).filter(m => {
-          const st = (m.tour || m.stage || '').toLowerCase();
-          return st.includes('финал') || st.includes('1/2') || st.includes('1/4') || st.includes('место');
-        });
-
-        // Deduplicate
-        const seenPlayoff = new Set();
-        const uniquePlayoff = [];
-        rawPlayoff.forEach(m => {
-          const k = `${m.t1}_${m.t2}_${m.score}`;
-          if (!seenPlayoff.has(k)) {
-            seenPlayoff.add(k);
-            uniquePlayoff.push(m);
-          }
-        });
+        // Одинаковый счёт одной пары может относиться к разным играм: не склеиваем их.
+        const uniquePlayoff = matches.filter(isTeamPlayoffMatch);
 
         if (uniquePlayoff.length === 0) {
           subContentHtml = `
             <div style="background: rgba(17, 24, 39, 0.85); border: 2px solid var(--nes-gold); padding: 28px 20px; text-align: center; box-shadow: 4px 4px 0 #000; margin-top: 14px;">
               <div style="font-size: 32px; margin-bottom: 8px;">👥 ⚽</div>
               <div style="font-family: var(--font-title); font-size: 16px; color: var(--nes-gold); margin-bottom: 8px;">
-                КЛУБНЫЙ ГРУППОВОЙ ЭТАП / КРУГОВАЯ СИСТЕМА
+                ПРОТОКОЛЫ ПЛЕЙ-ОФФ НЕ ДОБАВЛЕНЫ
               </div>
               <div style="font-size: 13px; color: #cbd5e1; max-width: 600px; margin: 0 auto 16px auto; line-height: 1.6;">
-                Все матчи и результаты данного чемпионата представлены в таблицах лиг и вкладке «Все матчи».
+                В текущем архиве нет отдельных матчей с подтверждённой стадией плей-офф. Это не означает, что плей-офф не проводился. Доступные результаты смотрите в итогах и описании турнира.
               </div>
               <button type="button" class="filter-btn active" style="font-size: 12px; padding: 6px 16px;" onclick="switchTeamSubTab('matches')">
                 📋 Посмотреть все матчи турнира

@@ -42,3 +42,10 @@ context.selectSeason=()=>{throw Error('Нельзя сбрасывать фил�
 assert.doesNotThrow(()=>vm.runInContext('handleRouting()',context));
 assert.equal(vm.runInContext('escapeHTML("<script>\\\"&")',context),'&lt;script&gt;&quot;&amp;');
 console.log('Маршруты, повреждённые ссылки, сохранение сезона и экранирование: OK');
+vm.runInContext(source.slice(source.indexOf('    function teamTournamentMatches'),
+                            source.indexOf('    function renderTeamTournamentDetails')),context);
+assert.equal(vm.runInContext('teamTournamentMatches({playoff_matches:[{score:"6:2"}]}).length',context),1);
+assert.equal(vm.runInContext('teamTournamentMatches({matches:[],playoff_matches:[{},{}]}).length',context),2);
+assert.equal(vm.runInContext('isTeamPlayoffMatch({stage:"Групповой этап"})',context),false);
+assert.equal(vm.runInContext('isTeamPlayoffMatch({stage:"1/2 финала"})',context),true);
+assert.equal(vm.runInContext('isTeamPlayoffMatch({tour:"За 3-е место"})',context),true);
