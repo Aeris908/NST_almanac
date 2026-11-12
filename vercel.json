@@ -1,5 +1,5 @@
 {
-  "buildCommand": "python build_all.py",
+  "buildCommand": "python -m pip install --disable-pip-version-check -r requirements.txt && python build_all.py",
   "outputDirectory": ".",
   "functions": {
     "api/handler.py": {
