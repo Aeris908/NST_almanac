@@ -24,9 +24,11 @@
   <meta name="nst-editor-api" content="@@EDITOR_API@@">
   <link rel="stylesheet" href="editor.css">
 
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 
 <body data-discipline="soccer">
+  <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
 
 
 
@@ -60,6 +62,7 @@
 
         <a href="index.html" class="meta-vk-btn" style="background: rgba(255, 203, 5, 0.15); border-color: var(--nes-gold); color: var(--nes-gold) !important;" title="Вернуться на главную страницу Альманаха Nekketsu">🏛️ В Альманах</a>
         <a href="quotes.html" class="meta-vk-btn" style="background: rgba(255, 203, 5, 0.08); border-color: rgba(255, 203, 5, 0.4); color: var(--nes-gold) !important;" title="Золотой Цитатник Сообщества NST">💬 Цитатник ↗</a>
+        <a id="editorEntry" href="soccer.html?edit=1" class="meta-vk-btn editor-entry" title="Включить карандаши для редактирования матчей">✎ Редактор</a>
         <a href="queue.html" class="meta-vk-btn" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.4); color: var(--nes-amber) !important;" title="Кабинет лороведа: проверка спорных матчей">⚖️ Очередь лороведа</a>
 
         <a href="https://vk.ru/nekketsu" target="_blank" class="meta-vk-btn">VK Сообщество ↗</a>
@@ -94,7 +97,7 @@
 
 
 
-  <main class="container">
+  <main class="container" id="mainContent" tabindex="-1">
     <div class="view-tools"><a id="currentViewLink" href="#/leaderboard">Ссылка на текущий раздел и фильтры</a><button type="button" class="filter-btn" id="copyViewLink">Скопировать ссылку</button></div>
     <details class="stats-explainer"><summary>Как читать статистику и Elo</summary>
       <p>Процент побед — число побед, делённое на число учтённых встреч. Ничьи входят в число встреч. История игрока и рейтинговый пул могут различаться: наличие игры в архиве ещё не означает, что она влияет на Elo.</p>
@@ -118,7 +121,7 @@
           <button class="filter-btn" onclick="filterDivision('all', this)">Все игроки</button>
           <button class="filter-btn" onclick="filterDivision('calibration', this)">Калибровка</button>
         </div>
-        <input type="search" class="clean-search" id="tableSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в рейтинге" oninput="renderTable()">
+        <input type="search" class="clean-search" id="tableSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в рейтинге" aria-keyshortcuts="/" title="Нажмите /, чтобы перейти к поиску" oninput="renderTable()">
         <button type="button" class="filter-btn" onclick="resetPlayerSearch('table')">Сбросить поиск и фильтр</button>
       </div>
 
@@ -215,7 +218,7 @@
 
         </div>
 
-        <input type="search" class="clean-search" id="cardsSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в карточках игроков" oninput="renderCards()">
+        <input type="search" class="clean-search" id="cardsSearch" placeholder="Ник, алиас или имя VK…" aria-label="Поиск в карточках игроков" aria-keyshortcuts="/" title="Нажмите /, чтобы перейти к поиску" oninput="renderCards()">
         <button type="button" class="filter-btn" onclick="resetPlayerSearch('cards')">Сбросить поиск и фильтр</button>
 
       </div>

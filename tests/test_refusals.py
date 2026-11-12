@@ -330,12 +330,15 @@ def test_undo_refuses_unknown_and_reverted_entry(con, find):
 
 
 def test_undo_last_on_a_clean_journal_is_harmless(con):
+    con.execute("delete from corrections")  # только копия базы этого теста
+    con.commit()
     assert edit.undo(con, "last")["entries"] == []
 
 
 def test_two_operations_do_not_revert_together(con, find):
     """`corrections.op` — метка операции: без неё два изменения в одну секунду откатывались бы
     одним `undo last`, и человек терял бы правку, которую не просил отменять."""
+    baseline=con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0]
     first = find(SCOREFUL, what="матч с числами")
     second = find("""select id from matches where id <> ? and hidden_by is null
         and row_set <> 'pool' limit 1""", (first,), what="второй матч")
@@ -348,7 +351,7 @@ def test_two_operations_do_not_revert_together(con, find):
     assert sides(con, second)[0]["score"] == was_second, "откат не вернул счёт второй игры"
     assert sides(con, first)[0]["score"] == 2, "откат второй операции съел первую"
     assert con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0] \
-        == len(one["journal"])
+        == baseline+len(one["journal"])
 
 
 def test_undo_of_one_field_leaves_its_pair(con, find):
@@ -412,6 +415,7 @@ def test_undo_by_label_reverts_the_older_operation_whole(con, find, fingerprint,
     Без метки старую операцию пришлось бы откатывать по одной записи, и база ездила бы с
     половинчатой правкой: дата вернулась, а точность даты осталась новой.
     """
+    baseline=con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0]
     first = find(SCOREFUL, what="матч с числами")
     linked = edit.pair_ids(con, first)
     second = another_match(con, find, linked)
@@ -429,7 +433,7 @@ def test_undo_by_label_reverts_the_older_operation_whole(con, find, fingerprint,
     assert all(card(con, current)["manual"] == 0 for current in linked), \
         "флаг снят с одной строки — связка осталась ручной"
     live = con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0]
-    assert live == len(two["journal"]), "откат старой операции тронул записи новой"
+    assert live == baseline+len(two["journal"]), "откат старой операции тронул записи новой"
     assert (sides(con, second)[0]["score"], sides(con, second)[1]["score"]) == (3, 0), \
         "откат старой операции съел правку, сделанную поверх"
     assert card(con, second)["manual"] == 1
@@ -452,13 +456,14 @@ def test_undo_by_label_refuses_an_unknown_operation(con, find):
 def test_undo_by_label_refuses_an_operation_already_reverted(con, find):
     """Повторный откат по той же метке отказывает: действующих записей у операции не осталось, а
     молчаливый «ничего не отменено» человек прочитал бы как успех."""
+    baseline={r[0] for r in con.execute("select id from corrections where reverted_at is null")}
     match_id = find(SCOREFUL, what="матч с числами")
     result = edit.set_date(con, match_id, "tester", played_on="2024-06")
     edit.undo(con, f"op:{result['op']}")
     with pytest.raises(edit.EditError) as error:
         edit.undo(con, f"op:{result['op']}")
     assert "уже отменена" in str(error.value)
-    assert edit.undo(con, "last")["entries"] == [], "живой операции не осталось в `last`"
+    assert {r[0] for r in con.execute("select id from corrections where reverted_at is null")} == baseline
 
 
 def test_journal_carries_the_operation_label_and_its_live_count(con, find, db_path):

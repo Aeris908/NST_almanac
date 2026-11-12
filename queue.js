@@ -959,6 +959,9 @@
   // ── Инициализация ─────────────────────────────────────────────────────
 
   function init() {
+    document.addEventListener('keydown',event=>{
+      if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.target.closest('input,textarea,select,[contenteditable]')){event.preventDefault();const input=document.getElementById('queueSearch');input.focus();input.select();}
+    });
     const tokenInput = document.getElementById("tokenInput");
     const loginBtn = document.getElementById("loginBtn");
     const searchInput = document.getElementById("queueSearch");

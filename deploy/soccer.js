@@ -5940,6 +5940,12 @@
     }
 function initPortal() {
       const initialRoute=location.hash;
+      document.querySelector('.skip-link')?.addEventListener('click',event=>{event.preventDefault();const main=document.getElementById('mainContent');main.focus();main.scrollIntoView({block:'start'});});
+      document.addEventListener('keydown',event=>{
+        if(event.key!=='/'||event.ctrlKey||event.metaKey||event.altKey||event.target.closest('input,textarea,select,[contenteditable]'))return;
+        const input=[document.getElementById('tableSearch'),document.getElementById('cardsSearch')].find(el=>el&&el.getClientRects().length);
+        if(input){event.preventDefault();input.focus();input.select();}
+      });
       new MutationObserver(decorateGames).observe(document.querySelector('main'),{childList:true,subtree:true});
       document.getElementById('copyViewLink')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);routeNotice('Ссылка скопирована.');}catch(_){routeNotice('Скопируйте адрес из строки браузера: '+location.href);}});
       try {

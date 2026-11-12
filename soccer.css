@@ -3781,3 +3781,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .linked-game {outline:3px solid var(--nes-gold);outline-offset:3px;scroll-margin:100px;}
 .rating-provisional {display:block;color:#fbbf24;font:11px var(--font-body);margin-top:5px;}
 .rating-scope {display:block;font:11px var(--font-body);color:#94a3b8;white-space:nowrap;margin-top:5px;}
+
+.skip-link {position:fixed;left:12px;top:8px;z-index:100001;padding:12px 18px;background:#ffcb05;color:#071423;font-weight:700;transform:translateY(-160%);}
+.skip-link:focus {transform:translateY(0);}
+:where(a,button,input,select,textarea):focus-visible {outline:3px solid #38bdf8;outline-offset:3px;}
+
+.logo-badge {white-space:nowrap;flex-shrink:0;}

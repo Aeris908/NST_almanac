@@ -194,6 +194,7 @@ def test_add_match_creates_row_and_undo_removes_it(con, find, fingerprint, undon
 def test_add_tournament_then_drop_it_then_undo_both(con, fingerprint, unchanged):
     """Турнир заводится рамкой с пустым списком игр, удаляется только пустой, а откаты идут
     слоями: последний откатывает предыдущий."""
+    baseline=con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0]
     before = fingerprint()
     edit.add_tournament(con, {"doc_key": "test_cup_1", "title": "Тестовый Кубок",
                               "kind": "special", "frame": {"category": "Спецтурниры"}}, "tester")
@@ -213,7 +214,7 @@ def test_add_tournament_then_drop_it_then_undo_both(con, fingerprint, unchanged)
     assert con.execute("select count(*) from tournament_docs where doc_key = 'test_cup_1'"
                        ).fetchone()[0] == 0
     assert con.execute("select count(*) from corrections where reverted_at is null"
-                       ).fetchone()[0] == 0
+                       ).fetchone()[0] == baseline
     unchanged(fingerprint(), before)
 
 
@@ -380,13 +381,14 @@ def test_rate_scope_marks_a_season_and_one_undo_reverts_it(con, find, fingerprin
           and m.played_on is not null and t.season like 'Season%'
         group by t.season having count(*) > 3 order by count(*) desc limit 1""",
         what="сезон с немаркированными играми")
+    baseline=con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0]
     before = fingerprint()
     marked = edit.set_rating_scope(con, True, "tester", season=season)
     assert len(marked["journal"]) > 1, "ожидались десятки строк, а не одна"
     assert con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0] \
-        == len(marked["journal"])
+        == baseline+len(marked["journal"])
     edit.undo(con, "last")
-    assert con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0] == 0
+    assert con.execute("select count(*) from corrections where reverted_at is null").fetchone()[0] == baseline
     unchanged(fingerprint(), before)
 
 

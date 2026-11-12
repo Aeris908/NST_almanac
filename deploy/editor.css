@@ -623,3 +623,25 @@ body.nst-edit-busy .match-history-row:hover::after {
   font-weight: 700;
   font-size: 12px;
 }
+
+/* Панель редактора располагается над плеером; окно правки — над самой панелью. */
+.nst-edit-bar { bottom:calc(var(--audio-bar-height,52px) + 12px);max-width:calc(100vw - 24px);box-sizing:border-box; }
+.nst-edit-actions { flex-wrap:wrap; }
+.nst-edit-panel { bottom:calc(var(--audio-bar-height,52px) + var(--nst-editor-bar-height,80px) + 24px);max-height:calc(100dvh - var(--audio-bar-height,52px) - var(--nst-editor-bar-height,80px) - 40px);box-sizing:border-box; }
+.nst-edit-bar[hidden],.nst-edit-panel[hidden] { display:none; }
+body.nst-edit-on { padding-bottom:calc(var(--audio-bar-height,52px) + var(--nst-editor-bar-height,80px) + 28px) !important; }
+@media(max-width:720px) {
+ .nst-edit-bar { max-width:none;bottom:calc(var(--audio-bar-height,52px) + 6px); }
+ .nst-edit-actions { flex-wrap:nowrap; }
+ .nst-edit-panel { bottom:calc(var(--audio-bar-height,52px) + var(--nst-editor-bar-height,58px) + 16px); }
+}
+
+.nst-edit-mobile-actions {display:none;}
+@media(max-width:720px) {
+ .nst-edit-bar {display:grid;grid-template-columns:minmax(0,1fr) auto;overflow:visible;gap:6px;}
+ .nst-edit-bar[hidden] {display:none;}
+ .nst-edit-title,.nst-edit-actions {display:none;}
+ .nst-edit-token {width:100%;min-width:0;box-sizing:border-box;}
+ .nst-edit-status {grid-column:1/-1;min-width:0;white-space:normal;overflow-wrap:anywhere;font-size:11px;line-height:1.4;}
+ .nst-edit-mobile-actions {display:block;grid-column:1/-1;width:100%;min-height:44px;background:#102b42;color:#ffcb05;border:1px solid #ffcb05;padding:8px;font:inherit;font-size:16px;}
+}

@@ -155,6 +155,8 @@ def test_request_carries_the_revision_the_panel_shows(applied, find, db_path):
 
 def test_request_without_live_corrections_is_refused(applied, db_path):
     """Публиковать нечего — в очереди не появляется пустая запись."""
+    applied.execute("delete from corrections")  # только изолированная копия теста
+    applied.commit()
     with pytest.raises(edit.EditError, match="публиковать нечего"):
         publish.request(applied, EDITOR, "нечего публиковать")
     assert publish.pending(db_path) == []

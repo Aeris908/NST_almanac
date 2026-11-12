@@ -10,8 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="audio-player.css">
   <link rel="stylesheet" href="queue.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body data-discipline="hub">
+  <a class="skip-link" href="#mainContent">Перейти к задачам</a>
   <div class="queue-wrap">
 
     <header class="queue-head">
@@ -19,13 +21,14 @@
         <a class="back-link" href="index.html">← На главную</a>
         <div class="nav-links">
           <a href="soccer.html">⚽ Футбол</a>
+          <a href="soccer.html?edit=1">✎ Редактор матчей</a>
           <a href="players.html">👥 Игроки</a>
           <a href="quotes.html">📜 Цитаты</a>
         </div>
       </div>
       <p class="eyebrow">⚖️ Кабинет лороведа · NST Альманах</p>
       <h1>Очередь задач на проверку</h1>
-      <p class="lede">Спорные протоколы, неоднозначные комментарии плей-офф и матчи с нестыковками регламента. Здесь лоровед принимает решение, сверяет источники и сохраняет вердикт напрямую в облачную базу Neon Postgres.</p>
+      <p class="lede">Спорные протоколы, неоднозначные комментарии плей-офф и матчи с нестыковками регламента. Здесь лоровед принимает решение, сверяет источники и сохраняет решение в архиве. После публикации исправления появятся на страницах сайта.</p>
 
       <!-- Блок авторизации и статуса соединения -->
       <div class="auth-bar" id="authBar">
@@ -47,7 +50,7 @@
     <div class="toolbar">
       <label class="search">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="queueSearch" type="search" placeholder="Поиск по никам, туру, тексту задачи или номеру матча…" autocomplete="off" aria-label="Поиск по очереди">
+        <input id="queueSearch" type="search" placeholder="Поиск по никам, туру, тексту задачи или номеру матча…" autocomplete="off" aria-label="Поиск по очереди" aria-keyshortcuts="/" title="Нажмите /, чтобы перейти к поиску">
       </label>
       <div class="actions">
         <button type="button" class="btn-refresh" id="refreshBtn" title="Обновить с сервера">🔄 Обновить очередь</button>
@@ -64,7 +67,7 @@
     <p class="publication-status" id="publicationStatus" role="status">Публикация: состояние проверяется после входа редактора.</p>
     <div id="noticeBox" class="notice-box" hidden></div>
 
-    <main>
+    <main id="mainContent" tabindex="-1">
       <div class="queue-list" id="queueList"></div>
     </main>
 

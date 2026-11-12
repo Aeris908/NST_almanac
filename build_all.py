@@ -6,12 +6,14 @@ Add ``--from-store`` to publish the store as it stands: the three steps that reg
 """
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 from db import store
+from portal.env_file import secret
 
 ROOT = Path(__file__).resolve().parent
 DEPLOY_DIR = ROOT / "deploy"
@@ -35,7 +37,7 @@ BUILDERS = (
 STORE_STEPS = ("db/build_db.py", "db/import_stores.py", "db/import_live.py")
 
 PAGES = ("index.html", "soccer.html", "quotes.html", "players.html", "queue.html")
-ASSETS = ("audio-player.js", "audio-player.css", "soccer.css", "soccer.js", "editor.js", "editor.css",
+ASSETS = ("favicon.svg", "audio-player.js", "audio-player.css", "soccer.css", "soccer.js", "editor.js", "editor.css",
           "players.js", "players.css", "queue.js", "queue.css", "site-data.js", "report-helper.js")
 
 
@@ -43,6 +45,11 @@ def build_pages(from_store=False):
     for title, script in BUILDERS:
         if from_store and script in STORE_STEPS:
             continue
+        if script == 'db/elo_review_queue.py' and not from_store and os.environ.get('VERCEL') == '1' and (secret('NST_POSTGRES_URL') or secret('DATABASE_URL')):
+            print("\n--> Reading the current editor database from Postgres")
+            # Схема подготовлена импортом; pull читает сервер одним согласованным срезом.
+            # Ошибка чтения останавливает публикацию, чтобы не выкатить устаревший архив.
+            subprocess.run([sys.executable, str(ROOT / 'db/sync.py'), 'pull'], cwd=ROOT, check=True)
         print(f"\n--> {title} ({script})")
         subprocess.run([sys.executable, str(ROOT / script)], cwd=ROOT, check=True)
 

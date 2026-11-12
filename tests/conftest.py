@@ -105,11 +105,11 @@ def undone(con, fingerprint, unchanged):
     `manual` и `roster` снимаются самим откатом (`release_unedited`), поэтому возврат сверяется
     по всему срезу данных, а не по одному полю.
     """
+    baseline={r[0] for r in con.execute("select id from corrections where reverted_at is null")}
     def _undone(before):
         result = edit.undo(con, "last")
         assert result["entries"], "откатывать нечего: операция не записала ни одного поля"
-        assert con.execute(
-            "select count(*) from corrections where reverted_at is null").fetchone()[0] == 0
+        assert {r[0] for r in con.execute("select id from corrections where reverted_at is null")} == baseline
         unchanged(fingerprint(), before)
         return result
     return _undone

@@ -5,7 +5,14 @@
 
 (() => {
   const params = new URLSearchParams(location.search);
-  if (!params.has("edit")) return;
+  const entry=document.getElementById('editorEntry');
+  if (!params.has("edit")) {
+    const updateEntry=()=>{if(entry){const url=new URL(location.href);url.searchParams.set('edit','1');entry.href=url.href;}};
+    updateEntry();
+    for(const event of ['click','pointerdown','focus','contextmenu'])entry?.addEventListener(event,updateEntry);
+    window.addEventListener('hashchange',updateEntry);
+    return;
+  }
 
   const isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
   const rawMeta = document.querySelector('meta[name="nst-editor-api"]')?.content || "";
@@ -14,7 +21,7 @@
     || metaApi
     || (isLocal ? "http://127.0.0.1:8090" : "");
 
-  const state = { token: sessionStorage.getItem("nstEditorToken") || "", revision: null, row: null,
+  const state = { token: sessionStorage.getItem("nstEditorToken") || localStorage.getItem("nstEditorToken") || "", revision: null, row: null,
     publish: [] };
 
   const el = (tag, cls, html) => {
@@ -45,6 +52,7 @@
   const bar = el("div", "nst-edit-bar");
   const panel = el("div", "nst-edit-panel");
   panel.hidden = true;
+  bar.id="nst-editor-toolbar";bar.setAttribute("role","region");bar.setAttribute("aria-label","Инструменты редактора");
 
   function say(message, kind = "info") {
     lastStatus = {message, kind};
@@ -147,6 +155,7 @@
     bar.appendChild(el("span", "nst-edit-title", "✎ РЕДАКТОР БАЗЫ"));
     const field = el("input", "nst-edit-token");
     field.type = "password";
+    field.autocomplete="current-password";field.setAttribute("aria-label","Токен редактора");
     field.placeholder = "токен";
     const login = el("button", null, "войти");
     login.type = "button";
@@ -158,6 +167,7 @@
       field.value = "";
       return refreshState();
     };
+    field.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();login.click();}});
     bar.appendChild(field);
     bar.appendChild(login);
     bar.appendChild(el("span", "nst-edit-status", "подключение…"));
@@ -172,7 +182,7 @@
       button.type = "button";
       if (action === "queue") queueButton = button;
       button.onclick = () => {
-        if (action === "hide") return document.body.classList.remove("nst-edit-on");
+        if (action === "hide") return setEditorVisible(false);
         if (action === "queue") return showQueue();
         if (action === "search") return showSearch();
         if (action === "match") return showNewMatch();
@@ -185,6 +195,11 @@
       buttons.appendChild(button);
     }
     bar.appendChild(buttons);
+    const menu=el('select','nst-edit-mobile-actions');menu.setAttribute('aria-label','Действия редактора');
+    menu.appendChild(new Option('Действия редактора…',''));
+    [...buttons.children].forEach((button,index)=>menu.appendChild(new Option(button.textContent,String(index))));
+    menu.onchange=()=>{const value=menu.value;menu.value='';if(value!==''&&!isBusy())buttons.children[Number(value)].click();};
+    bar.appendChild(menu);
   }
 
   async function refreshState() {
@@ -345,6 +360,7 @@
   /* ── что показать редактору ──────────────────────────────────────────── */
 
   function openPanel(title, bodyNode) {
+    panel.setAttribute("role","region");panel.setAttribute("aria-label",title);
     panel.innerHTML = "";
     const head = el("div", "nst-edit-head");
     head.appendChild(el("strong", null, title));
@@ -1405,10 +1421,19 @@
   buildBar();
   document.body.appendChild(bar);
   document.body.appendChild(panel);
-  document.body.classList.add("nst-edit-on");
+  function setEditorVisible(visible) {
+    if(isBusy())return say('Дождитесь завершения текущего действия.');
+    document.body.classList.toggle('nst-edit-on',visible);bar.hidden=!visible;
+    if(!visible){panel.hidden=true;state.row=null;}
+    if(entry){entry.textContent=visible?'✎ Скрыть редактор':'✎ Редактор';entry.setAttribute('aria-expanded',String(visible));entry.setAttribute('aria-controls',bar.id);}
+  }
+  entry?.addEventListener('click',event=>{event.preventDefault();setEditorVisible(bar.hidden);});
+  new ResizeObserver(()=>document.documentElement.style.setProperty('--nst-editor-bar-height',bar.getBoundingClientRect().height+'px')).observe(bar);
+  setEditorVisible(true);
   /* Ловим на фазе захвата: в режиме правки клик по строке матча значит «правь эту строку»,
      а не «открой карточку соперника», как обещает inline-обработчик страницы. */
   document.addEventListener("click", (event) => {
+    if (!document.body.classList.contains("nst-edit-on")) return;
     if (event.target.closest("button, a, input, .nst-edit-bar, .nst-edit-panel")) return;
     if (!event.target.closest(".h2h-match-item, .h2h-match-row, .match-history-row")) return;
     // Занятый сервер: клик по строке не порождает второй запрос и не открывает профиль игрока.
@@ -1433,5 +1458,5 @@
       return openDuel(duel);
     }
   }, true);
-  refreshState();
+  if(state.token)refreshState();else say("Введите токен редактора. Затем выберите матч или нажмите «найти».");
 })();
