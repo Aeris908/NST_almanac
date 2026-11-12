@@ -548,6 +548,23 @@ def set_source(con, match_id, editor, note=None, links=None):
     return _write(con, editor, "set-source", match_id, changes, linked)
 
 
+def add_video(con, match_id, url, editor):
+    """Добавить видео, не заменяя другие источники; операция журналируется и отменяется."""
+    from urllib.parse import urlsplit
+    value=str(url or '').strip()
+    try:
+        parsed=urlsplit(value)
+        valid=parsed.scheme in ('http','https') and bool(parsed.hostname) and not parsed.username and not parsed.password
+    except ValueError:valid=False
+    if not valid or len(value)>4096 or any(ch.isspace() for ch in value):
+        raise EditError('Вставьте полную ссылку на страницу видео, начиная с https://. Сам файл загружать не нужно.')
+    links=[[r['kind'],r['url']] for r in con.execute('select kind,url from match_links where match_id=? order by id',(match_id,))]
+    if ['video',value] not in links:links.append(['video',value])
+    result=set_source(con,match_id,editor,links=links)
+    result['operation']='add-video'
+    return result
+
+
 def add_tournament(con, spec, editor):
     """Новый турнир: рамка-документ с пустым списком игр.
 

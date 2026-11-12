@@ -48,13 +48,14 @@ ORIGINS_ENV = "NST_EDITOR_ORIGINS"
 DEFAULT_ORIGINS = "http://127.0.0.1:8000 http://localhost:8000"
 DEFAULT_TOKEN = "mafutaloh"
 MAX_BODY = 64 * 1024
-OPERATIONS = ("set-score", "set-players", "set-source", "set-place", "set-date", "set-phase",
+OPERATIONS = ("add-video", "set-score", "set-players", "set-source", "set-place", "set-date", "set-phase",
               "set-provenance", "set-rating", "rate-scope", "add-match", "add-tournament",
               "set-doc", "drop-match", "drop-tournament", "rename-player", "merge-player",
               "void", "unvoid", "unhide", "publish-request", "undo", "review-task", "review-existing")
 # Что обязано приехать в args: у каждой операции свой идентификатор, и отсутствие match_id у
 # правки игрока — это не «забыли», а перепутанная ручка.
 REQUIRED_ARGS = {
+    "add-video": ("match_id","url"),
     "review-task": ("task_id", "decision", "note"),
     "review-existing": ("task_id", "match_id", "outcome", "note"),
     "set-score": ("match_id", "s1", "s2"),

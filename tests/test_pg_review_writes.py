@@ -79,12 +79,13 @@ def test_postgres_api_preview_then_persist_and_undo(pg_copy):
     from db import api
     con=pg_copy;url=con._test_url
     task=next(t for t in api.queue(url) if t['batch']!='team_archive_review' and t.get('match_id'))
-    args={'task_id':task['id'],'task_expect':task['edit_version'],'match_id':task['match_id'],'note':'PG API integration check','stage':'PG API stage','outcome':'regular','s1':3,'s2':2}
+    args={'task_id':task['id'],'task_expect':task['edit_version'],'match_id':task['match_id'],'note':'PG API integration check','video_url':'https://youtu.be/pg-video-check','stage':'PG API stage','outcome':'regular','s1':3,'s2':2}
     before=api.revision(url)
     preview=api.mutate('review-existing',args,'tester',db_path=url,persist=False)
     assert preview['ok'] and not preview['persisted'] and api.revision(url)==before
     saved=api.mutate('review-existing',args,'tester',db_path=url,persist=True,expect=preview['revision'])
     assert saved['ok'] and saved['persisted'] and saved['comparison']
+    assert {'kind':'video','url':'https://youtu.be/pg-video-check'} in saved['match']['links']
     assert task['id'] not in {t['id'] for t in api.queue(url)}
     undone=api.mutate('undo',{'what':'op:'+saved['op']},'tester',db_path=url,persist=True)
     assert undone['ok'] and api.revision(url)==before

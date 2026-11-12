@@ -238,6 +238,7 @@
     "set-score": {what: "счёта"},
     "set-players": {what: "состава"},
     "set-source": {what: "источников"},
+    "add-video": {write:"прикрепление видео"},
     "set-rating": {what: "рейтингового флага"},
     "set-place": {what: "места строки"},
     "set-date": {what: "даты"},
@@ -486,6 +487,24 @@
       "пара 2×2 — через « & ». Ник сворачивается в карточку по справочнику имён, неизвестный ник "
       + "заведёт новую карточку; если под таким ником уже живёт другой игрок — правка не запишется"));
 
+    const videoBox=el('section','nst-video-help');
+    videoBox.appendChild(el('h3',null,'Видео этой встречи'));
+    videoBox.appendChild(el('p',null,'Откройте запись в ВК, YouTube или на другом сайте. Скопируйте адрес страницы из строки браузера и вставьте его ниже.'));
+    const videoLabel=el('label',null,'Ссылка на видео');
+    const videoInput=document.createElement('input');videoInput.type='url';videoInput.className='nst-edit-video-url';videoInput.placeholder='https://…';videoInput.setAttribute('aria-label','Ссылка на видео встречи');videoInput.inputMode='url';videoLabel.append(videoInput);videoBox.append(videoLabel);
+    const videoList=document.createElement('ul');
+    const paintVideos=links=>{videoList.replaceChildren();for(const item of links.filter(link=>link.kind==='video')){const li=document.createElement('li'),link=document.createElement('a');link.href=item.url;link.textContent='Открыть прикреплённое видео';link.target='_blank';link.rel='noopener';li.append(link);videoList.append(li);}};
+    paintVideos(row.links||[]);videoBox.append(videoList);
+    const videoStatus=el('p',null,'Другие ссылки сохранятся. Можно прикрепить несколько записей по очереди.');videoStatus.setAttribute('role','status');
+    const addVideo=el('button',null,'Прикрепить видео');addVideo.type='button';
+    addVideo.onclick=async()=>{
+      videoInput.required=true;if(!videoInput.reportValidity())return;
+      const answer=await run({operation:'add-video',args:{match_id:row.id,url:videoInput.value.trim()},persist:true});
+      if(answer?.ok){paintVideos(answer.match?.links||[]);videoInput.value='';videoStatus.textContent='Видео сохранено в базе. На общей странице оно появится после следующей публикации сайта.';}
+      else videoStatus.textContent='Видео не сохранено. Проверьте сообщение редактора и попробуйте ещё раз.';
+    };
+    videoBox.append(addVideo,videoStatus);box.insertBefore(videoBox,box.querySelector('.nst-edit-form'));
+    const advanced=document.createElement('details');advanced.className='nst-edit-sources-advanced';advanced.appendChild(el('summary',null,'Другие источники и примечание — дополнительные настройки'));
     const sourceForm = el("div", "nst-edit-form");
     sourceForm.appendChild(el("span", "nst-edit-h", "источники"));
     const noteInput = document.createElement("input");
@@ -511,10 +530,8 @@
       });
       sourceForm.appendChild(button);
     }
-    box.appendChild(sourceForm);
-    box.appendChild(el("p", "nst-edit-note",
-      "ссылки заменяются списком целиком: что написано в поле — то и есть доказательства игры. "
-      + "Одна ссылка на строку в минуту, без повторов"));
+    advanced.appendChild(sourceForm);box.appendChild(advanced);
+    advanced.appendChild(el("p", "nst-edit-note", "В дополнительных настройках сохраняется весь список источников. Для добавления видео пользуйтесь отдельной кнопкой выше — она оставит остальные ссылки на месте."));
     if (row.doc_key) {
       const docButton = el("button", "nst-edit-secondary", `рамка турнира ${row.doc_key}`);
       docButton.type = "button";
@@ -860,9 +877,7 @@
         + (value && value.__length__ ? ` (строк ${value.__length__[0]} → ${value.__length__[1]})` : "")));
     }
     if (answer.persisted) {
-      box.appendChild(el("p", "nst-edit-warn",
-        `записано (журнал ${answer.journal.join(", ")}). Цифры на странице обновит сборка: `
-        + "python build_all.py"));
+      box.appendChild(el("p", "nst-edit-warn", "Изменения сохранены в базе. На общей странице они появятся после следующей публикации сайта."));
     }
   }
 
@@ -878,7 +893,8 @@
           return showLog();
         }
         renderDelta(answer);
-        return refreshState();
+        await refreshState();
+        return answer;
       } catch (error) {
         say(error.message, "error");
         // Ревизия устарела: панель должна показать новую, а не слать правку по старой картинке.

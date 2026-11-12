@@ -481,6 +481,7 @@ def match_row(con, match_id):
                      "label": side["label"] or side["players"], "score": side["score"],
                      "outcome": side["outcome"]}
                     for side in edit.sides_of(con, match_id)]
+    out["links"]=[dict(row) for row in con.execute("select kind,url from match_links where match_id=? order by id",(match_id,))]
     return out
 
 
@@ -507,6 +508,8 @@ def _apply(con, operation, editor, args):
         return edit.set_score(con, args["match_id"], args["s1"], args["s2"], editor)
     if operation == "set-players":
         return edit.set_players(con, args["match_id"], args["sides"], editor)
+    if operation == "add-video":
+        return edit.add_video(con,args["match_id"],args["url"],editor)
     if operation == "set-source":
         return edit.set_source(con, args["match_id"], editor, args.get("note"), args.get("links"))
     if operation == "set-place":

@@ -880,3 +880,15 @@ html, body {
 .skip-link {position:fixed;left:12px;top:8px;z-index:100001;padding:12px 18px;background:#ffcb05;color:#071423;font-weight:700;transform:translateY(-160%);}
 .skip-link:focus {transform:translateY(0);}
 :where(a,button,input,select,textarea):focus-visible {outline:3px solid #38bdf8;outline-offset:3px;}
+
+/* Крупное поле видео и последовательные подсказки для редактора архива. */
+.nst-video-help,.video-help {grid-column:1/-1;padding:16px;border:1px solid #38bdf8;border-radius:6px;background:#10283c;color:#e2e8f0;line-height:1.6;font-size:15px;}
+.nst-video-help h3 {font-size:18px;margin:0 0 10px;color:#ffcb05;}
+.nst-video-help label,.video-help label {display:block;font-size:16px;font-weight:600;}
+.nst-video-help input,.video-help input {display:block;box-sizing:border-box;width:100%;min-height:46px;padding:10px;margin-top:8px;background:#091b2b;color:#fff;border:1px solid #65839a;border-radius:4px;font-size:16px;}
+.nst-video-help button {min-height:44px;font-size:16px;padding:10px 16px;}
+.video-help p,.nst-video-help p {margin:10px 0;}
+.video-help summary,.nst-edit-sources-advanced summary {padding:8px 0;color:#38bdf8;cursor:pointer;font-size:15px;}
+.video-help ol {padding-left:24px;}
+.optional-field {font-size:14px;font-weight:400;color:#cbd5e1;}
+.nst-video-help a,.video-help a {color:#38bdf8;overflow-wrap:anywhere;}

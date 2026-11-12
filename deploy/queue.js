@@ -24,11 +24,11 @@
   let drafts = {};
   try { drafts = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}') || {}; } catch (_) {}
   const draftId = form => form.dataset.taskId || form.closest('article')?.id.replace('task-', '');
-  const draftFields = form => [...form.querySelectorAll('input,select,textarea')].filter(el=>!el.closest('.report-assistant,.conflict-panel'));
+  const draftFields = form => [...form.querySelectorAll('input,select,textarea')].filter(el=>!el.closest('.report-assistant,.conflict-panel')&&!el.classList.contains('video-url'));
   function writeDraft(form) {
     if (form.dataset.saved === '1') return;
     const id = draftId(form); if (!id) return;
-    drafts[id] = {version:1,helperText:form.querySelector('.report-text')?.value, editVersion:form.dataset.editVersion,sourceRef:form.dataset.sourceRef, updated:Date.now(), fields:draftFields(form).map(el=>({value:el.value,checked:el.checked})),
+    drafts[id] = {videoUrls:[...form.querySelectorAll('.video-url')].map(el=>el.value),version:1,helperText:form.querySelector('.report-text')?.value, editVersion:form.dataset.editVersion,sourceRef:form.dataset.sourceRef, updated:Date.now(), fields:draftFields(form).map(el=>({value:el.value,checked:el.checked})),
       rows:[...form.querySelectorAll('.review-game')].map(row=>({id:row.dataset.matchId,
         place:row.dataset.place,common:row.dataset.useCommon,reversed:row.dataset.reversed,proposal:row.dataset.proposal,raw:row.dataset.raw,confirmed:row.dataset.confirmed,own:!row.querySelector('.row-player-fields').hidden}))};
     form.dataset.dirty='1';
@@ -65,6 +65,7 @@
       });
     }
     draftFields(form).forEach((el,i)=>{if(draft.fields[i]){el.value=draft.fields[i].value;el.checked=!!draft.fields[i].checked;}});
+    form.querySelectorAll('.video-url').forEach((el,i)=>el.value=draft.videoUrls?.[i]||'');
     form.dataset.dirty='1';return true;
   }
   function attachDraft(form) {
@@ -139,6 +140,7 @@
       const row=(label,a,b)=>{if(a===b)return;const values={regular:'Основное время',penalties:'Буллиты',overtime:'Овертайм',overtime_penalties:'Овертайм и буллиты',played:'Сыгран',technical:'Технический результат',void:'Аннулирован',win:'Победа',loss:'Поражение',draw:'Ничья',none:'Не учитывается'};const display=v=>/^(Результат|Исход|Статус)/.test(label)?values[v]||v:v;const tr=table.insertRow();for(const text of [label,display(a)??'—',display(b)??'—']){const td=tr.insertCell();td.textContent=String(text);}};
       for(const [key,label] of Object.entries(fields))row(label,item.before?.[key],item.after?.[key]);
       for(let i=0;i<2;i++)for(const [key,label] of [['players','Состав'],['score','Голы'],['outcome','Исход']])row(label+' '+(i?'B':'A'),item.before?.sides?.[i]?.[key],item.after?.sides?.[i]?.[key]);
+      row('Видео',(item.before?.links||[]).filter(link=>link.kind==='video').map(link=>link.url).join('\n'),(item.after?.links||[]).filter(link=>link.kind==='video').map(link=>link.url).join('\n'));
       if(table.rows.length===1){const p=document.createElement('p');p.textContent='Данные игры не меняются.';section.append(p);}else section.append(table);output.append(section);
     }
     const rating=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Влияние на Elo';rating.append(summary);
@@ -462,6 +464,10 @@
     card?.querySelector('[data-review-open]')?.click();card?.scrollIntoView({block:'start'});
   }
 
+  function videoField(inputClass,row={}) {
+    const links=(row.links||[]).filter(link=>link.kind==='video'&&/^https?:\/\//.test(link.url));
+    return `<section class="video-help"><label>Ссылка на видео этой игры <span class="optional-field">(необязательно)</span><input type="url" inputmode="url" class="video-url ${inputClass}" placeholder="Вставьте ссылку: https://…" aria-label="Ссылка на видео этой игры"></label><p>Существующие источники не удалятся. Видео сохранится вместе с решением.</p>${links.map(link=>`<a href="${escapeHTML(link.url)}" target="_blank" rel="noopener">Открыть уже прикреплённое видео</a>`).join(' ')}<details><summary>Как скопировать ссылку на видео?</summary><ol><li>Откройте запись встречи в ВК, YouTube или на другом сайте.</li><li>Нажмите «Поделиться» → «Скопировать ссылку» либо скопируйте адрес из строки браузера.</li><li>Вставьте ссылку в это поле. Затем проверьте и сохраните решение.</li></ol><p>Загружать сам файл не нужно. Для каждой игры указывайте её запись. После публикации сайта видео появится на общей странице.</p></details></section>`;
+  }
   function renderTaskCard(task) {
     if (task.batch === "team_archive_review") {
       const links = (task.links || []).filter(url => /^https?:\/\//.test(url)).map(url =>
@@ -602,11 +608,12 @@
                 <input type="text" class="input-note" aria-label="Обоснование решения" required placeholder="Что проверено и какое решение принято">
               </div>
               ${task.batch==='elo_review'?`<label>Подтверждённая дата игры<input type="date" class="input-played-on" value="${escapeHTML(String(row.played_on||'').slice(0,10))}"></label>`:''}
+              ${videoField('input-video-url',row)}
             </div>
 
             <div class="form-actions">
               <button type="button" class="btn-save" data-action="save">Проверить решение</button>
-              <button type="button" class="btn-preview" data-action="preview">Предпросмотр дельты</button>
+              <button type="button" class="btn-preview" data-action="preview">Показать изменения</button>
             </div>
 
             <div class="diff-preview-box" hidden></div>
@@ -689,6 +696,7 @@
       <div class="review-pk" ${['penalties','overtime_penalties'].includes(row.phase)?'':'hidden'}><label>Буллиты A<input type="number" class="review-pk1" min="0" max="99" value="${pk?pk[1]:''}"></label><label>Буллиты B<input type="number" class="review-pk2" min="0" max="99" value="${pk?pk[2]:''}"></label></div>
       <div class="game-tools"><button type="button" class="btn-preview" data-swap-game>⇄ Поменять пары и счёт</button><button type="button" class="btn-preview" data-own-roster>Изменить игроков этой игры</button><button type="button" class="btn-preview" data-remove-game>Убрать строку</button></div>
       <div class="row-player-fields form-grid" hidden>${nickField('a1','Игрок A1',a[0]||'')}${nickField('a2','Игрок A2',a[1]||'')}${nickField('b1','Игрок B1',b[0]||'')}${nickField('b2','Игрок B2',b[1]||'')}</div>
+      ${videoField('review-video-url',row)}
     </fieldset>`;
   }
 
@@ -760,7 +768,7 @@
           doc_key:value('.review-doc'), league:place.league??value('.review-league'),tour:place.tour??value('.review-tour'),stage:place.stage??value('.review-stage'),
           sides:[rowNames(row).slice(0,2).join(' & '),rowNames(row).slice(2).join(' & ')],
           s1:integer('.review-s1'),s2:integer('.review-s2'),pk1:integer('.review-pk1'),pk2:integer('.review-pk2'),
-          phase:get('.review-phase'),playoff:row.querySelector('.review-playoff').checked,from_report:row.dataset.proposal==='1',confirmed:row.dataset.confirmed==='1'};
+          video_url:get('.review-video-url'),phase:get('.review-phase'),playoff:row.querySelector('.review-playoff').checked,from_report:row.dataset.proposal==='1',confirmed:row.dataset.confirmed==='1'};
       });
       return {task_id:task.id,task_expect:form.dataset.editVersion, decision, note:value('.review-note'), games};
     };
@@ -866,7 +874,7 @@
         approved=null;decisionAction(saveBtn);
         try {
           previewBtn.disabled = true;decisionAction(saveBtn,false,true);
-          previewBtn.textContent = "Считаем дельту…";
+          previewBtn.textContent = "Проверяем изменения…";
           const payload = collectFormData(form, matchId);
           if(!await resolveConflict(form))return;
           payload.args.task_expect=form.dataset.editVersion;
@@ -883,7 +891,7 @@
           previewBox.innerHTML = `<span style="color:var(--nes-red);">Ошибка предпросмотра: ${escapeHTML(err.message)}</span>`;
         } finally {
           previewBtn.disabled = false;decisionAction(saveBtn,!!approved);
-          previewBtn.textContent = "Предпросмотр дельты";
+          previewBtn.textContent = "Показать изменения";
         }
       };
 
@@ -897,7 +905,7 @@
 
         try {
           saveBtn.disabled = true;
-          saveBtn.textContent = "Записываем в Neon…";
+          saveBtn.textContent = "Сохраняем решение…";
           const payload = collectFormData(form, matchId);
           if(!approved||approved!==JSON.stringify(payload.args)){await previewBtn.onclick();return;}
           payload.persist = true;
@@ -952,7 +960,7 @@
     if(['penalties','overtime_penalties'].includes(outcome)&&s1===s2&&(!pk1||!pk2||Number(pk1)===Number(pk2))){fieldError(form.querySelector('.input-pk2'),'Укажите разные результаты буллитов.');revealError(form.querySelector('.input-pk2'));throw Error('Проверьте результаты буллитов.');}
     return {
       operation: "review-existing",
-      args: {task_id:Number(form.dataset.taskId),task_expect:form.dataset.editVersion,match_id:matchId,s1,s2,outcome,stage,note,played_on:form.querySelector('.input-played-on')?.value,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
+      args: {task_id:Number(form.dataset.taskId),task_expect:form.dataset.editVersion,match_id:matchId,s1,s2,outcome,stage,note,video_url:form.querySelector('.input-video-url')?.value.trim(),played_on:form.querySelector('.input-played-on')?.value,pk1:pk1===''?null:Number(pk1),pk2:pk2===''?null:Number(pk2)},
     };
   }
 

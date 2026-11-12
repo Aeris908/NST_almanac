@@ -69,6 +69,8 @@ def resolve_existing(con, args, editor):
                 results.append(edit.set_place(batch, mid, editor, stage=str(args['stage']).strip()))
             if args.get('played_on'):
                 results.append(edit.set_date(batch,mid,editor,played_on=str(args['played_on'])))
+        if args.get("video_url"):
+            results.append(edit.add_video(batch,mid,args["video_url"],editor))
         payload = store.parse_json(task['payload'], default={})
         payload['вердикт_редактора'] = {'decision':'void' if outcome=='void' else 'save',
                                         'note':note,'editor':editor,'match_ids':[mid]}
@@ -168,13 +170,17 @@ def apply(con, args, editor):
                 results.append(edit.set_players(batch, mid, sides, editor))
                 results.append(edit.set_score(batch, mid, *scores, editor))
                 results.append(edit.set_place(batch, mid, editor, row.get('tour',''),row.get('league',''),row.get('stage','')))
-                results.append(edit.set_source(batch, mid, editor, shown, spec['links']))
+                existing_links=[[r['kind'],r['url']] for r in con.execute('select kind,url from match_links where match_id=? order by id',(mid,))]
+                all_links=[list(pair) for pair in dict.fromkeys(tuple(pair) for pair in existing_links+spec['links'])]
+                results.append(edit.set_source(batch, mid, editor, shown, all_links))
             else:
                 if not row.get('doc_key'):
                     raise edit.EditError('Выберите турнир для новой игры')
                 spec['tour'] = str(spec.get('tour') or 'Отчёт') + f' · Игра {game_index}'
                 result = edit.add_match(batch, spec, editor)
                 results.append(result); mid=result['match_id']
+            if row.get("video_url"):
+                results.append(edit.add_video(batch,mid,row["video_url"],editor))
             changes=[]
             for current in edit.pair_ids(con,mid):
                 for side, outcome in zip(edit.sides_of(con,current),outcomes):
